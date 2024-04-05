@@ -25,12 +25,12 @@
     font-weight: 700;
 }
 
-@font-face {
+/* @font-face {
     font-family: 'Gelion Light';
     src: url('~/assets/fonts/Gelion-Light.woff');
     font-style: normal;
     font-weight: normal;
-}
+} */
 
 @font-face {
     font-family: 'Gelion';

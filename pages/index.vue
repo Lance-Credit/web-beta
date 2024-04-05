@@ -40,7 +40,7 @@
                         </div>
                         <NuxtLink class="flex mb-12 text-lance-green">I do not have a community code</NuxtLink>
                         <button @click="communityCodeFilled = true" class="mb-6 btn w-full btn-primary" :disabled="!signupFormValues.communityCode">Continue</button>
-                        <NuxtLink class="flex gap-2 justify-center text-lance-text-black-60">
+                        <NuxtLink to="/auth/login" class="flex gap-2 justify-center text-lance-text-black-60">
                             Already have an account?<span class="text-lance-green font-medium">Login</span>
                         </NuxtLink>
                     </div>
@@ -60,7 +60,7 @@
                             <Form-PasswordInput class="mb-4" placeholder="Enter Password" label="Enter Password" v-bind="signupForm.password" :error="signupFormErrors.password"></Form-PasswordInput>
                         </div>
                         <button @click="signupFormSubmitted = true" class="mb-6 btn w-full btn-primary" :disabled="!signupFormFilled">Continue</button>
-                        <NuxtLink class="flex gap-2 justify-center text-lance-text-black-60">
+                        <NuxtLink to="/auth/login" class="flex gap-2 justify-center text-lance-text-black-60">
                             Already have an account?<span class="text-lance-green font-medium">Login</span>
                         </NuxtLink>
                     </div>
@@ -84,11 +84,6 @@
         <Auth-Modal v-if="verificationCodeSubmitted"/>
     </div>
 </template>
-
-<style>
-    .a{
-    }
-</style>
 
 <script setup lang="ts">
 
