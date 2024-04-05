@@ -7,7 +7,9 @@
 
 /* buttons */
 .btn{
-    /* display: flex; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 12px 24px;
     border-radius: 6px;
     font-family: 'Gelion';

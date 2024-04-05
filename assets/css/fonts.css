@@ -4,14 +4,14 @@
     font-style: normal;
     font-weight: 400;
 }
-
+*/
 @font-face {
     font-family: 'Aventa';
     src: url('~/assets/fonts/Aventa-Medium.woff2');
     font-style: normal;
     font-weight: 500;
 }
-
+/*
 @font-face {
     font-family: 'Aventa';
     src: url('~/assets/fonts/Aventa-SemiBold.woff2');
