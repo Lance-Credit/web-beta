@@ -23,7 +23,7 @@
             </template>
             <template #auth-content>
                 <div v-if="!signupFormSubmitted">
-                    <div v-if="!communityCodeFilled" class="ml-28 max-w-[416px]">
+                    <div v-if="!communityCodeFilled" class="ml-[140.5px] max-w-[416px]">
                         <p class="mb-1 text-lance-text-black font-aventa font-bold text-[24px] leading-[32px] tracking-[-0.24px]">
                             Hey there!
                         </p>
@@ -45,7 +45,7 @@
                         </NuxtLink>
                     </div>
     
-                    <div v-else class="ml-28 max-w-[376px]">
+                    <div v-else class="ml-[154.5px] max-w-[376px]">
                         <p class="mb-2 text-lance-text-black font-aventa text-[24px] leading-[32px] tracking-[-0.24px]">
                             Create your account
                         </p>
@@ -66,7 +66,7 @@
                     </div>
                 </div>
                 <div v-else>
-                    <div class="ml-28 max-w-[376px]">
+                    <div class="ml-[154.5px] max-w-[376px]">
                         <p class="mb-2 text-lance-text-black font-aventa font-medium text-[24px] leading-[32px] tracking-[-0.24px]">
                             Verify your account
                         </p>
@@ -74,14 +74,20 @@
                             Input the 6-digit verification code we sent to this phone number <span class="font-semibold">{{ formattedPhoneNumber }}</span> to activate your account.
                         </p>
                         <div class="mb-6">
-                            <Form-TextInput placeholder="Verification Code " label="Verification Code " v-bind="signupForm.verificationCode" :error="signupFormErrors.verificationCode"></Form-TextInput>
+                            <Form-TextInput placeholder="Verification Code" label="Verification Code" v-bind="signupForm.verificationCode" :error="signupFormErrors.verificationCode"></Form-TextInput>
                         </div>
                         <button @click="verificationCodeSubmitted = true" class="btn w-full btn-primary" :disabled="!signupFormValues.verificationCode">Continue</button>
                     </div>
                 </div>
             </template>
         </Auth-BaseAuth>
-        <Auth-Modal v-if="verificationCodeSubmitted"/>
+        <Auth-Modal
+            v-if="verificationCodeSubmitted"
+            title="Welcome to Lance X"
+            text='You have successfully created an account and joined the community through <span class="text-lance-text-black font-medium">Yewande Odumosu.</span>'
+            button-text="Proceed to your dashboard"
+            button-link="#"
+        />
     </div>
 </template>
 
