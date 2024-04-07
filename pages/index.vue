@@ -38,7 +38,7 @@
                         <div class="mb-2">
                             <Form-TextInput placeholder="Enter Community Code" label="Community Code" v-bind="signupForm.communityCode" :error="signupFormErrors.communityCode"></Form-TextInput>
                         </div>
-                        <NuxtLink class="flex mb-12 text-lance-green">I do not have a community code</NuxtLink>
+                        <NuxtLink to="https://tally.so/r/w2KLJL" target="_blank" class="flex mb-12 text-lance-green">I do not have a community code</NuxtLink>
                         <button @click="communityCodeFilled = true" class="mb-6 btn w-full btn-primary" :disabled="!signupFormValues.communityCode">Continue</button>
                         <NuxtLink to="/auth/login" class="flex gap-2 justify-center text-lance-text-black-60">
                             Already have an account?<span class="text-lance-green font-medium">Login</span>
