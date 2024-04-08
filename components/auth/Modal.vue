@@ -27,7 +27,7 @@
                 </svg>
             </div>
             <div class="text-center">
-                <p class="mb-2 text-lance-text-black text-[24px] font-medium leading-[32px] tracking-[-0.24px]">
+                <p class="mb-2 text-lance-text-black font-aventa font-bold text-[24px] leading-[32px] tracking-[-0.24px]">
                     {{ title }}
                 </p>
                 <p class="mb-8 text-lance-text-black-60" v-html="text"></p>

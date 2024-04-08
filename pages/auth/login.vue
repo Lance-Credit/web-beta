@@ -6,7 +6,7 @@
             </template>
             <template #auth-content>
                 <div>
-                    <p class="mb-2 text-lance-text-black font-aventa font-medium text-[24px] leading-[32px] tracking-[-0.24px]">
+                    <p class="mb-2 text-lance-text-black font-aventa font-bold text-[24px] leading-[32px] tracking-[-0.24px]">
                         Log in to your account
                     </p>
                     <p class="mb-6 text-lance-text-black-60">
