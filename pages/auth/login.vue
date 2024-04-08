@@ -5,7 +5,7 @@
                 <div class="rounded-b-[80px] w-ful bg-[url('/assets/img/community-code-1000007199.svg')] bg-cover h-[377px]"></div>
             </template>
             <template #auth-content>
-                <div class="ml-[154.5px] max-w-[376px]">
+                <div>
                     <p class="mb-2 text-lance-text-black font-aventa font-medium text-[24px] leading-[32px] tracking-[-0.24px]">
                         Log in to your account
                     </p>
