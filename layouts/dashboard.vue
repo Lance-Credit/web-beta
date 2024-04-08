@@ -1,7 +1,7 @@
 <template>
-    <div class="">
+    <div class="flex h-screen">
         <div class="bg-white fixed h-screen w-[213px]">
-            <div class="h-18 flex justify-center pt-8 pb-5 border-b border-solid border-[rgba(140,136,144,0.10)]">
+            <div class="h-[72px] flex justify-center pt-8 pb-5 border-b border-solid border-[rgba(140,136,144,0.10)]">
                 <svg width="132" height="20" viewBox="0 0 132 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M1.62887 10.258L8.35184 0.199919C8.64416 -0.119605 9.01654 -0.0484924 9.18225 0.358706L11.0078 4.83984C11.0856 5.06046 11.1052 5.29895 11.0644 5.53022C11.0236 5.76148 10.924 5.97695 10.776 6.15398L7.22943 11.5546H2.33732C1.38683 11.5654 0.819885 11.1854 1.62887 10.258Z" fill="black"/>
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M14.4771 18.0004H3.29091C2.62529 17.9565 2.00714 17.7744 1.72227 17.0739L0 12.0034C0.215979 12.36 0.629317 12.7126 1.7511 12.7107H12.6655C12.8902 12.7223 13.1079 12.797 13.2956 12.9269C13.4833 13.0569 13.6341 13.2372 13.7323 13.4491L14.9426 17.2649C15.1092 17.6701 14.9007 18.0013 14.4771 18.0004Z" fill="black"/>
@@ -134,8 +134,38 @@
                 </ul>
             </div>
         </div>
-        <div class="ml-[213px]">
-            <slot />
+        <div class="ml-[213px] w-full">
+            <div class="flex justify-between items-center py-3.5 px-8 bg-[#FDFCFE] border-b border-solid border-[rgba(140,136,144,0.10)] h-[72px]">
+                <input
+                    type="text"
+                    placeholder="Search for a transaction"
+                    class="py-2.5 px-4 pl-[41px] rounded-md border border-solid border-[rgba(10,79,77,0.20)] w-[376px] bg-[url('/assets/img/icons/search.svg')] bg-no-repeat bg-[center_left_18px] outline-none"
+                >
+                <div class="flex gap-6 items-center">
+                    <div class="relative p-2.5 rounded-md border border-solid border-[#BFBDC2]">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <mask id="mask0_7374_6096" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="3" y="1" width="19" height="18">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M3.00012 1H21.497V18.348H3.00012V1Z" fill="white"/>
+                            </mask>
+                            <g mask="url(#mask0_7374_6096)">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12.2471 2.5C8.75214 2.5 6.31614 5.238 6.31614 7.695C6.31614 9.774 5.73914 10.735 5.22914 11.583C4.82014 12.264 4.49714 12.802 4.49714 13.971C4.66414 15.857 5.90914 16.848 12.2471 16.848C18.5501 16.848 19.8341 15.813 20.0001 13.906C19.9971 12.802 19.6741 12.264 19.2651 11.583C18.7551 10.735 18.1781 9.774 18.1781 7.695C18.1781 5.238 15.7421 2.5 12.2471 2.5ZM12.2471 18.348C7.57114 18.348 3.34514 18.018 3.00014 14.035C2.99714 12.387 3.50014 11.549 3.94414 10.811C4.39314 10.063 4.81614 9.358 4.81614 7.695C4.81614 4.462 7.80213 1 12.2471 1C16.6921 1 19.6781 4.462 19.6781 7.695C19.6781 9.358 20.1011 10.063 20.5501 10.811C20.9941 11.549 21.4971 12.387 21.4971 13.971C21.1481 18.018 16.9231 18.348 12.2471 18.348Z" fill="#8C8890"/>
+                            </g>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12.1984 22.5001H12.1964C11.0754 22.4991 10.0144 22.0051 9.20939 21.1081C8.93239 20.8011 8.95739 20.3261 9.26539 20.0501C9.57339 19.7721 10.0474 19.7971 10.3244 20.1061C10.8424 20.6831 11.5074 21.0001 12.1974 21.0001H12.1984C12.8914 21.0001 13.5594 20.6831 14.0784 20.1051C14.3564 19.7981 14.8304 19.7731 15.1374 20.0501C15.4454 20.3271 15.4704 20.8021 15.1934 21.1091C14.3854 22.0061 13.3224 22.5001 12.1984 22.5001Z" fill="#8C8890"/>
+                        </svg>
+                        <div class="w-2 h-2 absolute top-3 right-2.5 bg-[#E70A3F] rounded-full"></div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-[44px] h-[44px] rounded-full bg-[#9BA6B9] bg-[url('/assets/img/kofo.jpg')]"></div>
+                        <p class="text-[#1E1721] font-medium">Kofoworola Martins</p>
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2.97982 5.31295C3.15733 5.13544 3.43511 5.1193 3.63085 5.26454L3.68693 5.31295L8.00004 9.62584L12.3132 5.31295C12.4907 5.13544 12.7684 5.1193 12.9642 5.26454L13.0203 5.31295C13.1978 5.49046 13.2139 5.76824 13.0687 5.96398L13.0203 6.02006L8.35359 10.6867C8.17608 10.8642 7.89831 10.8804 7.70257 10.7351L7.64649 10.6867L2.97982 6.02006C2.78456 5.8248 2.78456 5.50821 2.97982 5.31295Z" fill="#656167"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-[#FAFAFA] h-[calc(100%-72px)] p-8">
+                <slot />
+            </div>
         </div>
     </div>
 </template>
