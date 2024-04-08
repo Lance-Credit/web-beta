@@ -92,7 +92,9 @@
         validationSchema: yup.object({
             email: yup.string().email().required().label('Email Address'),
             verificationCode: yup.string().required().label('Verification Code'),
-            password: yup.string().required().label('Password'),
+            password: yup.string().required()
+            .matches(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$"), 'Password is not in correct format')
+            .matches(/^.{8,}$/, 'Password must be a minimum of 8 characters in length').label('Password'),
             conf_password: yup.string().required().oneOf([yup.ref('password')], "Passwords don't match").label('Password Confirmation')
         })
     });
