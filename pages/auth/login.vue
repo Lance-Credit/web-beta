@@ -33,6 +33,14 @@
     import * as yup from 'yup';
     import { useForm } from 'vee-validate';
 
+    definePageMeta({
+        middleware: 'auth',
+        auth: {
+            unauthenticatedOnly: true,
+            navigateAuthenticatedTo: '/dashboard',
+        },
+    });
+
     const { values: loginFormValues, errors: loginFormErrors, defineComponentBinds } = useForm({
         validationSchema: yup.object({
             email: yup.string().email().required().label('Email Address'),
