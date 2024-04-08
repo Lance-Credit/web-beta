@@ -17,7 +17,8 @@
                             <div class="mb-8">
                                 <Form-EmailInput class="mb-4" placeholder="Email address" label="Email address" v-bind="passwordResetForm.email" :error="passwordResetFormErrors.email"></Form-EmailInput>
                             </div>
-                            <button @click="emailFormSubmitted = true" class="mb-6 btn btn-primary w-full gap-4" :disabled="!passwordResetFormValues.email || passwordResetFormErrors.email">
+                            <Form-ErrorNotification v-if="resetPasswordFormRequestError" :message="resetPasswordFormRequestError" />
+                            <button @click="submitResetPasswordRequestForm" class="mb-6 btn btn-primary w-full gap-4" :disabled="!emailFormFilled || submittingResetPasswordRequestForm">
                                 <span>Continue</span>
                                 <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M3.33301 10.2715C3.33301 9.95507 3.56814 9.69358 3.8732 9.65219L3.95801 9.64648H16.458C16.8032 9.64648 17.083 9.92631 17.083 10.2715C17.083 10.5879 16.8479 10.8494 16.5428 10.8908L16.458 10.8965H3.95801C3.61283 10.8965 3.33301 10.6167 3.33301 10.2715Z" fill="white"/>
@@ -38,7 +39,8 @@
                             <div class="mb-8">
                                 <Form-TextInput placeholder="Verification Code" label="Verification Code" v-bind="passwordResetForm.verificationCode" :error="passwordResetFormErrors.verificationCode"></Form-TextInput>
                             </div>
-                            <button @click="verificationCodeFormSubmitted = true" class="mb-6 btn btn-primary w-full gap-4" :disabled="!passwordResetFormValues.verificationCode || passwordResetFormErrors.verificationCode">
+                            <Form-ErrorNotification v-if="verificationCodeErrorResponse" :message="verificationCodeErrorResponse" />
+                            <button @click="verificationCodeFormSubmitted = true" class="mb-6 btn btn-primary w-full gap-4" :disabled="!verificationCodeFormFilled">
                                 <span>Continue</span>
                                 <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M3.33301 10.2715C3.33301 9.95507 3.56814 9.69358 3.8732 9.65219L3.95801 9.64648H16.458C16.8032 9.64648 17.083 9.92631 17.083 10.2715C17.083 10.5879 16.8479 10.8494 16.5428 10.8908L16.458 10.8965H3.95801C3.61283 10.8965 3.33301 10.6167 3.33301 10.2715Z" fill="white"/>
@@ -62,7 +64,7 @@
                             <Form-PasswordRuleGuide :password="passwordResetFormValues.password"/>
                             <Form-PasswordInput placeholder="Confirm Password " label="Confirm Password " v-bind="passwordResetForm.conf_password" :error="passwordResetFormErrors.conf_password"></Form-PasswordInput>
                         </div>
-                        <button @click="newPasswordFormSubmitted = true" class="mb-6 btn btn-primary w-full gap-4" :disabled="!newPasswordFormFilled">
+                        <button @click="submitNewPasswordForm" class="mb-6 btn btn-primary w-full gap-4" :disabled="!newPasswordFormFilled || submittingNewPasswordForm">
                             <span>Continue</span>
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M3.33301 10.2715C3.33301 9.95507 3.56814 9.69358 3.8732 9.65219L3.95801 9.64648H16.458C16.8032 9.64648 17.083 9.92631 17.083 10.2715C17.083 10.5879 16.8479 10.8494 16.5428 10.8908L16.458 10.8965H3.95801C3.61283 10.8965 3.33301 10.6167 3.33301 10.2715Z" fill="white"/>
@@ -88,10 +90,13 @@
     import * as yup from 'yup';
     import { useForm } from 'vee-validate';
 
+    const { apiURL } = useRuntimeConfig().public;
+
     const { values: passwordResetFormValues, errors: passwordResetFormErrors, setFieldValue, defineComponentBinds } = useForm({
         validationSchema: yup.object({
             email: yup.string().email().required().label('Email Address'),
-            verificationCode: yup.string().required().label('Verification Code'),
+            verificationCode: yup.string().required().matches(/^[0-9]+$/, "Verification Code is required")
+            .matches(/^.{6}$/, "Verification Code is required").label('Verification Code'),
             password: yup.string().required()
             .matches(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$"), 'Password is not in correct format')
             .matches(/^.{8,}$/, 'Password must be a minimum of 8 characters in length').label('Password'),
@@ -127,11 +132,81 @@
 
     const verificationCodeFormSubmitted: Ref<boolean> = ref(false);
 
+    const emailFormFilled = computed(() => {
+        return passwordResetFormValues.email && !passwordResetFormErrors.value.email;
+    });
+
+    const submittingResetPasswordRequestForm: Ref<boolean> = ref(false);
+
+    const resetPasswordFormRequestError: Ref<string> = ref('');
+
+    const passwordResetToken: Ref<string> = ref('');
+
+    async function submitResetPasswordRequestForm(){
+
+        submittingResetPasswordRequestForm.value = true;
+
+        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/auth/password/reset`, {
+            method: 'PATCH',
+            headers: { "Content-Type": "application/json" },
+            body: {
+                "email": passwordResetFormValues.email,
+            }
+        });
+
+        if(result){
+            if((result as any).success && !(result as any).error){
+                submittingResetPasswordRequestForm.value = false;
+                emailFormSubmitted.value = true;
+                passwordResetToken.value = (result as any).data.token
+            }
+        }else if(error){
+            resetPasswordFormRequestError.value = error.value?.data.error;
+            submittingResetPasswordRequestForm.value = false;
+        }
+    }
+
+    const verificationCodeFormFilled = computed(() => {
+        return passwordResetFormValues.verificationCode && !passwordResetFormErrors.value.verificationCode;
+    });
+
+    const verificationCodeErrorResponse: Ref<string> = ref('');
+
     const newPasswordFormFilled = computed(()=>{
         return passwordResetFormValues.password && !passwordResetFormErrors.value.password &&
         passwordResetFormValues.conf_password && !passwordResetFormErrors.value.conf_password;
     });
 
     const newPasswordFormSubmitted: Ref<boolean> = ref(false);
+    
+    const submittingNewPasswordForm: Ref<boolean> = ref(false);
+
+    async function submitNewPasswordForm(){
+
+        submittingNewPasswordForm.value = true;
+
+        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/auth/password/reset/complete`, {
+            method: 'PATCH',
+            headers: { 
+                "Content-Type": "application/json",
+                "x-password-reset" : `Bearer ${passwordResetToken.value}`
+            },
+            body: {
+                "otp": passwordResetFormValues.verificationCode,
+                "password": passwordResetFormValues.password
+            }
+        });
+
+        if(result){
+            if((result as any).success && !(result as any).error){
+                submittingNewPasswordForm.value = false;
+                newPasswordFormSubmitted.value = true;
+            }
+        }else if(error){
+            verificationCodeFormSubmitted.value = false;
+            verificationCodeErrorResponse.value = error.value?.data.error;
+            submittingNewPasswordForm.value = false;
+        }
+    }
 
 </script>
