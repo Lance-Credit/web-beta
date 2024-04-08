@@ -17,7 +17,8 @@
                         <Form-PasswordInput class="mb-2" placeholder="Password" label="Password" v-bind="loginForm.password" :error="loginFormErrors.password"></Form-PasswordInput>
                         <NuxtLink to="/auth/password/reset" class="text-[#1E1721] text-sm leading-[24px]">Forgot password?</NuxtLink>
                     </div>
-                    <button @click="loginFormSubmitted = true" class="mb-6 btn w-full btn-primary" :disabled="!loginFormFilled">Login to your account</button>
+                    <Form-ErrorNotification v-if="loginError" :message="loginError" />
+                    <button @click="submitLogInForm" class="mb-6 btn w-full btn-primary" :disabled="!loginFormFilled || submittingLoginForm">Login to your account</button>
                     <NuxtLink to="/" class="flex gap-2 justify-center text-lance-text-black-60">
                         Don’t have an account?<span class="text-lance-green font-medium">Create an account</span>
                     </NuxtLink>
@@ -57,6 +58,25 @@
         loginFormValues.password && !loginFormErrors.value.password;
     });
 
-    const loginFormSubmitted: Ref<boolean> = ref(false);
+    const submittingLoginForm: Ref<boolean> = ref(false);
+    
+    const loginError: Ref<string> = ref('');
+
+    async function submitLogInForm(){
+        if(loginForm.email && loginForm.password){
+            submittingLoginForm.value = true;
+
+            const { signIn } = useAuth();
+            
+            const signedIn = await signIn('credentials', { email: loginFormValues.email, password: loginFormValues.password, redirect: false, callbackUrl: '/dashboard' })
+
+            if(!(signedIn as any).error){
+                await navigateTo('/dashboard');
+            }else{
+                loginError.value = (signedIn as any).error;
+                submittingLoginForm.value = false;
+            }
+        }
+    }
 
 </script>

@@ -11,6 +11,13 @@ export default defineNuxtConfig({
     { path: '~/components/auth', prefix: 'Auth' },
     '~/components'
   ],
-  modules: ['@nuxtjs/tailwindcss'],
+  modules: [
+    '@nuxtjs/tailwindcss',
+    '@sidebase/nuxt-auth'
+  ],
+  auth: {
+    // The module is enabled. Change this to disable the module
+    isEnabled: true,
+  },
   css: ['~/assets/css/main.css'],
 })
