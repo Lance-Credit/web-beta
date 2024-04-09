@@ -27,10 +27,10 @@
                 </svg>
             </div>
             <div class="text-center">
-                <p class="mb-2 text-lance-text-black font-aventa font-bold text-[24px] leading-[32px] tracking-[-0.24px]">
+                <p class="mb-2 text-lance-black font-aventa font-bold text-[24px] leading-[32px] tracking-[-0.24px]">
                     {{ title }}
                 </p>
-                <p class="mb-8 text-lance-text-black-60" v-html="text"></p>
+                <p class="mb-8 text-lance-black-60" v-html="text"></p>
                 <NuxtLink :to="buttonLink" class="btn btn-primary w-full gap-4">
                     <span>{{ buttonText }}</span>
                     <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">

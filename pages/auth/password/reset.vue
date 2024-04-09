@@ -8,10 +8,10 @@
                 <div>
                     <div v-if="!verificationCodeFormSubmitted">
                         <div v-if="!emailFormSubmitted">
-                            <p class="mb-2 text-lance-text-black font-aventa font-bold text-[24px] leading-[32px] tracking-[-0.24px]">
+                            <p class="mb-2 text-lance-black font-aventa font-bold text-[24px] leading-[32px] tracking-[-0.24px]">
                                 Forgot password?
                             </p>
-                            <p class="mb-6 text-lance-text-black-60">
+                            <p class="mb-6 text-lance-black-60">
                                 Don’t stress, Happens to the best of us
                             </p>
                             <div class="mb-8">
@@ -25,15 +25,15 @@
                                     <path d="M10.976 5.69405C10.7314 5.4505 10.7305 5.05477 10.9741 4.81017C11.1955 4.5878 11.5427 4.56688 11.7878 4.7479L11.858 4.80827L16.8996 9.82827C17.1227 10.0503 17.143 10.3988 16.9605 10.6438L16.8997 10.714L11.858 15.7348C11.6134 15.9784 11.2177 15.9776 10.9741 15.733C10.7527 15.5107 10.7333 15.1634 10.9153 14.9191L10.976 14.8491L15.5727 10.2709L10.976 5.69405Z" fill="white"/>
                                 </svg>
                             </button>
-                            <NuxtLink to="/auth/login" class="flex gap-2 justify-center text-lance-text-black-60">
+                            <NuxtLink to="/auth/login" class="flex gap-2 justify-center text-lance-black-60">
                                 Remember password?<span class="text-lance-green font-medium">Back to login</span>
                             </NuxtLink>
                         </div>
                         <div v-else>
-                            <p class="mb-2 text-lance-text-black font-aventa font-bold text-[24px] leading-[32px] tracking-[-0.24px]">
+                            <p class="mb-2 text-lance-black font-aventa font-bold text-[24px] leading-[32px] tracking-[-0.24px]">
                                 Verify your account
                             </p>
-                            <p class="mb-6 text-lance-text-black-60">
+                            <p class="mb-6 text-lance-black-60">
                                 Input the 6-digit verification code we sent to your email address to activate your account.
                             </p>
                             <div class="mb-8">
@@ -47,16 +47,16 @@
                                     <path d="M10.976 5.69405C10.7314 5.4505 10.7305 5.05477 10.9741 4.81017C11.1955 4.5878 11.5427 4.56688 11.7878 4.7479L11.858 4.80827L16.8996 9.82827C17.1227 10.0503 17.143 10.3988 16.9605 10.6438L16.8997 10.714L11.858 15.7348C11.6134 15.9784 11.2177 15.9776 10.9741 15.733C10.7527 15.5107 10.7333 15.1634 10.9153 14.9191L10.976 14.8491L15.5727 10.2709L10.976 5.69405Z" fill="white"/>
                                 </svg>
                             </button>
-                            <p class="flex gap-2 justify-center text-lance-text-black-60">
+                            <p class="flex gap-2 justify-center text-lance-black-60">
                                 Didn’t get the code?<span class="text-lance-green font-medium">Resend code</span>
                             </p>
                         </div>
                     </div>
                     <div v-else>
-                        <p class="mb-2 text-lance-text-black font-aventa font-bold text-[24px] leading-[32px] tracking-[-0.24px]">
+                        <p class="mb-2 text-lance-black font-aventa font-bold text-[24px] leading-[32px] tracking-[-0.24px]">
                             Create new password
                         </p>
-                        <p class="mb-6 text-lance-text-black-60">
+                        <p class="mb-6 text-lance-black-60">
                             Input the 6-digit verification code we sent to your email address to activate your account.
                         </p>
                         <div class="mb-8">

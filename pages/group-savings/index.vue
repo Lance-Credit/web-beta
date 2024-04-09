@@ -1,7 +1,7 @@
 <template>
     <div>
-        <p class="mb-[30px] text-lance-text-black text-xl leading-[26px] font-medium tracking-[-0.2px]">Ajo</p>
-        <div class="rounded-xl bg-white border border-solid border-lance-text-black-10 p-20 pb-[149px] text-center">
+        <p class="mb-[30px] text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px]">Ajo</p>
+        <div class="rounded-xl bg-white border border-solid border-lance-black-10 p-20 pb-[149px] text-center">
             <div class="flex flex-col items-center justify-center gap-6 w-[376px] mx-auto">
                 <div>
                     <svg width="192" height="193" viewBox="0 0 192 193" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -52,13 +52,13 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="mb-4 text-lance-text-black text-xl font-medium leading-[26px] tracking-[-0.2px]">
+                    <p class="mb-4 text-lance-black text-xl font-medium leading-[26px] tracking-[-0.2px]">
                         Group Savings is coming soon...
                     </p>
-                    <p class="text-lance-text-black-60 mb-6">
+                    <p class="text-lance-black-60 mb-6">
                         We’re currently working on a joint savings feature, and will let you know once it’s live!
                     </p>
-                    <p class="text-lance-text-black-60">
+                    <p class="text-lance-black-60">
                         Check back soon.
                     </p>
                 </div>

@@ -5,10 +5,12 @@ export default {
     colors: {
       'white': '#FFF',
       'lance-green': '#0A4F4D',
-      'lance-text-black': '#041111',
-      'lance-text-black-10': 'rgba(4,17,17,0.10)',
-      'lance-text-black-50': 'rgba(4,17,17,0.50)',
-      'lance-text-black-60': 'rgba(4,17,17,0.60)',
+      'lance-green-5': 'rgba(10,79,77,0.05)',
+      'lance-black': '#041111',
+      'lance-black-10': 'rgba(4,17,17,0.10)',
+      'lance-black-50': 'rgba(4,17,17,0.50)',
+      'lance-black-60': 'rgba(4,17,17,0.60)',
+      'lance-blue-10': 'rgba(3,87,238,0.10)',
     },
     fontFamily: {
       'aventa': ['Aventa'],

@@ -19,7 +19,7 @@
                 </svg>
             </div>
             <div class="py-12 px-4 flex flex-col justify-between h-[calc(100%-72px)]">
-                <ul class="flex flex-col gap-2 text-lance-text-black-60 leading-[22.4px]">
+                <ul class="flex flex-col gap-2 text-lance-black-60 leading-[22.4px]">
                     <li class="">
                         <NuxtLink to="/dashboard" class="py-3 pl-6 pr-[17.25px] flex gap-4 items-center" activeClass="rounded-md bg-[rgba(10,79,77,0.05)] text-lance-green font-medium">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -32,7 +32,7 @@
                         </NuxtLink>
                     </li>
                     <li class="">
-                        <NuxtLink to="" class="py-3 pl-6 pr-[17.25px] flex gap-4 items-center" activeClass="rounded-md bg-[rgba(10,79,77,0.05)] text-lance-green font-medium">
+                        <NuxtLink to="/wallet" class="py-3 pl-6 pr-[17.25px] flex gap-4 items-center" activeClass="rounded-md bg-[rgba(10,79,77,0.05)] text-lance-green font-medium">
                             <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M19.8887 12.8957H15.8407C13.9437 12.8957 12.3997 11.3527 12.3987 9.45667C12.3987 7.55867 13.9427 6.01467 15.8407 6.01367H19.8887C20.3027 6.01367 20.6387 6.34967 20.6387 6.76367C20.6387 7.17767 20.3027 7.51367 19.8887 7.51367H15.8407C14.7697 7.51467 13.8987 8.38567 13.8987 9.45567C13.8987 10.5247 14.7707 11.3957 15.8407 11.3957H19.8887C20.3027 11.3957 20.6387 11.7317 20.6387 12.1457C20.6387 12.5597 20.3027 12.8957 19.8887 12.8957Z" fill="#041111" fill-opacity="0.6"/>
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M16.2983 10.1436H15.9863C15.5723 10.1436 15.2363 9.80755 15.2363 9.39355C15.2363 8.97955 15.5723 8.64355 15.9863 8.64355H16.2983C16.7123 8.64355 17.0483 8.97955 17.0483 9.39355C17.0483 9.80755 16.7123 10.1436 16.2983 10.1436Z" fill="#041111" fill-opacity="0.6"/>
@@ -96,7 +96,7 @@
                         </NuxtLink>
                     </li>
                 </ul>
-                <ul class="flex flex-col gap-2 text-lance-text-black-60 leading-[22.4px]">
+                <ul class="flex flex-col gap-2 text-lance-black-60 leading-[22.4px]">
                     <li class="">
                         <NuxtLink class="py-3 pl-6 pr-[17.25px] flex gap-4 items-center" activeClass="rounded-md bg-[rgba(10,79,77,0.05)] text-lance-green font-medium">
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
