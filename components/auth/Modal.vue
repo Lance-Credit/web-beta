@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed top-0 w-screen h-screen bg-[rgba(4,17,17,0.70)] backdrop-blur-[2px] flex justify-center items-center">
+    <div class="fixed top-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex justify-center items-center">
         <div class="py-[97.5px] px-[76px] bg-white rounded-3xl w-[528px] h-fit">
             <div class="mb-10 flex justify-center">
                 <svg width="158" height="193" viewBox="0 0 158 193" fill="none" xmlns="http://www.w3.org/2000/svg">
