@@ -9,6 +9,7 @@ export default defineNuxtConfig({
   components: [
     { path: '~/components/form', prefix: 'Form' },
     { path: '~/components/auth', prefix: 'Auth' },
+    { path: '~/components/wallet', prefix: 'Wallet' },
     '~/components'
   ],
   modules: [

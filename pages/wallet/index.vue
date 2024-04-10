@@ -11,7 +11,7 @@
                     <p class="text-white text-[32px] font-medium leading-[32px] tracking-[-0.32px]">N 53,000</p>
                 </div>
                 <div class="flex gap-4">
-                    <button class="btn border border-solid border-white text-white">Fund Wallet</button>
+                    <button @click="showWalletDetailsModal = true" class="btn border border-solid border-white text-white">Fund Wallet</button>
                     <button class="btn bg-white gap-4 text-lance-green">
                         <span>Withdraw</span>
                         <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -38,7 +38,7 @@
                 >
                     <li class="flex items-center gap-4 basis-[158px]">
                         <div class="flex items-center justify-center w-9 h-9 rounded-full bg-[rgba(10,79,77,0.05)]">
-                            <svg v-if="type == 'top-up'" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg v-if="transaction.type == 'top-up'" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M10.8333 4.16634C10.8333 3.7061 10.4602 3.33301 9.99998 3.33301C9.53974 3.33301 9.16665 3.7061 9.16665 4.16634V9.16634H4.16665C3.70641 9.16634 3.33331 9.53944 3.33331 9.99967C3.33331 10.4599 3.70641 10.833 4.16665 10.833H9.16665V15.833C9.16665 16.2932 9.53974 16.6663 9.99998 16.6663C10.4602 16.6663 10.8333 16.2932 10.8333 15.833V10.833H15.8333C16.2936 10.833 16.6666 10.4599 16.6666 9.99967C16.6666 9.53944 16.2936 9.16634 15.8333 9.16634H10.8333V4.16634Z" fill="#0A4F4D"/>
                             </svg>
                             <svg v-else width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -62,6 +62,7 @@
         </div>
 
         <Wallet-TransactionDetailsModal @@closeTransactionDetailsModal="showSelectedTransaction = false" v-if="showSelectedTransaction" :transaction="selectedTransaction" />
+        <Wallet-DetailsModal @@closeWalletDetailsModal="showWalletDetailsModal = false" v-if="showWalletDetailsModal" :wallet="walletDetails" />
 
     </div>
 </template>
@@ -77,7 +78,7 @@
         layout: 'dashboard'
     });
 
-    // const selectedTransaction: Ref<null | TransactionData> = ref(null)
+    const selectedTransaction: Ref<null | TransactionData> = ref(null);
 
     const transactions: TransactionData[] = reactive([
         {
@@ -137,10 +138,16 @@
 
     const showSelectedTransaction: Ref<boolean> = ref(false);
 
-    const selectedTransaction: Ref<null | TransactionData> = ref(transactions[0])
-
     function viewTransactionDetails(transaction: TransactionData){
         selectedTransaction.value = transaction;
         showSelectedTransaction.value = true;
     }
+
+    const showWalletDetailsModal: Ref<boolean> = ref(false);
+
+    const walletDetails: Ref<null | Wallet> = ref({
+        account_no: '0072018906',
+        bank_name: 'STERLING BANK'
+    });
+
 </script>
