@@ -179,8 +179,4 @@
 
     const { data, signOut } = useAuth();
 
-    definePageMeta({
-        middleware: 'auth'
-    });
-
 </script>

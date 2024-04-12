@@ -76,6 +76,7 @@
 <script setup lang="ts">
 
     definePageMeta({
+        middleware: 'auth',
         layout: 'dashboard'
     });
 
@@ -152,6 +153,6 @@
         balance: 510800
     });
 
-    const showWalletWithdrawalModal: Ref<boolean> = ref(true);
+    const showWalletWithdrawalModal: Ref<boolean> = ref(false);
 
 </script>
