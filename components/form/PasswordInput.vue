@@ -5,8 +5,8 @@
                 {{ label }}
             </label>
             <input
-                @focusin="inputFocused = true" @focusout="inputFocused = false"
                 :type="showPassword ? 'text' : 'password'" :placeholder="placeholder" v-model="value"
+                @focusin="inputFocused = true" @focusout="inputFocused = false"
                 class="text-lance-black outline-none font-gelion font-normal text-base"
             >
             <div @click="showPassword = !showPassword" class="absolute right-[16px] top-0 h-full flex flex-col justify-center cursor-pointer">

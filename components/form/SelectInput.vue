@@ -4,31 +4,34 @@
             <label v-if="value" for="" class="mb-0.5 text-[13px] leading-[20.8px]" :class="[error ? 'text-[#E70A3F]' : 'text-lance-black']">
                 {{ label }}
             </label>
-            <input
-                :disabled="disabled" :type="type" :placeholder="placeholder" v-model="value"
+            <select
+                name="" v-model="value"
                 @focusin="inputFocused = true" @focusout="inputFocused = false"
-                class="text-lance-black outline-none font-gelion font-normal text-base"
+                class="text-lance-black outline-none font-gelion font-normal text-base appearance-none cursor-pointer"
             >
+                <option disabled selected :value="undefined">{{  placeholder  }}</option>
+                <option v-for="(option, key) in options" :key="key" :value="option.value">{{  option.label  }}</option>
+            </select>
         </div>
         <p class="text-[#E70A3F] text-xs">{{ error }}</p>
     </div>
 </template>
 
+<style scoped>
+    select{
+        background: url('/assets/img/icons/chevron-down.svg') no-repeat calc(100% - 16px) 50%;
+    }
+</style>
+
 <script setup lang="ts">
 
-    const props = withDefaults(
-        defineProps<{
-            label: string,
-            type?: string,
-            error?: string,
-            disabled?: boolean,
-            modelValue?: string,
-            placeholder: string
-        }>(),
-        {
-            type: 'text'
-        }
-    );
+    const props = defineProps<{
+        label: string,
+        error?: string,
+        modelValue?: string,
+        placeholder: string,
+        options: {label: string, value: string}[]
+    }>();
 
     const inputFocused: Ref<boolean> = ref(false);
 
@@ -40,7 +43,7 @@
           emit('update:modelValue', value)
         }
     });
-
+    
     const emit = defineEmits(['update:modelValue']);
 
 </script>

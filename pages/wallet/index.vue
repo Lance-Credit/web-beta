@@ -8,11 +8,11 @@
             >
                 <div>
                     <p class="mb-2 text-[rgba(255,255,255,0.80)] font-medium tracking-[-0.16px]">Wallet Balance</p>
-                    <p class="text-white text-[32px] font-medium leading-[32px] tracking-[-0.32px]">N 53,000</p>
+                    <p class="text-white text-[32px] font-medium leading-[32px] tracking-[-0.32px]">N {{ formattedMoneyValue(walletDetails?.balance )}}</p>
                 </div>
                 <div class="flex gap-4">
                     <button @click="showWalletDetailsModal = true" class="btn border border-solid border-white text-white">Fund Wallet</button>
-                    <button class="btn bg-white gap-4 text-lance-green">
+                    <button @click="showWalletWithdrawalModal = true" class="btn bg-white gap-4 text-lance-green">
                         <span>Withdraw</span>
                         <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0.0804443 6.10547C0.0804443 5.78906 0.315573 5.52756 0.620636 5.48617L0.705444 5.48047L13.2054 5.48047C13.5506 5.48047 13.8304 5.76029 13.8304 6.10547C13.8304 6.42188 13.5953 6.68338 13.2903 6.72476L13.2054 6.73047L0.705444 6.73047C0.360266 6.73047 0.0804443 6.45065 0.0804443 6.10547Z" fill="#0A4F4D"/>
@@ -63,6 +63,7 @@
 
         <Wallet-TransactionDetailsModal @@closeTransactionDetailsModal="showSelectedTransaction = false" v-if="showSelectedTransaction" :transaction="selectedTransaction" />
         <Wallet-DetailsModal @@closeWalletDetailsModal="showWalletDetailsModal = false" v-if="showWalletDetailsModal" :wallet="walletDetails" />
+        <Wallet-WithdrawModal @@closeWalletWithdrawalModal="showWalletWithdrawalModal = false" v-if="showWalletWithdrawalModal" :wallet-balance="walletDetails?.balance" />
 
     </div>
 </template>
@@ -132,8 +133,8 @@
         }
     ]);
 
-    function formattedMoneyValue(amount: number){
-        return amount.toLocaleString();
+    function formattedMoneyValue(amount: any | number){
+        return amount ? amount.toLocaleString() : 0;
     }
 
     const showSelectedTransaction: Ref<boolean> = ref(false);
@@ -147,7 +148,10 @@
 
     const walletDetails: Ref<null | Wallet> = ref({
         account_no: '0072018906',
-        bank_name: 'STERLING BANK'
+        bank_name: 'STERLING BANK',
+        balance: 510800
     });
+
+    const showWalletWithdrawalModal: Ref<boolean> = ref(true);
 
 </script>
