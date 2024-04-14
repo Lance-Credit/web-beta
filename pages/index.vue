@@ -112,6 +112,9 @@
 
     import * as yup from 'yup';
     import { useForm } from 'vee-validate';
+    import { useUserStore}  from '@/stores/user';
+
+    const { fetchUserProfile } = useUserStore();
 
     const { apiURL } = useRuntimeConfig().public;
 
@@ -307,6 +310,14 @@
             
                 const signedIn = await signIn('credentials', { email: signupFormValues.email, password: signupFormValues.password, redirect: false, callbackUrl: '/dashboard' })
 
+                if(!(signedIn as any).error){
+                    const headers = useRequestHeaders(['cookie']) as HeadersInit;
+                    const { data: { value: jwt } } = await useFetch('/api/token', { headers });
+
+                    await fetchUserProfile(jwt?.token, apiURL);
+
+                    await navigateTo('/dashboard');
+                }
             }
         }else if(error){
             verificationCodeErrorResponse.value = error.value?.data.error;

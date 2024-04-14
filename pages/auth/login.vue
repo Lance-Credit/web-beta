@@ -33,6 +33,12 @@
     import * as yup from 'yup';
     import { useForm } from 'vee-validate';
 
+    import { useUserStore } from '@/stores/user';
+
+    const { fetchUserProfile } = useUserStore();
+
+    const { apiURL } = useRuntimeConfig().public;
+
     definePageMeta({
         middleware: 'auth',
         auth: {
@@ -79,6 +85,11 @@
             const signedIn = await signIn('credentials', { email: loginFormValues.email, password: loginFormValues.password, redirect: false, callbackUrl: '/dashboard' })
 
             if(!(signedIn as any).error){
+                const headers = useRequestHeaders(['cookie']) as HeadersInit;
+                const { data: { value: jwt } } = await useFetch('/api/token', { headers });
+
+                await fetchUserProfile(jwt?.token, apiURL);
+
                 await navigateTo('/dashboard');
             }else{
                 loginError.value = (signedIn as any).error;

@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 const { apiURL } = useRuntimeConfig().public;
 
+
 export default NuxtAuthHandler({
     // A secret string you define, to ensure correct encryption
     secret: process.env.AUTH_SECRET,
@@ -26,14 +27,7 @@ export default NuxtAuthHandler({
                 // console.log(data);
 
                 if(data.success && !data.error){
-
-                    // const { id, firstName, lastName, email } = data.data.userData.user;
-
                     return {
-                        // id,
-                        // email,
-                        // lastName,
-                        // firstName,
                         token: data.data.token
                     };
                 }
@@ -42,29 +36,24 @@ export default NuxtAuthHandler({
             }
         })
     ],
-    // callbacks: {
-    //     async session({ session, token, user }) {
-    //         // Send properties to the client, like an access_token and user id from a provider.
-    //         if(token){
-    //             (session.user as any).id = token.id;
-    //             (session.user as any).lastName = token.lastName;
-    //             (session.user as any).firstName = token.firstName;
-    //         }
+    callbacks: {
+        // async session({ session, token, user }) {
+        //     // Send properties to the client, like an access_token and user id from a provider.
+        //     if(token){
+        //         (session.user as any).token = token.token;
+        //     }
             
-    //         return session
-    //     },
-    //     async jwt({token, user}) {
-    //         const isSignIn = user ? true : false;
+        //     return session
+        // },
+        async jwt({token, user}) {
+            const isSignIn = user ? true : false;
 
-    //         if (isSignIn) {
-    //             token.id = user.id,
-    //             token.token = (user as any).token;
-    //             token.lastName = (user as any).lastName;
-    //             token.firstName = (user as any).firstName;
-    //         }
+            if (isSignIn) {
+                token.token = (user as any).token;
+            }
 
-    //         return token;
-    //     }
-    // }
+            return token;
+        }
+    }
 })
 
