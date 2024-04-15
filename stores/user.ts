@@ -1,4 +1,5 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
+import { useKYCStore } from './kyc';
 
 export const useUserStore = defineStore('user', () => 
     {
@@ -16,15 +17,16 @@ export const useUserStore = defineStore('user', () =>
         async function fetchUserProfile(token: string, apiUrl: string) {
             
             const { data: { value: result }, error } = await useFetch(`${apiUrl}/v1/profile`, {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
+                method: 'GET',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
             });
             
-            if(result){
+
             if((result as any).success && !(result as any).error){
+                // console.log(result);
                 userProfile.value = {
                     "id": (result as any).data.profile.userId,
                     "email": (result as any).data.profile.email,
@@ -34,9 +36,14 @@ export const useUserStore = defineStore('user', () =>
                     "firstName": (result as any).data.profile.firstName,
                     "profilePicture": (result as any).data.profile.imageUrl
                 }
-            }
+
+                const { kycItems } = storeToRefs(useKYCStore());
+
+                kycItems.value.bvn.completed = (result as any).data.profile.hasVerifiedBvn;
+                kycItems.value.email.completed = (result as any).data.profile.hasVerifiedEmail;
+
             }else if(error){
-            console.log(error.value?.data);
+                console.log(error.value?.data);
             }
         }
         

@@ -68,11 +68,6 @@
     </div>
 </template>
 
-<style>
-.a{
-}
-</style>
-
 <script setup lang="ts">
 
     definePageMeta({

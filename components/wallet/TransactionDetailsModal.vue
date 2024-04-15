@@ -66,10 +66,7 @@
         </div>
     </div>
 </template>
-<style>
-.a{
-}
-</style>
+
 <script setup lang="ts">
 
     const props = defineProps<{

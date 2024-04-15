@@ -179,7 +179,7 @@
 
     import { useUserStore } from '@/stores/user'
 
-    const { data, signOut } = useAuth();
+    const { signOut } = useAuth();
 
     const { fullName } = storeToRefs(useUserStore());
 

@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="flex gap-6">
-                    <button @click="resetWithdrawalForm" class="btn btn-secondary w-full">Back</button>
+                    <button @click="resetWithdrawalForm" class="btn btn-tertiary w-full">Back</button>
                     <button
                         @click="activeTab = 'destination'" class="btn btn-primary w-full"
                         :disabled="!(withdrawalFormValues.withdrawalAmount && !withdrawalFormErrors.withdrawalAmount)">
@@ -71,7 +71,7 @@
                     </p>
                 </div>
                 <div class="flex gap-6">
-                    <button @click="activeTab = 'amount'" class="btn btn-secondary w-full">Back</button>
+                    <button @click="activeTab = 'amount'" class="btn btn-tertiary w-full">Back</button>
                     <button @click="activeTab = 'confirm'" class="btn btn-primary w-full" :disabled="!accountNumberFilledAndVerified">Continue</button>
                 </div>
             </div>
@@ -168,7 +168,7 @@
 
                 <div v-if="!withdrawalSuccessful">
                     <div v-if="!processingWithdrawal" class="flex gap-6">
-                        <button @click="resetWithdrawalForm" class="btn btn-secondary w-full">Cancel</button>
+                        <button @click="resetWithdrawalForm" class="btn btn-tertiary w-full">Cancel</button>
                         <button @click="processWithdrawal" class="btn btn-primary w-full">Proceed</button>
                     </div>
                 </div>
@@ -232,17 +232,14 @@
                 </div>
 
                 <div class="flex gap-6">
-                    <button @click="resetWithdrawalForm" class="btn btn-secondary w-full">Cancel</button>
+                    <button @click="resetWithdrawalForm" class="btn btn-tertiary w-full">Cancel</button>
                     <button @click="activeTab = 'confirm'" class="btn btn-primary w-full">Try again</button>
                 </div>
             </div>
         </div>
     </div>
 </template>
-<style>
-.a{
-}
-</style>
+
 <script setup lang="ts">
 
     import * as yup from 'yup';

@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     }
   },
   components: [
+    { path: '~/components/kyc', prefix: 'KYC' },
     { path: '~/components/form', prefix: 'Form' },
     { path: '~/components/auth', prefix: 'Auth' },
     { path: '~/components/wallet', prefix: 'Wallet' },

@@ -28,14 +28,12 @@
     background: #052926;
     color: #FFF;
 }
-
 .btn-secondary{
+    background: transparent;
+    border: 1px solid #0A4F4D;
+    color: #0A4F4D;
+}
+.btn-tertiary{
     background: #FFF;
     color: #052926;
 }
-/*
-.btn-tertiary{
-    border: 0;
-    background: rgba(28, 41, 40, 0.05);
-    color: #1C2928;
-} */

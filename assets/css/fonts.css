@@ -11,18 +11,23 @@
     font-style: normal;
     font-weight: 500;
 }
-/*
 @font-face {
     font-family: 'Aventa';
     src: url('~/assets/fonts/Aventa-SemiBold.woff2');
     font-style: normal;
     font-weight: 600;
-} */
+}
 @font-face {
     font-family: 'Aventa';
     src: url('~/assets/fonts/Aventa-Bold.woff2');
     font-style: normal;
     font-weight: 700;
+}
+@font-face {
+    font-family: 'Aventa';
+    src: url('~/assets/fonts/Aventa-ExtraBold.woff2');
+    font-style: normal;
+    font-weight: 800;
 }
 
 /* @font-face {
