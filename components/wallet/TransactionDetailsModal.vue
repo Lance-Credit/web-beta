@@ -78,5 +78,7 @@
         navigator.clipboard.writeText(text);
     }
 
-    const emit = defineEmits(['@close-transaction-details-modal']);
+    const emit = defineEmits<{
+        '@close-transaction-details-modal': []
+    }>();
 </script>

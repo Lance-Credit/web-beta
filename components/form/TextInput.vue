@@ -11,10 +11,12 @@
         placeholder: string
     }>();
 
-    function updateTextInput(text: string){
+    function updateTextInput(text: undefined | string){
         emit('update:modelValue', text)
     }
     
-    const emit = defineEmits(['update:modelValue']);
+    const emit = defineEmits<{
+        'update:modelValue': [value: undefined | string]
+    }>();
 
 </script>

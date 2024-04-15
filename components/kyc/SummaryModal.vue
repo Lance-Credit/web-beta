@@ -185,8 +185,8 @@
 
     const { kycItems, bvnNinKycCompleted } = storeToRefs(useKYCStore());
 
-    const emit = defineEmits([
-        '@continue-kyc-process',
-        '@close-kyc-summary-modal'
-    ]);
+    const emit = defineEmits<{
+        '@continue-kyc-process': [],
+        '@close-kyc-summary-modal': []
+    }>();
 </script>

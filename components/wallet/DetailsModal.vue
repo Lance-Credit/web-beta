@@ -35,5 +35,7 @@
         navigator.clipboard.writeText(text);
     }
 
-    const emit = defineEmits(['@close-wallet-details-modal']);
+    const emit = defineEmits<{
+        '@close-wallet-details-modal': []
+    }>();
 </script>

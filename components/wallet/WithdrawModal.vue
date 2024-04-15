@@ -342,6 +342,8 @@
         emit('@close-wallet-withdrawal-modal');
     }
 
-    const emit = defineEmits(['@close-wallet-withdrawal-modal']);
+    const emit = defineEmits<{
+        '@close-wallet-withdrawal-modal': []
+    }>();
 
 </script>

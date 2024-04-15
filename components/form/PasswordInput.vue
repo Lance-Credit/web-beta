@@ -42,12 +42,14 @@
         get() {
           return props.modelValue
         },
-        set(value) {
+        set(value: undefined | string) {
           emit('update:modelValue', value)
         }
     });
 
     
-    const emit = defineEmits(['update:modelValue']);
+    const emit = defineEmits<{
+        'update:modelValue': [value: undefined | string]
+    }>();
 
 </script>

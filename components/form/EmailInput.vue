@@ -11,10 +11,12 @@
         placeholder: string
     }>();
 
-    function updateEmail(email: string){
+    function updateEmail(email: undefined | string){
         emit('update:modelValue', email)
     }
     
-    const emit = defineEmits(['update:modelValue']);
+    const emit = defineEmits<{
+        'update:modelValue': [value: undefined | string]
+    }>();
 
 </script>
