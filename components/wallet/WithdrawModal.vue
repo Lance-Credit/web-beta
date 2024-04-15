@@ -76,7 +76,7 @@
                 </div>
             </div>
             <div v-if="activeTab == 'confirm'" class="flex flex-col gap-8">
-                <div @click="activeTab = 'destination'" class="absolute top-10 left-10 cursor-pointer">
+                <div v-show="!processingWithdrawal && !withdrawalSuccessful" @click="activeTab = 'destination'" class="absolute top-10 left-10 cursor-pointer">
                     <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M17.2471 7.27441C17.2471 7.65411 16.9649 7.9679 16.5988 8.01757L16.4971 8.02441L1.49707 8.02441C1.08286 8.02441 0.74707 7.68863 0.74707 7.27441C0.74707 6.89472 1.02922 6.58092 1.3953 6.53126L1.49707 6.52441L16.4971 6.52441C16.9113 6.52441 17.2471 6.8602 17.2471 7.27441Z" fill="#041111" fill-opacity="0.5"/>
                         <path d="M8.07606 12.7675C8.36959 13.0598 8.37061 13.5347 8.07835 13.8282C7.81265 14.095 7.39604 14.1201 7.10196 13.9029L7.01769 13.8305L0.967688 7.80647C0.700051 7.53998 0.675704 7.12187 0.894659 6.8278L0.967644 6.74357L7.01764 0.718573C7.31114 0.426287 7.78602 0.42727 8.0783 0.720769C8.34402 0.987586 8.36736 1.4043 8.1489 1.69746L8.07611 1.78143L2.56007 7.2753L8.07606 12.7675Z" fill="#041111" fill-opacity="0.5"/>
