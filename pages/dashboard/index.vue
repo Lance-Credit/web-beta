@@ -94,7 +94,7 @@
                 </div>
                 <div class="basis-[273px] py-8 px-6 flex flex-col justify-between rounded-xl bg-white border border-solid border-lance-green-10 grow">
                     <p class="text-lance-black-60 font-medium">Wallet Balance</p>
-                    <p class="text-lance-black text-[28px] leading-8 font-semibold tracking-[-0.28px]">N 0</p>
+                    <p class="text-lance-black text-[28px] leading-8 font-semibold tracking-[-0.28px]">N {{ balance.toLocaleString() }}</p>
                 </div>
                 <div class="basis-[421px] py-8 px-6 rounded-xl bg-white border border-solid border-lance-green-10 grow">
                     <p class="mb-3 flex items-center justify-between">
@@ -216,11 +216,23 @@
 <script setup lang="ts">
 
     import { useUserStore } from '@/stores/user';
+    import { useWalletStore } from '@/stores/wallet';
 
     definePageMeta({
         middleware: 'auth',
         layout: 'dashboard'
     });
+
+    const { apiURL } = useRuntimeConfig().public;
+
+    const { balance, fetchWalletBalance } = useWalletStore();
+
+    const headers = useRequestHeaders(['cookie']) as HeadersInit;
+    const { data: { value: jwt } } = await useFetch('/api/token', { headers });
+
+    onMounted(()=>{
+        fetchWalletBalance(jwt?.token, apiURL);
+    })
 
     const { userProfile } = storeToRefs(useUserStore());
 

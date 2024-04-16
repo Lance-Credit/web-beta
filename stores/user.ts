@@ -43,7 +43,7 @@ export const useUserStore = defineStore('user', () =>
                 kycItems.value.email.completed = (result as any).data.profile.hasVerifiedEmail;
 
             }else if(error){
-                console.log(error.value?.data);
+                // console.log(error.value?.data);
             }
         }
         

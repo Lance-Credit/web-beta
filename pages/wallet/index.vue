@@ -8,7 +8,7 @@
             >
                 <div>
                     <p class="mb-2 text-[rgba(255,255,255,0.80)] font-medium tracking-[-0.16px]">Wallet Balance</p>
-                    <p class="text-white text-[32px] font-medium leading-[32px] tracking-[-0.32px]">N {{ formattedMoneyValue(walletDetails?.balance )}}</p>
+                    <p class="text-white text-[32px] font-medium leading-[32px] tracking-[-0.32px]">N {{ formattedMoneyValue(balance)}}</p>
                 </div>
                 <div class="flex gap-4">
                     <button @click="showWalletDetailsModal = true" class="btn border border-solid border-white text-white">Fund Wallet</button>
@@ -68,17 +68,30 @@
 
         <Wallet-TransactionDetailsModal @@closeTransactionDetailsModal="showSelectedTransaction = false" v-show="showSelectedTransaction" :transaction="selectedTransaction" />
         <Wallet-DetailsModal @@closeWalletDetailsModal="showWalletDetailsModal = false" v-show="showWalletDetailsModal" :wallet="walletDetails" />
-        <Wallet-WithdrawModal @@closeWalletWithdrawalModal="showWalletWithdrawalModal = false" v-if="showWalletWithdrawalModal" :wallet-balance="walletDetails?.balance" />
+        <Wallet-WithdrawModal @@closeWalletWithdrawalModal="showWalletWithdrawalModal = false" v-if="showWalletWithdrawalModal" :wallet-balance="balance" />
 
     </div>
 </template>
 
 <script setup lang="ts">
 
+    import { useWalletStore } from '@/stores/wallet';
+
     definePageMeta({
         middleware: 'auth',
         layout: 'dashboard'
     });
+
+    const { apiURL } = useRuntimeConfig().public;
+
+    const { balance, fetchWalletBalance } = useWalletStore();
+
+    const headers = useRequestHeaders(['cookie']) as HeadersInit;
+    const { data: { value: jwt } } = await useFetch('/api/token', { headers });
+
+    onMounted(()=>{
+        fetchWalletBalance(jwt?.token, apiURL);
+    })
 
     const selectedTransaction: Ref<null | TransactionData> = ref(null);
 
@@ -149,8 +162,7 @@
 
     const walletDetails: Ref<null | Wallet> = ref({
         account_no: '0072018906',
-        bank_name: 'STERLING BANK',
-        balance: 510800
+        bank_name: 'STERLING BANK'
     });
 
     const showWalletWithdrawalModal: Ref<boolean> = ref(false);
