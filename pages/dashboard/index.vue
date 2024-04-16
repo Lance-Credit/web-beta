@@ -195,6 +195,9 @@
                             <div class="w-[81px] py-1 text-center rounded-[31px] bg-lance-black-5 text-lance-black-50 text-sm font-medium leading-6">
                                 {{ new Date(repayment.date) < new Date() ? 'Due' : 'Upcoming'}}
                             </div>
+                            <!-- <div class="w-[81px] py-1 text-center rounded-[31px] border border-solid border-[#5D242D] bg-[rgba(93,36,45,0.05)] text-[#5D242D] text-sm font-medium leading-6">
+                                Due
+                            </div> -->
                         </li>
                     </ul>
                 </div>
@@ -272,7 +275,7 @@
     const selectedTransaction: Ref<null | TransactionData> = ref(null);
 
     // const transactions: TransactionData[] | [] = reactive([]);
-    
+
     const transactions: TransactionData[] | [] = reactive([
         {
             id: 2,
