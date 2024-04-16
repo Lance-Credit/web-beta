@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed top-0 left-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex justify-center items-center">
+    <div class="fixed z-20 top-0 left-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex justify-center items-center">
         <div class="bg-white w-[466px] p-10 rounded-3xl flex flex-col gap-8">
             <div class="w-[192px] h-[192px] rounded-full bg-[#D6F0AD] flex items-center justify-center mx-auto">
                 <Loader-CircularBar />
