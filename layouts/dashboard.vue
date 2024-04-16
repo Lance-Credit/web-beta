@@ -135,7 +135,7 @@
             </div>
         </div>
         <div class="ml-[213px] w-full">
-            <div class="flex justify-between items-center py-3.5 px-8 bg-[#FDFCFE] border-b border-solid border-[rgba(140,136,144,0.10)] h-[72px]">
+            <div class="w-[calc(100%-213px)] h-[72px] fixed left-[213px] top-0 flex justify-between items-center py-3.5 px-8 bg-[#FDFCFE] border-b border-solid border-[rgba(140,136,144,0.10)] z-10">
                 <input
                     type="text"
                     placeholder="Search for a transaction"
@@ -163,7 +163,7 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-[#FAFAFA] h-[calc(100%-72px)] p-8">
+            <div class="bg-[#FAFAFA] mt-[72px] min-h-[calc(100%-72px)] p-8">
                 <slot />
             </div>
         </div>

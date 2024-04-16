@@ -24,7 +24,12 @@
                     </div>
                     <div class="py-1 px-6 rounded-[31px] bg-[rgba(93,36,45,0.05)]">
                         <p class="text-[#5D242D] text-sm leading-[24px]">
-                            {{ transaction?.type == 'top-up' ? 'Wallet Top-Up' : 'Withdrawal'}}
+                            <span v-if="transaction?.type == 'loan-repay'">
+                                Loan Repayment
+                            </span>
+                            <span v-else>
+                                {{ transaction?.type == 'top-up' ? 'Wallet Top-Up' : 'Wallet Withdrawal'}}
+                            </span>
                         </p>
                     </div>
                 </div>
