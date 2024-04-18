@@ -139,14 +139,14 @@
                 </li>
                 <li 
                     class="p-4 rounded-lg border border-solid flex items-center justify-between"
-                    :class="kycItems.bankAccount.completed ? 'border-lance-green bg-lance-green-5' : 'border-lance-black-10 bg-white'"
+                    :class="kycItems.linkedBankAccount.completed ? 'border-lance-green bg-lance-green-5' : 'border-lance-black-10 bg-white'"
                 >
                     <div class="flex gap-3 items-center">
                         <div
                             class="w-10 h-10 rounded-full flex items-center justify-center"
-                            :class="kycItems.bankAccount.completed ? 'bg-lance-green' : 'bg-lance-green-10'"
+                            :class="kycItems.linkedBankAccount.completed ? 'bg-lance-green' : 'bg-lance-green-10'"
                         >
-                            <svg v-if="!kycItems.bankAccount.completed" width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg v-if="!kycItems.linkedBankAccount.completed" width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M7.85128 7.9765C7.40528 7.9765 6.96061 7.82916 6.58861 7.5345L3.59861 5.12383C3.38328 4.9505 3.34994 4.63516 3.52261 4.4205C3.69661 4.2065 4.01128 4.1725 4.22594 4.34516L7.21328 6.75316C7.58861 7.0505 8.11728 7.0505 8.49528 6.7505L11.4526 4.3465C11.6673 4.17116 11.9819 4.2045 12.1566 4.41916C12.3306 4.63316 12.2979 4.94783 12.0839 5.1225L9.12128 7.5305C8.74661 7.82783 8.29861 7.9765 7.85128 7.9765Z" fill="black"/>
                                 <mask id="mask0_7493_10256" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="15" height="14">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M0.666626 0.333496H14.9999V13.3335H0.666626V0.333496Z" fill="white"/>
@@ -163,9 +163,9 @@
                     </div>
                     <div
                         class="rounded-full border-solid border-lance-green flex items-center justify-center"
-                        :class="kycItems.bankAccount.completed ? 'w-[23.333px] h-[23.333px] border-[1.75px] bg-[#ECFF4D]' : 'w-5 h-5 border-[1.5px] bg-white'"
+                        :class="kycItems.linkedBankAccount.completed ? 'w-[23.333px] h-[23.333px] border-[1.75px] bg-[#ECFF4D]' : 'w-5 h-5 border-[1.5px] bg-white'"
                     >
-                        <svg v-if="kycItems.bankAccount.completed" xmlns="http://www.w3.org/2000/svg" width="11" height="8" viewBox="0 0 11 8" fill="none">
+                        <svg v-if="kycItems.linkedBankAccount.completed" xmlns="http://www.w3.org/2000/svg" width="11" height="8" viewBox="0 0 11 8" fill="none">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M4.28231 7.31015C4.05948 7.31015 3.83431 7.22498 3.66398 7.05348L0.894314 4.28498C0.552481 3.94315 0.552481 3.39015 0.894314 3.04831C1.23615 2.70648 1.78915 2.70648 2.13098 3.04831L4.28231 5.19731L9.20098 0.279813C9.54282 -0.0620209 10.0958 -0.0620209 10.4376 0.279813C10.7795 0.621646 10.7795 1.17465 10.4376 1.51648L4.90065 7.05348C4.73031 7.22498 4.50631 7.31015 4.28231 7.31015Z" fill="#0A4F4D"/>
                         </svg>
                     </div>
