@@ -1,7 +1,17 @@
 <template>
     <div>
-        <div class="flex h-[65px] justify-center flex-col bg-white border border-solid py-2 px-4 rounded" :class="[error ? 'border-[#E70A3F]' : 'border-[rgba(4,17,17,0.10)]', inputFocused ? 'border-lance-green' : '']">
-            <label v-if="value" for="" class="mb-0.5 text-[13px] leading-[20.8px]" :class="[error ? 'text-[#E70A3F]' : 'text-lance-black']">
+        <div
+            class="flex h-[65px] justify-center flex-col border border-solid py-2 px-4 rounded border-[rgba(4,17,17,0.10)]"
+            :class="[
+                error ? 'border-[#E70A3F]' : '',
+                inputFocused ? 'border-lance-green' : '',
+                disabled ? 'bg-lance-green-5 border-none' : 'bg-white border-[rgba(4,17,17,0.10)]'
+            ]"   
+        >
+            <label
+                v-show="value" for="" class="mb-0.5 text-[13px] leading-[20.8px]"
+                :class="[error ? 'text-[#E70A3F]' : '', disabled ? 'text-lance-black-50' : 'text-lance-black']"
+            >
                 {{ label }}
             </label>
             <input
@@ -14,6 +24,14 @@
     </div>
 </template>
 
+<style scoped>
+
+ input:disabled {
+    background: none;
+ }
+ 
+</style>
+
 <script setup lang="ts">
 
     const props = withDefaults(
@@ -23,7 +41,7 @@
             error?: string,
             disabled?: boolean,
             modelValue?: string,
-            placeholder: string
+            placeholder?: string
         }>(),
         {
             type: 'text'

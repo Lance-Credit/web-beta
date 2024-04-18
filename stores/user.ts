@@ -34,7 +34,14 @@ export const useUserStore = defineStore('user', () =>
                     "userName": (result as any).data.profile.username,
                     "phoneNumber": (result as any).data.profile.mobile,
                     "firstName": (result as any).data.profile.firstName,
-                    "profilePicture": (result as any).data.profile.imageUrl
+                    "profilePicture": (result as any).data.profile.imageUrl,
+                    "maritalStatus": '',
+                    "educationLevel": '',
+                    "state": '',
+                    "address": '',
+                    "lga": '',
+                    "city": ''
+
                 }
 
                 const { kycItems } = storeToRefs(useKYCStore());

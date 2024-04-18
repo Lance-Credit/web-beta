@@ -1,10 +1,15 @@
 interface User {
     id: string,
+    lga: string,
+    city: string,
     email: string,
+    state: string,
+    address: string,
     userName: string,
     lastName: string,
     firstName: string,
     phoneNumber: string,
-    profilePicture: string
-
+    profilePicture: string,
+    maritalStatus: string,
+    educationLevel: string,
 }
