@@ -207,7 +207,7 @@
         <KYC-SummaryModal
             v-if="!kycCompleted" v-show="showKycSummary"
             @@close-kyc-summary-modal="showKycSummary = false"
-            @@continue-kyc-process="continueKycProcess = true"
+            @@continue-kyc-process="showKycProcess"
         />
         <Wallet-TransactionDetailsModal @@closeTransactionDetailsModal="showSelectedTransaction = false" v-show="showSelectedTransaction" :transaction="selectedTransaction" />
     </div>
@@ -250,6 +250,11 @@
 
     const continueKycProcess: Ref<boolean> = ref(false);
 
+    function showKycProcess(){
+        showKycSummary.value = false;
+        continueKycProcess.value = true;
+    }
+    
     // const activeLoan: Ref<Loan | null> = ref(null);
 
     const activeLoan: Ref<Loan | null> = ref({
