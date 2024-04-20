@@ -358,7 +358,7 @@
                             Complete your loan application details below with the required information.
                         </p>
                     </div>
-                    <div v-if="!kycItems.linkedBankAccount.completed" class="pt-6 flex gap-[240px]">
+                    <div v-if="kycItems.linkedBankAccount.completed" class="pt-6 flex gap-[240px]">
                         <p class="text-[#1E1721] font-medium tracking-[-0.16px]">Linked Bank Account</p>
                         <div>
                             <ul>
@@ -426,6 +426,100 @@
                     </div>
                 </div>
 
+                <div v-show="activeTab == 'nextOfKin'">
+                    <div class="flex items-center justify-between border-b border-solid border-lance-black-5 pb-4">
+                        <div>
+                            <p class="text-[#1E1721] font-aventa text-2xl tracking-[-0.24px] font-semibold">
+                                Next of Kin
+                            </p>
+                            <p class="text-lance-black-60 text-sm leading-6">
+                                Complete your loan application details below with the required information.
+                            </p>
+                        </div>
+                        <div v-show="!editingNextOfKinDetails">
+                            <button @click="editingNextOfKinDetails = true" class="gap-4 btn btn-primary">
+                                <span>Edit</span>
+                                <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17.2923 18.6172H11.2482C10.9032 18.6172 10.6232 18.3372 10.6232 17.9922C10.6232 17.6472 10.9032 17.3672 11.2482 17.3672H17.2923C17.6373 17.3672 17.9173 17.6472 17.9173 17.9922C17.9173 18.3372 17.6373 18.6172 17.2923 18.6172" fill="white"/>
+                                    <mask id="mask0_7530_2573" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="1" y="2" width="15" height="17">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M1.66699 2.83398H15.9841V18.6169H1.66699V2.83398Z" fill="white"/>
+                                    </mask>
+                                    <g mask="url(#mask0_7530_2573)">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9256 4.51476L3.07973 14.3273C2.93723 14.5056 2.88473 14.7356 2.93723 14.9564L3.50473 17.3606L6.03723 17.3289C6.27806 17.3264 6.50056 17.2189 6.64806 17.0356C9.32889 13.6814 14.4397 7.28642 14.5847 7.09892C14.7214 6.87726 14.7747 6.56392 14.7031 6.26226C14.6297 5.95309 14.4372 5.69059 14.1597 5.52309C14.1006 5.48226 12.6964 4.39226 12.6531 4.35809C12.1247 3.93476 11.3539 4.00809 10.9256 4.51476V4.51476ZM3.01139 18.617C2.72222 18.617 2.47055 18.4187 2.40305 18.1362L1.72055 15.2437C1.57972 14.6445 1.71972 14.0262 2.10389 13.5462L9.95389 3.72785C9.95722 3.72452 9.95972 3.72035 9.96305 3.71702C10.8239 2.68785 12.3806 2.53619 13.4306 3.37869C13.4722 3.41119 14.8664 4.49452 14.8664 4.49452C15.3731 4.79619 15.7689 5.33535 15.9189 5.97369C16.0681 6.60535 15.9597 7.25702 15.6122 7.80785C15.5864 7.84869 15.5639 7.88369 7.62389 17.817C7.24139 18.2937 6.66805 18.5712 6.05222 18.5787L3.01972 18.617H3.01139Z" fill="white"/>
+                                    </g>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.5196 10.0715C13.3863 10.0715 13.2529 10.029 13.1388 9.94229L8.59543 6.45229C8.3221 6.24229 8.27043 5.85062 8.48043 5.57562C8.69126 5.30229 9.08293 5.25146 9.3571 5.46146L13.9013 8.95062C14.1746 9.16062 14.2263 9.55312 14.0154 9.82729C13.8929 9.98729 13.7071 10.0715 13.5196 10.0715" fill="white"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div v-show="editingNextOfKinDetails" class="flex items-center gap-4">
+                            <button @click="editingNextOfKinDetails = false" class="btn btn-secondary">Cancel</button>
+                            <button @click="saveNextOfKinDetails" class="gap-4 btn btn-primary" :disabled="!nextOfKinDetailsFilled || savingNextOfKinDetails">Save changes</button>
+                        </div>
+                    </div>
+                    <div v-show="!editingNextOfKinDetails">
+                        <div class="pt-6">
+                            <p class="mb-6 text-[#1E1721] font-medium tracking-[-0.16px]">Next of Kin Details</p>
+                            <div class="flex justify-between">
+                                <div class="flex flex-col gap-6 basis-[185px]">
+                                    <div>
+                                        <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
+                                            First Name
+                                        </p>
+                                        <p class="text-lance-black">{{ nextOfKinDetails?.firstName || '--' }}</p>
+                                    </div>
+                                    <div>
+                                        <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
+                                            Email Address
+                                        </p>
+                                        <p class="text-lance-black">{{ nextOfKinDetails?.email || '--' }}</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-6 basis-[185px]">
+                                    <div>
+                                        <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
+                                            Last Name
+                                        </p>
+                                        <p class="text-lance-black">{{ nextOfKinDetails?.lastName || '--' }}</p>
+                                    </div>
+                                    <div>
+                                        <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
+                                            Phone Number
+                                        </p>
+                                        <p class="text-lance-black">{{ nextOfKinDetails?.phoneNumber || '--' }}</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-6 basis-[185px]">
+                                    <div>
+                                        <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
+                                            Relationship
+                                        </p>
+                                        <p class="text-lance-black">{{ nextOfKinDetails?.relationship || '--' }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-show="editingNextOfKinDetails">
+                        <div class="pt-6">
+                            <p class="mb-6 text-[#1E1721] font-medium tracking-[-0.16px]">Next of Kin Details</p>
+                            <div class="flex gap-[86px]">
+                                <div class="flex flex-col gap-6 basis-[376px]">
+                                    <Form-TextInput placeholder="First Name" label="First Name" v-bind="settingsForm.nextOfKinFirstName" :error="settingsFormErrors.nextOfKinFirstName" />
+                                    <Form-SelectInput
+                                        :options="nextOfKinRelationshipListOptions" placeholder="Relationship" label="Relationship"
+                                        v-bind="settingsForm.nextOfKinRelationship" :error="settingsFormErrors.nextOfKinRelationship"
+                                    />
+                                    <Form-TextInput placeholder="Phone number" label="Phone number" v-bind="settingsForm.nextOfKinPhoneNumber" :error="settingsFormErrors.nextOfKinPhoneNumber" />
+                                </div>
+                                <div class="flex flex-col gap-6 basis-[376px]">
+                                    <Form-TextInput placeholder="Last Name" label="Last Name" v-bind="settingsForm.nextOfKinLastName" :error="settingsFormErrors.nextOfKinLastName" />
+                                    <Form-EmailInput placeholder="Email address" label="Email address" v-bind="settingsForm.nextOfKinEmail" :error="settingsFormErrors.nextOfKinEmail" />
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
             </div>
         </div>
@@ -448,6 +542,8 @@ letter-spacing: -0.16px;
     import { useForm } from 'vee-validate';
     import { useKYCStore } from '@/stores/kyc';
     import { useUserStore } from '@/stores/user';
+    import { useNextOfKinStore } from '@/stores/nextOfKin';
+import DetailsModal from '~/components/wallet/DetailsModal.vue';
 
     definePageMeta({
         middleware: 'auth',
@@ -458,18 +554,26 @@ letter-spacing: -0.16px;
 
     const { fullName, userProfile } = storeToRefs(useUserStore());
 
+    const { nextOfKinDetails } = storeToRefs(useNextOfKinStore());
+
     const activeTab: Ref<string> = ref('personalDetails');
 
     const editingPersonalDetails: Ref<boolean> = ref(false);
 
     const { values: settingsFormValues, errors: settingsFormErrors, defineComponentBinds } = useForm({
         validationSchema: yup.object({
+            lga: yup.string().required().label('LGA'),
+            city: yup.string().required().label('City'),
+            state: yup.string().required().label('State'),
             maritalStatus: yup.string().required().label('Marital Status'),
             educationLevel: yup.string().required().label('Marital Status'),
             residentialAddress: yup.string().required().label('Residential Address'),
-            lga: yup.string().required().label('LGA'),
-            city: yup.string().required().label('City'),
-            state: yup.string().required().label('State')
+
+            nextOfKinLastName: yup.string().required().label('Last Name'),
+            nextOfKinEmail: yup.string().required().label('Email Address'),
+            nextOfKinFirstName: yup.string().required().label('First Name'),
+            nextOfKinPhoneNumber: yup.string().required().label('Phone Number'),
+            nextOfKinRelationship: yup.string().required().label('Relationship'),
         })
     });
     
@@ -500,6 +604,32 @@ letter-spacing: -0.16px;
             }),
         }),
         state: defineComponentBinds('state', {
+            mapProps: state => ({
+                error: state.errors[0],
+            }),
+        }),
+
+        nextOfKinFirstName: defineComponentBinds('nextOfKinFirstName', {
+            mapProps: state => ({
+                error: state.errors[0],
+            }),
+        }),
+        nextOfKinRelationship: defineComponentBinds('nextOfKinRelationship', {
+            mapProps: state => ({
+                error: state.errors[0],
+            }),
+        }),
+        nextOfKinPhoneNumber: defineComponentBinds('nextOfKinPhoneNumber', {
+            mapProps: state => ({
+                error: state.errors[0],
+            }),
+        }),
+        nextOfKinLastName: defineComponentBinds('nextOfKinLastName', {
+            mapProps: state => ({
+                error: state.errors[0],
+            }),
+        }),
+        nextOfKinEmail: defineComponentBinds('nextOfKinEmail', {
             mapProps: state => ({
                 error: state.errors[0],
             }),
@@ -545,12 +675,43 @@ letter-spacing: -0.16px;
 
     const savingPersonalDetails: Ref<boolean> = ref(false);
 
-    function savePersonalDetails(){
+    
+    const { apiURL } = useRuntimeConfig().public;
+
+    const headers = useRequestHeaders(['cookie']) as HeadersInit;
+    const { data: { value: jwt } } = await useFetch('/api/token', { headers });
+
+    async function savePersonalDetails(){
         savingPersonalDetails.value = true;
-        setTimeout(()=> {
-            savingPersonalDetails.value = false;
-            console.log('personal details saved')
-        }, 2000);
+
+        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/profile`, {
+            method: 'PATCH',
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization" : `Bearer ${jwt?.token}`
+            },
+            body: {
+                lga: settingsFormValues.lga,
+                city: settingsFormValues.city,
+                state: settingsFormValues.state,
+                maritalStatus: settingsFormValues.maritalStatus,
+                educationLevel: settingsFormValues.educationLevel,
+                residentialAddress: settingsFormValues.residentialAddress,
+                firstName: userProfile.value.firstName,
+                lastName: userProfile.value.lastName,
+                dob: "1993-04-24"
+            }
+        });
+
+        if(result){
+            if((result as any).success && !(result as any).error){
+                console.log(result);
+                // populate userprofile
+                // userProfile.value.maritalStatus
+            }
+        }else if(error){
+            console.log(error.value?.data);
+        }
     }
 
     const linkedBankAccounts = [
@@ -560,11 +721,6 @@ letter-spacing: -0.16px;
             accountNumber: '2209889321'
         }
     ];
-
-    const { apiURL } = useRuntimeConfig().public;
-
-    const headers = useRequestHeaders(['cookie']) as HeadersInit;
-    const { data: { value: jwt } } = await useFetch('/api/token', { headers });
 
     async function fetchLinkedBankAccounts(){
 
@@ -579,7 +735,7 @@ letter-spacing: -0.16px;
         if(result){
             if((result as any).success && !(result as any).error){
                 console.log(result);
-                // population linkedBankAccounts
+                // populate linkedBankAccounts
             }
         }else if(error){
             console.log(error.value?.data);
@@ -588,10 +744,40 @@ letter-spacing: -0.16px;
 
     onMounted(()=>{
         fetchLinkedBankAccounts();
+        fetchNextOfKinDetails();
     });
 
     function addNewAccount(){
         console.log('new account added')
+    }
+
+    const nextOfKinRelationshipListOptions = reactive([
+        {
+            label: 'Sister',
+            value: 'Sister'
+        }
+    ]);
+
+    const editingNextOfKinDetails: Ref<boolean> = ref(false);
+
+    const savingNextOfKinDetails: Ref<boolean> = ref(false);
+
+    const nextOfKinDetailsFilled = computed(() => {
+        return true;
+    });
+
+    async function fetchNextOfKinDetails(){
+        if(!nextOfKinDetails.value){
+            console.log('fetching next of kin details.');
+            // if there is a next of kin DetailsModal,
+            console.log('update in store.');
+        }else{
+            console.log('set initial values for next of kin form')
+        }
+    }
+    async function saveNextOfKinDetails(){
+        console.log('next of kin details saved');
+        console.log('update next of kin store');
     }
 
 </script>
