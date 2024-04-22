@@ -561,7 +561,58 @@
                     </div>
                 </div>
 
-
+                <div v-show="activeTab == 'help'">
+                    <div class="border-b border-solid border-lance-black-5 pb-4">
+                        <div>
+                            <p class="text-[#1E1721] font-aventa text-2xl tracking-[-0.24px] font-semibold">
+                                Help
+                            </p>
+                            <p class="text-lance-black-60 text-sm leading-6">
+                                Find help to the issues you might have run into
+                            </p>
+                        </div>
+                    </div>
+                    <div class="py-6 border-b border-solid border-lance-black-5">
+                        <div class="flex gap-[132px]">
+                            <div class="basis-[251px]">
+                                <p class="text-[#1E1721] font-medium tracking-[-0.16px]">Frequently Asked Questions</p>
+                                <p class="text-lance-black-60 text-sm leading-6 tracking-[-0.14px]">
+                                    Everything you need to know about the Lance and how it works.
+                                </p>
+                            </div>
+                            <ul class="basis-[calc(100%-383px)]">
+                                <li v-for="(faq, key) in faqList" :key="key" class="py-4 border-b border-solid border-lance-black-10">
+                                    <div @click="openedFaq = key" class="mb-1 flex items-center justify-between cursor-pointer">
+                                        <p class="text-[#1E1721] font-medium tracking-[-0.16px]">
+                                            {{ faq.title }}
+                                        </p>
+                                        <svg class="faq-tip" :class="openedFaq == key ? 'rotate-180' : ''" width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M0.72505 0.976027C0.946939 0.754138 1.29416 0.733967 1.53884 0.915512L1.60893 0.976027L7.00033 6.36714L12.3917 0.976027C12.6136 0.754138 12.9608 0.733967 13.2055 0.915512L13.2756 0.976027C13.4975 1.19792 13.5177 1.54514 13.3361 1.78981L13.2756 1.85991L7.44227 7.69324C7.22038 7.91513 6.87316 7.9353 6.62848 7.75376L6.55838 7.69324L0.72505 1.85991C0.480973 1.61583 0.480973 1.2201 0.72505 0.976027Z" fill="#656167"/>
+                                        </svg>
+                                    </div>
+                                    <p v-show="openedFaq == key" class="text-lance-black-60 tracking-[-0.16px] faq-text">
+                                        {{ faq.text }}
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex justify-between items-center py-4 px-6 rounded-lg bg-lance-green-5 cursor-pointer">
+                        <div class="flex gap-2 items-center">
+                            <div class="w-8 h-8 bg-lance-green-5 rounded-full flex items-center justify-center">
+                                <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M16.875 8.86292V8.75354C16.87 6.93515 16.1429 5.19321 14.8536 3.91093C13.5643 2.62865 11.8184 1.91107 10 1.91604C8.18161 1.92101 6.43967 2.64814 5.15739 3.93745C3.87511 5.22676 3.15753 6.97265 3.1625 8.79104V8.85354C2.70244 8.98181 2.297 9.25713 2.0081 9.63745C1.71919 10.0178 1.56269 10.4822 1.5625 10.9598V11.5848C1.5625 12.165 1.79297 12.7214 2.2032 13.1316C2.61344 13.5418 3.16984 13.7723 3.75 13.7723H4.07812C4.1568 14.792 4.61718 15.7445 5.36735 16.4396C6.11752 17.1348 7.10227 17.5214 8.125 17.5223H10C10.4144 17.5223 10.8118 17.3577 11.1049 17.0646C11.3979 16.7716 11.5625 16.3742 11.5625 15.9598V15.6473C11.5625 15.5644 11.5296 15.4849 11.471 15.4263C11.4124 15.3677 11.3329 15.3348 11.25 15.3348H8.75C8.66712 15.3348 8.58763 15.3677 8.52903 15.4263C8.47042 15.4849 8.4375 15.5644 8.4375 15.6473V16.8973H8.125C7.21332 16.8973 6.33898 16.5351 5.69432 15.8905C5.04966 15.2458 4.6875 14.3715 4.6875 13.4598V9.08479C4.6875 9.00191 4.65458 8.92243 4.59597 8.86382C4.53737 8.80522 4.45788 8.77229 4.375 8.77229H3.7875C3.78501 7.11966 4.43913 5.53373 5.60596 4.36339C6.77279 3.19304 8.35674 2.53415 10.0094 2.53167C11.662 2.52918 13.2479 3.1833 14.4183 4.35013C15.5886 5.51696 16.2475 7.10091 16.25 8.75354V8.77229H15.625C15.5421 8.77229 15.4626 8.80522 15.404 8.86382C15.3454 8.92243 15.3125 9.00191 15.3125 9.08479V13.4598C15.3125 13.5427 15.3454 13.6222 15.404 13.6808C15.4626 13.7394 15.5421 13.7723 15.625 13.7723H16.25C16.5373 13.7723 16.8217 13.7157 17.0871 13.6058C17.3525 13.4958 17.5937 13.3347 17.7968 13.1316C17.9999 12.9285 18.1611 12.6873 18.271 12.4219C18.3809 12.1565 18.4375 11.8721 18.4375 11.5848V10.9598C18.4376 10.4886 18.2856 10.03 18.0041 9.65217C17.7225 9.27436 17.3265 8.99754 16.875 8.86292ZM9.0625 15.9598H10.9375C10.9375 16.2084 10.8387 16.4469 10.6629 16.6227C10.4871 16.7985 10.2486 16.8973 10 16.8973H9.0625V15.9598ZM4.0625 13.1473H3.75C3.54481 13.1473 3.34163 13.1069 3.15206 13.0284C2.96249 12.9498 2.79024 12.8347 2.64515 12.6896C2.50005 12.5446 2.38496 12.3723 2.30644 12.1827C2.22792 11.9932 2.1875 11.79 2.1875 11.5848V10.9598C2.1875 10.5454 2.35212 10.148 2.64515 9.85494C2.93817 9.56191 3.3356 9.39729 3.75 9.39729H4.0625V13.1473ZM17.8125 11.5848C17.8125 11.79 17.7721 11.9932 17.6936 12.1827C17.615 12.3723 17.4999 12.5446 17.3549 12.6896C17.2098 12.8347 17.0375 12.9498 16.8479 13.0284C16.6584 13.1069 16.4552 13.1473 16.25 13.1473H15.9375V9.39729H16.25C16.6644 9.39729 17.0618 9.56191 17.3549 9.85494C17.6479 10.148 17.8125 10.5454 17.8125 10.9598V11.5848Z" fill="#041111" stroke="#041111" stroke-width="0.5"/>
+                                </svg>
+                            </div>
+                            <p class="text-lance-black">
+                                Can’t find the help you’re looking for? Chat with someone from our team.
+                            </p>
+                        </div>
+                        <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.96967 19.8643C7.7034 19.598 7.6792 19.1814 7.89705 18.8878L7.96967 18.8037L14.439 12.334L7.96967 5.86431C7.7034 5.59805 7.6792 5.18138 7.89705 4.88777L7.96967 4.80365C8.23594 4.53739 8.6526 4.51318 8.94621 4.73104L9.03033 4.80365L16.0303 11.8037C16.2966 12.0699 16.3208 12.4866 16.1029 12.7802L16.0303 12.8643L9.03033 19.8643C8.73744 20.1572 8.26256 20.1572 7.96967 19.8643Z" fill="black"/>
+                        </svg>
+                    </div>
+                </div>
 
                 <div v-show="activeTab == 'about'">
                     <div class="border-b border-solid border-lance-black-5 pb-4">
@@ -650,7 +701,11 @@
         </Auth-Modal>
     </div>
 </template>
-<style>
+
+<style scoped>
+    .faq-text, .faq-tip{
+        transition: all 1s ease 0s
+    }
 .a{
     color: var(--Text-60, rgba(4, 17, 17, 0.60));
 font-feature-settings: 'liga' off;
@@ -662,6 +717,7 @@ line-height: 24px; /* 150% */
 letter-spacing: -0.16px;
 }
 </style>
+
 <script setup lang="ts">
     
     import * as yup from 'yup';
@@ -971,5 +1027,30 @@ letter-spacing: -0.16px;
             // console.log(error.value?.data);
         }
     }
+
+    const openedFaq: Ref<number | null> = ref(null);
+
+    const faqList = [
+        {
+            title: 'Why do I need a referral code to join Lance?',
+            text: 'By requiring a referral code, we ensure that our community remains a curated space of like-minded individuals who are genuinely invested in growth, collaboration, and support. This exclusive entry requirement not only guarantees the quality of connections but also opens the doors to unique benefits and opportunities reserved for our esteemed members.'
+        },
+        {
+            title: 'Why do I need a referral code to join Lance?',
+            text: 'By requiring a referral code, we ensure that our community remains a curated space of like-minded individuals who are genuinely invested in growth, collaboration, and support. This exclusive entry requirement not only guarantees the quality of connections but also opens the doors to unique benefits and opportunities reserved for our esteemed members.'
+        },
+        {
+            title: 'Why do I need a referral code to join Lance?',
+            text: 'By requiring a referral code, we ensure that our community remains a curated space of like-minded individuals who are genuinely invested in growth, collaboration, and support. This exclusive entry requirement not only guarantees the quality of connections but also opens the doors to unique benefits and opportunities reserved for our esteemed members.'
+        },
+        {
+            title: 'Why do I need a referral code to join Lance?',
+            text: 'By requiring a referral code, we ensure that our community remains a curated space of like-minded individuals who are genuinely invested in growth, collaboration, and support. This exclusive entry requirement not only guarantees the quality of connections but also opens the doors to unique benefits and opportunities reserved for our esteemed members.'
+        },
+        {
+            title: 'Why do I need a referral code to join Lance?',
+            text: 'By requiring a referral code, we ensure that our community remains a curated space of like-minded individuals who are genuinely invested in growth, collaboration, and support. This exclusive entry requirement not only guarantees the quality of connections but also opens the doors to unique benefits and opportunities reserved for our esteemed members.'
+        }
+    ]
 
 </script>
