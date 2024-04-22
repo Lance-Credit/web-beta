@@ -62,7 +62,7 @@
                         <div class="mb-8">
                             <Form-PasswordInput class="mb-2" placeholder="Password" label="Password" v-bind="passwordResetForm.password" :error="passwordResetFormErrors.password"></Form-PasswordInput>
                             <Form-PasswordRuleGuide :password="passwordResetFormValues.password"/>
-                            <Form-PasswordInput placeholder="Confirm Password " label="Confirm Password " v-bind="passwordResetForm.conf_password" :error="passwordResetFormErrors.conf_password"></Form-PasswordInput>
+                            <Form-PasswordInput placeholder="Confirm Password" label="Confirm Password" v-bind="passwordResetForm.conf_password" :error="passwordResetFormErrors.conf_password"></Form-PasswordInput>
                         </div>
                         <button @click="submitNewPasswordForm" class="mb-6 btn btn-primary w-full gap-4" :disabled="!newPasswordFormFilled || submittingNewPasswordForm">
                             <span>Continue</span>

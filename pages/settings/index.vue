@@ -521,18 +521,60 @@
                 </div>
 
 
+
+                <div v-show="activeTab == 'password'">
+                    <div class="flex items-center justify-between border-b border-solid border-lance-black-5 pb-4">
+                        <div>
+                            <p class="text-[#1E1721] font-aventa text-2xl tracking-[-0.24px] font-semibold">
+                                Password
+                            </p>
+                            <p class="text-lance-black-60 text-sm leading-6">
+                                Complete your loan application details below with the required information.
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <button @click="updatePassword" class="gap-4 btn btn-primary" :disabled="!newPasswordFilled || savingNewPassword">Update Password</button>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="py-6 border-b border-solid border-lance-black-5">
+                            <div class="flex">
+                                <p class="w-[320px] text-[#1E1721] font-medium tracking-[-0.16px]">Current Password</p>
+                                <Form-PasswordInput label="Current Password" v-bind="settingsForm.currPassword" :error="settingsFormErrors.currPassword" class="w-[376px]" />
+                            </div>
+                        </div>
+                        <div class="py-6 border-b border-solid border-lance-black-5">
+                            <div class="flex">
+                                <p class="w-[320px] text-[#1E1721] font-medium tracking-[-0.16px]">New Password</p>
+                                <div class="w-[376px]">
+                                    <Form-PasswordInput class="mb-2" placeholder="New Password" label="New Password" v-bind="settingsForm.newPassword" :error="settingsFormErrors.newPassword" />
+                                    <Form-PasswordRuleGuide :password="settingsFormValues.newPassword"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-6">
+                            <div class="flex">
+                                <p class="w-[320px] text-[#1E1721] font-medium tracking-[-0.16px]">Confirm New Password</p>
+                                <Form-PasswordInput label="Confirm New Password" v-bind="settingsForm.confPassword" :error="settingsFormErrors.confPassword" class="w-[376px]" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>
 </template>
 <style>
 .a{
-    color: var(--Text-60, rgba(4, 17, 17, 0.60));
+    color: ;
+font-feature-settings: 'liga' off;
 font-family: Gelion;
 font-size: 16px;
 font-style: normal;
-font-weight: 400;
-line-height: 150%; /* 24px */
+font-weight: 500;
+line-height: 24px; /* 150% */
 letter-spacing: -0.16px;
 }
 </style>
@@ -543,13 +585,14 @@ letter-spacing: -0.16px;
     import { useKYCStore } from '@/stores/kyc';
     import { useUserStore } from '@/stores/user';
     import { useNextOfKinStore } from '@/stores/nextOfKin';
-import DetailsModal from '~/components/wallet/DetailsModal.vue';
-
+    
     definePageMeta({
         middleware: 'auth',
         layout: 'dashboard'
     });
     
+    const { signOut } = useAuth();
+
     const { kycItems } = useKYCStore();
 
     const { fullName, userProfile } = storeToRefs(useUserStore());
@@ -560,7 +603,7 @@ import DetailsModal from '~/components/wallet/DetailsModal.vue';
 
     const editingPersonalDetails: Ref<boolean> = ref(false);
 
-    const { values: settingsFormValues, errors: settingsFormErrors, defineComponentBinds } = useForm({
+    const { values: settingsFormValues, errors: settingsFormErrors, setFieldValue, defineComponentBinds } = useForm({
         validationSchema: yup.object({
             lga: yup.string().required().label('LGA'),
             city: yup.string().required().label('City'),
@@ -570,12 +613,20 @@ import DetailsModal from '~/components/wallet/DetailsModal.vue';
             residentialAddress: yup.string().required().label('Residential Address'),
 
             nextOfKinLastName: yup.string().required().label('Last Name'),
-            nextOfKinEmail: yup.string().required().label('Email Address'),
+            nextOfKinEmail: yup.string().email().required().label('Email Address'),
             nextOfKinFirstName: yup.string().required().label('First Name'),
             nextOfKinPhoneNumber: yup.string().required().label('Phone Number'),
             nextOfKinRelationship: yup.string().required().label('Relationship'),
+
+            currPassword: yup.string().required()
+            .matches(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$"), 'Current Password is not in correct format').matches(/^.{8,}$/, 'Current Password must be a minimum of 8 characters in length').label('Current Password'),
+            newPassword: yup.string().required()
+            .matches(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$"), 'Password is not in correct format')
+            .matches(/^.{8,}$/, 'Password must be a minimum of 8 characters in length').label('Password'),
+            confPassword: yup.string().required().oneOf([yup.ref('newPassword')], "Passwords don't match").label('Password Confirmation')
         })
     });
+    setFieldValue('newPassword', '');
     
     const settingsForm = reactive({
         maritalStatus: defineComponentBinds('maritalStatus', {
@@ -630,6 +681,22 @@ import DetailsModal from '~/components/wallet/DetailsModal.vue';
             }),
         }),
         nextOfKinEmail: defineComponentBinds('nextOfKinEmail', {
+            mapProps: state => ({
+                error: state.errors[0],
+            }),
+        }),
+
+        currPassword: defineComponentBinds('currPassword', {
+            mapProps: state => ({
+                error: state.errors[0],
+            }),
+        }),
+        newPassword: defineComponentBinds('newPassword', {
+            mapProps: state => ({
+                error: state.errors[0],
+            }),
+        }),
+        confPassword: defineComponentBinds('confPassword', {
             mapProps: state => ({
                 error: state.errors[0],
             }),
@@ -763,7 +830,11 @@ import DetailsModal from '~/components/wallet/DetailsModal.vue';
     const savingNextOfKinDetails: Ref<boolean> = ref(false);
 
     const nextOfKinDetailsFilled = computed(() => {
-        return true;
+        return settingsFormValues.nextOfKinFirstName && !settingsFormErrors.value.nextOfKinFirstName &&
+        settingsFormValues.nextOfKinRelationship && !settingsFormErrors.value.nextOfKinRelationship &&
+        settingsFormValues.nextOfKinPhoneNumber && !settingsFormErrors.value.nextOfKinPhoneNumber &&
+        settingsFormValues.nextOfKinLastName && !settingsFormErrors.value.nextOfKinLastName &&
+        settingsFormValues.nextOfKinEmail && !settingsFormErrors.value.nextOfKinEmail;
     });
 
     async function fetchNextOfKinDetails(){
@@ -778,6 +849,41 @@ import DetailsModal from '~/components/wallet/DetailsModal.vue';
     async function saveNextOfKinDetails(){
         console.log('next of kin details saved');
         console.log('update next of kin store');
+    }
+
+    const newPasswordFilled = computed(() => {
+        return settingsFormValues.currPassword && !settingsFormErrors.value.currPassword &&
+        settingsFormValues.newPassword && !settingsFormErrors.value.newPassword &&
+        settingsFormValues.confPassword && !settingsFormErrors.value.confPassword;
+    });
+
+    const savingNewPassword: Ref<boolean> = ref(false);
+
+    async function updatePassword(){
+        savingNewPassword.value = true;
+
+        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/auth/password`, {
+            method: 'PATCH',
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization" : `Bearer ${jwt?.token}`
+            },
+            body: {
+                "oldPassword": settingsFormValues.currPassword,
+                "newPassword": settingsFormValues.newPassword,
+                "confirmPassword": settingsFormValues.confPassword
+            }
+        });
+
+        if(result){
+            if((result as any).success && !(result as any).error){
+                // console.log(result);
+                signOut();
+            }
+        }else if(error){
+            savingNewPassword.value = false;
+            // console.log(error.value?.data);
+        }
     }
 
 </script>
