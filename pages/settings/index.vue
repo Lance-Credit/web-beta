@@ -562,6 +562,39 @@
                 </div>
 
 
+
+                <div v-show="activeTab == 'about'">
+                    <div class="border-b border-solid border-lance-black-5 pb-4">
+                        <div>
+                            <p class="text-[#1E1721] font-aventa text-2xl tracking-[-0.24px] font-semibold">
+                                About Lance
+                            </p>
+                            <p class="text-lance-black-60 text-sm leading-6">
+                                Read more and learn about the Lance Credit mission
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pt-6">
+                        <div class="flex gap-[247px]">
+                            <div class="w-[136px]">
+                                <svg width="136" height="21" viewBox="0 0 136 21" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                    <rect y="0.333984" width="136" height="20" fill="url(#pattern0_3050_12513)"/>
+                                    <defs>
+                                        <pattern id="pattern0_3050_12513" patternContentUnits="objectBoundingBox" width="1" height="1">
+                                            <use xlink:href="#image0_3050_12513" transform="matrix(0.00565611 0 0 0.0384615 -0.00339367 0)"/>
+                                        </pattern>
+                                        <image id="image0_3050_12513" width="178" height="26" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALIAAAAaCAYAAAATxQbrAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAVgSURBVHgB7VvtjeM2EH0I7n/cgdlBVALTgTsIU4HdgXUV2KlA7sCXCnSpwJsK5FQgd7ARYQ40poYfkuxdHE4PGHhNcj5IPnFIygvkQ3XSdqKxYMEPjEsn752csWDBc6A6qToxXlnjpEAmvmS22zOjupNVJzdMQ+V9/6eTExb8jFDoSXxynytXTvVvXnuLKyY6e/ekxHT4tios+FmhIXPg6MpWXjlxZhIaDMnXYjoWIi8gaIzjQJDIv8T1cEC/nHPYJ2WDz4PC8Gn9LFAqnBoPT6ULXgBL1PeIfMM0TF2RdSc17tmAdG222ONOhh36Q4KVC3pybbw6Okgo3B9WbtPqbROxrJxfP1u1rj+pQ4oW+kK+Q4uHZKNydkhiusq137DvB+dzJ7SnMeU+7EHfIC8+SZ/7pz5IHNi62AiVE84ZkgMiUJC3FM/YJ08h8j4Ri421FcrXTt8IdZeADrcprbJ/JPRI9oKutXfO0LW+QxmvwOPc2L9rL6YDhrFr1u+9177y2m5Zfet0+HhZnzuEscVwwWk8fYUwkal/hNhYRbe5FdIDPRVjibxFeuJDsnY2zET92osllaV88VeLeqS+9vQtiYkMJWSyNoHYtdA3W6Y8O3vEHybDfEhkJv02EaMVutKtvDY+kQnvgXIRBukBVpiOMURWCGeGBumssUa6T3Ywa4RXWZ2IpXX6TULfBHTtCb2ETHJrkxOBfMTOJyv0BOFE08xuGdBVzK9CGIrFogR9268iM8aXEFkhnTZLzMMYIhvIk6vxGPMF44nsT1bIzi5iw24TONGOkf41Cf8WpaBvPP+x8SJo9A+pX9ZE9CrPZ46Po6C/y9BX6Ln2dCKHCMEHfy7GEFnaTxqhnSXT2D2yNNg6El8t1CkhDuOJXT2LTP/I8K+RB4XH+LTT/xbRaZF/tbrCkBM0B7k3OPTgzyYyf7O3Rzwd3Dr5HR8LhWEMJ6GdLf8b94NYLt6Esu+R9v7kXDF8wxSKTwtlByRO3A7K+/yOPFwD5W3Ej+2jHRfLgxvSuOExPtLP0QXkOZiELyyIMtH2Kya+GpwBnzyxAbritRgTiw+F+VB4Lah/lsQXTMeYcbniSeAr8l+d/Bpo9y8e90IfBX9QYinrN3wsctOnhTS5p07+QxpX9qnwOtyYn68T9AhjxmVM2ygskTXu6Spng/7RsA8Q3+7QHvTktVN4/ZvGNwwPhwWGP2oxgp6UQi2JS69sBXkLQ59K8Pks3NCT8oTxuKLfauT+qEzjibArrd03NTOkQv7TFTrMSDCQr6wMa6MRvvpaR+xojItvJ9TZFKxc/Qry/XvosNji8cFYBfqhXX3pvpdIQzlb/Ce3GunxHnOgLFz7UtA3yEODJ95aaMRvKnIld0X39Ro8vnIkMQhPLidDLKa182kwn8ixWJpILMrpbwL1tfPRBuyC+adbBYU4KgxJr5EmMrXhr/dDoBsuI+g3GTEeMBxjAo2zjxYRIvOg5kiNPOTao87pGTGtnQ2D+US2KEb6Lz3bxxG6DYZk2LE6jSEs+Q6sDSejRprIPEaebXwf54itY0aMFR4Xolwi1648uI0sMZ0sXHK2F2OJbLFD+iFq8HoiWxRIv1FsEc5QJaaRGMJYXND/cKZCT4xa0NfII7IfY43+qrBmPk4Iz/fR68sZ/Y+HaHw26LNULpF5VqM3sjVvoPAcIudsL+pM8W0p3AePsge9Gjau3gg2VmwA/LoiM75QnwweJ5bOGSXSaVV5feH9yX0rFtI3AZ1ihP2QDyKlztAvAvolHq/6pJjOCP9LHdml+Rm0qzGfyDUWLPgE8HvkP3Ff4hWm44YFCxYsWLBgwYIFC35s/A8PQSCmtpXoAwAAAABJRU5ErkJggg=="/>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <p class="text-lance-black-60 tracking-[-0.16px]">
+                                By requiring a referral code, we ensure that our community remains a curated space of like-minded individuals who are genuinely invested in growth, collaboration, and support. This exclusive entry requirement not only guarantees the quality of connections but also opens the doors to unique benefits and opportunities reserved for our esteemed members.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </div>
 
@@ -619,12 +652,12 @@
 </template>
 <style>
 .a{
-    color: ;
+    color: var(--Text-60, rgba(4, 17, 17, 0.60));
 font-feature-settings: 'liga' off;
 font-family: Gelion;
 font-size: 16px;
 font-style: normal;
-font-weight: 500;
+font-weight: 400;
 line-height: 24px; /* 150% */
 letter-spacing: -0.16px;
 }
