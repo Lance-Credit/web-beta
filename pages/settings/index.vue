@@ -520,7 +520,149 @@
                     </div>
                 </div>
 
+                <div v-show="activeTab == 'creditScore'">
+                    <div class="border-b border-solid border-lance-black-5 pb-4">
+                        <div>
+                            <p class="text-[#1E1721] font-aventa text-2xl tracking-[-0.24px] font-semibold">
+                                Credit Score & Education
+                            </p>
+                            <p class="text-lance-black-60 text-sm leading-6">
+                                Complete your loan application details below with the required information.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="py-6 border-b border-solid border-lance-black-5">
+                        <div class="flex gap-[132px]">
+                            <div class="basis-[251px]">
+                                <p class="text-[#1E1721] font-medium tracking-[-0.16px]">Your Credit Ratings</p>
+                                <p class="text-lance-black-60 text-sm leading-6 tracking-[-0.14px]">
+                                    Everything you need to know about the Lance and how it works.
+                                </p>
+                            </div>
+                            <div class="basis-[calc(100%-383px)] tracking-[-0.16px]">
+                                <div class="flex items-center gap-4 mb-4 p-6 rounded-xl border border-solid border-lance-green bg-[rgba(236,255,77,0.10)]">
+                                    <div class="w-10 h-10 rounded-full bg-lance-green-5 flex items-center justify-center">
+                                        <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <mask id="mask0_7614_1485" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="21" height="21">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0.333984H20.0027V20.335H0V0.333984Z" fill="white"/>
+                                            </mask>
+                                            <g mask="url(#mask0_7614_1485)">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.94472 18.4094C9.53472 18.9854 10.4847 18.9784 11.0707 18.3894L11.7927 17.6694C12.3527 17.1104 13.1267 16.7914 13.9157 16.7914H14.9457C15.7797 16.7914 16.4577 16.1134 16.4577 15.2804V14.2514C16.4577 13.4504 16.7677 12.6974 17.3337 12.1304L18.0537 11.4094C18.3467 11.1154 18.5037 10.7344 18.5027 10.3304C18.5017 9.92737 18.3427 9.54837 18.0557 9.26237L17.3347 8.54037C16.7677 7.96937 16.4577 7.21737 16.4577 6.41637V5.38937C16.4577 4.55537 15.7797 3.87737 14.9457 3.87737H13.9177C13.1167 3.87737 12.3637 3.56637 11.7967 3.00337L11.0747 2.28037C10.4737 1.68537 9.51472 1.68837 8.92772 2.27937L8.20872 3.00037C7.63472 3.56737 6.88172 3.87737 6.08372 3.87737H5.05472C4.22172 3.87837 3.54372 4.55637 3.54372 5.38937V6.41437C3.54372 7.21537 3.23272 7.96837 2.66872 8.53637L1.95872 9.24737C1.95172 9.25537 1.94472 9.26137 1.93772 9.26837C1.35072 9.85937 1.35372 10.8184 1.94472 11.4054L2.66672 12.1274C3.23272 12.6954 3.54372 13.4484 3.54372 14.2494V15.2804C3.54372 16.1134 4.22072 16.7914 5.05472 16.7914H6.08172C6.88372 16.7924 7.63672 17.1034 8.20372 17.6684L8.92472 18.3874C8.93072 18.3944 8.93772 18.4014 8.94472 18.4094ZM9.99872 20.3354C9.23172 20.3354 8.46472 20.0454 7.87772 19.4634C7.86972 19.4554 7.86172 19.4474 7.85372 19.4384L7.14372 18.7294C6.86072 18.4484 6.48272 18.2924 6.08072 18.2914H5.05472C3.39372 18.2914 2.04372 16.9404 2.04372 15.2804V14.2494C2.04372 13.8474 1.88672 13.4704 1.60472 13.1864L0.885722 12.4684C-0.282278 11.3064 -0.296278 9.41437 0.850722 8.23437C0.859722 8.22537 0.868722 8.21637 0.877722 8.20737L1.60572 7.47737C1.88672 7.19437 2.04372 6.81537 2.04372 6.41437V5.38937C2.04372 3.72937 3.39372 2.37837 5.05372 2.37737H6.08372C6.48472 2.37737 6.86272 2.22037 7.14972 1.93737L7.86472 1.22037C9.03372 0.0433709 10.9447 0.0373709 12.1237 1.20937L12.8547 1.94037C13.1377 2.22137 13.5157 2.37737 13.9177 2.37737H14.9457C16.6067 2.37737 17.9577 3.72837 17.9577 5.38937V6.41637C17.9577 6.81737 18.1137 7.19637 18.3967 7.48137L19.1147 8.20037C19.6837 8.76537 19.9997 9.52037 20.0027 10.3254C20.0057 11.1304 19.6947 11.8874 19.1277 12.4584L18.3947 13.1894C18.1137 13.4724 17.9577 13.8494 17.9577 14.2514V15.2804C17.9577 16.9404 16.6067 18.2914 14.9467 18.2914H13.9157C13.5197 18.2914 13.1327 18.4514 12.8517 18.7304L12.1337 19.4484C11.5467 20.0394 10.7727 20.3354 9.99872 20.3354Z" fill="#0A4F4D"/>
+                                            </g>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M7.42993 13.6544C7.23793 13.6544 7.04593 13.5814 6.89993 13.4344C6.60693 13.1414 6.60693 12.6674 6.89993 12.3744L12.0399 7.23342C12.3329 6.94042 12.8079 6.94042 13.1009 7.23342C13.3939 7.52642 13.3939 8.00142 13.1009 8.29442L7.95993 13.4344C7.81393 13.5814 7.62193 13.6544 7.42993 13.6544Z" fill="#0A4F4D"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12.5035 13.832C11.9505 13.832 11.4985 13.385 11.4985 12.832C11.4985 12.279 11.9415 11.832 12.4945 11.832H12.5035C13.0565 11.832 13.5035 12.279 13.5035 12.832C13.5035 13.385 13.0565 13.832 12.5035 13.832Z" fill="#0A4F4D"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M7.50354 8.83203C6.95054 8.83203 6.49854 8.38503 6.49854 7.83203C6.49854 7.27903 6.94154 6.83203 7.49454 6.83203H7.50354C8.05654 6.83203 8.50354 7.27903 8.50354 7.83203C8.50354 8.38503 8.05654 8.83203 7.50354 8.83203Z" fill="#0A4F4D"/>
+                                        </svg>
+                                    </div>
+                                    <div class="w-full">
+                                        <div class="mb-4 flex items-center justify-between">
+                                            <p class="text-lance-black-60 tracking-[-0.16px]">Your score</p>
+                                            <p class="text-[#041111] text-xl leading-[30px] font-medium tracking-[-0.2px]">
+                                                838/1000
+                                            </p>
+                                            <p class="py-1 px-6 text-lance-green rounded-[31px] bg-lance-green-5">Excellent</p>
+                                        </div>
+                                        <div class="rounded-[3px] bg-lance-green-10 h-1.5 w-full" style="box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25) inset;">
+                                            <div class="rounded-[3px] h-full w-[83.8%]" style="background: linear-gradient(270deg, #09837F 2.17%, #E8FF28 99.93%)"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="mb-1 text-[#1E1721] font-medium">What does this mean?</p>
+                                <p class="text-lance-black-60">
+                                    By requiring a referral code, we ensure that our community remains a curated space of like-minded individuals who are genuinely invested in growth, collaboration, and support.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-6">
+                        <div class="flex gap-[132px]">
+                            <div class="basis-[251px]">
+                                <p class="text-[#1E1721] font-medium tracking-[-0.16px]">Improving Your Rating</p>
+                                <p class="text-lance-black-60 text-sm leading-6 tracking-[-0.14px]">
+                                    Everything you need to know about the Lance and how it works.
+                                </p>
+                            </div>
+                            <ul class="basis-[calc(100%-383px)]">
+                                <li class="flex items-center gap-4 pb-4 border-b border-solid border-lance-black-10">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-full bg-lance-green-5">
+                                        <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.21653 14.3371C5.05653 14.3371 4.89553 14.2861 4.75953 14.1821C4.43153 13.9291 4.36953 13.4581 4.62253 13.1301L7.61553 9.2401C7.73753 9.0811 7.91853 8.9781 8.11653 8.9531C8.31853 8.9271 8.51653 8.9831 8.67353 9.1081L11.4935 11.3231L13.9605 8.1401C14.2145 7.8111 14.6845 7.7501 15.0125 8.0061C15.3405 8.2601 15.4005 8.7311 15.1465 9.0581L12.2165 12.8381C12.0945 12.9961 11.9145 13.0991 11.7165 13.1231C11.5165 13.1501 11.3185 13.0921 11.1605 12.9691L8.34253 10.7551L5.81153 14.0441C5.66353 14.2361 5.44153 14.3371 5.21653 14.3371Z" fill="#0A4F4D"/>
+                                            <mask id="mask0_7614_8680" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="15" y="0" width="6" height="6">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M15.2954 0.333984H20.6394V5.67888H15.2954V0.333984Z" fill="white"/>
+                                            </mask>
+                                            <g mask="url(#mask0_7614_8680)">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M17.9674 1.83398C17.3214 1.83398 16.7954 2.35898 16.7954 3.00598C16.7954 3.65198 17.3214 4.17898 17.9674 4.17898C18.6134 4.17898 19.1394 3.65198 19.1394 3.00598C19.1394 2.35898 18.6134 1.83398 17.9674 1.83398ZM17.9674 5.67898C16.4944 5.67898 15.2954 4.47998 15.2954 3.00598C15.2954 1.53198 16.4944 0.333984 17.9674 0.333984C19.4414 0.333984 20.6394 1.53198 20.6394 3.00598C20.6394 4.47998 19.4414 5.67898 17.9674 5.67898Z" fill="#0A4F4D"/>
+                                            </g>
+                                            <mask id="mask1_7614_8680" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="1" width="20" height="21">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 1.17578H19.8619V21.0368H0V1.17578Z" fill="white"/>
+                                            </mask>
+                                            <g mask="url(#mask1_7614_8680)">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M14.233 21.0368H5.629C2.262 21.0368 0 18.6718 0 15.1518V7.06978C0 3.54478 2.262 1.17578 5.629 1.17578H12.897C13.311 1.17578 13.647 1.51178 13.647 1.92578C13.647 2.33978 13.311 2.67578 12.897 2.67578H5.629C3.121 2.67578 1.5 4.39978 1.5 7.06978V15.1518C1.5 17.8568 3.082 19.5368 5.629 19.5368H14.233C16.741 19.5368 18.362 17.8158 18.362 15.1518V8.11278C18.362 7.69878 18.698 7.36278 19.112 7.36278C19.526 7.36278 19.862 7.69878 19.862 8.11278V15.1518C19.862 18.6718 17.6 21.0368 14.233 21.0368Z" fill="#0A4F4D"/>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <div class="tracking-[-0.16px]">
+                                        <p class="text-[#1E1721] font-medium mb-1">Loan more, Earn more</p>
+                                        <p class="text-lance-black-60">
+                                            By loaning more and paying back successfully, your credit rating increases.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="flex items-center gap-4 py-4 border-b border-solid border-lance-black-10">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-full bg-lance-green-5">
+                                        <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.21653 14.3371C5.05653 14.3371 4.89553 14.2861 4.75953 14.1821C4.43153 13.9291 4.36953 13.4581 4.62253 13.1301L7.61553 9.2401C7.73753 9.0811 7.91853 8.9781 8.11653 8.9531C8.31853 8.9271 8.51653 8.9831 8.67353 9.1081L11.4935 11.3231L13.9605 8.1401C14.2145 7.8111 14.6845 7.7501 15.0125 8.0061C15.3405 8.2601 15.4005 8.7311 15.1465 9.0581L12.2165 12.8381C12.0945 12.9961 11.9145 13.0991 11.7165 13.1231C11.5165 13.1501 11.3185 13.0921 11.1605 12.9691L8.34253 10.7551L5.81153 14.0441C5.66353 14.2361 5.44153 14.3371 5.21653 14.3371Z" fill="#0A4F4D"/>
+                                            <mask id="mask0_7614_8680" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="15" y="0" width="6" height="6">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M15.2954 0.333984H20.6394V5.67888H15.2954V0.333984Z" fill="white"/>
+                                            </mask>
+                                            <g mask="url(#mask0_7614_8680)">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M17.9674 1.83398C17.3214 1.83398 16.7954 2.35898 16.7954 3.00598C16.7954 3.65198 17.3214 4.17898 17.9674 4.17898C18.6134 4.17898 19.1394 3.65198 19.1394 3.00598C19.1394 2.35898 18.6134 1.83398 17.9674 1.83398ZM17.9674 5.67898C16.4944 5.67898 15.2954 4.47998 15.2954 3.00598C15.2954 1.53198 16.4944 0.333984 17.9674 0.333984C19.4414 0.333984 20.6394 1.53198 20.6394 3.00598C20.6394 4.47998 19.4414 5.67898 17.9674 5.67898Z" fill="#0A4F4D"/>
+                                            </g>
+                                            <mask id="mask1_7614_8680" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="1" width="20" height="21">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 1.17578H19.8619V21.0368H0V1.17578Z" fill="white"/>
+                                            </mask>
+                                            <g mask="url(#mask1_7614_8680)">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M14.233 21.0368H5.629C2.262 21.0368 0 18.6718 0 15.1518V7.06978C0 3.54478 2.262 1.17578 5.629 1.17578H12.897C13.311 1.17578 13.647 1.51178 13.647 1.92578C13.647 2.33978 13.311 2.67578 12.897 2.67578H5.629C3.121 2.67578 1.5 4.39978 1.5 7.06978V15.1518C1.5 17.8568 3.082 19.5368 5.629 19.5368H14.233C16.741 19.5368 18.362 17.8158 18.362 15.1518V8.11278C18.362 7.69878 18.698 7.36278 19.112 7.36278C19.526 7.36278 19.862 7.69878 19.862 8.11278V15.1518C19.862 18.6718 17.6 21.0368 14.233 21.0368Z" fill="#0A4F4D"/>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <div class="tracking-[-0.16px]">
+                                        <p class="text-[#1E1721] font-medium mb-1">Early Loan Repayments</p>
+                                        <p class="text-lance-black-60">
+                                            The more frequently you repay your loans, the higher your credit score increases.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="flex items-center gap-4 py-4">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-full bg-lance-green-5">
+                                        <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.21653 14.3371C5.05653 14.3371 4.89553 14.2861 4.75953 14.1821C4.43153 13.9291 4.36953 13.4581 4.62253 13.1301L7.61553 9.2401C7.73753 9.0811 7.91853 8.9781 8.11653 8.9531C8.31853 8.9271 8.51653 8.9831 8.67353 9.1081L11.4935 11.3231L13.9605 8.1401C14.2145 7.8111 14.6845 7.7501 15.0125 8.0061C15.3405 8.2601 15.4005 8.7311 15.1465 9.0581L12.2165 12.8381C12.0945 12.9961 11.9145 13.0991 11.7165 13.1231C11.5165 13.1501 11.3185 13.0921 11.1605 12.9691L8.34253 10.7551L5.81153 14.0441C5.66353 14.2361 5.44153 14.3371 5.21653 14.3371Z" fill="#0A4F4D"/>
+                                            <mask id="mask0_7614_8680" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="15" y="0" width="6" height="6">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M15.2954 0.333984H20.6394V5.67888H15.2954V0.333984Z" fill="white"/>
+                                            </mask>
+                                            <g mask="url(#mask0_7614_8680)">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M17.9674 1.83398C17.3214 1.83398 16.7954 2.35898 16.7954 3.00598C16.7954 3.65198 17.3214 4.17898 17.9674 4.17898C18.6134 4.17898 19.1394 3.65198 19.1394 3.00598C19.1394 2.35898 18.6134 1.83398 17.9674 1.83398ZM17.9674 5.67898C16.4944 5.67898 15.2954 4.47998 15.2954 3.00598C15.2954 1.53198 16.4944 0.333984 17.9674 0.333984C19.4414 0.333984 20.6394 1.53198 20.6394 3.00598C20.6394 4.47998 19.4414 5.67898 17.9674 5.67898Z" fill="#0A4F4D"/>
+                                            </g>
+                                            <mask id="mask1_7614_8680" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="1" width="20" height="21">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 1.17578H19.8619V21.0368H0V1.17578Z" fill="white"/>
+                                            </mask>
+                                            <g mask="url(#mask1_7614_8680)">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M14.233 21.0368H5.629C2.262 21.0368 0 18.6718 0 15.1518V7.06978C0 3.54478 2.262 1.17578 5.629 1.17578H12.897C13.311 1.17578 13.647 1.51178 13.647 1.92578C13.647 2.33978 13.311 2.67578 12.897 2.67578H5.629C3.121 2.67578 1.5 4.39978 1.5 7.06978V15.1518C1.5 17.8568 3.082 19.5368 5.629 19.5368H14.233C16.741 19.5368 18.362 17.8158 18.362 15.1518V8.11278C18.362 7.69878 18.698 7.36278 19.112 7.36278C19.526 7.36278 19.862 7.69878 19.862 8.11278V15.1518C19.862 18.6718 17.6 21.0368 14.233 21.0368Z" fill="#0A4F4D"/>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <div class="tracking-[-0.16px]">
+                                        <p class="text-[#1E1721] font-medium mb-1">Early Loan Repayments</p>
+                                        <p class="text-lance-black-60">
+                                            The more frequently you repay your loans, the higher your credit score increases.
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
 
+                </div>
 
                 <div v-show="activeTab == 'password'">
                     <div class="flex items-center justify-between border-b border-solid border-lance-black-5 pb-4">
@@ -644,8 +786,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
 
@@ -703,19 +843,11 @@
 </template>
 
 <style scoped>
+
     .faq-text, .faq-tip{
         transition: all 1s ease 0s
     }
-.a{
-    color: var(--Text-60, rgba(4, 17, 17, 0.60));
-font-feature-settings: 'liga' off;
-font-family: Gelion;
-font-size: 16px;
-font-style: normal;
-font-weight: 400;
-line-height: 24px; /* 150% */
-letter-spacing: -0.16px;
-}
+    
 </style>
 
 <script setup lang="ts">
