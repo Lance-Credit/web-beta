@@ -259,7 +259,10 @@
 
     const activeLoan: Ref<Loan | null> = ref({
         amount: 400000,
+        active: true,
         totalPaid: 200000,
+        dueDate: '18th Aug 2023',
+        duration: 6,
         repayments: [
             {
                 amount: 24500,

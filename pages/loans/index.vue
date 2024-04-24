@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <div class="border-t border-solid border-lance-black-5 pt-4 flex gap-6">
-                            <button class="btn btn-tertiary w-full">See Loan Details</button>
+                            <button @click="viewLoanDetails(activeLoan)" class="btn btn-tertiary w-full">See Loan Details</button>
                             <button class="btn btn-primary w-full">Make a Repayment</button>
                         </div>
                     </div>
@@ -98,7 +98,9 @@
             <div class="rounded-xl bg-white border border-solid border-lance-black-10 p-10 basis-2/4">
                 <p class="mb-6 text-[#1E1721] text-xl font-medium leading-[26px] tracking-[-0.2px]">Loan History</p>
                 <ul class="flex flex-col gap-4">
-                    <li v-for="(loan, key) in loanHistory" :key="key" class="py-3 px-6 rounded-2xl border border-solid border-lance-black-10 flex items-center justify-between">
+                    <li
+                        @click="viewLoanDetails(loan)" v-for="(loan, key) in loanHistory" :key="key"
+                        class="py-3 px-6 rounded-2xl border border-solid border-lance-black-10 flex items-center justify-between cursor-pointer">
                         <div class="basis-1/3">
                             <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Amount</p>
                             <p class="text-black text-sm font-medium leading-5">N {{ (loan.amount).toLocaleString() }}</p>
@@ -120,6 +122,8 @@
                 </ul>
             </div>
         </div>
+
+        <Loans-DetailsModal @@close-loan-details-modal="showSelectedLoanDetails = false" v-show="showSelectedLoanDetails" :loan="selectedLoan" />
     </div>
 </template>
 <style>
@@ -140,7 +144,7 @@ background: var(--White-100, #FFF);
 
     // const loanHistory: [] = [];
 
-    const loanHistory = [
+    const loanHistory: Loan[] = [
         {
             amount: 300000,
             duration: 6,
@@ -171,7 +175,16 @@ background: var(--White-100, #FFF);
                 {
                     amount: 24500,
                     date: '13 May 2034'
-                },
+                }
+            ]
+        },
+        {
+            amount: 300000,
+            duration: 2,
+            active: false,
+            dueDate: '24th Aug 2023',
+            totalPaid: 300000,
+            repayments: [
                 {
                     amount: 24500,
                     date: '13 May 2034'
@@ -184,21 +197,37 @@ background: var(--White-100, #FFF);
         },
         {
             amount: 300000,
-            duration: 6,
+            duration: 2,
             active: false,
-            totalPaid: 300000
+            dueDate: '24th Aug 2023',
+            totalPaid: 300000,
+            repayments: [
+                {
+                    amount: 24500,
+                    date: '13 May 2034'
+                },
+                {
+                    amount: 24500,
+                    date: '13 May 2034'
+                }
+            ]
         },
         {
             amount: 300000,
-            duration: 6,
+            duration: 2,
             active: false,
-            totalPaid: 300000
-        },
-        {
-            amount: 300000,
-            duration: 6,
-            active: false,
-            totalPaid: 300000
+            dueDate: '24th Aug 2023',
+            totalPaid: 300000,
+            repayments: [
+                {
+                    amount: 24500,
+                    date: '13 May 2034'
+                },
+                {
+                    amount: 24500,
+                    date: '13 May 2034'
+                }
+            ]
         }
     ];
 
@@ -212,6 +241,15 @@ background: var(--White-100, #FFF);
             return (loan.totalPaid / loan.amount) * 100;
         }
         return 100;
-    })
+    });
+
+    const selectedLoan: Ref<Loan | null> = ref(null);
+    
+    const showSelectedLoanDetails: Ref<boolean> = ref(false);
+    
+    function viewLoanDetails(loan: Loan){
+        selectedLoan.value = loan;
+        showSelectedLoanDetails.value = true;
+    }
 
 </script>
