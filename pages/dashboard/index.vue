@@ -89,7 +89,7 @@
                         <p>Total Loan Received : <span class="font-semibold">N {{ activeLoan ? (activeLoan.amount).toLocaleString() : '0'}}</span></p>
                     </div>
                     <div class="h-2 w-full rounded-lg bg-white" style="box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.10) inset;">
-                        <div class="h-full rounded-lg" style="background: linear-gradient(270deg, #E8FF28 -2.03%, #09837F 101.29%);" :style="`width: ${percentageLoanPaid}%`"></div>
+                        <div class="h-full rounded-lg" style="background: linear-gradient(90deg, #E8FF28 -2.03%, #09837F 101.29%);" :style="`width: ${percentageLoanPaid}%`"></div>
                     </div>
                 </div>
                 <div class="basis-[273px] py-8 px-6 flex flex-col justify-between rounded-xl bg-white border border-solid border-lance-green-10 grow">

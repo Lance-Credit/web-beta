@@ -4,6 +4,8 @@ export default {
   theme: {
     colors: {
       'white': '#FFF',
+      'black': '#000',
+
       'lance-green': '#0A4F4D',
       'lance-green-5': 'rgba(10,79,77,0.05)',
       'lance-green-10': 'rgba(10,79,77,0.10)',

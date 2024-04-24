@@ -58,6 +58,13 @@
     font-weight: 600;
 }
 
+@font-face {
+    font-family: 'Gelion';
+    src: url('~/assets/fonts/Gelion-Bold.woff');
+    font-style: normal;
+    font-weight: 700;
+}
+
 /* @font-face {
     font-family: 'Cabinet';
     src: url('~/assets/fonts/CabinetGrotesk-Bold.woff2');
