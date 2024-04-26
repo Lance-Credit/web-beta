@@ -10,7 +10,6 @@
                 </svg>
             </div>
             <slot />
-            <input type="radio" :name="name" :value="value" class="hidden">
         </label>
     </div>
 </template>
