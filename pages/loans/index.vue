@@ -124,7 +124,10 @@
         </div>
 
         <Loans-DetailsModal @@close-loan-details-modal="showSelectedLoanDetails = false" v-show="showSelectedLoanDetails" :loan="selectedLoan" />
-        <Loans-RepaymentModal v-if="activeLoan" @@close-loan-repayment-modal="showLoanRepaymentModal = false" v-show="showLoanRepaymentModal" :loan="activeLoan" />
+        <Loans-RepaymentModal
+            v-if="activeLoan" @@close-loan-repayment-modal="showLoanRepaymentModal = false"
+            @@successful-loan-repayment="loanRepaymentSuccessful"
+            v-show="showLoanRepaymentModal" :loan="activeLoan" :wallet-balance="balance" />
     </div>
 </template>
 <style>
@@ -136,10 +139,14 @@ background: var(--White-100, #FFF);
 </style>
 <script setup lang="ts">
 
+    import { useWalletStore } from '@/stores/wallet';
+
     definePageMeta({
         middleware: 'auth',
         layout: 'dashboard'
     });
+
+    const { balance, fetchWalletBalance } = useWalletStore();
 
     const showLoanInstructions: Ref<boolean> = ref(false);
 
@@ -254,5 +261,10 @@ background: var(--White-100, #FFF);
     }
 
     const showLoanRepaymentModal: Ref<boolean> = ref(false);
+    
+    async function loanRepaymentSuccessful(){
+        showLoanRepaymentModal.value = false;
+        // refetch loanHistory
+    }
 
 </script>
