@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-show="!continueLoanRequestProcess">
         <KYC-Process v-if="!kycCompleted" v-show="continueKycProcess" @@stop-kyc-process="continueKycProcess = false" />
 
         <div v-show="!continueKycProcess">
@@ -24,13 +24,20 @@
                 </div>
                 <div class="flex gap-4 items-center">
                     <NuxtLink to="/wallet" class="btn btn-secondary">Withdraw from wallet</NuxtLink>
-                    <NuxtLink :to="activeLoan ? '' : '/loans'" class="btn btn-primary gap-4">
-                        <span>{{ activeLoan ? 'Make a repayment' : 'Request a Loan'}}</span>
+                    <NuxtLink v-if="activeLoan" :to="'/loans'" class="btn btn-primary gap-4">
+                        <span>Make a repayment</span>
                         <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M3.58044 9.771C3.58044 9.45458 3.81557 9.19309 4.12064 9.1517L4.20544 9.146H16.7054C17.0506 9.146 17.3304 9.42582 17.3304 9.771C17.3304 10.0874 17.0953 10.3489 16.7903 10.3903L16.7054 10.396H4.20544C3.86027 10.396 3.58044 10.1162 3.58044 9.771Z" fill="white"/>
                             <path d="M11.223 5.19356C10.9783 4.95001 10.9775 4.55428 11.221 4.30968C11.4425 4.08731 11.7896 4.0664 12.0347 4.24741L12.1049 4.30778L17.1466 9.32778C17.3696 9.54985 17.3899 9.89828 17.2075 10.1433L17.1466 10.2135L12.105 15.2344C11.8604 15.4779 11.4647 15.4771 11.2211 15.2325C10.9997 15.0102 10.9802 14.6629 11.1623 14.4186L11.2229 14.3486L15.8196 9.77042L11.223 5.19356Z" fill="white"/>
                         </svg>
                     </NuxtLink>
+                    <button v-else @click="showLoansThingsToNote = true" class="btn btn-primary gap-4">
+                        <span>Request a Loan</span>
+                        <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3.58044 9.771C3.58044 9.45458 3.81557 9.19309 4.12064 9.1517L4.20544 9.146H16.7054C17.0506 9.146 17.3304 9.42582 17.3304 9.771C17.3304 10.0874 17.0953 10.3489 16.7903 10.3903L16.7054 10.396H4.20544C3.86027 10.396 3.58044 10.1162 3.58044 9.771Z" fill="white"/>
+                            <path d="M11.223 5.19356C10.9783 4.95001 10.9775 4.55428 11.221 4.30968C11.4425 4.08731 11.7896 4.0664 12.0347 4.24741L12.1049 4.30778L17.1466 9.32778C17.3696 9.54985 17.3899 9.89828 17.2075 10.1433L17.1466 10.2135L12.105 15.2344C11.8604 15.4779 11.4647 15.4771 11.2211 15.2325C10.9997 15.0102 10.9802 14.6629 11.1623 14.4186L11.2229 14.3486L15.8196 9.77042L11.223 5.19356Z" fill="white"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
             <div
@@ -210,7 +217,13 @@
             @@continue-kyc-process="showKycProcess"
         />
         <Wallet-TransactionDetailsModal @@closeTransactionDetailsModal="showSelectedTransaction = false" v-show="showSelectedTransaction" :transaction="selectedTransaction" />
+        <Loans-ThingsToNote
+            v-show="showLoansThingsToNote"
+            @@close-loans-things-to-note-modal="showLoansThingsToNote = false"
+            @@continue-loan-request-process="showLoanRequestProcess"
+        />
     </div>
+    <Loans-RequestProcess v-show="continueLoanRequestProcess" @@close-loan-application-modal="continueLoanRequestProcess = false" />
 </template>
 
 <script setup lang="ts">
@@ -242,6 +255,33 @@
         navigator.clipboard.writeText(referralCode.value);
     }
 
+
+
+
+
+
+
+
+
+    const showLoansThingsToNote: Ref<boolean> = ref(false);
+    
+    const continueLoanRequestProcess: Ref<boolean> = ref(false);
+
+    function showLoanRequestProcess(){
+        showLoansThingsToNote.value = false;
+        continueLoanRequestProcess.value = true;
+    }
+
+    
+
+
+
+
+
+
+
+
+
     const kycCompleted: Ref<boolean> = ref(false);
     
     const kycCompletion: Ref<number> = ref(0);
@@ -255,29 +295,29 @@
         continueKycProcess.value = true;
     }
     
-    // const activeLoan: Ref<Loan | null> = ref(null);
+    const activeLoan: Ref<Loan | null> = ref(null);
 
-    const activeLoan: Ref<Loan | null> = ref({
-        amount: 400000,
-        active: true,
-        totalPaid: 200000,
-        dueDate: '18th Aug 2023',
-        duration: 6,
-        repayments: [
-            {
-                amount: 24500,
-                date: '18th Aug 2023'
-            },
-            {
-                amount: 24500,
-                date: '24th Aug 2023'
-            },
-            {
-                amount: 24500,
-                date: '30th Aug 2023'
-            }
-        ]
-    });
+    // const activeLoan: Ref<Loan | null> = ref({
+    //     amount: 400000,
+    //     active: true,
+    //     totalPaid: 200000,
+    //     dueDate: '18th Aug 2023',
+    //     duration: 6,
+    //     repayments: [
+    //         {
+    //             amount: 24500,
+    //             date: '18th Aug 2023'
+    //         },
+    //         {
+    //             amount: 24500,
+    //             date: '24th Aug 2023'
+    //         },
+    //         {
+    //             amount: 24500,
+    //             date: '30th Aug 2023'
+    //         }
+    //     ]
+    // });
 
     const percentageLoanPaid = computed(() => {
         const loan: Loan | null = activeLoan.value;
