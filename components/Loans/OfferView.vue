@@ -12,7 +12,7 @@
                     </p>
                     <p v-else class="text-[#5D242D]">Your loan offer was not approved.</p>
                 </div>
-                
+
                 <div v-if="notification?.approved" class="rounded-lg border border-solid border-lance-black bg-[rgba(236,255,77,0.05)]">
                     <div class="p-6 bg-lance-green-5 text-center">
                         <p class="mb-1 text-lance-black-50 text-sm">Total Repayment Amount</p>
@@ -180,11 +180,14 @@
                 </div>
 
                 <div v-if="notification?.approved" class="flex items-center gap-[14px]">
-                    <button class="btn btn-tertiary w-full">Reject Offer</button>
-                    <button class="btn btn-primary w-full">Accept Offer</button>
+                    <button @click="rejectLoanOffer" class="btn btn-tertiary w-full" :disabled="acceptingLoanOffer || rejectingLoanOffer">Reject Offer</button>
+                    <button @click="acceptLoanOffer" class="btn btn-primary w-full" :disabled="acceptingLoanOffer || rejectingLoanOffer">Accept Offer</button>
                 </div>
             </div>
         </div>
+
+        <Loans-OfferAcceptanceModal v-if="loanOfferAcceptanceSuccess" />
+        <Loans-OfferRejectionModal v-if="loanOfferRejectionSuccess" />
     </div>
 </template>
 <style>
@@ -225,5 +228,31 @@ line-height: 30px; /* 150% */
         }
         return 0;
     });
+
+    const acceptingLoanOffer: Ref<boolean> = ref(false);
+    
+    const loanOfferAcceptanceSuccess: Ref<boolean> = ref(false);
+
+    const rejectingLoanOffer: Ref<boolean> = ref(false);
+    
+    const loanOfferRejectionSuccess: Ref<boolean> = ref(false);
+
+    async function acceptLoanOffer(){
+        acceptingLoanOffer.value = true;
+        setTimeout(()=>{
+            loanOfferAcceptanceSuccess.value = true;
+        }, 5000);
+
+        // mark notification as read
+    }
+
+    async function rejectLoanOffer(){
+        rejectingLoanOffer.value = true;
+        setTimeout(()=>{
+            loanOfferRejectionSuccess.value = true;
+        }, 5000);
+
+        // mark notification as read
+    }
 
 </script>
