@@ -180,14 +180,14 @@
                 </div>
 
                 <div v-if="notification?.approved" class="flex items-center gap-[14px]">
-                    <button @click="rejectLoanOffer" class="btn btn-tertiary w-full" :disabled="acceptingLoanOffer || rejectingLoanOffer">Reject Offer</button>
-                    <button @click="acceptLoanOffer" class="btn btn-primary w-full" :disabled="acceptingLoanOffer || rejectingLoanOffer">Accept Offer</button>
+                    <button @click="showLoanOfferRejectionModal = true" class="btn btn-tertiary w-full" :disabled="acceptingLoanOffer">Reject Offer</button>
+                    <button @click="acceptLoanOffer" class="btn btn-primary w-full" :disabled="acceptingLoanOffer">Accept Offer</button>
                 </div>
             </div>
         </div>
 
         <Loans-OfferAcceptanceModal v-if="loanOfferAcceptanceSuccess" />
-        <Loans-OfferRejectionModal v-if="loanOfferRejectionSuccess" />
+        <Loans-OfferRejectionModal v-if="showLoanOfferRejectionModal"  @@close-offer-rejection-modal="showLoanOfferRejectionModal = false" />
     </div>
 </template>
 <style>
@@ -232,10 +232,8 @@ line-height: 30px; /* 150% */
     const acceptingLoanOffer: Ref<boolean> = ref(false);
     
     const loanOfferAcceptanceSuccess: Ref<boolean> = ref(false);
-
-    const rejectingLoanOffer: Ref<boolean> = ref(false);
     
-    const loanOfferRejectionSuccess: Ref<boolean> = ref(false);
+    const showLoanOfferRejectionModal: Ref<boolean> = ref(false);
 
     async function acceptLoanOffer(){
         acceptingLoanOffer.value = true;
@@ -247,9 +245,8 @@ line-height: 30px; /* 150% */
     }
 
     async function rejectLoanOffer(){
-        rejectingLoanOffer.value = true;
         setTimeout(()=>{
-            loanOfferRejectionSuccess.value = true;
+            showLoanOfferRejectionModal.value = true;
         }, 5000);
 
         // mark notification as read
