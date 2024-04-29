@@ -124,7 +124,7 @@
                         <div>
                             <p class="mb-1 text-lance-black-50 text-sm leading-5">Loan Amount</p>
                             <p class="text-lance-green text-xl font-semibold leading-[30px]">
-                                N{{ (notification?.loanAmount)?.loan.toLocaleString() }}
+                                N{{ (notification?.loan.loanAmount)?.toLocaleString() }}
                             </p>
                         </div>
                         <p class="text-lance-black-70 text-sm leading-[21px]">Reasons below</p>
