@@ -56,7 +56,10 @@ background: #FFF;
             time: '11:39 AM',
             summary: 'Your loan request has been reviewed. View details of you offer now.',
             approved: true,
-            loanAmount: 500000
+            loan: {
+                loanAmount: 500000,
+                loanDuration: 6
+            }
         },
         {
             date: 'Today',
@@ -65,7 +68,10 @@ background: #FFF;
             time: '11:39 AM',
             summary: 'Your loan request has been reviewed. View details of you offer now.',
             approved: false,
-            loanAmount: 600000
+            loan: {
+                loanAmount: 500000,
+                loanDuration: 7
+            }
         }
     ]);
     
