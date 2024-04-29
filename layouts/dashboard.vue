@@ -142,7 +142,7 @@
                     class="py-2.5 px-4 pl-[41px] rounded-md border border-solid border-[rgba(10,79,77,0.20)] w-[376px] bg-[url('/assets/img/icons/search.svg')] bg-no-repeat bg-[center_left_18px] outline-none"
                 >
                 <div class="flex gap-6 items-center">
-                    <div class="relative p-2.5 rounded-md border border-solid border-[#BFBDC2]">
+                    <NuxtLink to="/notifications" class="relative p-2.5 rounded-md border border-solid border-[#BFBDC2]">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <mask id="mask0_7374_6096" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="3" y="1" width="19" height="18">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M3.00012 1H21.497V18.348H3.00012V1Z" fill="white"/>
@@ -153,7 +153,7 @@
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M12.1984 22.5001H12.1964C11.0754 22.4991 10.0144 22.0051 9.20939 21.1081C8.93239 20.8011 8.95739 20.3261 9.26539 20.0501C9.57339 19.7721 10.0474 19.7971 10.3244 20.1061C10.8424 20.6831 11.5074 21.0001 12.1974 21.0001H12.1984C12.8914 21.0001 13.5594 20.6831 14.0784 20.1051C14.3564 19.7981 14.8304 19.7731 15.1374 20.0501C15.4454 20.3271 15.4704 20.8021 15.1934 21.1091C14.3854 22.0061 13.3224 22.5001 12.1984 22.5001Z" fill="#8C8890"/>
                         </svg>
                         <div class="w-2 h-2 absolute top-3 right-2.5 bg-[#E70A3F] rounded-full"></div>
-                    </div>
+                    </NuxtLink>
                     <div class="flex items-center gap-2">
                         <div class="w-[44px] h-[44px] rounded-full bg-cover bg-[#9BA6B9] bg-[url('/assets/img/kofo.jpg')]"></div>
                         <p class="text-[#1E1721] font-medium">{{ fullName }}</p>
