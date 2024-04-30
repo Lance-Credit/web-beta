@@ -140,7 +140,8 @@
         layout: 'dashboard'
     });
 
-    const { balance, fetchWalletBalance } = useWalletStore();
+    const { fetchWalletBalance } = useWalletStore();
+    const { balance } = storeToRefs(useWalletStore());
 
     const showLoanInstructions: Ref<boolean> = ref(false);
 

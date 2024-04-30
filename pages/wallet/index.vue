@@ -84,7 +84,8 @@
 
     const { apiURL } = useRuntimeConfig().public;
 
-    const { balance, fetchWalletBalance } = useWalletStore();
+    const { fetchWalletBalance } = useWalletStore();
+    const { balance } = storeToRefs(useWalletStore());
 
     const headers = useRequestHeaders(['cookie']) as HeadersInit;
     const { data: { value: jwt } } = await useFetch('/api/token', { headers });

@@ -865,7 +865,7 @@
     
     const { signOut } = useAuth();
 
-    const { kycItems } = useKYCStore();
+    const { kycItems } = storeToRefs(useKYCStore());
 
     const { fullName, userProfile } = storeToRefs(useUserStore());
 
