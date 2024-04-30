@@ -190,17 +190,7 @@
         <Loans-OfferRejectionModal v-if="showLoanOfferRejectionModal"  @@close-offer-rejection-modal="showLoanOfferRejectionModal = false" />
     </div>
 </template>
-<style>
-.a{
-    color: var(--Primary-Green-100, #0A4F4D);
-text-align: center;
-font-family: Gelion;
-font-size: 20px;
-font-style: normal;
-font-weight: 600;
-line-height: 30px; /* 150% */
-}
-</style>
+
 <script setup lang="ts">
 
     const props = defineProps<{

@@ -98,16 +98,7 @@
         </div>
     </div>
 </template>
-<style>
-.a{
-    color: var(--Primary-Green-100, #0A4F4D);
-font-family: Gelion;
-font-size: 14px;
-font-style: normal;
-font-weight: 600;
-line-height: 24px;
-}
-</style>
+
 <script setup lang="ts">
 
     import * as yup from 'yup';

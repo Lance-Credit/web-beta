@@ -130,13 +130,7 @@
             v-show="showLoanRepaymentModal" :loan="activeLoan" :wallet-balance="balance" />
     </div>
 </template>
-<style>
-.a{
-    border-radius: 11.667px;
-border: 1.75px solid var(--Primary-Green-100, #0A4F4D);
-background: var(--White-100, #FFF);
-}
-</style>
+
 <script setup lang="ts">
 
     import { useWalletStore } from '@/stores/wallet';

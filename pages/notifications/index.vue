@@ -31,50 +31,28 @@
         <Loans-OfferView v-show="showLoanOfferView" :notification="selectedNotification" />
     </div>
 </template>
-<style>
-.a{
-    border-radius: 12px;
-background: #FFF;
-}
-</style>
+
 <script setup lang="ts">
+
+    import { useNotificationsStore } from '@/stores/notifications';
 
     definePageMeta({
         middleware: 'auth',
         layout: 'dashboard'
     });
+    
+    const { fetchNotifications } = useNotificationsStore();
+    const { notifications } = storeToRefs(useNotificationsStore());
+
+    const { apiURL } = useRuntimeConfig().public;
+
+    const headers = useRequestHeaders(['cookie']) as HeadersInit;
+    const { data: { value: jwt } } = await useFetch('/api/token', { headers });
 
     onMounted(() => {
-        fetchNotifications();
+        fetchNotifications(jwt?.token, apiURL);
     });
 
-    const notifications = reactive([
-        {
-            date: 'Today',
-            read: false,
-            title: 'Your Loan request was accepted',
-            time: '11:39 AM',
-            summary: 'Your loan request has been reviewed. View details of you offer now.',
-            approved: true,
-            loan: {
-                loanAmount: 500000,
-                loanDuration: 6
-            }
-        },
-        {
-            date: 'Today',
-            read: false,
-            title: 'Your Loan request was not approved',
-            time: '11:39 AM',
-            summary: 'Your loan request has been reviewed. View details of you offer now.',
-            approved: false,
-            loan: {
-                loanAmount: 500000,
-                loanDuration: 7
-            }
-        }
-    ]);
-    
     const showLoanOfferView: Ref<boolean> = ref(false);
 
     const selectedNotification = ref(null);
@@ -84,28 +62,4 @@ background: #FFF;
         selectedNotification.value = notification;
     }
 
-    const { apiURL } = useRuntimeConfig().public;
-
-    const headers = useRequestHeaders(['cookie']) as HeadersInit;
-    const { data: { value: jwt } } = await useFetch('/api/token', { headers });
-
-
-    async function fetchNotifications(){
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/notifications`, {
-            method: 'GET',
-            headers: { 
-                "Content-Type": "application/json",
-                "Authorization" : `Bearer ${jwt?.token}`
-            }
-        });
-
-        if(result){
-            if((result as any).success && !(result as any).error){
-                console.log(result.data.notifications);
-                // notifications.value = result.data.notifications;
-            }
-        }else if(error){
-            console.log(error.value?.data);
-        }
-    }
 </script>

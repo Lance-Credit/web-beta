@@ -169,16 +169,7 @@
         <Loans-SuccessfulLoanApplicationModal v-if="loanApplicationSuccess" @@close-loan-application-modal="emit('@close-loan-application-modal')" />
     </div>
 </template>
-<style>
-.a{
-    color: var(--Primary-Green-100, #0A4F4D);
-font-family: Gelion;
-font-size: 13px;
-font-style: normal;
-font-weight: 500;
-line-height: 160%;
-}
-</style>
+
 <script setup lang="ts">
 
     import * as yup from 'yup';
