@@ -44,12 +44,9 @@ export const useUserStore = defineStore('user', () =>
 
                 }
 
-                const { kycItems, fetchKycStatus } = useKYCStore();
+                const { fetchKycStatus } = useKYCStore();
 
-                kycItems.bvn.completed = (result as any).data.profile.hasVerifiedBvn;
-                kycItems.email.completed = (result as any).data.profile.hasVerifiedEmail;
-
-                // fetchKycStatus(token, apiUrl);
+                fetchKycStatus(token, apiUrl);
 
             }else if(error){
                 // console.log(error.value?.data);

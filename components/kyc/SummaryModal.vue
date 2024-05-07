@@ -7,14 +7,14 @@
             <ul class="text-lance-black text-sm leading-[20px] tracking-[-0.14px] flex flex-col gap-4">
                 <li 
                     class="p-4 rounded-lg border border-solid flex items-center justify-between"
-                    :class="kycItems.email.completed ? 'border-lance-green bg-lance-green-5' : 'border-lance-black-10 bg-white'"
+                    :class="kycItems.account.completed ? 'border-lance-green bg-lance-green-5' : 'border-lance-black-10 bg-white'"
                 >
                     <div class="flex gap-3 items-center">
                         <div
                             class="w-10 h-10 rounded-full flex items-center justify-center"
-                            :class="kycItems.email.completed ? 'bg-lance-green' : 'bg-lance-green-10'"
+                            :class="kycItems.account.completed ? 'bg-lance-green' : 'bg-lance-green-10'"
                         >
-                            <svg v-if="!kycItems.email.completed" width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg v-if="!kycItems.account.completed" width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M7.85128 7.9765C7.40528 7.9765 6.96061 7.82916 6.58861 7.5345L3.59861 5.12383C3.38328 4.9505 3.34994 4.63516 3.52261 4.4205C3.69661 4.2065 4.01128 4.1725 4.22594 4.34516L7.21328 6.75316C7.58861 7.0505 8.11728 7.0505 8.49528 6.7505L11.4526 4.3465C11.6673 4.17116 11.9819 4.2045 12.1566 4.41916C12.3306 4.63316 12.2979 4.94783 12.0839 5.1225L9.12128 7.5305C8.74661 7.82783 8.29861 7.9765 7.85128 7.9765Z" fill="black"/>
                                 <mask id="mask0_7493_10256" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="15" height="14">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M0.666626 0.333496H14.9999V13.3335H0.666626V0.333496Z" fill="white"/>
@@ -27,13 +27,13 @@
                                 <path d="M13.5 2H2.49996C2.01389 2.00051 1.54788 2.19064 1.20417 2.52866C0.860467 2.86668 0.667146 3.32499 0.666626 3.80303V11.5303C0.667146 12.0083 0.860467 12.4667 1.20417 12.8047C1.54788 13.1427 2.01389 13.3328 2.49996 13.3333H13.5C13.986 13.3328 14.452 13.1427 14.7957 12.8047C15.1395 12.4667 15.3328 12.0083 15.3333 11.5303V3.80303C15.3328 3.32499 15.1395 2.86668 14.7957 2.52866C14.452 2.19064 13.986 2.00051 13.5 2ZM13.0357 4.98241L8.32145 8.58847C8.22952 8.65875 8.1164 8.6969 7.99996 8.6969C7.88352 8.6969 7.7704 8.65875 7.67847 8.58847L2.96419 4.98241C2.9088 4.94127 2.86227 4.88972 2.82732 4.83074C2.79236 4.77177 2.76968 4.70655 2.76057 4.63888C2.75147 4.57121 2.75613 4.50244 2.77428 4.43655C2.79244 4.37067 2.82373 4.30899 2.86633 4.2551C2.90893 4.20121 2.962 4.15619 3.02245 4.12265C3.0829 4.0891 3.14953 4.06771 3.21846 4.05971C3.28739 4.05171 3.35725 4.05726 3.42397 4.07604C3.4907 4.09482 3.55297 4.12646 3.60716 4.16911L7.99996 7.52919L12.3928 4.16911C12.5026 4.08753 12.6407 4.05175 12.7771 4.06951C12.9136 4.08726 13.0375 4.15713 13.1219 4.264C13.2064 4.37087 13.2448 4.50615 13.2286 4.64059C13.2125 4.77503 13.1432 4.89782 13.0357 4.98241Z" fill="#ECFF4D"/>
                             </svg>
                         </div>
-                        <p>Email Verification</p>
+                        <p>Account Verification</p>
                     </div>
                     <div
                         class="rounded-full border-solid border-lance-green flex items-center justify-center"
-                        :class="kycItems.email.completed ? 'w-[23.333px] h-[23.333px] border-[1.75px] bg-[#ECFF4D]' : 'w-5 h-5 border-[1.5px] bg-white'"
+                        :class="kycItems.account.completed ? 'w-[23.333px] h-[23.333px] border-[1.75px] bg-[#ECFF4D]' : 'w-5 h-5 border-[1.5px] bg-white'"
                     >
-                        <svg v-if="kycItems.email.completed" xmlns="http://www.w3.org/2000/svg" width="11" height="8" viewBox="0 0 11 8" fill="none">
+                        <svg v-if="kycItems.account.completed" xmlns="http://www.w3.org/2000/svg" width="11" height="8" viewBox="0 0 11 8" fill="none">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M4.28231 7.31015C4.05948 7.31015 3.83431 7.22498 3.66398 7.05348L0.894314 4.28498C0.552481 3.94315 0.552481 3.39015 0.894314 3.04831C1.23615 2.70648 1.78915 2.70648 2.13098 3.04831L4.28231 5.19731L9.20098 0.279813C9.54282 -0.0620209 10.0958 -0.0620209 10.4376 0.279813C10.7795 0.621646 10.7795 1.17465 10.4376 1.51648L4.90065 7.05348C4.73031 7.22498 4.50631 7.31015 4.28231 7.31015Z" fill="#0A4F4D"/>
                         </svg>
                     </div>
@@ -73,14 +73,14 @@
                 </li>
                 <li 
                     class="p-4 rounded-lg border border-solid flex items-center justify-between"
-                    :class="bvnNinKycCompleted ? 'border-lance-green bg-lance-green-5' : 'border-lance-black-10 bg-white'"
+                    :class="kycItems.kyc.completed ? 'border-lance-green bg-lance-green-5' : 'border-lance-black-10 bg-white'"
                 >
                     <div class="flex gap-3 items-center">
                         <div
                             class="w-10 h-10 rounded-full flex items-center justify-center"
-                            :class="bvnNinKycCompleted ? 'bg-lance-green' : 'bg-lance-green-10'"
+                            :class="kycItems.kyc.completed ? 'bg-lance-green' : 'bg-lance-green-10'"
                         >
-                            <svg v-if="!bvnNinKycCompleted" width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg v-if="!kycItems.kyc.completed" width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M7.85128 7.9765C7.40528 7.9765 6.96061 7.82916 6.58861 7.5345L3.59861 5.12383C3.38328 4.9505 3.34994 4.63516 3.52261 4.4205C3.69661 4.2065 4.01128 4.1725 4.22594 4.34516L7.21328 6.75316C7.58861 7.0505 8.11728 7.0505 8.49528 6.7505L11.4526 4.3465C11.6673 4.17116 11.9819 4.2045 12.1566 4.41916C12.3306 4.63316 12.2979 4.94783 12.0839 5.1225L9.12128 7.5305C8.74661 7.82783 8.29861 7.9765 7.85128 7.9765Z" fill="black"/>
                                 <mask id="mask0_7493_10256" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="15" height="14">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M0.666626 0.333496H14.9999V13.3335H0.666626V0.333496Z" fill="white"/>
@@ -97,9 +97,9 @@
                     </div>
                     <div
                         class="rounded-full border-solid border-lance-green flex items-center justify-center"
-                        :class="bvnNinKycCompleted ? 'w-[23.333px] h-[23.333px] border-[1.75px] bg-[#ECFF4D]' : 'w-5 h-5 border-[1.5px] bg-white'"
+                        :class="kycItems.kyc.completed ? 'w-[23.333px] h-[23.333px] border-[1.75px] bg-[#ECFF4D]' : 'w-5 h-5 border-[1.5px] bg-white'"
                     >
-                        <svg v-if="bvnNinKycCompleted" xmlns="http://www.w3.org/2000/svg" width="11" height="8" viewBox="0 0 11 8" fill="none">
+                        <svg v-if="kycItems.kyc.completed" xmlns="http://www.w3.org/2000/svg" width="11" height="8" viewBox="0 0 11 8" fill="none">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M4.28231 7.31015C4.05948 7.31015 3.83431 7.22498 3.66398 7.05348L0.894314 4.28498C0.552481 3.94315 0.552481 3.39015 0.894314 3.04831C1.23615 2.70648 1.78915 2.70648 2.13098 3.04831L4.28231 5.19731L9.20098 0.279813C9.54282 -0.0620209 10.0958 -0.0620209 10.4376 0.279813C10.7795 0.621646 10.7795 1.17465 10.4376 1.51648L4.90065 7.05348C4.73031 7.22498 4.50631 7.31015 4.28231 7.31015Z" fill="#0A4F4D"/>
                         </svg>
                     </div>
@@ -183,7 +183,7 @@
 
     import { useKYCStore } from '@/stores/kyc';
 
-    const { kycItems, bvnNinKycCompleted } = storeToRefs(useKYCStore());
+    const { kycItems } = storeToRefs(useKYCStore());
 
     const emit = defineEmits<{
         '@continue-kyc-process': [],

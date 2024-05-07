@@ -31,7 +31,7 @@
                             <path d="M11.223 5.19356C10.9783 4.95001 10.9775 4.55428 11.221 4.30968C11.4425 4.08731 11.7896 4.0664 12.0347 4.24741L12.1049 4.30778L17.1466 9.32778C17.3696 9.54985 17.3899 9.89828 17.2075 10.1433L17.1466 10.2135L12.105 15.2344C11.8604 15.4779 11.4647 15.4771 11.2211 15.2325C10.9997 15.0102 10.9802 14.6629 11.1623 14.4186L11.2229 14.3486L15.8196 9.77042L11.223 5.19356Z" fill="white"/>
                         </svg>
                     </NuxtLink>
-                    <button v-else @click="showLoansThingsToNote = true" class="btn btn-primary gap-4">
+                    <button v-else @click="kycCompleted ? showLoansThingsToNote = true : showKycIncompleteModal = true" class="btn btn-primary gap-4">
                         <span>Request a Loan</span>
                         <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M3.58044 9.771C3.58044 9.45458 3.81557 9.19309 4.12064 9.1517L4.20544 9.146H16.7054C17.0506 9.146 17.3304 9.42582 17.3304 9.771C17.3304 10.0874 17.0953 10.3489 16.7903 10.3903L16.7054 10.396H4.20544C3.86027 10.396 3.58044 10.1162 3.58044 9.771Z" fill="white"/>
@@ -224,6 +224,8 @@
         />
     </div>
     <Loans-RequestProcess v-show="continueLoanRequestProcess" @@close-loan-application-modal="continueLoanRequestProcess = false" />
+    
+    <KYC-IncompleteKycNotificationModal v-if="!kycCompleted" v-show="showKycIncompleteModal" @@close-kyc-incomplete-modal="showKycIncompleteModal = false" />
 </template>
 
 <script setup lang="ts">
@@ -283,9 +285,32 @@
 
 
 
-    const kycCompleted: Ref<boolean> = ref(false);
-    
-    const kycCompletion: Ref<number> = ref(0);
+    const showKycIncompleteModal: Ref<boolean> = ref(false);
+        
+    const { kycItems, kycCompleted } = storeToRefs(useKYCStore());
+
+    const kycCompletion = computed(() => {
+
+        let completion = 0;
+
+        if(kycItems.value.account.completed){
+            completion = completion + 20;
+        }
+        if(kycItems.value.personalDetails.completed){
+            completion = completion + 20;
+        }
+        if(kycItems.value.kyc.completed){
+            completion = completion + 20;
+        }
+        if(kycItems.value.id.completed){
+            completion = completion + 20;
+        }
+        if(kycItems.value.linkedBankAccount.completed){
+            completion = completion + 20;
+        }
+
+        return completion;
+    });
     
     const showKycSummary: Ref<boolean> = ref(false);
 
