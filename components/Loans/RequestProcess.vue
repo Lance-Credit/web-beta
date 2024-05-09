@@ -13,12 +13,12 @@
                 </div>
                 <div>
                     <Form-MoneyInput
-                        placeholder="Amount" label="Amount" v-bind="loanRequestForm.loanAmount"
+                        placeholder="Amount" label="Amount" v-model="loanRequestForm.loanAmount[0].value" v-bind="loanRequestForm.loanAmount[1].value"
                         :error="loanRequestFormErrors.loanAmount" class="mb-4"
                     />
                     <Form-SelectInput
                         :options="loanDurationListOptions" placeholder="Duration in Months" label="Duration in Months"
-                        v-bind="loanRequestForm.loanDuration" :error="loanRequestFormErrors.loanDuration"
+                        v-model="loanRequestForm.loanDuration[0].value" v-bind="loanRequestForm.loanDuration[1].value" :error="loanRequestFormErrors.loanDuration"
                     />
                 </div>
                 <div v-show="loanRequestFormFilled">
@@ -33,7 +33,7 @@
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M6.24417 4.14497C6.57597 4.14497 6.84717 4.41317 6.84717 4.74497C6.84717 5.07677 6.58137 5.34497 6.25017 5.34497H6.24417C5.91237 5.34497 5.64417 5.07677 5.64417 4.74497C5.64417 4.41317 5.91237 4.14497 6.24417 4.14497Z" fill="#0A4F4D"/>
                         </svg>
                         <p class="text-lance-black-70 text-[13px] leading-[20.8px]">
-                            Interest Rate: <span class="text-lance-green font-medium">25%</span>
+                            Interest Rate: <span class="text-lance-green font-medium">{{ defaultInterestRate }}%</span>
                         </p>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M14.2109 19.4192H7.04093C4.2351 19.4192 2.3501 17.4484 2.3501 14.5151V7.78008C2.3501 4.84257 4.2351 2.86841 7.04093 2.86841H13.0976C13.4426 2.86841 13.7226 3.14841 13.7226 3.49341C13.7226 3.83841 13.4426 4.11841 13.0976 4.11841H7.04093C4.95093 4.11841 3.6001 5.55507 3.6001 7.78008V14.5151C3.6001 16.7692 4.91843 18.1692 7.04093 18.1692H14.2109C16.3009 18.1692 17.6518 16.7351 17.6518 14.5151V8.64924C17.6518 8.30424 17.9318 8.02424 18.2768 8.02424C18.6218 8.02424 18.9018 8.30424 18.9018 8.64924V14.5151C18.9018 17.4484 17.0168 19.4192 14.2109 19.4192Z" fill="#041111" fill-opacity="0.5"/>
                                     </g>
                                 </svg>
-                                <span>Interest Rate (25%)</span>
+                                <span>Interest Rate ({{ defaultInterestRate }}%)</span>
                             </p>
                             <p class="text-lance-black">N {{ totalInterest.toLocaleString() }}</p>
                         </li>
@@ -104,7 +104,7 @@
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M14.2109 19.4192H7.04093C4.2351 19.4192 2.3501 17.4484 2.3501 14.5151V7.78008C2.3501 4.84257 4.2351 2.86841 7.04093 2.86841H13.0976C13.4426 2.86841 13.7226 3.14841 13.7226 3.49341C13.7226 3.83841 13.4426 4.11841 13.0976 4.11841H7.04093C4.95093 4.11841 3.6001 5.55507 3.6001 7.78008V14.5151C3.6001 16.7692 4.91843 18.1692 7.04093 18.1692H14.2109C16.3009 18.1692 17.6518 16.7351 17.6518 14.5151V8.64924C17.6518 8.30424 17.9318 8.02424 18.2768 8.02424C18.6218 8.02424 18.9018 8.30424 18.9018 8.64924V14.5151C18.9018 17.4484 17.0168 19.4192 14.2109 19.4192Z" fill="#041111" fill-opacity="0.5"/>
                                     </g>
                                 </svg>
-                                <span>Processing Fee (2%)</span>
+                                <span>Processing Fee ({{ defaultProcessingFeeRate }}%)</span>
                             </p>
                             <p class="text-lance-black">N {{ processingFee.toLocaleString() }}</p>
                         </li>
@@ -178,25 +178,17 @@
 
     const activeTab: Ref<string> = ref('request');
 
-    const { values: loanRequestFormValues, errors: loanRequestFormErrors, defineComponentBinds } = useForm({
+    const { values: loanRequestFormValues, errors: loanRequestFormErrors, defineField } = useForm({
         validationSchema: yup.object({
             loanAmount: yup.number().required().typeError('Loan amount is required').label('Loan Amount'),
             loanDuration: yup.number().required().label('Loan Duration')
         })
     });
 
-    const loanRequestForm = reactive({
-        loanAmount: defineComponentBinds('loanAmount', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        }),
-        loanDuration: defineComponentBinds('loanDuration', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        })
-    });
+    const loanRequestForm = {
+        loanAmount: defineField('loanAmount'),
+        loanDuration: defineField('loanDuration')
+    };
 
     const loanDurationListOptions = [
         {
@@ -254,16 +246,21 @@
         loanRequestFormValues.loanDuration && !loanRequestFormErrors.value.loanDuration;
     });
 
+    const { defaultInterestRate } = useRuntimeConfig().public;
+    const { defaultProcessingFeeRate } = useRuntimeConfig().public;
+    
     const totalInterest = computed(() => {
         if(loanRequestFormFilled.value){
-            return (loanRequestFormValues.loanAmount * 0.25) * loanRequestFormValues.loanDuration;
+            return (
+                loanRequestFormValues.loanAmount * (parseInt(defaultInterestRate)/100)
+            ) * loanRequestFormValues.loanDuration;
         }
         return 0;
     });
 
     const processingFee = computed(() => {
         if(loanRequestFormFilled.value){
-            return loanRequestFormValues.loanAmount * 0.02;
+            return loanRequestFormValues.loanAmount * (parseInt(defaultProcessingFeeRate)/100);
         }
         return 0;
     });
@@ -271,7 +268,7 @@
     const totalRepayment = computed(() => {
         if(loanRequestFormFilled.value){
             const principal = loanRequestFormValues.loanAmount;
-            return principal + totalInterest.value + processingFee.value;
+            return principal + totalInterest.value;
         }
         return 0;
     });
@@ -280,11 +277,36 @@
 
     const loanApplicationSuccess: Ref<boolean> = ref(false);
 
-    function submitLoanApplication(){
+    const { apiURL } = useRuntimeConfig().public;
+
+    const { data: { value: jwt } } = await useFetch('/api/token');
+
+    async function submitLoanApplication(){
+
         submittingLoanApplication.value = true;
-        setTimeout(()=>{
-            loanApplicationSuccess.value = true;
-        }, 5000)
+        
+
+        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/loans`, {
+            method: 'POST',
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization" : `Bearer ${jwt?.token}`
+            },
+            body: {
+                "source": "web",
+                "amount": loanRequestFormValues.loanAmount,
+                "tenure": loanRequestFormValues.loanDuration
+            }
+        });
+
+        if(result){
+            if((result as any).success && !(result as any).error){
+                loanApplicationSuccess.value = true;
+                submittingLoanApplication.value = false;
+            }
+        }else if(error){
+            // console.log(error.value?.data);
+        }
     }
 
 
