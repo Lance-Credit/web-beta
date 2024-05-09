@@ -15,9 +15,10 @@ export const useWalletStore = defineStore('wallet', () =>
             });
             
 
-            if((result as any).success && !(result as any).error){
-                balance.value = (result as any).data.balance
-
+            if(result){
+                if((result as any).success && !(result as any).error){
+                    balance.value = (result as any).data.balance
+                }
             }else if(error){
                 // console.log(error.value?.data);
             }

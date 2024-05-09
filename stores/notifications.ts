@@ -41,7 +41,7 @@ export const useNotificationsStore = defineStore('notifications', () =>
     
             if(result){
                 if((result as any).success && !(result as any).error){
-                    console.log(result.data.notifications);
+                    console.log((result as any).data.notifications);
                     // notifications.value = result.data.notifications;
                 }
             }else if(error){
