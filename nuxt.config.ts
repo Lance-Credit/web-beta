@@ -3,7 +3,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
-      apiURL: process.env.API_URL || "https://staging-core-api.lancecredit.com"
+      apiURL: process.env.API_URL || "https://staging-core-api.lancecredit.com",
+      defaultInterestRate: process.env.DEFAULT_INTEREST_RATE || "5",
+      defaultProcessingFeeRate: process.env.DEFAULT_PROCESSING_FEE_RATE || "1"
     }
   },
   components: [
