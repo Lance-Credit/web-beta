@@ -317,12 +317,12 @@
                                 <div class="flex flex-col gap-6 basis-[376px]">
                                     <Form-TextInput label="Last Name" v-model="userProfile.lastName" :disabled="true" />
                                     <Form-SelectInput
-                                        :options="maritalStatusListOptions" placeholder="Marital Status" label="Marital Status"
-                                        v-bind="settingsForm.maritalStatus" :error="settingsFormErrors.maritalStatus"
+                                        :options="maritalStatusListOptions" placeholder="Marital Status" label="Marital Status" v-model="settingsForm.maritalStatus[0].value"
+                                        v-bind="settingsForm.maritalStatus[1].value" :error="settingsFormErrors.maritalStatus"
                                     />
                                     <Form-SelectInput
-                                        :options="educationLevelListOptions" placeholder="Education Level" label="Education Level"
-                                        v-bind="settingsForm.educationLevel" :error="settingsFormErrors.educationLevel"
+                                        :options="educationLevelListOptions" placeholder="Education Level" label="Education Level" v-model="settingsForm.educationLevel[0].value"
+                                        v-bind="settingsForm.educationLevel[1].value" :error="settingsFormErrors.educationLevel"
                                     />
                                 </div>                                
                             </div>
@@ -331,17 +331,17 @@
                             <p class="mb-6 text-[#1E1721] font-medium tracking-[-0.16px]">Residential Details</p>
                             <div class="flex gap-[86px]">
                                 <div class="flex flex-col gap-6 basis-[376px]">
-                                    <Form-TextInput placeholder="Residential Address" label="Residential Address" v-bind="settingsForm.residentialAddress" :error="settingsFormErrors.residentialAddress" />
+                                    <Form-TextInput placeholder="Residential Address" label="Residential Address" v-model="settingsForm.residentialAddress[0].value" v-bind="settingsForm.residentialAddress[1].value" :error="settingsFormErrors.residentialAddress" />
                                     <Form-SelectInput
                                         :options="lgaListOptions" placeholder="LGA" label="LGA"
-                                        v-bind="settingsForm.lga" :error="settingsFormErrors.lga"
+                                        v-model="settingsForm.lga[0].value" v-bind="settingsForm.lga[1].value" :error="settingsFormErrors.lga"
                                     />
                                 </div>
                                 <div class="flex flex-col gap-6 basis-[376px]">
-                                    <Form-TextInput placeholder="City" label="City" v-bind="settingsForm.city" :error="settingsFormErrors.city" />
+                                    <Form-TextInput placeholder="City" label="City" v-model="settingsForm.city[0].value" v-bind="settingsForm.city[1].value" :error="settingsFormErrors.city" />
                                     <Form-SelectInput
                                         :options="stateListOptions" placeholder="State" label="State"
-                                        v-bind="settingsForm.state" :error="settingsFormErrors.state"
+                                        v-model="settingsForm.state[0].value" v-bind="settingsForm.state[1].value" :error="settingsFormErrors.state"
                                     />
                                 </div>
                             </div>
@@ -504,16 +504,16 @@
                             <p class="mb-6 text-[#1E1721] font-medium tracking-[-0.16px]">Next of Kin Details</p>
                             <div class="flex gap-[86px]">
                                 <div class="flex flex-col gap-6 basis-[376px]">
-                                    <Form-TextInput placeholder="First Name" label="First Name" v-bind="settingsForm.nextOfKinFirstName" :error="settingsFormErrors.nextOfKinFirstName" />
+                                    <Form-TextInput placeholder="First Name" label="First Name" v-model="settingsForm.nextOfKinFirstName[0].value" v-bind="settingsForm.nextOfKinFirstName[1].value" :error="settingsFormErrors.nextOfKinFirstName" />
                                     <Form-SelectInput
-                                        :options="nextOfKinRelationshipListOptions" placeholder="Relationship" label="Relationship"
-                                        v-bind="settingsForm.nextOfKinRelationship" :error="settingsFormErrors.nextOfKinRelationship"
+                                        :options="nextOfKinRelationshipListOptions" placeholder="Relationship" label="Relationship" v-model="settingsForm.nextOfKinRelationship[0].value"
+                                        v-bind="settingsForm.nextOfKinRelationship[1].value" :error="settingsFormErrors.nextOfKinRelationship"
                                     />
-                                    <Form-TextInput placeholder="Phone number" label="Phone number" v-bind="settingsForm.nextOfKinPhoneNumber" :error="settingsFormErrors.nextOfKinPhoneNumber" />
+                                    <Form-TextInput placeholder="Phone number" label="Phone number" v-model="settingsForm.nextOfKinPhoneNumber[0].value" v-bind="settingsForm.nextOfKinPhoneNumber[1].value" :error="settingsFormErrors.nextOfKinPhoneNumber" />
                                 </div>
                                 <div class="flex flex-col gap-6 basis-[376px]">
-                                    <Form-TextInput placeholder="Last Name" label="Last Name" v-bind="settingsForm.nextOfKinLastName" :error="settingsFormErrors.nextOfKinLastName" />
-                                    <Form-EmailInput placeholder="Email address" label="Email address" v-bind="settingsForm.nextOfKinEmail" :error="settingsFormErrors.nextOfKinEmail" />
+                                    <Form-TextInput placeholder="Last Name" label="Last Name" v-model="settingsForm.nextOfKinLastName[0].value" v-bind="settingsForm.nextOfKinLastName[1].value" :error="settingsFormErrors.nextOfKinLastName" />
+                                    <Form-EmailInput placeholder="Email address" label="Email address" v-model="settingsForm.nextOfKinEmail[0].value" v-bind="settingsForm.nextOfKinEmail[1].value" :error="settingsFormErrors.nextOfKinEmail" />
                                 </div>                                
                             </div>
                         </div>
@@ -682,14 +682,14 @@
                         <div class="py-6 border-b border-solid border-lance-black-5">
                             <div class="flex">
                                 <p class="w-[320px] text-[#1E1721] font-medium tracking-[-0.16px]">Current Password</p>
-                                <Form-PasswordInput label="Current Password" v-bind="settingsForm.currPassword" :error="settingsFormErrors.currPassword" class="w-[376px]" />
+                                <Form-PasswordInput label="Current Password" v-model="settingsForm.currPassword[0].value" v-bind="settingsForm.currPassword[1].value" :error="settingsFormErrors.currPassword" class="w-[376px]" />
                             </div>
                         </div>
                         <div class="py-6 border-b border-solid border-lance-black-5">
                             <div class="flex">
                                 <p class="w-[320px] text-[#1E1721] font-medium tracking-[-0.16px]">New Password</p>
                                 <div class="w-[376px]">
-                                    <Form-PasswordInput class="mb-2" placeholder="New Password" label="New Password" v-bind="settingsForm.newPassword" :error="settingsFormErrors.newPassword" />
+                                    <Form-PasswordInput class="mb-2" placeholder="New Password" label="New Password" v-model="settingsForm.newPassword[0].value" v-bind="settingsForm.newPassword[1].value" :error="settingsFormErrors.newPassword" />
                                     <Form-PasswordRuleGuide :password="settingsFormValues.newPassword"/>
                                 </div>
                             </div>
@@ -697,7 +697,7 @@
                         <div class="pt-6">
                             <div class="flex">
                                 <p class="w-[320px] text-[#1E1721] font-medium tracking-[-0.16px]">Confirm New Password</p>
-                                <Form-PasswordInput label="Confirm New Password" v-bind="settingsForm.confPassword" :error="settingsFormErrors.confPassword" class="w-[376px]" />
+                                <Form-PasswordInput label="Confirm New Password" v-model="settingsForm.confPassword[0].value" v-bind="settingsForm.confPassword[1].value" :error="settingsFormErrors.confPassword" class="w-[376px]" />
                             </div>
                         </div>
                     </div>
@@ -878,7 +878,7 @@
 
     const editingPersonalDetails: Ref<boolean> = ref(false);
 
-    const { values: settingsFormValues, errors: settingsFormErrors, setFieldValue, defineComponentBinds } = useForm({
+    const { values: settingsFormValues, errors: settingsFormErrors, setFieldValue, defineField } = useForm({
         validationSchema: yup.object({
             lga: yup.string().required().label('LGA'),
             city: yup.string().required().label('City'),
@@ -903,108 +903,52 @@
     });
     setFieldValue('newPassword', '');
     
-    const settingsForm = reactive({
-        maritalStatus: defineComponentBinds('maritalStatus', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        }),
-        educationLevel: defineComponentBinds('educationLevel', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        }),
-        residentialAddress: defineComponentBinds('residentialAddress', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        }),
-        lga: defineComponentBinds('lga', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        }),
-        city: defineComponentBinds('city', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        }),
-        state: defineComponentBinds('state', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        }),
+    const settingsForm = {
+        maritalStatus : defineField('maritalStatus'),
+        educationLevel : defineField('educationLevel'),
+        residentialAddress : defineField('residentialAddress'),
+        lga : defineField('lga'),
+        city : defineField('city'),
+        state : defineField('state'),
 
-        nextOfKinFirstName: defineComponentBinds('nextOfKinFirstName', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        }),
-        nextOfKinRelationship: defineComponentBinds('nextOfKinRelationship', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        }),
-        nextOfKinPhoneNumber: defineComponentBinds('nextOfKinPhoneNumber', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        }),
-        nextOfKinLastName: defineComponentBinds('nextOfKinLastName', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        }),
-        nextOfKinEmail: defineComponentBinds('nextOfKinEmail', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        }),
+        nextOfKinFirstName : defineField('nextOfKinFirstName'),
+        nextOfKinRelationship : defineField('nextOfKinRelationship'),
+        nextOfKinPhoneNumber : defineField('nextOfKinPhoneNumber'),
+        nextOfKinLastName : defineField('nextOfKinLastName'),
+        nextOfKinEmail : defineField('nextOfKinEmail'),
 
-        currPassword: defineComponentBinds('currPassword', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        }),
-        newPassword: defineComponentBinds('newPassword', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        }),
-        confPassword: defineComponentBinds('confPassword', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        }),
-    });
+        currPassword : defineField('currPassword'),
+        newPassword : defineField('newPassword'),
+        confPassword : defineField('confPassword')
+    };
 
-    const maritalStatusListOptions = reactive([
+    const maritalStatusListOptions = [
         {
             label: 'Single',
             value: 'Single'
         }
-    ]);
+    ];
 
-    const educationLevelListOptions = reactive([
+    const educationLevelListOptions = [
         {
             label: 'Tertiary Education',
             value: 'Tertiary Education'
         }
-    ]);
+    ];
 
-    const lgaListOptions = reactive([
+    const lgaListOptions = [
         {
             label: 'Lagos Mainland',
             value: 'Lagos Mainland'
         }
-    ]);
+    ];
 
-    const stateListOptions = reactive([
+    const stateListOptions = [
         {
             label: 'Lagos',
             value: 'Lagos'
         }
-    ]);
+    ];
 
     const personalDetailsFilled = computed(() => {
         return settingsFormValues.maritalStatus && !settingsFormErrors.value.maritalStatus &&
@@ -1020,8 +964,7 @@
     
     const { apiURL } = useRuntimeConfig().public;
 
-    const headers = useRequestHeaders(['cookie']) as HeadersInit;
-    const { data: { value: jwt } } = await useFetch('/api/token', { headers });
+    const { data: { value: jwt } } = await useFetch('/api/token');
 
     async function savePersonalDetails(){
         savingPersonalDetails.value = true;
@@ -1041,7 +984,7 @@
                 residentialAddress: settingsFormValues.residentialAddress,
                 firstName: userProfile.value.firstName,
                 lastName: userProfile.value.lastName,
-                dob: "1993-04-24"
+                // dob: "1993-04-24"
             }
         });
 
