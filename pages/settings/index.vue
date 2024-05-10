@@ -422,7 +422,7 @@
                             </p>
                             <p class="text-lance-black-60">Add your bank account and complete your pending KYC process</p>
                         </div>
-                        <button @click="addNewAccount" class="btn btn-primary w-[282px]">Add new account</button>
+                        <button @click="!kycCompleted ? showKycIncompleteModal = true : addNewAccount" class="btn btn-primary w-[282px]">Add new account</button>
                     </div>
                 </div>
 
@@ -839,6 +839,7 @@
                 </svg>
             </div>
         </Auth-Modal>
+        <KYC-IncompleteKycNotificationModal v-if="!kycCompleted" v-show="showKycIncompleteModal" @@close-kyc-incomplete-modal="navigateTo('/dashboard')" />
     </div>
 </template>
 
@@ -865,7 +866,9 @@
     
     const { signOut } = useAuth();
 
-    const { kycItems } = storeToRefs(useKYCStore());
+    const showKycIncompleteModal: Ref<boolean> = ref(false);
+
+    const { kycItems, kycCompleted } = storeToRefs(useKYCStore());
 
     const { fullName, userProfile } = storeToRefs(useUserStore());
 
