@@ -238,17 +238,7 @@
         layout: 'dashboard'
     });
 
-    const { apiURL } = useRuntimeConfig().public;
-
-    const { fetchWalletBalance } = useWalletStore();
     const { balance } = storeToRefs(useWalletStore());
-
-    const headers = useRequestHeaders(['cookie']) as HeadersInit;
-    const { data: { value: jwt } } = await useFetch('/api/token', { headers });
-
-    onMounted(()=>{
-        fetchWalletBalance(jwt?.token, apiURL);
-    })
 
     const { userProfile } = storeToRefs(useUserStore());
 

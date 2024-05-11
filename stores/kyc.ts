@@ -1,7 +1,10 @@
 import { defineStore } from 'pinia';
+import { useWalletStore } from './wallet';
 
 export const useKYCStore = defineStore('kyc', () => 
     {
+        const { linkedAccount } = storeToRefs(useWalletStore());
+
         const kycItems = ref({
             account: {
                 completed: false
@@ -29,7 +32,12 @@ export const useKYCStore = defineStore('kyc', () =>
         async function fetchKycStatus(token: string, apiUrl: string) {
             
             await fetchUserVerifications(token, apiUrl);
-            await fetchUserLinkedAccountVerifications(token, apiUrl);
+
+            const { fetchUserLinkedAccountAndBalance } = useWalletStore();
+
+            await fetchUserLinkedAccountAndBalance(token, apiUrl);
+
+            kycItems.value.linkedBankAccount.completed = linkedAccount.value ? true : false;
         }
 
         async function fetchUserVerifications(token: string, apiUrl: string) {
@@ -64,29 +72,6 @@ export const useKYCStore = defineStore('kyc', () =>
                 }else{
                     kycItems.value.id.completed = false;
                     kycItems.value.personalDetails.completed = false;
-                }
-
-            }else if(error){
-                // console.log(error.value?.data);
-            }
-        }
-
-        async function fetchUserLinkedAccountVerifications(token: string, apiUrl: string) {
-            
-            const { data: { value: result }, error } = await useFetch(`${apiUrl}/v1/payments/accounts`, {
-                method: 'GET',
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-            
-
-            if((result as any).success && !(result as any).error){
-                if((result as any).data.hasLinkedAccount){
-                    kycItems.value.linkedBankAccount.completed = true;
-                }else{
-                    kycItems.value.linkedBankAccount.completed = false;
                 }
 
             }else if(error){

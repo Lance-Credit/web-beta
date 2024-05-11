@@ -84,14 +84,14 @@
 
     const { apiURL } = useRuntimeConfig().public;
 
-    const { fetchWalletBalance } = useWalletStore();
+    const { fetchUserLinkedAccountAndBalance } = useWalletStore();
     const { balance } = storeToRefs(useWalletStore());
 
     const headers = useRequestHeaders(['cookie']) as HeadersInit;
     const { data: { value: jwt } } = await useFetch('/api/token', { headers });
 
     onMounted(()=>{
-        fetchWalletBalance(jwt?.token, apiURL);
+        fetchUserLinkedAccountAndBalance(jwt?.token, apiURL);
     })
 
     const selectedTransaction: Ref<null | TransactionData> = ref(null);

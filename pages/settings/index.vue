@@ -363,7 +363,6 @@
                         <div>
                             <ul>
                                 <li
-                                    v-for="(linkedBankAccount, key) in linkedBankAccounts" :key="key"
                                     class="mb-4 py-4 px-6 rounded-xl border border-solid border-lance-green-20 bg-white flex items-center gap-[130px]"
                                 >
                                     <div class="flex gap-4 items-center">
@@ -377,11 +376,11 @@
                                             </defs>
                                         </svg>
                                         <div class="tracking-[-0.16px]">
-                                            <p class="text-[#1E1721] font-medium">{{ linkedBankAccount.accountName }}</p>
-                                            <p class="text-lance-black-60">{{ linkedBankAccount.accountNumber }}</p>
+                                            <p class="text-[#1E1721] font-medium">{{ linkedAccount.accountName }}</p>
+                                            <p class="text-lance-black-60">{{ linkedAccount.accountNumber }}</p>
                                         </div>
                                     </div>
-                                    <p class="text-lance-black-50 text-sm leading-[21px]">{{ linkedBankAccount.bankName }}</p>
+                                    <p class="text-lance-black-50 text-sm leading-[21px]">{{ linkedAccount.bankName }}</p>
                                 </li>
                             </ul>
                             <p @click="addNewAccount" class="flex gap-4 items-center justify-center cursor-pointer">
@@ -857,7 +856,9 @@
     import { useForm } from 'vee-validate';
     import { useKYCStore } from '@/stores/kyc';
     import { useUserStore } from '@/stores/user';
+    import { useWalletStore } from '@/stores/wallet';
     import { useNextOfKinStore } from '@/stores/nextOfKin';
+
     
     definePageMeta({
         middleware: 'auth',
@@ -999,36 +1000,11 @@
         }
     }
 
-    const linkedBankAccounts = [
-        {
-            bankName: 'Sterling Bank',
-            accountName: 'Sterling Bank',
-            accountNumber: '2209889321'
-        }
-    ];
+    
+    const { linkedAccount } = storeToRefs(useWalletStore());
 
-    async function fetchLinkedBankAccounts(){
-
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/payments/accounts`, {
-            method: 'GET',
-            headers: { 
-                "Content-Type": "application/json",
-                "Authorization" : `Bearer ${jwt?.token}`
-            }
-        });
-
-        if(result){
-            if((result as any).success && !(result as any).error){
-                console.log(result);
-                // populate linkedBankAccounts
-            }
-        }else if(error){
-            console.log(error.value?.data);
-        }
-    }
 
     onMounted(()=>{
-        fetchLinkedBankAccounts();
         fetchNextOfKinDetails();
     });
 
