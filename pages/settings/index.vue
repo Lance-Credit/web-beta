@@ -383,7 +383,7 @@
                                     <p class="text-lance-black-50 text-sm leading-[21px]">{{ linkedAccount.bankName }}</p>
                                 </li>
                             </ul>
-                            <p @click="addNewAccount" class="flex gap-4 items-center justify-center cursor-pointer">
+                            <button @click="connectAccount" :disabled="addingNewAccount" class="flex gap-4 items-center justify-center cursor-pointer">
                                 <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g clip-path="url(#clip0_3021_15135)">
                                     <path d="M15.3309 13.6467L15.3368 6.22793C15.3368 6.00601 15.2487 5.79318 15.0917 5.63626C14.9348 5.47934 14.722 5.39119 14.5001 5.39119C14.2782 5.39119 14.0653 5.47934 13.9084 5.63626C13.7515 5.79318 13.6633 6.00601 13.6633 6.22793L13.6692 13.6467L6.2505 13.6408C6.02858 13.6408 5.81575 13.7289 5.65883 13.8858C5.50191 14.0428 5.41376 14.2556 5.41376 14.4775C5.41376 14.6994 5.50191 14.9123 5.65883 15.0692C5.81575 15.2261 6.02858 15.3143 6.2505 15.3143L13.6692 15.3084L13.6633 22.7271C13.6629 22.8371 13.6842 22.9461 13.7261 23.0478C13.768 23.1496 13.8296 23.242 13.9074 23.3198C13.9852 23.3975 14.0776 23.4592 14.1793 23.5011C14.2811 23.5429 14.3901 23.5643 14.5001 23.5638C14.6101 23.5643 14.7191 23.5429 14.8208 23.5011C14.9225 23.4592 15.015 23.3975 15.0928 23.3198C15.1705 23.242 15.2322 23.1496 15.274 23.0478C15.3159 22.9461 15.3373 22.8371 15.3368 22.7271L15.3309 15.3084L22.7497 15.3142C22.8597 15.3147 22.9687 15.2934 23.0704 15.2515C23.1721 15.2096 23.2645 15.148 23.3423 15.0702C23.4201 14.9924 23.4817 14.9 23.5236 14.7982C23.5655 14.6965 23.5869 14.5875 23.5864 14.4775C23.5869 14.3675 23.5655 14.2585 23.5236 14.1568C23.4817 14.055 23.4201 13.9626 23.3423 13.8848C23.2645 13.807 23.1721 13.7454 23.0704 13.7035C22.9687 13.6616 22.8597 13.6403 22.7497 13.6408L15.3309 13.6467Z" fill="#0A4F4D"/>
@@ -395,7 +395,7 @@
                                     </defs>
                                 </svg>
                                 <span class="text-lance-green font-medium">Add new account</span>
-                            </p>
+                            </button>
                         </div>
                     </div>
                     <div v-else class="pt-6 flex flex-col items-center justify-center gap-6 w-[376px] mx-auto text-center">
@@ -421,7 +421,7 @@
                             </p>
                             <p class="text-lance-black-60">Add your bank account and complete your pending KYC process</p>
                         </div>
-                        <button @click="!kycCompleted ? showKycIncompleteModal = true : addNewAccount" class="btn btn-primary w-[282px]">Add new account</button>
+                        <button @click="!kycCompleted ? showKycIncompleteModal = true : connectAccount" class="btn btn-primary w-[282px]" :disabled="addingNewAccount">Add new account</button>
                     </div>
                 </div>
 
@@ -854,6 +854,7 @@
     
     import * as yup from 'yup';
     import { useForm } from 'vee-validate';
+    import Connect from '@mono.co/connect.js';
     import { useKYCStore } from '@/stores/kyc';
     import { useUserStore } from '@/stores/user';
     import { useWalletStore } from '@/stores/wallet';
@@ -1000,24 +1001,75 @@
         }
     }
 
-    
+
     const { linkedAccount } = storeToRefs(useWalletStore());
+    const { fetchUserLinkedAccountAndBalance } = useWalletStore();
 
 
     onMounted(()=>{
         fetchNextOfKinDetails();
     });
 
-    function addNewAccount(){
-        console.log('new account added')
+    const { monoKey } = useRuntimeConfig().public;
+
+    const addingNewAccount: Ref<boolean> = ref(false);
+
+    const monoConnectCode: Ref<string | null> = ref(null);
+
+    function connectAccount(){
+        addingNewAccount.value = true;
+
+        const customer = {
+            name: fullName.value,
+            email: userProfile.value.email,
+        };
+        
+        const config = {
+            key: monoKey,
+            data: { customer },
+            onSuccess: function (response: any) {
+                console.log(JSON.stringify(response));
+                console.log('code: ',response.code)
+
+                monoConnectCode.value = response.code;
+                addNewAccount();
+            }
+        };
+
+        const connect = new Connect(config);
+        connect.setup();
+        connect.open();
+
     }
 
-    const nextOfKinRelationshipListOptions = reactive([
+    async function addNewAccount(){
+        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/payments/accounts`, {
+            method: 'POST',
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization" : `Bearer ${jwt?.token}`
+            },
+            body: {
+                "code": monoConnectCode.value
+            }
+        });
+
+        if(result){
+            if((result as any).success && !(result as any).error){
+                console.log('success',result);
+                fetchUserLinkedAccountAndBalance(jwt?.token, apiURL);
+            }
+        }else if(error){
+            console.log(error.value?.data);
+        }
+    }
+
+    const nextOfKinRelationshipListOptions = [
         {
             label: 'Sister',
             value: 'Sister'
         }
-    ]);
+    ];
 
     const editingNextOfKinDetails: Ref<boolean> = ref(false);
 

@@ -3,9 +3,10 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
-      apiURL: process.env.API_URL || "https://staging-core-api.lancecredit.com",
+      monoKey: process.env.MONO_KEY || 'test_pk_WjmkB85mktPkjnjfIRYS',
       defaultInterestRate: process.env.DEFAULT_INTEREST_RATE || "5",
-      defaultProcessingFeeRate: process.env.DEFAULT_PROCESSING_FEE_RATE || "1"
+      defaultProcessingFeeRate: process.env.DEFAULT_PROCESSING_FEE_RATE || "1",
+      apiURL: process.env.API_URL || "https://staging-core-api.lancecredit.com",
     }
   },
   components: [
@@ -29,6 +30,16 @@ export default defineNuxtConfig({
   auth: {
     // The module is enabled. Change this to disable the module
     isEnabled: true,
+    // provider: {
+    //   type: 'local',
+    //   endpoints: {
+    //     signIn: { path: '/login', method: 'post' },
+    //     signOut: { path: '/logout', method: 'post' },
+    //     signUp: { path: '/register', method: 'post' },
+    //     getSession: { path: '/session', method: 'get' }
+    //   },
+    //   token: { signInResponseTokenPointer: '/token/accessToken' },
+    // }
   },
   css: ['~/assets/css/main.css'],
 })
