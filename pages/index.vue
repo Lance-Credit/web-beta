@@ -39,7 +39,7 @@
                                 that grants you unrestricted entry to our platform.
                             </p>
                             <div class="mb-2">
-                                <Form-TextInput placeholder="Enter Community Code" label="Community Code" v-bind="signupForm.communityCode" :error="signupFormErrors.communityCode"></Form-TextInput>
+                                <Form-TextInput placeholder="Enter Community Code" label="Community Code" v-model="signupForm.communityCode[0].value" v-bind="signupForm.communityCode[1].value" :error="signupFormErrors.communityCode" />
                             </div>
                             <NuxtLink to="https://tally.so/r/w2KLJL" target="_blank" class="flex mb-8 text-lance-green">I do not have a community code</NuxtLink>
 
@@ -59,11 +59,11 @@
                                 Let’s get you started, Please provide the info below
                             </p>
                             <div class="mb-8">
-                                <Form-TextInput class="mb-4" placeholder="First Name" label="First Name" v-bind="signupForm.firstName" :error="signupFormErrors.firstName"></Form-TextInput>
-                                <Form-TextInput class="mb-4" placeholder="Last Name" label="Last Name" v-bind="signupForm.lastName" :error="signupFormErrors.lastName"></Form-TextInput>
-                                <Form-EmailInput class="mb-4" placeholder="Email Address" label="Email Address" v-bind="signupForm.email" :error="signupFormErrors.email"></Form-EmailInput>
-                                <Form-TextInput class="mb-4" placeholder="090*****990" label="Phone Number" v-bind="signupForm.phoneNumber" :error="signupFormErrors.phoneNumber"></Form-TextInput>
-                                <Form-PasswordInput class="mb-4" placeholder="Enter Password" label="Enter Password" v-bind="signupForm.password" :error="signupFormErrors.password"></Form-PasswordInput>
+                                <Form-TextInput class="mb-4" placeholder="First Name" label="First Name" v-model="signupForm.firstName[0].value" v-bind="signupForm.firstName[1].value" :error="signupFormErrors.firstName" />
+                                <Form-TextInput class="mb-4" placeholder="Last Name" label="Last Name" v-model="signupForm.lastName[0].value" v-bind="signupForm.lastName[1].value" :error="signupFormErrors.lastName" />
+                                <Form-EmailInput class="mb-4" placeholder="Email Address" label="Email Address" v-model="signupForm.email[0].value" v-bind="signupForm.email[1].value" :error="signupFormErrors.email" />
+                                <Form-TextInput class="mb-4" placeholder="090*****990" label="Phone Number" v-model="signupForm.phoneNumber[0].value" v-bind="signupForm.phoneNumber[1].value" :error="signupFormErrors.phoneNumber" />
+                                <Form-PasswordInput class="mb-4" placeholder="Enter Password" label="Enter Password" v-model="signupForm.password[0].value" v-bind="signupForm.password[1].value" :error="signupFormErrors.password" />
                                 <Form-PasswordRuleGuide :password="signupFormValues.password"/>
                             </div>
 
@@ -76,22 +76,41 @@
                         </div>
                     </div>
                     <div v-else>
-                        <div>
+                        <div v-if="emailVerified">
                             <p class="mb-2 text-lance-black font-aventa font-bold text-[24px] leading-[32px] tracking-[-0.24px]">
-                                Verify your account
+                                Verify your phone number
                             </p>
                             <p class="mb-6 text-lance-black-60">
                                 Input the 6-digit verification code we sent to this phone number <span class="font-semibold">{{ formattedPhoneNumber }}</span> to activate your account.
                             </p>
                             <div class="mb-6">
-                                <Form-TextInput placeholder="Verification Code" label="Verification Code" v-bind="signupForm.verificationCode" :error="signupFormErrors.verificationCode"></Form-TextInput>
+                                <Form-TextInput placeholder="Verification Code" label="Verification Code" v-model="signupForm.phoneVerificationCode[0].value" v-bind="signupForm.phoneVerificationCode[1].value" :error="signupFormErrors.phoneVerificationCode" />
                             </div>
 
-                            <Form-ErrorNotification v-if="verificationCodeErrorResponse" :message="verificationCodeErrorResponse" />
+                            <Form-ErrorNotification v-if="phoneVerificationCodeErrorResponse" :message="phoneVerificationCodeErrorResponse" />
 
-                            <button @click="submitVerificationCode" class="mb-6 btn w-full btn-primary" :disabled="!(signupFormValues.verificationCode && !signupFormErrors.verificationCode) || submittingVerificationCode">Continue</button>
-                            <p v-show="showResendVerificationCode" class="flex gap-2 justify-center text-lance-black-60">
-                                Didn’t get the code?<span @click="resendVerificationCode" class="text-lance-green font-medium cursor-pointer">Resend code</span>
+                            <button @click="submitPhoneVerificationCode" class="mb-6 btn w-full btn-primary" :disabled="!(signupFormValues.phoneVerificationCode && !signupFormErrors.phoneVerificationCode) || submittingPhoneVerificationCode">Continue</button>
+                            <p v-show="showResendPhoneVerificationCode" class="flex gap-2 justify-center text-lance-black-60">
+                                Didn’t get the code?<span @click="resendPhoneVerificationCode" class="text-lance-green font-medium cursor-pointer">Resend code</span>
+                            </p>
+                        </div>
+
+                        <div v-else>
+                            <p class="mb-2 text-lance-black font-aventa font-bold text-[24px] leading-[32px] tracking-[-0.24px]">
+                                Verify your email address
+                            </p>
+                            <p class="mb-6 text-lance-black-60">
+                                Input the 6-digit verification code we sent to this email address <span class="font-semibold">{{ signupFormValues.email }}</span> to activate your account.
+                            </p>
+                            <div class="mb-6">
+                                <Form-TextInput placeholder="Verification Code" label="Verification Code" v-model="signupForm.emailVerificationCode[0].value" v-bind="signupForm.emailVerificationCode[1].value" :error="signupFormErrors.emailVerificationCode" />
+                            </div>
+
+                            <Form-ErrorNotification v-if="emailVerificationCodeErrorResponse" :message="emailVerificationCodeErrorResponse" />
+
+                            <button @click="submitEmailVerificationCode" class="mb-6 btn w-full btn-primary" :disabled="!(signupFormValues.emailVerificationCode && !signupFormErrors.emailVerificationCode) || submittingEmailVerificationCode">Continue</button>
+                            <p v-show="showResendEmailVerificationCode" class="flex gap-2 justify-center text-lance-black-60">
+                                Didn’t get the code?<span @click="resendEmailVerificationCode" class="text-lance-green font-medium cursor-pointer">Resend code</span>
                             </p>
                         </div>
                     </div>
@@ -144,7 +163,7 @@
 
     const activeIllustration:Ref<number> = ref(1);
 
-    const illustrations = ref([
+    const illustrations = [
         {
             active: true,
             bodyText: 'Our community codes are unique identifiers created to verify users, ensuring ethical conduct in credit activities, enhancing safety and trust.',
@@ -157,10 +176,10 @@
             title: 'I need a community code',
             img: '/assets/img/need-a-communicty-code.svg'
         },
-    ]);
+    ];
 
     function animateIllustration(){
-        activeIllustration.value = activeIllustration.value != illustrations.value.length - 1 ? activeIllustration.value + 1 : 0;
+        activeIllustration.value = activeIllustration.value != illustrations.length - 1 ? activeIllustration.value + 1 : 0;
     }
 
     onMounted(()=>{
@@ -169,7 +188,7 @@
 
     const communityCodeFilled: Ref<boolean> = ref(false);
 
-    const { values: signupFormValues, errors: signupFormErrors, setFieldValue, defineComponentBinds } = useForm({
+    const { values: signupFormValues, errors: signupFormErrors, setFieldValue, defineField, defineComponentBinds } = useForm({
         validationSchema: yup.object({
             communityCode: yup.string().required().label('Community Code'),
             firstName: yup.string().required().label('First Name'),
@@ -179,49 +198,24 @@
             password: yup.string().required()
             .matches(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$"), 'Password is not in correct format')
             .matches(/^.{8,}$/, 'Password must be a minimum of 8 characters in length').label('Password'),
-            verificationCode: yup.string().required().matches(/^[0-9]+$/, "Verification Code is required")
-            .matches(/^.{6}$/, "Verification Code is required").label('Verification Code'),
+            phoneVerificationCode: yup.string().required().matches(/^[0-9]+$/, "Phone Verification Code is required")
+            .matches(/^.{6}$/, "Phone Verification Code is required").label('Phone Verification Code'),
+            emailVerificationCode: yup.string().required().matches(/^[0-9]+$/, "Email Verification Code is required")
+            .matches(/^.{6}$/, "Email Verification Code is required").label('Email Verification Code'),
         })
     });
     setFieldValue('password', '');
 
-    const signupForm = reactive({
-        communityCode: defineComponentBinds('communityCode', {
-            mapProps: state => ({
-              error: state.errors[0],
-            }),
-        }),
-        firstName: defineComponentBinds('firstName', {
-            mapProps: state => ({
-              error: state.errors[0],
-            }),
-        }),
-        lastName: defineComponentBinds('lastName', {
-            mapProps: state => ({
-              error: state.errors[0],
-            }),
-        }),
-        email: defineComponentBinds('email', {
-            mapProps: state => ({
-              error: state.errors[0],
-            }),
-        }),
-        phoneNumber: defineComponentBinds('phoneNumber', {
-            mapProps: state => ({
-              error: state.errors[0],
-            }),
-        }),
-        password: defineComponentBinds('password', {
-            mapProps: state => ({
-              error: state.errors[0],
-            }),
-        }),
-        verificationCode: defineComponentBinds('verificationCode', {
-            mapProps: state => ({
-              error: state.errors[0],
-            }),
-        })
-    });
+    const signupForm = {
+        email: defineField('email'),
+        lastName: defineField('lastName'),
+        password: defineField('password'),
+        firstName: defineField('firstName'),
+        phoneNumber: defineField('phoneNumber'),
+        communityCode: defineField('communityCode'),
+        phoneVerificationCode: defineField('phoneVerificationCode'),
+        emailVerificationCode: defineField('emailVerificationCode')
+    };
 
     const submittingCommunityCode: Ref<boolean> = ref(false);
 
@@ -275,8 +269,8 @@
     const signupErrorResponse: Ref<string> = ref('');
 
     const authToken: Ref<string> = ref('');
-    
-    const showResendVerificationCode: Ref<boolean> = ref(false);
+
+    const showResendEmailVerificationCode: Ref<boolean> = ref(false);
 
     async function submitSignUpForm(){
 
@@ -300,7 +294,7 @@
             if((result as any).success && !(result as any).error){
                 signUpSuccess.value = true;
                 authToken.value = (result as any).data.token;
-                processShowResendVerificationCode();
+                processShowResendEmailVerificationCode();
             }
         }else if(error){
             signupErrorResponse.value = error.value?.data.error;
@@ -308,21 +302,82 @@
         }
     }
 
-    const verificationCodeSubmitted: Ref<boolean> = ref(false);
+    const emailVerified: Ref<boolean> = ref(false);
+    
+    const submittingEmailVerificationCode: Ref<boolean> = ref(false);
 
-    const submittingVerificationCode: Ref<boolean> = ref(false);
+    const emailVerificationCodeErrorResponse: Ref<string> = ref('');
 
-    const verificationCodeErrorResponse: Ref<string> = ref('');
-
-    async function submitVerificationCode(){
-
-        submittingVerificationCode.value = true;
-
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/auth/phone/verification?token=${signupFormValues.verificationCode}`,{
-            method: 'GET',
+    async function submitEmailVerificationCode(){
+        
+        submittingEmailVerificationCode.value = true;
+        
+        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/verifications/email/complete`,{
+            method: 'POST',
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${authToken.value}`
+            },
+            body: {
+                "token": signupFormValues.emailVerificationCode
+            }
+        });
+        
+        if(result){
+            if((result as any).success && !(result as any).error){
+                emailVerified.value = true;
+                processShowResendPhoneVerificationCode();
+            }
+        }else if(error){
+            emailVerificationCodeErrorResponse.value = error.value?.data.error;
+            submittingEmailVerificationCode.value = false;
+        }
+    }
+
+    async function resendEmailVerificationCode(){
+        
+        showResendEmailVerificationCode.value = false;
+        
+        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/verifications/email?mode=otp`,{
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${authToken.value}`
+            }
+        });
+        
+        if(error){
+            emailVerificationCodeErrorResponse.value = error.value?.data.error;
+            submittingEmailVerificationCode.value = false;
+        }
+        
+        processShowResendEmailVerificationCode();
+    }
+
+    function processShowResendEmailVerificationCode(){
+        setTimeout( () => showResendEmailVerificationCode.value = true, 120000);
+    }
+
+    const verificationCodeSubmitted: Ref<boolean> = ref(false);
+
+    const submittingPhoneVerificationCode: Ref<boolean> = ref(false);
+
+    const phoneVerificationCodeErrorResponse: Ref<string> = ref('');
+
+    const showResendPhoneVerificationCode: Ref<boolean> = ref(false);
+
+    async function submitPhoneVerificationCode(){
+
+        submittingPhoneVerificationCode.value = true;
+
+        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/verifications/phone/complete`,{
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${authToken.value}`
+            },
+            body: {
+                "token": signupFormValues.phoneVerificationCode
             }
         });
 
@@ -344,36 +399,32 @@
                 }
             }
         }else if(error){
-            verificationCodeErrorResponse.value = error.value?.data.error;
-            submittingVerificationCode.value = false;
+            phoneVerificationCodeErrorResponse.value = error.value?.data.error;
+            submittingPhoneVerificationCode.value = false;
         }
     }
 
-    async function resendVerificationCode(){
+    async function resendPhoneVerificationCode(){
 
-        showResendVerificationCode.value = false;
+        showResendPhoneVerificationCode.value = false;
 
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/auth/phone/verification`,{
-            method: 'PATCH',
+        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/verifications/phone`,{
+            method: 'POST',
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${authToken.value}`
             }
         });
 
-        if(result){
-            if((result as any).success && !(result as any).error){
-                // verificationCodeSubmitted.value = true;
-            }
-        }else if(error){
-            verificationCodeErrorResponse.value = error.value?.data.error;
-            submittingVerificationCode.value = false;
+        if(error){
+            phoneVerificationCodeErrorResponse.value = error.value?.data.error;
+            submittingPhoneVerificationCode.value = false;
         }
 
-        processShowResendVerificationCode();
+        processShowResendPhoneVerificationCode();
     }
 
-    function processShowResendVerificationCode(){
-        setTimeout( () => showResendVerificationCode.value = true, 120000);
+    function processShowResendPhoneVerificationCode(){
+        setTimeout( () => showResendPhoneVerificationCode.value = true, 120000);
     }
 </script>
