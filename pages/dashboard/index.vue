@@ -238,6 +238,12 @@
         layout: 'dashboard'
     });
 
+    useHead({
+        script: [
+            { src: 'https://widget.dojah.io/widget.js', body: true }
+        ]
+    });
+
     const { balance } = storeToRefs(useWalletStore());
 
     const { userProfile } = storeToRefs(useUserStore());

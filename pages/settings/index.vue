@@ -854,11 +854,11 @@
     
     import * as yup from 'yup';
     import { useForm } from 'vee-validate';
-    import Connect from '@mono.co/connect.js';
     import { useKYCStore } from '@/stores/kyc';
     import { useUserStore } from '@/stores/user';
     import { useWalletStore } from '@/stores/wallet';
     import { useNextOfKinStore } from '@/stores/nextOfKin';
+    import { Connect as MonoConnect } from '@mono.co/connect.js';
 
     
     definePageMeta({
@@ -1036,7 +1036,7 @@
             }
         };
 
-        const connect = new Connect(config);
+        const connect = new MonoConnect(config);
         connect.setup();
         connect.open();
 

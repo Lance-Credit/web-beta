@@ -3,10 +3,16 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
-      monoKey: process.env.MONO_KEY || 'test_pk_WjmkB85mktPkjnjfIRYS',
+      apiURL: process.env.API_URL || "https://staging-core-api.lancecredit.com",
+
       defaultInterestRate: process.env.DEFAULT_INTEREST_RATE || "5",
       defaultProcessingFeeRate: process.env.DEFAULT_PROCESSING_FEE_RATE || "1",
-      apiURL: process.env.API_URL || "https://staging-core-api.lancecredit.com",
+
+      monoKey: process.env.MONO_KEY || 'test_pk_WjmkB85mktPkjnjfIRYS',
+      
+      dojahAppId: process.env.DOJAH_APP_ID || "63887b462e85a5003640f7e0",
+      dojahWidgetId: process.env.DOJAH_WIDGET_ID || "65e284b5f2409c00400ae810",
+      dojahPublicKey: process.env.DOJAH_PUBLIC_KEY || "test_pk_BArg1e8S34jyNwf03lujrmp0q"
     }
   },
   components: [

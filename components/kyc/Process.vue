@@ -118,7 +118,7 @@
                     <p>Don't worry, it's quick and completely secure!</p>
                     <div class="flex items-center gap-3.5">
                         <button @click="emit('@stop-kyc-process')" class="btn btn-tertiary w-full">Back</button>
-                        <button @click="startDojahKyc = true" class="btn btn-primary w-full">Proceed</button>
+                        <button @click="startDojahKyc" class="btn btn-primary w-full">Proceed</button>
                     </div>
                 </div>
                 <div v-if="activeStep == 'bankAccount'" class="w-[376px] mx-auto flex flex-col gap-8">
@@ -167,19 +167,67 @@
             </div>
         </div>
 
-        <KYC-DojahModal v-show="startDojahKyc" />
+        <KYC-DojahModal v-show="startingDojahKyc" />
         <KYC-MonoModal v-show="startMonoKyc" />
     </div>
 </template>
 
 <script setup lang="ts">
     import { useKYCStore } from '@/stores/kyc';
+    import { useUserStore } from '@/stores/user';
 
-    const activeStep: Ref<string> = ref('personalDetails')
-
+    
     const { kycItems } = storeToRefs(useKYCStore());
+    const { userProfile } = storeToRefs(useUserStore());
+    
+    const activeStep: Ref<string> = ref(kycItems.value.kyc.completed ? 'bankAccount' : 'personalDetails');
 
-    const startDojahKyc: Ref<boolean> = ref(false);
+    const startingDojahKyc: Ref<boolean> = ref(false);
+
+    const { dojahAppId, dojahPublicKey, dojahWidgetId } = useRuntimeConfig().public;
+    async function startDojahKyc(){
+        startingDojahKyc.value = true;
+
+        const options = {
+            app_id: dojahAppId,
+            p_key: dojahPublicKey,
+            type: 'custom',
+
+            user_data: {
+                residence_country: 'NG',
+                email: userProfile.value.email,
+                last_name: userProfile.value.lastName,
+                first_name: userProfile.value.firstName,
+            },
+            
+            // metadata: {
+            //   user_id: '12xxxxsxsxsxssx1',
+            // },
+            
+            config: {
+              widget_id: dojahWidgetId
+            },
+
+            onSuccess: function (response) {
+              console.log('Success', response);
+              activeStep.value = 'bankAccount';
+            },
+
+            onError: function (err) {
+              console.log('Error', err);
+            },
+
+            onClose: function () {
+              console.log('Widget closed');
+            }
+        };
+        
+        const connect = new Connect(options);
+        
+        connect.setup();
+        startingDojahKyc.value = false;
+        connect.open();
+    }
     
     const startMonoKyc: Ref<boolean> = ref(false);
 
