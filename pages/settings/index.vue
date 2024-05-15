@@ -858,7 +858,6 @@
     import { useUserStore } from '@/stores/user';
     import { useWalletStore } from '@/stores/wallet';
     import { useNextOfKinStore } from '@/stores/nextOfKin';
-    import { Connect as MonoConnect } from '@mono.co/connect.js';
 
     
     definePageMeta({
@@ -1001,67 +1000,22 @@
         }
     }
 
-
     const { linkedAccount } = storeToRefs(useWalletStore());
-    const { fetchUserLinkedAccountAndBalance } = useWalletStore();
 
 
     onMounted(()=>{
         fetchNextOfKinDetails();
     });
 
-    const { monoKey } = useRuntimeConfig().public;
 
     const addingNewAccount: Ref<boolean> = ref(false);
 
-    const monoConnectCode: Ref<string | null> = ref(null);
+    const { monoConnect } = useAddBankAccount();
 
-    function connectAccount(){
+    async function connectAccount(){
         addingNewAccount.value = true;
 
-        const customer = {
-            name: fullName.value,
-            email: userProfile.value.email,
-        };
-        
-        const config = {
-            key: monoKey,
-            data: { customer },
-            onSuccess: function (response: any) {
-                console.log(JSON.stringify(response));
-                console.log('code: ',response.code)
-
-                monoConnectCode.value = response.code;
-                addNewAccount();
-            }
-        };
-
-        const connect = new MonoConnect(config);
-        connect.setup();
-        connect.open();
-
-    }
-
-    async function addNewAccount(){
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/payments/accounts`, {
-            method: 'POST',
-            headers: { 
-                "Content-Type": "application/json",
-                "Authorization" : `Bearer ${jwt?.token}`
-            },
-            body: {
-                "code": monoConnectCode.value
-            }
-        });
-
-        if(result){
-            if((result as any).success && !(result as any).error){
-                console.log('success',result);
-                fetchUserLinkedAccountAndBalance(jwt?.token, apiURL);
-            }
-        }else if(error){
-            console.log(error.value?.data);
-        }
+        monoConnect();
     }
 
     const nextOfKinRelationshipListOptions = [

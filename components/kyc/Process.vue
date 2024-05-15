@@ -161,14 +161,14 @@
                     <p>Don't worry, it's quick and completely secure!</p>
                     <div class="flex items-center gap-3.5">
                         <button @click="emit('@stop-kyc-process')" class="btn btn-tertiary w-full">Back</button>
-                        <button @click="startMonoKyc = true" class="btn btn-primary w-full">Start Verification</button>
+                        <button @click="startMonoKyc" class="btn btn-primary w-full">Start Verification</button>
                     </div>
                 </div>
             </div>
         </div>
 
         <KYC-DojahModal v-show="startingDojahKyc" />
-        <KYC-MonoModal v-show="startMonoKyc" />
+        <KYC-MonoModal v-show="startingMonoKyc" />
     </div>
 </template>
 
@@ -209,7 +209,7 @@
             },
 
             onSuccess: function (response) {
-              console.log('Success', response);
+            //   console.log('Success', response);
               activeStep.value = 'bankAccount';
             },
 
@@ -225,11 +225,19 @@
         const connect = new Connect(options);
         
         connect.setup();
-        startingDojahKyc.value = false;
+        // startingDojahKyc.value = false;
         connect.open();
     }
     
-    const startMonoKyc: Ref<boolean> = ref(false);
+    const startingMonoKyc: Ref<boolean> = ref(false);
+    
+    const { monoConnect } = useAddBankAccount();
+
+    function startMonoKyc(){
+        startingMonoKyc.value = true;
+
+        monoConnect();
+    }
 
     const emit = defineEmits<{
         '@stop-kyc-process': []
