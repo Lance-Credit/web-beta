@@ -293,7 +293,7 @@
         if(result){
             if((result as any).success && !(result as any).error){
                 signUpSuccess.value = true;
-                authToken.value = (result as any).data.token;
+                authToken.value = (result as any).data.token.verification;
                 processShowResendEmailVerificationCode();
             }
         }else if(error){
@@ -312,14 +312,15 @@
         
         submittingEmailVerificationCode.value = true;
         
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/verifications/email/complete`,{
+        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/onboarding/verification`,{
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${authToken.value}`
+                "x-verification-token": `Bearer ${authToken.value}`
             },
             body: {
-                "token": signupFormValues.emailVerificationCode
+                "token": signupFormValues.emailVerificationCode,
+                "type": "email"
             }
         });
         
@@ -335,27 +336,24 @@
     }
 
     async function resendEmailVerificationCode(){
-        
         showResendEmailVerificationCode.value = false;
         
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/verifications/email?mode=otp`,{
-            method: 'POST',
+        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/onboarding/verification?type=email`,{
+            method: 'GET',
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${authToken.value}`
+                "x-verification-token": `Bearer ${authToken.value}`
             }
         });
-        
         if(error){
             emailVerificationCodeErrorResponse.value = error.value?.data.error;
-            submittingEmailVerificationCode.value = false;
         }
         
         processShowResendEmailVerificationCode();
     }
 
     function processShowResendEmailVerificationCode(){
-        setTimeout( () => showResendEmailVerificationCode.value = true, 120000);
+        setTimeout( () => showResendEmailVerificationCode.value = true, 12000);
     }
 
     const verificationCodeSubmitted: Ref<boolean> = ref(false);
@@ -370,14 +368,15 @@
 
         submittingPhoneVerificationCode.value = true;
 
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/verifications/phone/complete`,{
+        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/onboarding/verification`,{
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${authToken.value}`
+                "x-verification-token": `Bearer ${authToken.value}`
             },
             body: {
-                "token": signupFormValues.phoneVerificationCode
+                "token": signupFormValues.phoneVerificationCode,
+                "type": "phone"
             }
         });
 
@@ -390,8 +389,7 @@
                 const signedIn = await signIn('credentials', { email: signupFormValues.email, password: signupFormValues.password, redirect: false, callbackUrl: '/dashboard' })
 
                 if(!(signedIn as any).error){
-                    const headers = useRequestHeaders(['cookie']) as HeadersInit;
-                    const { data: { value: jwt } } = await useFetch('/api/token', { headers });
+                    const { data: { value: jwt } } = await useFetch('/api/token');
 
                     await fetchUserProfile(jwt?.token, apiURL);
 
@@ -408,23 +406,22 @@
 
         showResendPhoneVerificationCode.value = false;
 
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/verifications/phone`,{
-            method: 'POST',
+        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/onboarding/verification?type=phone`,{
+            method: 'GET',
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${authToken.value}`
+                "x-verification-token": `Bearer ${authToken.value}`
             }
         });
 
         if(error){
             phoneVerificationCodeErrorResponse.value = error.value?.data.error;
-            submittingPhoneVerificationCode.value = false;
         }
 
         processShowResendPhoneVerificationCode();
     }
 
     function processShowResendPhoneVerificationCode(){
-        setTimeout( () => showResendPhoneVerificationCode.value = true, 120000);
+        setTimeout( () => showResendPhoneVerificationCode.value = true, 12000);
     }
 </script>
