@@ -188,6 +188,8 @@
     async function startDojahKyc(){
         startingDojahKyc.value = true;
 
+        setTimeout(() => startingDojahKyc.value = false, 10000);
+
         const options = {
             app_id: dojahAppId,
             p_key: dojahPublicKey,
@@ -235,6 +237,8 @@
 
     function startMonoKyc(){
         startingMonoKyc.value = true;
+
+        setTimeout(() => startingMonoKyc.value = false, 10000);
 
         monoConnect();
     }
