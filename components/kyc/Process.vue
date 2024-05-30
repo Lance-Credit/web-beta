@@ -188,47 +188,68 @@
     async function startDojahKyc(){
         startingDojahKyc.value = true;
 
-        setTimeout(() => startingDojahKyc.value = false, 10000);
+        const { apiURL } = useRuntimeConfig().public;
 
-        const options = {
-            app_id: dojahAppId,
-            p_key: dojahPublicKey,
-            type: 'custom',
+        const { data: { value: jwt } } = await useFetch('/api/token');
 
-            user_data: {
-                residence_country: 'NG',
-                email: userProfile.value.email,
-                last_name: userProfile.value.lastName,
-                first_name: userProfile.value.firstName,
-            },
-            
-            // metadata: {
-            //   user_id: '12xxxxsxsxsxssx1',
-            // },
-            
-            config: {
-              widget_id: dojahWidgetId
-            },
-
-            onSuccess: function (response) {
-            //   console.log('Success', response);
-              activeStep.value = 'bankAccount';
-            },
-
-            onError: function (err) {
-              console.log('Error', err);
-            },
-
-            onClose: function () {
-              console.log('Widget closed');
+        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/verifications/kyc`, {
+            method: 'POST',
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization" : `Bearer ${jwt?.token}`
             }
-        };
+        });
+
+        if(result){
+            if((result as any).success && !(result as any).error){
+
+                const options = {
+                    app_id: dojahAppId,
+                    p_key: dojahPublicKey,
+                    type: 'custom',
         
-        const connect = new Connect(options);
+                    user_data: {
+                        residence_country: 'NG',
+                        email: userProfile.value.email,
+                        last_name: userProfile.value.lastName,
+                        first_name: userProfile.value.firstName,
+                    },
+                    
+                    // metadata: {
+                    //   user_id: '12xxxxsxsxsxssx1',
+                    // },
         
-        connect.setup();
-        // startingDojahKyc.value = false;
-        connect.open();
+                    reference_id: (result as any).data.dojahReference,
+                    
+                    config: {
+                      widget_id: dojahWidgetId
+                    },
+        
+                    onSuccess: function (response) {
+                    //   console.log('Success', response);
+                      activeStep.value = 'bankAccount';
+                    },
+        
+                    onError: function (err) {
+                      console.log('Error', err);
+                    },
+        
+                    onClose: function () {
+                      console.log('Widget closed');
+                    }
+                };
+                
+                const connect = new Connect(options);
+                
+                connect.setup();
+
+                startingDojahKyc.value = false;
+                
+                connect.open();
+            }
+        }else if(error){
+            // console.log(error.value?.data);
+        }
     }
     
     const startingMonoKyc: Ref<boolean> = ref(false);
