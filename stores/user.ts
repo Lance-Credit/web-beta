@@ -28,13 +28,13 @@ export const useUserStore = defineStore('user', () =>
             if((result as any).success && !(result as any).error){
                 // console.log(result);
                 userProfile.value = {
-                    "id": (result as any).data.profile.userId,
-                    "email": (result as any).data.profile.email,
-                    "lastName": (result as any).data.profile.lastName,
-                    "userName": (result as any).data.profile.username,
-                    "phoneNumber": (result as any).data.profile.mobile,
-                    "firstName": (result as any).data.profile.firstName,
-                    "profilePicture": (result as any).data.profile.imageUrl,
+                    "id": '',
+                    "email": (result as any).data.email,
+                    "lastName": (result as any).data.lastName,
+                    "userName": (result as any).data.username,
+                    "phoneNumber": (result as any).data.mobile,
+                    "firstName": (result as any).data.firstName,
+                    "profilePicture": '',
                     "maritalStatus": '',
                     "educationLevel": '',
                     "state": '',
