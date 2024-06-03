@@ -2,7 +2,7 @@
     <div class="fixed z-20 top-0 left-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex items-center justify-center">
         <div class="bg-white w-[466px] rounded-3xl p-10 flex flex-col gap-6">
             <p class="text-lance-black text-2xl font-medium leading-[26px] tracking-[-0.24px]">Loan Details</p>
-            <div v-show="loan?.status != 'active'" class="flex items-center justify-between">
+            <div v-show="loan?.status == 'paid'" class="flex items-center justify-between">
                 <div>
                     <p class="text-lance-black-50 text-sm leading-5">Total Amount Repaid</p>
                     <p class="mt-[-12px] text-lance-black text-4xl font-bold leading-[55.93px] tracking-[0.36px]">
@@ -36,7 +36,7 @@
                         <p class="text-lance-black">Wedding</p>
                     </li>
                 </ul>
-                <div v-show="loan?.status == 'active'" class="mt-4 p-6 rounded-lg border border-solid border-lance-black bg-[rgba(236,255,77,0.05)]">
+                <div v-show="loan?.status != 'paid'" class="mt-4 p-6 rounded-lg border border-solid border-lance-black bg-[rgba(236,255,77,0.05)]">
                     <div class="flex items-center justify-between">
                         <p class="text-lance-black-70 text-sm leading-[21px]">Total Repayment</p>
                         <p class="text-lance-green text-2xl font-bold leading-[30px]">
