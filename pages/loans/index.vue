@@ -1,14 +1,14 @@
 <template>
-    <div>
+    <div v-show="!continueLoanRequestProcess">
         <p class="mb-[30px] text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px]">Loans</p>
         <div v-if="!loanHistory.length" class="rounded-xl bg-white border border-solid border-lance-black-10 p-[115px] pb-[162px] text-center">
-            <Loans-NoActiveLoan @@show-loan-instructions="showLoanInstructions == true" />
+            <Loans-NoActiveLoan @@show-loan-instructions="kycCompleted ? showLoanInstructions = true : showKycIncompleteModal = true" />
         </div>
 
         <div v-else class="flex gap-[25px]">
             <div class="basis-2/4">
                 <div v-if="!activeLoan" class="rounded-xl bg-white border border-solid border-lance-black-10 py-[132.5px] px-[96.5px] text-center">
-                    <Loans-NoActiveLoan @@show-loan-instructions="showLoanInstructions == true" />
+                    <Loans-NoActiveLoan @@show-loan-instructions="kycCompleted ? showLoanInstructions = true : showKycIncompleteModal = true" />
                 </div>
                 <div v-else class="flex flex-col gap-4">
                     <div class="rounded-xl bg-white border border-solid border-lance-black-10 py-6 px-10">
@@ -38,9 +38,9 @@
                         </p>
                         <div class="mb-3 rounded-lg bg-lance-green-5 py-2 px-4">
                             <div class="flex items-center justify-between mb-1 text-lance-black-60 text-sm leading-5">
-                                <p>Paid: <span class="font-semibold">N {{ (activeLoan.totalPaid)?.toLocaleString() }}</span></p>
+                                <p>Paid: <span class="font-semibold">N {{ (activeLoan.totalRepayments)?.toLocaleString() }}</span></p>
                                 <p>
-                                    Balance : <span class="font-semibold">N {{ (activeLoan.amount - activeLoan.totalPaid).toLocaleString() }}</span>
+                                    Balance : <span class="font-semibold">N {{ (activeLoan.amount - activeLoan.totalRepayments).toLocaleString() }}</span>
                                 </p>
                             </div>
                             <div class="h-2 w-full rounded-lg bg-lance-green-10" style="box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.10) inset;">
@@ -99,7 +99,28 @@
                 <p class="mb-6 text-[#1E1721] text-xl font-medium leading-[26px] tracking-[-0.2px]">Loan History</p>
                 <ul class="flex flex-col gap-4">
                     <li
-                        @click="viewLoanDetails(loan)" v-for="(loan, key) in loanHistory" :key="key"
+                        @click="viewLoanDetails(activeLoan)" v-if="activeLoan"
+                        class="py-3 px-6 rounded-2xl border border-solid border-lance-black-10 flex items-center justify-between cursor-pointer">
+                        <div class="basis-1/3">
+                            <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Amount</p>
+                            <p class="text-black text-sm font-medium leading-5">N {{ (activeLoan.amount).toLocaleString() }}</p>
+                        </div>
+                        <div class="basis-1/3">
+                            <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Duration</p>
+                            <p class="text-black text-sm font-medium leading-5">{{ activeLoan.tenure }} Months</p>
+                        </div>
+                        <div class="basis-1/3">
+                            <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Status</p>
+                            <p
+                                class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit"
+                                :class="activeLoan.status == 'active' ? 'bg-[rgba(12,180,59,0.04)] text-[#0CB43B]' : 'bg-lance-black-5 text-lance-black-50'"
+                            >
+                                {{ activeLoan.status == 'active' ? 'Active' : 'Completed' }}
+                            </p>
+                        </div>
+                    </li>
+                    <li
+                        @click="viewLoanDetails(loan)" v-for="(loan, key) in completedLoan" :key="key"
                         class="py-3 px-6 rounded-2xl border border-solid border-lance-black-10 flex items-center justify-between cursor-pointer">
                         <div class="basis-1/3">
                             <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Amount</p>
@@ -107,15 +128,15 @@
                         </div>
                         <div class="basis-1/3">
                             <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Duration</p>
-                            <p class="text-black text-sm font-medium leading-5">{{ loan.duration }} Months</p>
+                            <p class="text-black text-sm font-medium leading-5">{{ loan.tenure }} Months</p>
                         </div>
                         <div class="basis-1/3">
                             <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Status</p>
                             <p
                                 class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit"
-                                :class="loan.active ? 'bg-[rgba(12,180,59,0.04)] text-[#0CB43B]' : 'bg-lance-black-5 text-lance-black-50'"
+                                :class="loan.status == 'active' ? 'bg-[rgba(12,180,59,0.04)] text-[#0CB43B]' : 'bg-lance-black-5 text-lance-black-50'"
                             >
-                                {{ loan.active ? 'Active' : 'Completed' }}
+                                {{ loan.status == 'active' ? 'Active' : 'Completed' }}
                             </p>
                         </div>
                     </li>
@@ -127,8 +148,17 @@
         <Loans-RepaymentModal
             v-if="activeLoan" @@close-loan-repayment-modal="showLoanRepaymentModal = false"
             @@successful-loan-repayment="loanRepaymentSuccessful"
-            v-show="showLoanRepaymentModal" :loan="activeLoan" :wallet-balance="balance" />
+            v-show="showLoanRepaymentModal" :loan="activeLoan" :wallet-balance="balance"
+        />
+        <KYC-IncompleteKycNotificationModal v-if="!kycCompleted" v-show="showKycIncompleteModal" @@close-kyc-incomplete-modal="navigateTo('/dashboard')" />
+        <Loans-Instructions
+            v-show="showLoanInstructions"
+            @@close-loan-instructions-modal="showLoanInstructions = false"
+            @@continue-loan-request-process="showLoanRequestProcess"
+        />
+        <Loans-RequestProcess v-show="continueLoanRequestProcess" @@close-loan-application-modal="continueLoanRequestProcess = false" />
     </div>
+    <Loans-RequestProcess v-show="continueLoanRequestProcess" @@close-loan-application-modal="continueLoanRequestProcess = false" />
 </template>
 
 <script setup lang="ts">
@@ -140,110 +170,32 @@
         layout: 'dashboard'
     });
 
-    const { fetchUserLinkedAccountAndBalance } = useWalletStore();
+    const showKycIncompleteModal: Ref<boolean> = ref(false);
+        
+    const { kycItems, kycCompleted } = storeToRefs(useKYCStore());
+
     const { balance } = storeToRefs(useWalletStore());
 
     const showLoanInstructions: Ref<boolean> = ref(false);
 
-    // const loanHistory: [] = [];
+    const continueLoanRequestProcess: Ref<boolean> = ref(false);
 
-    const loanHistory: Loan[] = [
-        {
-            amount: 300000,
-            duration: 6,
-            active: true,
-            dueDate: '24th Aug 2023',
-            totalPaid: 200000,
-            repayments: [
-                {
-                    amount: 24500,
-                    date: '13 May 2034'
-                },
-                {
-                    amount: 24500,
-                    date: '13 May 2034'
-                },
-                {
-                    amount: 24500,
-                    date: '13 May 2034'
-                },
-                {
-                    amount: 24500,
-                    date: '13 May 2034'
-                },
-                {
-                    amount: 24500,
-                    date: '13 May 2034'
-                },
-                {
-                    amount: 24500,
-                    date: '13 May 2034'
-                }
-            ]
-        },
-        {
-            amount: 300000,
-            duration: 2,
-            active: false,
-            dueDate: '24th Aug 2023',
-            totalPaid: 300000,
-            repayments: [
-                {
-                    amount: 24500,
-                    date: '13 May 2034'
-                },
-                {
-                    amount: 24500,
-                    date: '13 May 2034'
-                }
-            ]
-        },
-        {
-            amount: 300000,
-            duration: 2,
-            active: false,
-            dueDate: '24th Aug 2023',
-            totalPaid: 300000,
-            repayments: [
-                {
-                    amount: 24500,
-                    date: '13 May 2034'
-                },
-                {
-                    amount: 24500,
-                    date: '13 May 2034'
-                }
-            ]
-        },
-        {
-            amount: 300000,
-            duration: 2,
-            active: false,
-            dueDate: '24th Aug 2023',
-            totalPaid: 300000,
-            repayments: [
-                {
-                    amount: 24500,
-                    date: '13 May 2034'
-                },
-                {
-                    amount: 24500,
-                    date: '13 May 2034'
-                }
-            ]
+    function showLoanRequestProcess(){
+        showLoanInstructions.value = false;
+        continueLoanRequestProcess.value = true;
+    }
+
+    const { apiURL } = useRuntimeConfig().public;
+
+    const { data: { value: jwt } } = await useFetch('/api/token');
+
+    const { loanHistory, activeLoan, percentageLoanPaid, completedLoan } = storeToRefs(useLoanHistoryStore());
+    const { fetchLoanHistory } = useLoanHistoryStore();
+    
+    onMounted(()=>{
+        if(!loanHistory.value.length){
+            fetchLoanHistory(jwt?.token, apiURL);
         }
-    ];
-
-    const activeLoan = computed(() => {
-        return loanHistory.find((loan)=> loan.active);
-    });
-
-    const percentageLoanPaid = computed(() => {
-        const loan: Loan | null = activeLoan.value;
-        if(loan){
-            return (loan.totalPaid / loan.amount) * 100;
-        }
-        return 100;
     });
 
     const selectedLoan: Ref<Loan | null> = ref(null);
@@ -259,7 +211,7 @@
     
     async function loanRepaymentSuccessful(){
         showLoanRepaymentModal.value = false;
-        // refetch loanHistory
+        fetchLoanHistory();
     }
 
 </script>

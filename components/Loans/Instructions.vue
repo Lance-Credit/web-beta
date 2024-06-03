@@ -87,7 +87,7 @@
                 </p>
             </Form-RadioInput>
             <div class="flex items-center gap-6">
-                <button @click="emit('@close-loans-things-to-note-modal')" class="btn btn-tertiary w-full">Back</button>
+                <button @click="emit('@close-loan-instructions-modal')" class="btn btn-tertiary w-full">Back</button>
                 <button
                     @click="emit('@continue-loan-request-process')" class="btn btn-primary w-full"
                     :disabled="!formValues.termsOfUse || formErrors.termsOfUse"
@@ -113,7 +113,7 @@
 
     const emit = defineEmits<{
         '@continue-loan-request-process': [],
-        '@close-loans-things-to-note-modal': []
+        '@close-loan-instructions-modal': []
     }>();
 
 </script>

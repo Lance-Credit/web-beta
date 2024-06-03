@@ -65,15 +65,15 @@
                         <p class="text-lance-black-60">How would you like to pay your loan?</p>
                     </div>
                     <form  class="flex flex-col gap-6">
-                        <Form-RadioInput type="radio" name="repaymentOption" value="nextRepayment">
+                        <!-- <Form-RadioInput type="radio" name="repaymentOption" value="nextRepayment">
                             <p class="text-lance-black text-sm">
                                 Pay Next Instalment of <span class="font-bold">N{{ (loan?.repayments[0].amount)?.toLocaleString() }}</span>
                             </p>
-                        </Form-RadioInput>
+                        </Form-RadioInput> -->
         
                         <Form-RadioInput type="radio" name="repaymentOption" value="full">
                             <p class="text-lance-black text-sm">
-                                 Make full repayment of <span class="font-bold">N{{ (loan?.amount)?.toLocaleString() }}</span>
+                                 Make full repayment of <span class="font-bold">N{{ (loan?.totalRepaymentAmount)?.toLocaleString() }}</span>
                             </p>
                         </Form-RadioInput>
         
@@ -85,7 +85,7 @@
                     </form>
                     <div class="flex gap-6">
                         <button @click="emit('@close-loan-repayment-modal')" class="btn btn-tertiary w-full">Back</button>
-                        <button @click="continueRepayment = true" class="btn btn-primary w-full" :disabled="!repaymentFormValues.repaymentOption || repaymentFormErrors.repaymentOption">Make Repayment</button>
+                        <button @click="continueRepayment = true" class="btn btn-primary w-full" :disabled="!(repaymentFormValues.repaymentOption && repaymentFormErrors.repaymentOption)">Make Repayment</button>
                     </div>
                 </div>
     
@@ -115,7 +115,7 @@
                     </div>
                     <div class="flex gap-6">
                         <button @click="emit('@close-loan-repayment-modal')" class="btn btn-tertiary w-full">Back</button>
-                        <button @click="continueRepayment = true" class="btn btn-primary w-full" :disabled="!repaymentFormValues.repaymentAmount || repaymentFormErrors.repaymentAmount">Continue</button>
+                        <button @click="continueRepayment = true" class="btn btn-primary w-full" :disabled="!(repaymentFormValues.repaymentAmount && !repaymentFormErrors.repaymentAmount)">Continue</button>
                     </div>
                 </div>
             </div>
@@ -185,7 +185,7 @@
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M16.4563 14.0254H12.8569C12.5809 14.0254 12.3569 13.8014 12.3569 13.5254C12.3569 13.2494 12.5809 13.0254 12.8569 13.0254H16.4563C16.7323 13.0254 16.9563 13.2494 16.9563 13.5254C16.9563 13.8014 16.7323 14.0254 16.4563 14.0254Z" fill="#052926"/>
                             </svg>
                             <p class="text-sm leading-5">Loan Balance:
-                                <span class="font-bold">N{{ (loan.amount - chosenAmount).toLocaleString() }}</span>
+                                <span class="font-bold">N{{ (loan?.totalRepaymentAmount - chosenAmount).toLocaleString() }}</span>
                             </p>
                         </div>
                     </div>
@@ -232,11 +232,11 @@
         }
 
         if(repaymentFormValues.repaymentOption == 'full'){
-            return props.loan.amount;
+            return props.loan?.amount;
         }
 
         if(repaymentFormValues.repaymentOption == 'nextRepayment'){
-            return props.loan.repayments[0].amount;
+            return props.loan?.repayments[0].amount;
         }
         return 0
     });

@@ -31,7 +31,7 @@
                             <path d="M11.223 5.19356C10.9783 4.95001 10.9775 4.55428 11.221 4.30968C11.4425 4.08731 11.7896 4.0664 12.0347 4.24741L12.1049 4.30778L17.1466 9.32778C17.3696 9.54985 17.3899 9.89828 17.2075 10.1433L17.1466 10.2135L12.105 15.2344C11.8604 15.4779 11.4647 15.4771 11.2211 15.2325C10.9997 15.0102 10.9802 14.6629 11.1623 14.4186L11.2229 14.3486L15.8196 9.77042L11.223 5.19356Z" fill="white"/>
                         </svg>
                     </NuxtLink>
-                    <button v-else @click="kycCompleted ? showLoansThingsToNote = true : showKycIncompleteModal = true" class="btn btn-primary gap-4">
+                    <button v-else @click="kycCompleted ? showLoanInstructions = true : showKycIncompleteModal = true" class="btn btn-primary gap-4">
                         <span>Request a Loan</span>
                         <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M3.58044 9.771C3.58044 9.45458 3.81557 9.19309 4.12064 9.1517L4.20544 9.146H16.7054C17.0506 9.146 17.3304 9.42582 17.3304 9.771C17.3304 10.0874 17.0953 10.3489 16.7903 10.3903L16.7054 10.396H4.20544C3.86027 10.396 3.58044 10.1162 3.58044 9.771Z" fill="white"/>
@@ -68,7 +68,7 @@
                     <p class="mb-8 text-[rgba(255,255,255,0.80)] font-medium">Next Repayment</p>
                     <div class="mb-4 pb-7 border-b border-solid border-[rgba(255,255,255,0.20)]">
                         <p class="mb-1 text-white text-[28px] leading-[36px] tracking-[0.28px] font-semibold">
-                            N {{ activeLoan ? (activeLoan.repayments[0].amount).toLocaleString() : '0.00'}}
+                            N {{ activeLoan ? (activeLoan.monthlyPaymentAmount).toLocaleString() : '0.00'}}
                         </p>
                         <p class="text-[rgba(255,255,255,0.90)] text-sm flex items-center gap-2">
                             <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -88,11 +88,11 @@
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M5.26101 2.7194C3.53234 2.7194 2.58034 3.6414 2.58034 5.3154V11.3481C2.58034 13.0587 3.53234 14.0001 5.26101 14.0001H10.8997C12.6283 14.0001 13.5803 13.0761 13.5803 11.3987V5.3154C13.583 4.49207 13.3617 3.85207 12.9223 3.41207C12.4703 2.95873 11.7737 2.7194 10.9057 2.7194H5.26101ZM10.8997 14.9999H5.26105C2.99105 14.9999 1.58038 13.6006 1.58038 11.3479V5.31524C1.58038 3.09657 2.99105 1.71924 5.26105 1.71924H10.9057C12.0451 1.71924 12.9871 2.06057 13.6304 2.70524C14.2551 3.33257 14.5837 4.23457 14.5804 5.31657V11.3986C14.5804 13.6199 13.1697 14.9999 10.8997 14.9999Z" fill="white" fill-opacity="0.9"/>
                                 </g>
                             </svg>
-                            <span>Due: {{ activeLoan ? activeLoan.repayments[0].date : '- -'}}</span>
+                            <!-- <span>Due: {{ activeLoan ? activeLoan.repayments[0].date : '- -'}}</span> -->
                         </p>
                     </div>
                     <div class="mb-0.5 flex items-center justify-between text-[rgba(255,255,255,0.90)] text-sm">
-                        <p>Paid: <span class="font-semibold">N {{ activeLoan ? (activeLoan.totalPaid).toLocaleString() : '0'}}</span></p>
+                        <p>Paid: <span class="font-semibold">N {{ activeLoan ? (activeLoan.totalRepayments).toLocaleString() : '0'}}</span></p>
                         <p>Total Loan Received : <span class="font-semibold">N {{ activeLoan ? (activeLoan.amount).toLocaleString() : '0'}}</span></p>
                     </div>
                     <div class="h-2 w-full rounded-lg bg-white" style="box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.10) inset;">
@@ -217,21 +217,20 @@
             @@continue-kyc-process="showKycProcess"
         />
         <Wallet-TransactionDetailsModal @@closeTransactionDetailsModal="showSelectedTransaction = false" v-show="showSelectedTransaction" :transaction="selectedTransaction" />
-        <Loans-ThingsToNote
-            v-show="showLoansThingsToNote"
-            @@close-loans-things-to-note-modal="showLoansThingsToNote = false"
+        <Loans-Instructions
+            v-show="showLoanInstructions"
+            @@close-loan-instructions-modal="showLoanInstructions = false"
             @@continue-loan-request-process="showLoanRequestProcess"
         />
+        <KYC-IncompleteKycNotificationModal v-if="!kycCompleted" v-show="showKycIncompleteModal" @@close-kyc-incomplete-modal="showKycIncompleteModal = false" />
     </div>
     <Loans-RequestProcess v-show="continueLoanRequestProcess" @@close-loan-application-modal="continueLoanRequestProcess = false" />
-    
-    <KYC-IncompleteKycNotificationModal v-if="!kycCompleted" v-show="showKycIncompleteModal" @@close-kyc-incomplete-modal="showKycIncompleteModal = false" />
 </template>
 
 <script setup lang="ts">
 
-    import { useUserStore } from '@/stores/user';
-    import { useWalletStore } from '@/stores/wallet';
+    // import { useUserStore } from '@/stores/user';
+    // import { useWalletStore } from '@/stores/wallet';
 
     definePageMeta({
         middleware: 'auth',
@@ -262,12 +261,12 @@
 
 
 
-    const showLoansThingsToNote: Ref<boolean> = ref(false);
+    const showLoanInstructions: Ref<boolean> = ref(false);
     
     const continueLoanRequestProcess: Ref<boolean> = ref(false);
 
     function showLoanRequestProcess(){
-        showLoansThingsToNote.value = false;
+        showLoanInstructions.value = false;
         continueLoanRequestProcess.value = true;
     }
 
@@ -317,37 +316,18 @@
         continueKycProcess.value = true;
     }
     
-    const activeLoan: Ref<Loan | null> = ref(null);
+    const { apiURL } = useRuntimeConfig().public;
 
-    // const activeLoan: Ref<Loan | null> = ref({
-    //     amount: 400000,
-    //     active: true,
-    //     totalPaid: 200000,
-    //     dueDate: '18th Aug 2023',
-    //     duration: 6,
-    //     repayments: [
-    //         {
-    //             amount: 24500,
-    //             date: '18th Aug 2023'
-    //         },
-    //         {
-    //             amount: 24500,
-    //             date: '24th Aug 2023'
-    //         },
-    //         {
-    //             amount: 24500,
-    //             date: '30th Aug 2023'
-    //         }
-    //     ]
-    // });
+    const { data: { value: jwt } } = await useFetch('/api/token');
 
-    const percentageLoanPaid = computed(() => {
-        const loan: Loan | null = activeLoan.value;
-        if(loan){
-            return (loan.totalPaid / loan.amount) * 100;
+    const { activeLoan, loanHistory, percentageLoanPaid } = storeToRefs(useLoanHistoryStore());
+    const { fetchLoanHistory } = useLoanHistoryStore();
+    
+    onMounted(()=>{
+        if(!loanHistory.value.length){
+            fetchLoanHistory(jwt?.token, apiURL);
         }
-        return 100;
-    })
+    });
     
     const creditScore = computed(() => {
         return activeLoan.value ? 838 : 98;

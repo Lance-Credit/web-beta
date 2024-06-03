@@ -1,10 +1,13 @@
 interface Loan {
+    rate: number,
     amount: number,
-    active: boolean,
+    status: string,
+    tenure: number,
     dueDate: string,
-    duration: number,
-    totalPaid: number,
-    repayments: LoanRepayment[]
+    totalRepayments: number,
+    repayments: LoanRepayment[],
+    totalRepaymentAmount: number,
+    monthlyPaymentAmount: number,
 }
 
 interface LoanRepayment {
