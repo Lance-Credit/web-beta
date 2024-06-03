@@ -154,12 +154,18 @@
 <script setup lang="ts">
 
     import * as yup from 'yup';
-    import { useForm } from 'vee-validate';
-    import { useUserStore}  from '@/stores/user';
 
     const { fetchUserProfile } = useUserStore();
-
+    
     const { apiURL } = useRuntimeConfig().public;
+    
+    definePageMeta({
+        middleware: 'auth',
+        auth: {
+            unauthenticatedOnly: true,
+            navigateAuthenticatedTo: '/dashboard',
+        },
+    });
 
     const activeIllustration:Ref<number> = ref(1);
 
