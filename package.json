@@ -12,8 +12,8 @@
   "dependencies": {
     "@mono.co/connect.js": "^2.0.2",
     "@pinia/nuxt": "^0.5.1",
+    "@vee-validate/nuxt": "^4.13.0",
     "nuxt": "^3.11.1",
-    "vee-validate": "^4.12.6",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
     "yup": "^1.4.0"

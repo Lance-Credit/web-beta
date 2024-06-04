@@ -840,7 +840,6 @@
 <script setup lang="ts">
     
     import * as yup from 'yup';
-    import { useForm } from 'vee-validate';
     import { useKYCStore } from '@/stores/kyc';
     import { useUserStore } from '@/stores/user';
     import { useWalletStore } from '@/stores/wallet';
@@ -971,8 +970,7 @@
                 educationLevel: settingsFormValues.educationLevel,
                 residentialAddress: settingsFormValues.residentialAddress,
                 firstName: userProfile.value.firstName,
-                lastName: userProfile.value.lastName,
-                // dob: "1993-04-24"
+                lastName: userProfile.value.lastName
             }
         });
 

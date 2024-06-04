@@ -202,7 +202,6 @@
 <script setup lang="ts">
     
     import * as yup from 'yup';
-    import { useForm } from 'vee-validate';
 
     const props = defineProps<{
         loan: null | Loan,
