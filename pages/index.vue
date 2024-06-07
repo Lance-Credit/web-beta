@@ -237,7 +237,7 @@
 
         submittingCommunityCode.value = true;
 
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/community_code?code=${signupFormValues.communityCode}`);
+        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/onboarding/community-code?communityCode=${signupFormValues.communityCode}`);
 
         if(result){
             if((result as any).success && !(result as any).error){
