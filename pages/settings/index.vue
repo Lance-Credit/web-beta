@@ -224,7 +224,7 @@
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             Marital Status
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile.maritalStatus || '--' }}</p>
+                                        <p class="text-lance-black">{{ userProfile.maritalStatus ? userProfile.maritalStatus[0].toUpperCase() + userProfile.maritalStatus.substring(1) : '--' }}</p>
                                     </div>
                                     <div>
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
@@ -310,7 +310,7 @@
                             <p class="mb-6 text-[#1E1721] font-medium tracking-[-0.16px]">Personal Details</p>
                             <div class="flex gap-[86px]">
                                 <div class="flex flex-col gap-6 basis-[376px]">
-                                    <Form-TextInput label="Residential Address" v-model="userProfile.firstName" :disabled="true" />
+                                    <Form-TextInput label="First Name" v-model="userProfile.firstName" :disabled="true" />
                                     <Form-TextInput label="Email address" v-model="userProfile.email" :disabled="true" />
                                     <Form-TextInput label="Phone number" v-model="userProfile.phoneNumber" :disabled="true" />
                                 </div>
@@ -889,6 +889,9 @@
         })
     });
     setFieldValue('newPassword', '');
+    if(userProfile.value.maritalStatus){
+        setFieldValue('maritalStatus', userProfile.value.maritalStatus);
+    }
     
     const settingsForm = {
         maritalStatus : defineField('maritalStatus'),
@@ -912,7 +915,19 @@
     const maritalStatusListOptions = [
         {
             label: 'Single',
-            value: 'Single'
+            value: 'single'
+        },
+        {
+            label: 'Engaged',
+            value: 'engaged'
+        },
+        {
+            label: 'Married',
+            value: 'married'
+        },
+        {
+            label: 'Divorced',
+            value: 'divorced'
         }
     ];
 
@@ -955,7 +970,6 @@
 
     async function savePersonalDetails(){
         savingPersonalDetails.value = true;
-
         const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/profile`, {
             method: 'PATCH',
             headers: { 
@@ -963,14 +977,16 @@
                 "Authorization" : `Bearer ${jwt?.token}`
             },
             body: {
-                lga: settingsFormValues.lga,
-                city: settingsFormValues.city,
-                state: settingsFormValues.state,
                 maritalStatus: settingsFormValues.maritalStatus,
                 educationLevel: settingsFormValues.educationLevel,
-                residentialAddress: settingsFormValues.residentialAddress,
-                firstName: userProfile.value.firstName,
-                lastName: userProfile.value.lastName
+                residentialAddress: {
+                    street: settingsFormValues.residentialAddress,
+                    city: settingsFormValues.city,
+                    lga: settingsFormValues.lga,
+                    state: settingsFormValues.state,
+                    country: 'NG'
+                },
+
             }
         });
 
@@ -978,6 +994,7 @@
             if((result as any).success && !(result as any).error){
                 console.log(result);
                 // populate userprofile
+                userProfile.value.maritalStatus = (result as any).data.profile.maritalStatus;
                 // userProfile.value.maritalStatus
             }
         }else if(error){

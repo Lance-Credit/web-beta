@@ -35,7 +35,7 @@ export const useUserStore = defineStore('user', () =>
                     "phoneNumber": (result as any).data.mobile,
                     "firstName": (result as any).data.firstName,
                     "profilePicture": '',
-                    "maritalStatus": '',
+                    "maritalStatus": (result as any).data.profile.maritalStatus,
                     "educationLevel": '',
                     "state": '',
                     "address": '',
