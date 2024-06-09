@@ -164,13 +164,13 @@
         />
         <KYC-IncompleteKycNotificationModal v-if="!kycCompleted" v-show="showKycIncompleteModal" @@close-kyc-incomplete-modal="navigateTo('/dashboard')" />
         <Loans-Instructions
-            v-show="showLoanInstructions"
+            v-show="showLoanInstructions && loanSettings"
+            :loan-settings="loanSettings"
             @@close-loan-instructions-modal="showLoanInstructions = false"
             @@continue-loan-request-process="showLoanRequestProcess"
         />
-        <Loans-RequestProcess v-show="continueLoanRequestProcess" @@close-loan-application-modal="continueLoanRequestProcess = false" />
     </div>
-    <Loans-RequestProcess v-show="continueLoanRequestProcess" @@close-loan-application-modal="continueLoanRequestProcess = false" />
+    <Loans-RequestProcess v-show="continueLoanRequestProcess" @@close-loan-application-modal="continueLoanRequestProcess = false" :loan-settings="loanSettings" />
 </template>
 
 <script setup lang="ts">
@@ -201,13 +201,25 @@
 
     const { data: { value: jwt } } = await useFetch('/api/token');
 
+    const loanSettings: Ref<{
+        "defaultRate": number,
+        "minRate": number,
+        "maxRate": number,
+        "minDuration": number,
+        "maxDuration": number,
+        "processingFee": number
+    } | null> = ref(null);
+
+    const { fetchLoanSettings } = useFetchLoanSettings();
+
     const { loanHistory, activeLoan, pendingLoans, percentageLoanPaid, completedLoans } = storeToRefs(useLoanHistoryStore());
     const { fetchLoanHistory } = useLoanHistoryStore();
     
-    onMounted(()=>{
+    onMounted(async()=>{
         if(!loanHistory.value.length){
             fetchLoanHistory(jwt?.token, apiURL);
-        }
+        };
+        loanSettings.value = await fetchLoanSettings();
     });
 
     const selectedLoan: Ref<Loan | null> = ref(null);

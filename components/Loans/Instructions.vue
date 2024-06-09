@@ -28,8 +28,8 @@
                             Processing Fees & Time
                         </p>
                         <p class="text-lance-black-50 leading-6">
-                            Lance loans range from <span class="text-lance-green font-medium">30 -365</span>
-                            days with an Annual Percentage Rate from <span class="text-lance-green font-medium">4% - 28%</span>.
+                            Lance loans range from <span class="text-lance-green font-medium">{{loanSettings?.minDuration}} - {{loanSettings?.maxDuration}}</span>
+                            days with an Annual Percentage Rate from <span class="text-lance-green font-medium">{{loanSettings?.minRate}}% - {{loanSettings?.maxRate}}%</span>.
                         </p>
                     </div>
                 </li>
@@ -103,12 +103,22 @@
 
     import * as yup from 'yup';
 
+    defineProps<{
+        loanSettings?: {
+            "defaultRate": number,
+            "minRate": number,
+            "maxRate": number,
+            "minDuration": number,
+            "maxDuration": number,
+            "processingFee": number
+        } | null
+    }>();
+
     const { values: formValues, errors: formErrors } = useForm({
         validationSchema: yup.object({
             termsOfUse: yup.string().required().label('Terms')
         })
     });
-
 
     const emit = defineEmits<{
         '@continue-loan-request-process': [],

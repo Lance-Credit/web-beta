@@ -6,6 +6,7 @@
             </label>
             <select
                 name="" v-model="value"
+                @change="emit('@select-change')"
                 @focusin="inputFocused = true" @focusout="inputFocused = false"
                 class="text-lance-black outline-none font-gelion font-normal text-base appearance-none cursor-pointer"
             >
@@ -45,7 +46,8 @@
     });
     
     const emit = defineEmits<{
-        'update:modelValue': [value: undefined | string]
+        'update:modelValue': [value: undefined | string],
+        '@select-change': []
     }>();
 
 </script>

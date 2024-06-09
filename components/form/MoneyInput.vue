@@ -9,6 +9,7 @@
                 <input
                     type="number" :placeholder="placeholder" v-model.number="value"
                     @focusin="inputFocused = true" @focusout="inputFocused = false"
+                    @change="emit('@money-changed')"
                     class="text-lance-black outline-none font-gelion font-normal text-base w-full appearance-none"
                 >
             </div>
@@ -45,7 +46,8 @@
     });
 
     const emit = defineEmits<{
-        'update:modelValue': [value: undefined | number | string]
+        'update:modelValue': [value: undefined | number | string],
+        '@money-changed': []
     }>();
 
 </script>

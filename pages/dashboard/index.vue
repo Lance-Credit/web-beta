@@ -218,19 +218,17 @@
         />
         <Wallet-TransactionDetailsModal @@closeTransactionDetailsModal="showSelectedTransaction = false" v-show="showSelectedTransaction" :transaction="selectedTransaction" />
         <Loans-Instructions
-            v-show="showLoanInstructions"
+            v-show="showLoanInstructions && loanSettings"
+            :loan-settings="loanSettings"
             @@close-loan-instructions-modal="showLoanInstructions = false"
             @@continue-loan-request-process="showLoanRequestProcess"
         />
         <KYC-IncompleteKycNotificationModal v-if="!kycCompleted" v-show="showKycIncompleteModal" @@close-kyc-incomplete-modal="showKycIncompleteModal = false" />
     </div>
-    <Loans-RequestProcess v-show="continueLoanRequestProcess" @@close-loan-application-modal="continueLoanRequestProcess = false" />
+    <Loans-RequestProcess v-show="continueLoanRequestProcess" @@close-loan-application-modal="continueLoanRequestProcess = false" :loan-settings="loanSettings" />
 </template>
 
 <script setup lang="ts">
-
-    // import { useUserStore } from '@/stores/user';
-    // import { useWalletStore } from '@/stores/wallet';
 
     definePageMeta({
         middleware: 'auth',
@@ -253,14 +251,6 @@
         navigator.clipboard.writeText(referralCode.value);
     }
 
-
-
-
-
-
-
-
-
     const showLoanInstructions: Ref<boolean> = ref(false);
     
     const continueLoanRequestProcess: Ref<boolean> = ref(false);
@@ -272,8 +262,21 @@
 
     
 
+    const { apiURL } = useRuntimeConfig().public;
 
+    const { data: { value: jwt } } = await useFetch('/api/token');
 
+    const loanSettings: Ref<{
+        "defaultRate": number,
+        "minRate": number,
+        "maxRate": number,
+        "minDuration": number,
+        "maxDuration": number,
+        "processingFee": number
+    } | null> = ref(null);
+
+    const { fetchLoanSettings } = useFetchLoanSettings();
+    
 
 
 
@@ -315,18 +318,15 @@
         showKycSummary.value = false;
         continueKycProcess.value = true;
     }
-    
-    const { apiURL } = useRuntimeConfig().public;
-
-    const { data: { value: jwt } } = await useFetch('/api/token');
 
     const { activeLoan, loanHistory, percentageLoanPaid } = storeToRefs(useLoanHistoryStore());
     const { fetchLoanHistory } = useLoanHistoryStore();
     
-    onMounted(()=>{
+    onMounted(async()=>{
         if(!loanHistory.value.length){
             fetchLoanHistory(jwt?.token, apiURL);
-        }
+        };
+        loanSettings.value = await fetchLoanSettings();
     });
     
     const creditScore = computed(() => {

@@ -189,8 +189,7 @@
 
     const { apiURL } = useRuntimeConfig().public;
 
-    const headers = useRequestHeaders(['cookie']) as HeadersInit;
-    const { data: { value: jwt } } = await useFetch('/api/token', { headers });
+    const { data: { value: jwt } } = await useFetch('/api/token');
     
     onMounted(() => {
         fetchNotifications(jwt?.token, apiURL);

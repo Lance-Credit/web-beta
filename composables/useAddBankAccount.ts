@@ -20,8 +20,6 @@ export const useAddBankAccount = () => {
             key: monoKey,
             data: { customer },
             onSuccess: function (response: any) {
-                console.log(JSON.stringify(response));
-                console.log('code: ',response.code)
     
                 addNewAccount(response.code)
             }
@@ -51,11 +49,11 @@ export const useAddBankAccount = () => {
         
         if(result){
             if((result as any).success && !(result as any).error){
-                // console.log('success',result);
+                console.log('success',result);
                 fetchUserLinkedAccountAndBalance(jwt?.token, apiURL);
             }
         }else if(error){
-            // console.log(error.value?.data);
+            console.log(error.value?.data);
         }
     }
 

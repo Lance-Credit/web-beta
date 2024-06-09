@@ -14,17 +14,17 @@
                 <div>
                     <Form-MoneyInput
                         placeholder="Amount" label="Amount" v-model="loanRequestForm.loanAmount[0].value" v-bind="loanRequestForm.loanAmount[1].value"
-                        :error="loanRequestFormErrors.loanAmount" class="mb-4"
+                        :error="loanRequestFormErrors.loanAmount" class="mb-4" @@money-changed="calculateLoanSummary"
                     />
                     <Form-SelectInput
-                        :options="loanDurationListOptions" placeholder="Duration in Months" label="Duration in Months"
+                        :options="loanDurationListOptions" placeholder="Duration in Months" label="Duration in Months" @@select-change="calculateLoanSummary"
                         v-model="loanRequestForm.loanDuration[0].value" v-bind="loanRequestForm.loanDuration[1].value" :error="loanRequestFormErrors.loanDuration"
                     />
                 </div>
-                <div v-show="loanRequestFormFilled">
+                <div v-show="loanSummary">
                     <div class="mb-1 py-2 px-4 text-center rounded bg-[#F2F7F7]">
                         <p class="mb-0.5 text-lance-green text-[13px] leading-[20.8px]">Total Repayment</p>
-                        <p class="text-lance-black text-lg font-medium leading-[27px]">N {{ totalRepayment.toLocaleString() }}</p>
+                        <p class="text-lance-black text-lg font-medium leading-[27px]">N {{ (loanSummary?.totalRepaymentAmount)?.toLocaleString() }}</p>
                     </div>
                     <div class="rounded-[17px] bg-[#EFFFD4] flex items-center gap-2 p-0.5 justify-center">
                         <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,11 +33,11 @@
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M6.24417 4.14497C6.57597 4.14497 6.84717 4.41317 6.84717 4.74497C6.84717 5.07677 6.58137 5.34497 6.25017 5.34497H6.24417C5.91237 5.34497 5.64417 5.07677 5.64417 4.74497C5.64417 4.41317 5.91237 4.14497 6.24417 4.14497Z" fill="#0A4F4D"/>
                         </svg>
                         <p class="text-lance-black-70 text-[13px] leading-[20.8px]">
-                            Interest Rate: <span class="text-lance-green font-medium">{{ defaultInterestRate }}%</span>
+                            Interest Rate: <span class="text-lance-green font-medium">{{ loanSummary?.rate }}%</span>
                         </p>
                     </div>
                 </div>
-                <button @click="activeTab = 'summary'" class="btn btn-primary">Next</button>
+                <button @click="activeTab = 'summary'" class="btn btn-primary" :disabled="!loanRequestFormFilled || !loanSummary">Next</button>
             </div>
 
             <div v-show="activeTab == 'summary'" class="flex flex-col gap-6 w-[386px] mx-auto">
@@ -83,9 +83,9 @@
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M14.2109 19.4192H7.04093C4.2351 19.4192 2.3501 17.4484 2.3501 14.5151V7.78008C2.3501 4.84257 4.2351 2.86841 7.04093 2.86841H13.0976C13.4426 2.86841 13.7226 3.14841 13.7226 3.49341C13.7226 3.83841 13.4426 4.11841 13.0976 4.11841H7.04093C4.95093 4.11841 3.6001 5.55507 3.6001 7.78008V14.5151C3.6001 16.7692 4.91843 18.1692 7.04093 18.1692H14.2109C16.3009 18.1692 17.6518 16.7351 17.6518 14.5151V8.64924C17.6518 8.30424 17.9318 8.02424 18.2768 8.02424C18.6218 8.02424 18.9018 8.30424 18.9018 8.64924V14.5151C18.9018 17.4484 17.0168 19.4192 14.2109 19.4192Z" fill="#041111" fill-opacity="0.5"/>
                                     </g>
                                 </svg>
-                                <span>Interest Rate ({{ defaultInterestRate }}%)</span>
+                                <span>Interest Rate ({{ loanSummary?.rate }}%)</span>
                             </p>
-                            <p class="text-lance-black">N {{ totalInterest.toLocaleString() }}</p>
+                            <p class="text-lance-black">N {{ ((loanSummary?.totalRepaymentAmount || 0) - loanRequestFormValues.loanAmount).toLocaleString() }}</p>
                         </li>
                         <li class="flex items-center justify-between py-4 border-b border-solid border-b-lance-green-5">
                             <p class="text-lance-black-70 text-sm leading-[21px] flex items-center gap-2">
@@ -104,9 +104,9 @@
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M14.2109 19.4192H7.04093C4.2351 19.4192 2.3501 17.4484 2.3501 14.5151V7.78008C2.3501 4.84257 4.2351 2.86841 7.04093 2.86841H13.0976C13.4426 2.86841 13.7226 3.14841 13.7226 3.49341C13.7226 3.83841 13.4426 4.11841 13.0976 4.11841H7.04093C4.95093 4.11841 3.6001 5.55507 3.6001 7.78008V14.5151C3.6001 16.7692 4.91843 18.1692 7.04093 18.1692H14.2109C16.3009 18.1692 17.6518 16.7351 17.6518 14.5151V8.64924C17.6518 8.30424 17.9318 8.02424 18.2768 8.02424C18.6218 8.02424 18.9018 8.30424 18.9018 8.64924V14.5151C18.9018 17.4484 17.0168 19.4192 14.2109 19.4192Z" fill="#041111" fill-opacity="0.5"/>
                                     </g>
                                 </svg>
-                                <span>Processing Fee ({{ defaultProcessingFeeRate }}%)</span>
+                                <span>Processing Fee</span>
                             </p>
-                            <p class="text-lance-black">N {{ processingFee.toLocaleString() }}</p>
+                            <p class="text-lance-black">N {{ loanSummary?.processingFee.toLocaleString() }}</p>
                         </li>
                         <li class="flex items-center justify-between py-4 border-b border-solid border-b-lance-green-5">
                             <p class="text-lance-black-70 text-sm leading-[21px] flex items-center gap-2">
@@ -116,7 +116,7 @@
                                 </svg>
                                 <span>Duration</span>
                             </p>
-                            <p class="text-lance-black">{{ loanRequestFormValues.loanDuration }} months</p>
+                            <p class="text-lance-black">{{ loanSummary?.tenure }} months</p>
                         </li>
                         <li class="flex items-center justify-between pt-4">
                             <p class="text-lance-black-70 text-sm leading-[21px] flex items-center gap-2">
@@ -137,7 +137,7 @@
                                 </svg>
                                 <span>Repayment</span>
                             </p>
-                            <p class="text-lance-black">N {{ (totalRepayment/loanRequestFormValues.loanDuration).toLocaleString() }} monthly</p>
+                            <p class="text-lance-black">N {{ (loanSummary?.monthlyPaymentAmount)?.toLocaleString() }} monthly</p>
                         </li>
                     </ul>
                     <div class="mt-4 p-6 rounded-lg border border-solid border-lance-black bg-[rgba(236,255,77,0.05)]">
@@ -154,7 +154,7 @@
                                 <span>Total Repayment</span>
                             </p>
                             <p class="text-lance-green text-2xl font-bold leading-[30px]">
-                                N{{ totalRepayment.toLocaleString() }}
+                                N{{ (loanSummary?.totalRepaymentAmount)?.toLocaleString() }}
                             </p>
                         </div>
                     </div>
@@ -174,6 +174,16 @@
 
     import * as yup from 'yup';
 
+    const props = defineProps<{
+        loanSettings?: {
+            "defaultRate": number,
+            "minRate": number,
+            "maxRate": number,
+            "minDuration": number,
+            "maxDuration": number,
+            "processingFee": number
+        } | null
+    }>();
 
     const activeTab: Ref<string> = ref('request');
 
@@ -189,87 +199,23 @@
         loanDuration: defineField('loanDuration')
     };
 
-    const loanDurationListOptions = [
-        {
-            label: '1 month',
-            value: '1'
-        },
-        {
-            label: '2 months',
-            value: '2'
-        },
-        {
-            label: '3 months',
-            value: '3'
-        },
-        {
-            label: '4 months',
-            value: '4'
-        },
-        {
-            label: '5 months',
-            value: '5'
-        },
-        {
-            label: '6 months',
-            value: '6'
-        },
-        {
-            label: '7 months',
-            value: '7'
-        },
-        {
-            label: '8 months',
-            value: '8'
-        },
-        {
-            label: '9 months',
-            value: '9'
-        },
-        {
-            label: '10 months',
-            value: '10'
-        },
-        {
-            label: '11 months',
-            value: '11'
-        },
-        {
-            label: '12 months',
-            value: '12'
-        }
-    ];
+    const loanDurationListOptions = computed(() => {
+        const totalMonthPeriod = props.loanSettings?.maxDuration ? props.loanSettings.maxDuration/30 : 1;
 
+        let listArray = [];
+
+        for (let i = 1; i <= totalMonthPeriod; i++) {
+            listArray.push({
+                label: i+' month',
+                value: i.toString()
+            });
+        }
+        return listArray;
+    })
+    
     const loanRequestFormFilled = computed(() => {
         return loanRequestFormValues.loanAmount && !loanRequestFormErrors.value.loanAmount &&
         loanRequestFormValues.loanDuration && !loanRequestFormErrors.value.loanDuration;
-    });
-
-    const { defaultInterestRate } = useRuntimeConfig().public;
-    const { defaultProcessingFeeRate } = useRuntimeConfig().public;
-    
-    const totalInterest = computed(() => {
-        if(loanRequestFormFilled.value){
-            return (
-                loanRequestFormValues.loanAmount * (parseInt(defaultInterestRate)/100)
-            ) * loanRequestFormValues.loanDuration;
-        }
-        return 0;
-    });
-
-    const processingFee = computed(() => {
-        if(loanRequestFormFilled.value){
-            return loanRequestFormValues.loanAmount * (parseInt(defaultProcessingFeeRate)/100);
-        }
-        return 0;
-    });
-
-    const totalRepayment = computed(() => {
-        if(loanRequestFormFilled.value){
-            const principal = loanRequestFormValues.loanAmount;
-            return principal + totalInterest.value;
-        }
-        return 0;
     });
 
     const submittingLoanApplication: Ref<boolean> = ref(false);
@@ -280,6 +226,35 @@
 
     const { data: { value: jwt } } = await useFetch('/api/token');
 
+    const loanSummary: Ref<{
+        "monthlyPaymentAmount": number,
+        "totalRepaymentAmount": number,
+        "rate": number,
+        "tenure": number,
+        "processingFee": number
+    } | null> = ref(null);
+    
+    async function calculateLoanSummary(){
+        if(loanRequestFormFilled.value){
+            loanSummary.value = null;
+            const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/loans/summary?principal=${loanRequestFormValues.loanAmount}&tenure=${loanRequestFormValues.loanDuration}`,{
+                method: 'GET',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${jwt.token}`
+                }
+            });
+    
+            if(result){
+                if((result as any).success && !(result as any).error){
+                    loanSummary.value = (result as any).data;
+                }
+            }else if(error){
+                // console.log(error.value?.data);
+            }
+        }
+    }
+        
     async function submitLoanApplication(){
 
         submittingLoanApplication.value = true;
