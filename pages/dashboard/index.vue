@@ -235,9 +235,11 @@
         layout: 'dashboard'
     });
 
+    const { kycItems, kycCompleted } = storeToRefs(useKYCStore());
+
     useHead({
         script: [
-            { src: 'https://widget.dojah.io/widget.js', body: true }
+            !kycCompleted.value ? { src: 'https://widget.dojah.io/widget.js', body: true } : ''
         ]
     });
 
@@ -284,8 +286,6 @@
 
 
     const showKycIncompleteModal: Ref<boolean> = ref(false);
-        
-    const { kycItems, kycCompleted } = storeToRefs(useKYCStore());
 
     const kycCompletion = computed(() => {
 
