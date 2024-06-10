@@ -28,6 +28,8 @@ export const useWalletStore = defineStore('wallet', () =>
                     }
                 }
             }else if(error){
+                balance.value = 0;
+                linkedAccount.value = null;
                 // console.log(error.value?.data);
             }
         }

@@ -84,8 +84,7 @@
             const signedIn = await signIn('credentials', { email: loginFormValues.email, password: loginFormValues.password, redirect: false, callbackUrl: '/dashboard' })
 
             if(!(signedIn as any).error){
-                const headers = useRequestHeaders(['cookie']) as HeadersInit;
-                const { data: { value: jwt } } = await useFetch('/api/token', { headers });
+                const { data: { value: jwt } } = await useFetch('/api/token');
 
                 await fetchUserProfile(jwt?.token, apiURL);
 
