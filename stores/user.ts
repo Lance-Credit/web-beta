@@ -36,7 +36,7 @@ export const useUserStore = defineStore('user', () =>
                     "firstName": (result as any).data.firstName,
                     "profilePicture": '',
                     "maritalStatus": (result as any).data.profile.maritalStatus,
-                    "educationLevel": '',
+                    "educationLevel": (result as any).data.profile.levelOfEducation,
                     "state": '',
                     "address": '',
                     "lga": '',

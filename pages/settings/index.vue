@@ -230,7 +230,7 @@
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             Education Level
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile.educationLevel || '--' }}</p>
+                                        <p class="text-lance-black">{{ userProfile.educationLevel ? userProfile.educationLevel[0].toUpperCase() + userProfile.educationLevel.substring(1) + ' Education' : '--' }}</p>
                                     </div>
                                 </div>
                                 <div class="flex flex-col gap-6 basis-[185px]">
@@ -933,8 +933,20 @@
 
     const educationLevelListOptions = [
         {
-            label: 'Tertiary Education',
-            value: 'Tertiary Education'
+            label: 'Primary Education',
+            value: 'primary'
+        },
+        {
+            label: 'Secondary Education',
+            value: 'secondary'
+        },
+        {
+            label: 'Bachelors Education',
+            value: 'bachelors'
+        },
+        {
+            label: 'Graduate Education',
+            value: 'graduate'
         }
     ];
 
@@ -978,7 +990,7 @@
             },
             body: {
                 maritalStatus: settingsFormValues.maritalStatus,
-                educationLevel: settingsFormValues.educationLevel,
+                levelOfEducation: settingsFormValues.educationLevel,
                 residentialAddress: {
                     street: settingsFormValues.residentialAddress,
                     city: settingsFormValues.city,
@@ -995,7 +1007,7 @@
                 console.log(result);
                 // populate userprofile
                 userProfile.value.maritalStatus = (result as any).data.profile.maritalStatus;
-                // userProfile.value.maritalStatus
+                userProfile.value.educationLevel = (result as any).data.profile.levelOfEducation;
             }
         }else if(error){
             console.log(error.value?.data);
