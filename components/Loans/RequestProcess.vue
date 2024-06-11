@@ -268,8 +268,8 @@
             },
             body: {
                 "source": "web",
-                "amount": loanRequestFormValues.loanAmount,
-                "tenure": loanRequestFormValues.loanDuration
+                "amount": parseInt(loanRequestFormValues.loanAmount),
+                "tenure": parseInt(loanRequestFormValues.loanDuration)
             }
         });
 
