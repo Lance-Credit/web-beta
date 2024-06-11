@@ -338,7 +338,11 @@
         if(!loanHistory.value.length){
             fetchLoanHistory(jwt?.token, apiURL);
         };
-        loanSettings.value = await fetchLoanSettings();
+
+        if(kycCompleted.value){
+            loanSettings.value = await fetchLoanSettings();
+        }
+
         useHead({
             script: [
                 !kycCompleted.value ? { src: 'https://widget.dojah.io/widget.js', body: true } : ''

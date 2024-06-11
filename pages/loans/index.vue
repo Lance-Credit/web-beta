@@ -219,7 +219,10 @@
         if(!loanHistory.value.length){
             fetchLoanHistory(jwt?.token, apiURL);
         };
-        loanSettings.value = await fetchLoanSettings();
+        
+        if(kycCompleted.value){
+            loanSettings.value = await fetchLoanSettings();
+        }
     });
 
     const selectedLoan: Ref<Loan | null> = ref(null);
