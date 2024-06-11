@@ -43,10 +43,19 @@
             <div
                 @click="showKycSummary = true" v-if="!kycCompleted"
                 class="mb-6 rounded-xl bg-white border border-solid border-lance-green-20 py-6 px-10 flex items-center justify-between cursor-pointer">
-                <div class="flex gap-4 items-center">
-                    <div class="w-16 h-16 rounded-full border-[6.4px] border-solid border-[rgba(109,151,105,0.40)] flex items-center justify-center">
+                <div class="flex gap-4 items-center">                    
+                    <div class="w-16 h-16 rounded-full flex items-center justify-center relative">
+                        <svg width="64" height="64" viewBox="0 0 64 64" class="absolute top-0 left-0">
+                            <circle class="bg"
+                              cx="32" cy="32" r="29" fill="none" stroke="rgba(109,151,105,0.40)" stroke-width="6"
+                            ></circle>
+                            <circle class="fg stroke-lance-green"
+                              cx="32" cy="32" r="29" fill="none" stroke-width="6" :stroke-dasharray="`${kycCompletionCircumference} ${182.285714285714286 - kycCompletionCircumference}`"
+                            ></circle>
+                        </svg>
                         <p class="text-lance-secondary-green text-lg leading-[26px] font-medium">{{ kycCompletion }}%</p>
                     </div>
+
                     <div>
                         <p class="mb-2 text-[#1E1721] text-xl font-medium leading-[normal] tracking-[-0.2px]">
                             Please complete your KYC
@@ -227,7 +236,12 @@
     </div>
     <Loans-RequestProcess v-show="continueLoanRequestProcess" @@close-loan-application-modal="continueLoanRequestProcess = false" :loan-settings="loanSettings" />
 </template>
-
+<style>
+    circle.fg {
+    transform: rotate(-90deg);
+    transform-origin: 32px 32px;
+    }
+</style>
 <script setup lang="ts">
 
     definePageMeta({
@@ -236,12 +250,6 @@
     });
 
     const { kycItems, kycCompleted } = storeToRefs(useKYCStore());
-
-    useHead({
-        script: [
-            !kycCompleted.value ? { src: 'https://widget.dojah.io/widget.js', body: true } : ''
-        ]
-    });
 
     const { balance } = storeToRefs(useWalletStore());
 
@@ -309,6 +317,10 @@
 
         return completion;
     });
+
+    const kycCompletionCircumference = computed(() => {
+        return (kycCompletion.value/100) * 2 * (22/7) * 29;
+    })
     
     const showKycSummary: Ref<boolean> = ref(false);
 
@@ -327,6 +339,11 @@
             fetchLoanHistory(jwt?.token, apiURL);
         };
         loanSettings.value = await fetchLoanSettings();
+        useHead({
+            script: [
+                !kycCompleted.value ? { src: 'https://widget.dojah.io/widget.js', body: true } : ''
+            ]
+        });
     });
     
     const creditScore = computed(() => {
