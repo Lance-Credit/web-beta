@@ -177,6 +177,7 @@
     import { useUserStore } from '@/stores/user';
 
     
+    const { fetchKycStatus } = useKYCStore();
     const { kycItems } = storeToRefs(useKYCStore());
     const { userProfile } = storeToRefs(useUserStore());
     
@@ -185,12 +186,13 @@
     const startingDojahKyc: Ref<boolean> = ref(false);
 
     const { dojahAppId, dojahPublicKey, dojahWidgetId } = useRuntimeConfig().public;
+
+    const { apiURL } = useRuntimeConfig().public;
+
+    const { data: { value: jwt } } = await useFetch('/api/token');
+
     async function startDojahKyc(){
         startingDojahKyc.value = true;
-
-        const { apiURL } = useRuntimeConfig().public;
-
-        const { data: { value: jwt } } = await useFetch('/api/token');
 
         const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/verifications/kyc`, {
             method: 'POST',
@@ -226,14 +228,14 @@
                     },
         
                     onSuccess: function (response) {
-                    //   console.log('Success', response);
-                      activeStep.value = 'bankAccount';
+                        //   console.log('Success', response);
+                        confirmDojahComplete();
                     },
-        
+                    
                     onError: function (err) {
-                      console.log('Error', err);
+                        console.log('Error', err);
                     },
-        
+                
                     onClose: function () {
                       console.log('Widget closed');
                     }
@@ -243,12 +245,23 @@
                 
                 connect.setup();
 
-                startingDojahKyc.value = false;
                 
                 connect.open();
             }
         }else if(error){
             // console.log(error.value?.data);
+        }
+    }
+    
+    async function confirmDojahComplete(){
+        if(kycItems.value.kyc.completed){
+            startingDojahKyc.value = false;
+            activeStep.value = 'bankAccount';
+        }else{
+            setTimeout(async() => {
+                await fetchKycStatus(jwt?.token, apiURL);
+                confirmDojahComplete();
+            }, 120000);
         }
     }
     
