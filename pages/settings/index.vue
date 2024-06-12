@@ -257,13 +257,13 @@
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             State
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile.state || '--' }}</p>
+                                        <p class="text-lance-black">{{ userProfile.residentialAddress.state || '--' }}</p>
                                     </div>
                                     <div>
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             Residential Address
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile.address || '--' }}</p>
+                                        <p class="text-lance-black">{{ userProfile.residentialAddress.street || '--' }}</p>
                                     </div>
                                 </div>
                                 <div class="flex flex-col gap-6 basis-[185px]">
@@ -271,7 +271,7 @@
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             LGA
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile.lga || '--' }}</p>
+                                        <p class="text-lance-black">{{ userProfile.residentialAddress.lga || '--' }}</p>
                                     </div>
                                 </div>
                                 <div class="flex flex-col gap-6 basis-[185px]">
@@ -279,7 +279,7 @@
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             City
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile.city || '--' }}</p>
+                                        <p class="text-lance-black">{{ userProfile.residentialAddress.city || '--' }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -892,6 +892,21 @@
     if(userProfile.value.maritalStatus){
         setFieldValue('maritalStatus', userProfile.value.maritalStatus);
     }
+    if(userProfile.value.educationLevel){
+        setFieldValue('educationLevel', userProfile.value.educationLevel);
+    }
+    if(userProfile.value.residentialAddress.lga){
+        setFieldValue('lga', userProfile.value.residentialAddress.lga);
+    }
+    if(userProfile.value.residentialAddress.city){
+        setFieldValue('city', userProfile.value.residentialAddress.city);
+    }
+    if(userProfile.value.residentialAddress.state){
+        setFieldValue('state', userProfile.value.residentialAddress.state);
+    }
+    if(userProfile.value.residentialAddress.street){
+        setFieldValue('residentialAddress', userProfile.value.residentialAddress.street);
+    }
     
     const settingsForm = {
         maritalStatus : defineField('maritalStatus'),
@@ -1004,13 +1019,16 @@
 
         if(result){
             if((result as any).success && !(result as any).error){
-                console.log(result);
-                // populate userprofile
                 userProfile.value.maritalStatus = (result as any).data.profile.maritalStatus;
                 userProfile.value.educationLevel = (result as any).data.profile.levelOfEducation;
+                userProfile.value.residentialAddress.city = (result as any).data.profile.residentialAddress.city;
+                userProfile.value.residentialAddress.country = (result as any).data.profile.residentialAddress.country;
+                userProfile.value.residentialAddress.lga = (result as any).data.profile.residentialAddress.lga;
+                userProfile.value.residentialAddress.state = (result as any).data.profile.residentialAddress.state;
+                userProfile.value.residentialAddress.street = (result as any).data.profile.residentialAddress.street;
             }
         }else if(error){
-            console.log(error.value?.data);
+            // console.log(error.value?.data);
         }
     }
 

@@ -37,10 +37,13 @@ export const useUserStore = defineStore('user', () =>
                     "profilePicture": '',
                     "maritalStatus": (result as any).data.profile.maritalStatus,
                     "educationLevel": (result as any).data.profile.levelOfEducation,
-                    "state": '',
-                    "address": '',
-                    "lga": '',
-                    "city": ''
+                    "residentialAddress": {
+                        "city": (result as any).data.profile.residentialAddress.city,
+                        "country": (result as any).data.profile.residentialAddress.country,
+                        "lga": (result as any).data.profile.residentialAddress.lga,
+                        "state": (result as any).data.profile.residentialAddress.state,
+                        "street": (result as any).data.profile.residentialAddress.street,
+                    },
 
                 }
 

@@ -1,10 +1,6 @@
 interface User {
     id: string,
-    lga: string,
-    city: string,
     email: string,
-    state: string,
-    address: string,
     userName: string,
     lastName: string,
     firstName: string,
@@ -12,4 +8,11 @@ interface User {
     profilePicture: string,
     maritalStatus: string,
     educationLevel: string,
+    residentialAddress: {
+        city: string
+        country: string
+        lga: string
+        state: string
+        street: string
+    },
 }
