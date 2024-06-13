@@ -23,17 +23,17 @@
             </div>
             <p class="mb-6 text-[#0E0B10] font-medium leading-[22px] tracking-[-0.16px]">Wallet Transactions</p>
             <div class="p-4 rounded-xl bg-white border border-solid border-lance-blue-10">
-                <ul class="flex justify-between py-2 px-4 text-lance-black-60 text-sm leading-[24px]">
+                <ul class="flex py-2 px-4 text-lance-black-60 text-sm leading-[24px]">
                     <li class="w-[228px]">Transaction Type</li>
-                    <li class="basis-[138px]">Amount</li>
-                    <li class="basis-[250px]">Description</li>
-                    <li class="basis-[108px]">Reference</li>
-                    <li class="basis-[158px] text-right">Transaction Date</li>
+                    <li class="w-[138px]">Amount</li>
+                    <li class="w-[250px] grow">Description</li>
+                    <li class="w-[108px] grow">Reference</li>
+                    <li class="w-[158px] text-right">Transaction Date</li>
                 </ul>
                 <ul
                     @click="viewTransactionDetails(transaction)"
                     v-for="(transaction) in transactions" :key="transaction.id"
-                    class="mb-2 flex justify-between items-center pt-[23px] pb-[15px] px-4 border-t
+                    class="mb-2 flex items-center pt-[23px] pb-[15px] px-4 border-t
                     border-solid border-[rgba(3,87,238,0.05)] text-lance-black leading-[26px] cursor-pointer"
                 >
                     <li class="flex items-center gap-4 w-[228px]">
@@ -52,12 +52,12 @@
                             {{ transaction.txnType == 'credit' ? 'Wallet Top-Up' : 'Wallet Withdrawal'}}
                         </p>
                     </li>
-                    <li class="font-medium basis-[138px]">N {{ (transaction.amount).toLocaleString() }}</li>
-                    <li class="basis-[250px]">{{ transaction.metadata.description }}</li>
-                    <li class="basis-[108px]">
+                    <li class="font-medium w-[138px]">N {{ (transaction.amount).toLocaleString() }}</li>
+                    <li class="w-[250px] grow">{{ transaction.metadata.description }}</li>
+                    <li class="w-[108px] grow">
                         {{ transaction.reference }}
                     </li>
-                    <li class="basis-[158px] text-right">
+                    <li class="w-[158px] text-right">
                         {{ new Date(transaction.createdAt).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) }}
                     </li>
                 </ul>
