@@ -7,7 +7,7 @@
                     <p class="text-lance-black-60">Provide the amount you would like to withdraw from your account.</p>
                 </div>
                 <div>
-                    <Form-MoneyInput placeholder="Amount" label="Amount" v-bind="withdrawalForm.withdrawalAmount" :error="withdrawalFormErrors.withdrawalAmount" class="mb-4"></Form-MoneyInput>
+                    <Form-MoneyInput placeholder="Amount" label="Amount" v-model="withdrawalForm.withdrawalAmount[0].value" v-bind="withdrawalForm.withdrawalAmount[1].value" :error="withdrawalFormErrors.withdrawalAmount" class="mb-4"></Form-MoneyInput>
                     <div class="flex items-center gap-2 py-2 px-4 rounded-lg bg-lance-green-5">
                         <div class="w-8 h-8 rounded-full flex items-center justify-center bg-lance-green border border-solid border-lance-green">
                             <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -47,18 +47,14 @@
                     <p class="text-lance-black-60">Please enter the bank details you would like us to process your withdrawal to.</p>
                 </div>
                 <div>
-                    <Form-SelectInput
-                        :options="bankListOptions" placeholder="Bank Name" label="Bank Name" class="mb-4"
-                        v-bind="withdrawalForm.destinationBankName" :error="withdrawalFormErrors.destinationBankName"
-                    ></Form-SelectInput>
+                    <Form-TextInput
+                        placeholder="Bank Name" label="Bank Name" class="mb-4" v-model="withdrawalForm.destinationBankName[0].value" :disabled="true"
+                    ></Form-TextInput>
                     <div class="relative mb-8">
                         <Form-TextInput
-                            placeholder="Account Number" label="Account Number" v-bind="withdrawalForm.destinationAccountNumber"
-                            :error="withdrawalFormErrors.destinationAccountNumber"
-                            @update:model-value="verifyDestinationAccount"
+                            placeholder="Account Number" label="Account Number" v-model="withdrawalForm.destinationAccountNumber[0].value" :disabled="true"
                         ></Form-TextInput>
                         <div
-                            v-if="!resolvingDestinationAccountName && !withdrawalFormErrors.destinationAccountNumber && resolvedDestinationAccountName"
                             class="absolute top-6 right-4 w-[16.667px] h-[16.667px] rounded-full border-[1.5px] border-[#0CB43B] flex justify-center items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="8" height="6" viewBox="0 0 8 6" fill="none">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M3.26279 5.47725C3.10363 5.47725 2.94279 5.41642 2.82113 5.29392L0.842793 3.31642C0.598626 3.07225 0.598626 2.67725 0.842793 2.43309C1.08696 2.18892 1.48196 2.18892 1.72613 2.43309L3.26279 3.96809L6.77613 0.455586C7.02029 0.211419 7.41529 0.211419 7.65946 0.455586C7.90363 0.699753 7.90363 1.09475 7.65946 1.33892L3.70446 5.29392C3.58279 5.41642 3.42279 5.47725 3.26279 5.47725" fill="#0CB43B"/>
@@ -66,13 +62,14 @@
                         </div>
                     </div>
                     <p class="text-lance-black font-medium flex items-center justify-center">
-                        <Loader-Basic v-if="resolvingDestinationAccountName" />
-                        <span v-if="!resolvingDestinationAccountName && !withdrawalFormErrors.destinationAccountNumber">{{ resolvedDestinationAccountName }}</span>
+                        <span>{{ linkedAccount.accountName }}</span>
                     </p>
                 </div>
                 <div class="flex gap-6">
                     <button @click="activeTab = 'amount'" class="btn btn-tertiary w-full">Back</button>
-                    <button @click="activeTab = 'confirm'" class="btn btn-primary w-full" :disabled="!accountNumberFilledAndVerified">Continue</button>
+                    <button @click="activeTab = 'confirm'" class="btn btn-primary w-full">
+                        Continue
+                    </button>
                 </div>
             </div>
             <div v-if="activeTab == 'confirm'" class="flex flex-col gap-8">
@@ -137,7 +134,7 @@
                                 N {{ withdrawalFormValues.withdrawalAmount.toLocaleString() }}
                             </span> to
                             <span class="font-medium text-lance-black">
-                                {{ withdrawalFormValues.resolvedDestinationAccountName}}, {{ withdrawalFormValues.destinationBankName }}.
+                                {{ linkedAccount.accountName.toUpperCase() }}, {{ withdrawalFormValues.destinationBankName }}.
                             </span>
                         </p>
                         <p v-else>
@@ -245,12 +242,15 @@
     import * as yup from 'yup';
 
     const props = defineProps<{
-        walletBalance: any | number
+        walletBalance: any | number,
+        linkedAccount: Beneficiary
     }>();
+
+    const { fetchAccountBalance } = useWalletStore();
 
     const activeTab: Ref<string> = ref('amount');
 
-    const { values: withdrawalFormValues, errors: withdrawalFormErrors, defineComponentBinds } = useForm({
+    const { values: withdrawalFormValues, errors: withdrawalFormErrors, setFieldValue, defineField } = useForm({
         validationSchema: yup.object({
             withdrawalAmount: yup.number().required().
             max(props.walletBalance, "Insufficient Funds. Try again using the amount in your account")
@@ -260,81 +260,49 @@
             .typeError('Destination Account Number is required').label('Destination Account Number'),
         })
     });
+    setFieldValue('destinationBankName', props.linkedAccount.bankName);
+    setFieldValue('destinationAccountNumber', props.linkedAccount.accountNumber);
     
-    const withdrawalForm = reactive({
-        withdrawalAmount: defineComponentBinds('withdrawalAmount', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        }),
-        destinationBankName: defineComponentBinds('destinationBankName', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        }),
-        destinationAccountNumber: defineComponentBinds('destinationAccountNumber', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        })
-    });
-
-    const bankListOptions = reactive([
-        {
-            label: 'Sterling Bank',
-            value: '054'
-        }
-    ]);
-
-    const destinationAccountIsValid: Ref<boolean> = ref(false);
-        
-    const resolvedDestinationAccountName: Ref<string> = ref('');
-
-    let resolveBankAccountTimeout: Timeout;
-
-    function verifyDestinationAccount(){
-        if(
-            withdrawalFormValues.destinationBankName && !withdrawalFormErrors.value.destinationBankName &&
-            withdrawalFormValues.destinationAccountNumber && withdrawalFormValues.destinationAccountNumber?.length == 10
-        ){
-            resolveBankAccountTimeout = setTimeout(resolveBankAccount, 1500);
-        }else {
-            clearTimeout(resolveBankAccountTimeout);
-        }
-    }
-
-    const resolvingDestinationAccountName: Ref<boolean> = ref(false);
-
-    const accountNumberFilledAndVerified = computed(() => {
-        return destinationAccountIsValid.value && !resolvingDestinationAccountName.value && withdrawalFormValues.destinationAccountNumber?.length == 10
-    })
-
-    function resolveBankAccount(){
-        resolvingDestinationAccountName.value = true;
-        setTimeout(()=>{
-            resolvingDestinationAccountName.value = false;
-            resolvedDestinationAccountName.value = 'Wisdom Ndebe';
-            destinationAccountIsValid.value = true;
-        }, 5000)
-        console.log(withdrawalFormValues.destinationAccountNumber);
-    }
+    const withdrawalForm = {
+        withdrawalAmount: defineField('withdrawalAmount'),
+        destinationBankName: defineField('destinationBankName'),
+        destinationAccountNumber: defineField('destinationAccountNumber'),
+    };
 
     const processingWithdrawal: Ref<boolean> = ref(false);
 
     const withdrawalSuccessful: Ref<boolean | null> = ref(null);
 
-    function processWithdrawal(){
+    const { apiURL } = useRuntimeConfig().public;
+
+    const { data: { value: jwt } } = await useFetch('/api/token');
+
+    async function processWithdrawal(){
         processingWithdrawal.value = true;
-        setTimeout(()=>{
+
+        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/wallets/withdraw`, {
+            method: 'POST',
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization" : `Bearer ${jwt?.token}`
+            },
+            body: {
+                "amount": parseInt(withdrawalFormValues.withdrawalAmount) * 100
+            }
+    
+        });
+    
+        if(result){
+            if((result as any).success && !(result as any).error){
+                processingWithdrawal.value = false;
+                withdrawalSuccessful.value = true;
+                fetchAccountBalance(jwt?.token, apiURL);
+            }
+        }else if(error){
+            console.log(error.value?.data);
             processingWithdrawal.value = false;
-
-            // if withdrawal was successful
-            withdrawalSuccessful.value = true;
-
-            // if withdrawal failed
-            // activeTab.value = 'failed';
-        }, 5000)
-        console.log('withdrawal processed');
+            activeTab.value = 'failed';
+        }
     }
 
     function resetWithdrawalForm(){

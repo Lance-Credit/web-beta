@@ -66,7 +66,7 @@
 
         <Wallet-TransactionDetailsModal @@closeTransactionDetailsModal="showSelectedTransaction = false" v-show="showSelectedTransaction" :transaction="selectedTransaction" />
         <Wallet-DetailsModal @@closeWalletDetailsModal="showWalletDetailsModal = false" v-show="showWalletDetailsModal" :wallet="walletDetails" />
-        <Wallet-WithdrawModal @@closeWalletWithdrawalModal="showWalletWithdrawalModal = false" v-if="showWalletWithdrawalModal" :wallet-balance="balance" />
+        <Wallet-WithdrawModal @@closeWalletWithdrawalModal="showWalletWithdrawalModal = false" v-if="showWalletWithdrawalModal" :wallet-balance="balance" :linked-account="linkedAccount" />
         <Wallet-FundingModal @@closeWalletFundingModal="showWalletFundingModal = false" v-if="showWalletFundingModal" />
 
     </div>
@@ -86,7 +86,7 @@
     const { apiURL } = useRuntimeConfig().public;
 
     const { fetchAccountBalance } = useWalletStore();
-    const { balance, transactions } = storeToRefs(useWalletStore());
+    const { balance, transactions, linkedAccount } = storeToRefs(useWalletStore());
 
     const { data: { value: jwt } } = await useFetch('/api/token');
 
