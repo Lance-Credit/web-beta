@@ -157,22 +157,22 @@
                         >
                             <li class="flex items-center gap-4 basis-[50%]">
                                 <div class="flex items-center justify-center w-9 h-9 rounded-full bg-[rgba(10,79,77,0.05)]">
-                                    <svg v-if="transaction.type == 'top-up' || transaction.type == 'loan-repay'" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <svg v-if="transaction.txnType == 'credit' || transaction.txnType == 'loan-repay'" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M10.8333 4.16634C10.8333 3.7061 10.4602 3.33301 9.99998 3.33301C9.53974 3.33301 9.16665 3.7061 9.16665 4.16634V9.16634H4.16665C3.70641 9.16634 3.33331 9.53944 3.33331 9.99967C3.33331 10.4599 3.70641 10.833 4.16665 10.833H9.16665V15.833C9.16665 16.2932 9.53974 16.6663 9.99998 16.6663C10.4602 16.6663 10.8333 16.2932 10.8333 15.833V10.833H15.8333C16.2936 10.833 16.6666 10.4599 16.6666 9.99967C16.6666 9.53944 16.2936 9.16634 15.8333 9.16634H10.8333V4.16634Z" fill="#0A4F4D"/>
                                     </svg>
                                     <svg v-else width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M9.16665 9.16699H4.16665C3.70641 9.16699 3.33331 9.54009 3.33331 10.0003C3.33331 10.4606 3.70641 10.8337 4.16665 10.8337H9.16665L10.8333 10.8337H15.8333C16.2936 10.8337 16.6666 10.4606 16.6666 10.0003C16.6666 9.54009 16.2936 9.16699 15.8333 9.16699H10.8333H9.16665Z" fill="#E70A3F"/>
                                     </svg>
                                 </div>
-                                <p v-if="transaction.type == 'loan-repay'">
+                                <p v-if="transaction.txnType == 'loan-repay'">
                                     Loan Repayment
                                 </p>
                                 <p v-else>
-                                    {{ transaction.type == 'top-up' ? 'Wallet Top-Up' : 'Wallet Withdrawal'}}
+                                    {{ transaction.txnType == 'credit' ? 'Wallet Top-Up' : 'Wallet Withdrawal'}}
                                 </p>
                             </li>
-                            <li class="font-medium basis-[30%]">N {{ formattedMoneyValue(transaction.amount) }}</li>
-                            <li class="basis-[20%] text-right">{{ transaction.date }}</li>
+                            <li class="font-medium basis-[30%]">N {{ (transaction.amount).toLocaleString() }}</li>
+                            <li class="basis-[20%] text-right">{{ new Date(transaction.createdAt).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) }}</li>
                         </ul>
                     </div>
                 </div>
@@ -251,7 +251,7 @@
 
     const { kycItems, kycCompleted } = storeToRefs(useKYCStore());
 
-    const { balance } = storeToRefs(useWalletStore());
+    const { balance, transactions } = storeToRefs(useWalletStore());
 
     const { userProfile } = storeToRefs(useUserStore());
 
@@ -335,7 +335,6 @@
     const { fetchLoanHistory } = useLoanHistoryStore();
     
     onMounted(async()=>{
-        
         if(kycCompleted.value){
             loanSettings.value = await fetchLoanSettings();
             if(!loanHistory.value.length){
@@ -355,56 +354,11 @@
     })
 
 
-    const selectedTransaction: Ref<null | TransactionData> = ref(null);
-
-    // const transactions: TransactionData[] | [] = reactive([]);
-
-    const transactions: TransactionData[] | [] = reactive([
-        {
-            id: 2,
-            type: 'loan-repay',
-            amount: 100000000,
-            name: 'Yinka Babatola',
-            status: 'success',
-            date: '24 July 2023',
-            sender: 'Chidozie Okoro',
-            bank: '3022859043 | First Bank',
-            transaction_no: '001679084',
-            description: 'Aquafix Omeprazole'
-        },
-        {
-            id: 4,
-            type: 'top-up',
-            amount: 100000000,
-            name: 'Yinka Babatola',
-            status: 'success',
-            date: '24 July 2023',
-            sender: 'Chidozie Okoro',
-            bank: '3022859043 | First Bank',
-            transaction_no: '001679084',
-            description: 'Aquafix Omeprazole'
-        },
-        {
-            id: 3,
-            type: 'withdrawal',
-            amount: 100000000,
-            name: 'Ndebe Wisdom',
-            status: 'Failed',
-            date: '24 July 2023',
-            sender: 'Chidozie Okoro',
-            bank: '3022859043 | First Bank',
-            transaction_no: '001679084',
-            description: 'Aquafix Omeprazole'
-        }
-    ]);
-
-    function formattedMoneyValue(amount: any | number){
-        return amount ? amount.toLocaleString() : 0;
-    }
+    const selectedTransaction: Ref<null | Transaction> = ref(null);
 
     const showSelectedTransaction: Ref<boolean> = ref(false);
 
-    function viewTransactionDetails(transaction: TransactionData){
+    function viewTransactionDetails(transaction: Transaction){
         selectedTransaction.value = transaction;
         showSelectedTransaction.value = true;
     }

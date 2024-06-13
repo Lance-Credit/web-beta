@@ -11,7 +11,7 @@
             <div class="py-6 px-10">
                 <div class="pb-6 text-center flex flex-col gap-2 items-center justify-center border-b border-solid border-[rgba(10,79,77,0.10)]">
                     <div class="flex items-center justify-center w-11 h-11 rounded-full bg-[rgba(10,79,77,0.05)]">
-                        <svg v-if="transaction?.type == 'top-up'" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg v-if="transaction?.txnType == 'credit'" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M10.8333 4.16634C10.8333 3.7061 10.4602 3.33301 9.99998 3.33301C9.53974 3.33301 9.16665 3.7061 9.16665 4.16634V9.16634H4.16665C3.70641 9.16634 3.33331 9.53944 3.33331 9.99967C3.33331 10.4599 3.70641 10.833 4.16665 10.833H9.16665V15.833C9.16665 16.2932 9.53974 16.6663 9.99998 16.6663C10.4602 16.6663 10.8333 16.2932 10.8333 15.833V10.833H15.8333C16.2936 10.833 16.6666 10.4599 16.6666 9.99967C16.6666 9.53944 16.2936 9.16634 15.8333 9.16634H10.8333V4.16634Z" fill="#0A4F4D"/>
                         </svg>
                         <svg v-else width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -22,48 +22,53 @@
                         <p class="text-lance-black-50 text-sm">Amount</p>
                         <p class="mt-[-4px] text-lance-black text-[28px] font-bold leading-[34px] tracking-[0.28px]">{{ transaction?.amount.toLocaleString() }}</p>
                     </div>
-                    <div class="py-1 px-6 rounded-[31px] bg-[rgba(93,36,45,0.05)]">
-                        <p class="text-[#5D242D] text-sm leading-[24px]">
-                            <span v-if="transaction?.type == 'loan-repay'">
+                    <div class="py-1 px-6 rounded-[31px]" :class="transaction?.txnType == 'credit' ? 'bg-lance-green-5' : 'bg-[rgba(93,36,45,0.05)]'">
+                        <p class="text-sm leading-[24px]" :class="transaction?.txnType == 'credit' ? 'text-lance-green' : 'text-[#5D242D]'">
+                            <span v-if="transaction?.txnType == 'loan-repay'">
                                 Loan Repayment
                             </span>
                             <span v-else>
-                                {{ transaction?.type == 'top-up' ? 'Wallet Top-Up' : 'Wallet Withdrawal'}}
+                                {{ transaction?.txnType == 'credit' ? 'Wallet Top-Up' : 'Wallet Withdrawal'}}
                             </span>
                         </p>
                     </div>
                 </div>
                 <div class="mt-6 p-6 rounded-2xl bg-lance-black-5">
                     <ul class="tracking-[-0.16px] border-solid">
-                        <li class="flex pb-[18px] border-b border-[rgba(10,79,77,0.05)]">
-                            <span class="text-lance-black-50 basis-36">Sender:</span>
-                            <span class="text-[#1E1721]">{{ transaction?.sender }}</span>
+                        <li class="flex gap-2 pb-[18px] border-b border-[rgba(10,79,77,0.05)]">
+                            <span class="text-lance-black-50 w-36">Processor:</span>
+                            <span class="text-[#1E1721] w-[calc(100%-144px)]">
+                                {{ `${transaction?.metadata.processor[0].toUpperCase()}${transaction?.metadata.processor.substring(1)}` }}
+                            </span>
                         </li>
-                        <li class="flex py-[18px] border-b border-[rgba(10,79,77,0.05)]">
-                            <span class="text-lance-black-50 basis-36">Bank Details:</span>
-                            <span class="text-[#1E1721]">{{ transaction?.bank }}</span>
+                        <li class="flex gap-2 py-[18px] border-b border-[rgba(10,79,77,0.05)]">
+                            <span class="text-lance-black-50 w-36">Processor Reference:</span>
+                            <span class="text-[#1E1721] w-[calc(100%-144px)]">{{ transaction?.metadata.processorReference }}</span>
                         </li>
 
-                        <li class="flex py-[18px] border-b border-[rgba(10,79,77,0.05)]">
-                            <span class="text-lance-black-50 basis-36">Transaction Date:</span>
-                            <span class="text-[#1E1721]">{{ transaction?.date }}</span>
+                        <li class="flex gap-2 py-[18px] border-b border-[rgba(10,79,77,0.05)]">
+                            <span class="text-lance-black-50 w-36">Transaction Date:</span>
+                            <span class="text-[#1E1721] w-[calc(100%-144px)]">{{ transaction ? new Date(transaction.createdAt).toLocaleDateString('en-GB', { day:"numeric", month:"long", year:"numeric" }) : '' }}</span>
                         </li>
-                        <li class="flex py-[18px] border-b border-[rgba(10,79,77,0.05)]">
-                            <span class="text-lance-black-50 basis-36">Transaction No.:</span>
+                        <li class="flex gap-2 py-[18px] border-b border-[rgba(10,79,77,0.05)]">
+                            <span class="text-lance-black-50 w-36">Transaction Ref.:</span>
                             <p class="text-[#1E1721] flex items-center justify-between w-[calc(100%-144px)]">
-                                <span>{{ transaction?.transaction_no }}</span>
-                                <svg @click="copyTransactionNumber" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="cursor-pointer">
+                                <span>{{ transaction?.reference }}</span>
+                                <svg @click="copyTransactionReference" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="cursor-pointer">
                                     <path d="M17.4917 2.5087L17.8453 2.15515L17.4917 2.5087C17.7105 2.72749 17.8334 3.02424 17.8334 3.33366V11.667C17.8334 11.9764 17.7105 12.2732 17.4917 12.4919C17.2729 12.7107 16.9762 12.8337 16.6667 12.8337H15.5001V6.66699C15.5001 6.09236 15.2718 5.54126 14.8655 5.13493L14.5119 5.48848L14.8655 5.13493C14.4591 4.7286 13.9081 4.50033 13.3334 4.50033H7.16675V3.33366C7.16675 3.02424 7.28966 2.72749 7.50846 2.5087C7.72725 2.28991 8.024 2.16699 8.33341 2.16699H16.6667C16.9762 2.16699 17.2729 2.28991 17.4917 2.5087ZM3.33341 7.16699H11.6667C12.3098 7.16699 12.8334 7.69063 12.8334 8.33366V16.667C12.8334 17.31 12.3098 17.8337 11.6667 17.8337H3.33341C2.69039 17.8337 2.16675 17.31 2.16675 16.667V8.33366C2.16675 7.69063 2.69039 7.16699 3.33341 7.16699Z" stroke="#041111" stroke-opacity="0.5" stroke-linejoin="round"/>
                                 </svg>
                             </p>
                         </li>
-                        <li class="flex py-[18px] border-b border-[rgba(10,79,77,0.05)]">
-                            <span class="text-lance-black-50 basis-36">Description:</span>
-                            <span class="text-[#1E1721]">{{ transaction?.description }}</span>
+                        <li class="flex gap-2 py-[18px] border-b border-[rgba(10,79,77,0.05)]">
+                            <span class="text-lance-black-50 w-36">Description:</span>
+                            <span class="text-[#1E1721] w-[calc(100%-144px)]">{{ transaction?.metadata.description }}</span>
                         </li>
-                        <li class="flex pt-[18px]">
-                            <span class="text-lance-black-50 basis-36">Date & Time:</span>
-                            <span class="text-[#1E1721]">{{ transaction?.date }}</span>
+                        <li class="flex gap-2 pt-[18px]">
+                            <span class="text-lance-black-50 w-36">Date & Time:</span>
+                            <span class="text-[#1E1721] w-[calc(100%-144px)]">
+                                {{ transaction ? new Date(transaction.createdAt).toLocaleDateString('en-GB', { day:"numeric", month:"long", year:"numeric" }) : '' }} | 
+                                {{ transaction ? new Date(transaction.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: true }) : '' }}
+                            </span>
                         </li>
                     </ul>
                 </div>
@@ -75,14 +80,14 @@
 <script setup lang="ts">
 
     const props = defineProps<{
-        transaction: null | TransactionData
+        transaction: null | Transaction
     }>();
 
-    function copyTransactionNumber(){
-        const text = props.transaction?.transaction_no || '';
+    function copyTransactionReference(){
+        const text = props.transaction?.reference || '';
         navigator.clipboard.writeText(text);
     }
-
+console.log(props.transaction)
     const emit = defineEmits<{
         '@close-transaction-details-modal': []
     }>();

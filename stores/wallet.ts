@@ -4,7 +4,7 @@ export const useWalletStore = defineStore('wallet', () =>
     {
         const balance: Ref<number> = ref(0);
 
-        const transactions: Ref<Transactions[]> = ref([]);
+        const transactions: Ref<Transaction[]> = ref([]);
 
         const linkedAccount: Ref<Beneficiary | null>  = ref(null);
 
