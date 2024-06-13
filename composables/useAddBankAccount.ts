@@ -36,7 +36,7 @@ export const useAddBankAccount = () => {
         const { data: { value: jwt } } = await useFetch('/api/token');
         const { fetchUserLinkedAccountAndBalance } = useWalletStore();
 
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/payments/accounts`, {
+        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/accounts`, {
             method: 'POST',
             headers: { 
                 "Content-Type": "application/json",
@@ -49,11 +49,11 @@ export const useAddBankAccount = () => {
         
         if(result){
             if((result as any).success && !(result as any).error){
-                console.log('success',result);
+                // console.log('success',result);
                 fetchUserLinkedAccountAndBalance(jwt?.token, apiURL);
             }
         }else if(error){
-            console.log(error.value?.data);
+            // console.log(error.value?.data);
         }
     }
 
