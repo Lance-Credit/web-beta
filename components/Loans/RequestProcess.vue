@@ -174,6 +174,8 @@
 
     import * as yup from 'yup';
 
+    const { fetchLoanHistory } = useLoanHistoryStore();
+
     const props = defineProps<{
         loanSettings?: {
             "defaultRate": number,
@@ -277,6 +279,7 @@
             if((result as any).success && !(result as any).error){
                 loanApplicationSuccess.value = true;
                 submittingLoanApplication.value = false;
+                fetchLoanHistory(jwt?.token, apiURL);
             }
         }else if(error){
             // console.log(error.value?.data);

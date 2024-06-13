@@ -194,7 +194,7 @@
 
     const communityCodeFilled: Ref<boolean> = ref(false);
 
-    const { values: signupFormValues, errors: signupFormErrors, setFieldValue, defineField, defineComponentBinds } = useForm({
+    const { values: signupFormValues, errors: signupFormErrors, setFieldValue, defineField } = useForm({
         validationSchema: yup.object({
             communityCode: yup.string().required().label('Community Code'),
             firstName: yup.string().required().label('First Name'),

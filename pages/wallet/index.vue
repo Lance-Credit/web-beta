@@ -8,10 +8,10 @@
             >
                 <div>
                     <p class="mb-2 text-[rgba(255,255,255,0.80)] font-medium tracking-[-0.16px]">Wallet Balance</p>
-                    <p class="text-white text-[32px] font-medium leading-[32px] tracking-[-0.32px]">N {{ formattedMoneyValue(balance)}}</p>
+                    <p class="text-white text-[32px] font-medium leading-[32px] tracking-[-0.32px]">N {{ balance.toLocaleString() }}</p>
                 </div>
                 <div class="flex gap-4">
-                    <button @click="showWalletDetailsModal = true" class="btn border border-solid border-white text-white">Fund Wallet</button>
+                    <button @click="showWalletFundingModal = true" class="btn border border-solid border-white text-white">Fund Wallet</button>
                     <button @click="showWalletWithdrawalModal = true" class="btn bg-white gap-4 text-lance-green">
                         <span>Withdraw</span>
                         <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -52,7 +52,7 @@
                             {{ transaction.type == 'top-up' ? 'Wallet Top-Up' : 'Wallet Withdrawal'}}
                         </p>
                     </li>
-                    <li class="font-medium basis-[138px]">N {{ formattedMoneyValue(transaction.amount) }}</li>
+                    <li class="font-medium basis-[138px]">N {{ (transaction.amount).toLocaleString() }}</li>
                     <li class="basis-[250px]">{{ transaction.name }}</li>
                     <li class="basis-[108px]">
                         <div
@@ -69,6 +69,7 @@
         <Wallet-TransactionDetailsModal @@closeTransactionDetailsModal="showSelectedTransaction = false" v-show="showSelectedTransaction" :transaction="selectedTransaction" />
         <Wallet-DetailsModal @@closeWalletDetailsModal="showWalletDetailsModal = false" v-show="showWalletDetailsModal" :wallet="walletDetails" />
         <Wallet-WithdrawModal @@closeWalletWithdrawalModal="showWalletWithdrawalModal = false" v-if="showWalletWithdrawalModal" :wallet-balance="balance" />
+        <Wallet-FundingModal @@closeWalletFundingModal="showWalletFundingModal = false" v-if="showWalletFundingModal" />
 
     </div>
 </template>
@@ -82,16 +83,19 @@
         layout: 'dashboard'
     });
 
+    const { kycCompleted } = storeToRefs(useKYCStore());
+
     const { apiURL } = useRuntimeConfig().public;
 
-    const { fetchUserLinkedAccountAndBalance } = useWalletStore();
+    const { fetchAccountBalance } = useWalletStore();
     const { balance } = storeToRefs(useWalletStore());
 
-    const headers = useRequestHeaders(['cookie']) as HeadersInit;
-    const { data: { value: jwt } } = await useFetch('/api/token', { headers });
+    const { data: { value: jwt } } = await useFetch('/api/token');
 
     onMounted(()=>{
-        fetchUserLinkedAccountAndBalance(jwt?.token, apiURL);
+        if(kycCompleted.value){
+            fetchAccountBalance(jwt?.token, apiURL);
+        }
     })
 
     const selectedTransaction: Ref<null | TransactionData> = ref(null);
@@ -148,10 +152,6 @@
         }
     ]);
 
-    function formattedMoneyValue(amount: any | number){
-        return amount ? amount.toLocaleString() : 0;
-    }
-
     const showSelectedTransaction: Ref<boolean> = ref(false);
 
     function viewTransactionDetails(transaction: TransactionData){
@@ -160,6 +160,8 @@
     }
 
     const showWalletDetailsModal: Ref<boolean> = ref(false);
+
+    const showWalletFundingModal: Ref<boolean> = ref(false);
 
     const walletDetails: Ref<null | Wallet> = ref({
         account_no: '0072018906',
