@@ -52,7 +52,7 @@
                             {{ transaction.txnType == 'credit' ? 'Wallet Top-Up' : 'Wallet Withdrawal'}}
                         </p>
                     </li>
-                    <li class="font-medium w-[138px]">N {{ (transaction.amount).toLocaleString() }}</li>
+                    <li class="font-medium w-[138px]">N {{ (transaction.amount/100).toLocaleString() }}</li>
                     <li class="w-[250px] grow">{{ transaction.metadata.description }}</li>
                     <li class="w-[108px] grow">
                         {{ transaction.reference }}

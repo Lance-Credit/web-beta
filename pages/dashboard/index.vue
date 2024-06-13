@@ -171,7 +171,7 @@
                                     {{ transaction.txnType == 'credit' ? 'Wallet Top-Up' : 'Wallet Withdrawal'}}
                                 </p>
                             </li>
-                            <li class="font-medium basis-[30%]">N {{ (transaction.amount).toLocaleString() }}</li>
+                            <li class="font-medium basis-[30%]">N {{ (transaction.amount/100).toLocaleString() }}</li>
                             <li class="basis-[20%] text-right">{{ new Date(transaction.createdAt).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) }}</li>
                         </ul>
                     </div>

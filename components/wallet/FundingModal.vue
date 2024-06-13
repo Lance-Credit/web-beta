@@ -55,7 +55,7 @@
                 "Authorization": `Bearer ${jwt?.token}`
             },
             body: {
-                "amount": fundingFormValues.fundingAmount
+                "amount": parseInt(fundingFormValues.fundingAmount) * 100
             }
         });
         
