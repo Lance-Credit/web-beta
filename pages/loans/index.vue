@@ -216,12 +216,11 @@
     const { fetchLoanHistory } = useLoanHistoryStore();
     
     onMounted(async()=>{
-        if(!loanHistory.value.length){
-            fetchLoanHistory(jwt?.token, apiURL);
-        };
-        
         if(kycCompleted.value){
             loanSettings.value = await fetchLoanSettings();
+            if(!loanHistory.value.length){
+                fetchLoanHistory(jwt?.token, apiURL);
+            };
         }
     });
 
