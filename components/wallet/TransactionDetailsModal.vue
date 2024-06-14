@@ -20,7 +20,7 @@
                     </div>
                     <div>
                         <p class="text-lance-black-50 text-sm">Amount</p>
-                        <p class="mt-[-4px] text-lance-black text-[28px] font-bold leading-[34px] tracking-[0.28px]">{{ transaction?.amount.toLocaleString() }}</p>
+                        <p class="mt-[-4px] text-lance-black text-[28px] font-bold leading-[34px] tracking-[0.28px]">{{ transaction ? (transaction.amount / 100).toLocaleString() : 0 }}</p>
                     </div>
                     <div class="py-1 px-6 rounded-[31px]" :class="transaction?.txnType == 'credit' ? 'bg-lance-green-5' : 'bg-[rgba(93,36,45,0.05)]'">
                         <p class="text-sm leading-[24px]" :class="transaction?.txnType == 'credit' ? 'text-lance-green' : 'text-[#5D242D]'">
