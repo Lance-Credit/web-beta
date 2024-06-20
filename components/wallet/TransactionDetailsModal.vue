@@ -87,7 +87,7 @@
         const text = props.transaction?.reference || '';
         navigator.clipboard.writeText(text);
     }
-console.log(props.transaction)
+
     const emit = defineEmits<{
         '@close-transaction-details-modal': []
     }>();
