@@ -29,6 +29,12 @@
     font-style: normal;
     font-weight: 800;
 }
+@font-face {
+    font-family: 'Aventa';
+    src: url('~/assets/fonts/Aventa-Black.woff2');
+    font-style: normal;
+    font-weight: 900;
+}
 
 /* @font-face {
     font-family: 'Gelion Light';

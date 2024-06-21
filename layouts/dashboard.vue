@@ -62,7 +62,7 @@
                         </NuxtLink>
                     </li>
                     <li>
-                        <NuxtLink class="py-3 pl-6 pr-[17.25px] flex gap-4 items-center group" activeClass="is-active rounded-md bg-[rgba(10,79,77,0.05)] text-lance-green font-medium">
+                        <NuxtLink to="/community" class="py-3 pl-6 pr-[17.25px] flex gap-4 items-center group" activeClass="is-active rounded-md bg-[rgba(10,79,77,0.05)] text-lance-green font-medium">
                             <svg width="22" height="17" viewBox="0 0 22 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="fill-[#041111] opacity-[.6] group-[.is-active]:fill-lance-green group-[.is-active]:opacity-[1]">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M16.8868 8.14626C16.5188 8.14626 16.1978 7.87526 16.1448 7.50026C16.0878 7.08926 16.3728 6.71026 16.7838 6.65326C17.8238 6.50726 18.6088 5.60526 18.6108 4.55326C18.6108 3.51026 17.8628 2.62826 16.8318 2.45926C16.4238 2.39226 16.1468 2.00626 16.2138 1.59726C16.2818 1.18826 16.6648 0.914262 17.0758 0.979262C18.8338 1.26826 20.1108 2.77226 20.1108 4.55526C20.1068 6.35026 18.7658 7.89026 16.9908 8.13926C16.9558 8.14426 16.9208 8.14626 16.8868 8.14626Z"/>
                                 <mask id="mask0_7374_722" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="17" y="10" width="5" height="5">
