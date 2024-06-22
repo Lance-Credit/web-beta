@@ -41,24 +41,18 @@
                         Code
                     </li>
                     <li class="w-1/4">
-                        Date Used
-                    </li>
-                    <li class="w-1/4">
-                        Used Type
-                    </li>
-                    <li class="w-1/4">
                         Status
+                    </li>
+                    <li class="w-1/4">
+                        Used By
+                    </li>
+                    <li class="w-1/4">
+                        Date Used
                     </li>
                 </ul>
                 <ul @click="showCommunityCodeDetails(code)" v-for="(code, key) in communityCodes" :key="key" class="flex items-center py-6 border-b border-solid border-lance-black-5 text-lance-black cursor-pointer">
                     <li class="w-1/4">
                         {{ code.code }}
-                    </li>
-                    <li class="w-1/4">
-                        {{ code.usedAt }}
-                    </li>
-                    <li class="w-1/4">
-                        {{ code.usedBy }}
                     </li>
                     <li class="w-1/4">
                         <p
@@ -67,6 +61,12 @@
                         >
                             {{ code.used ? 'Active' : 'Inactive'}}
                         </p>
+                    </li>
+                    <li class="w-1/4">
+                        {{ code.usedBy }}
+                    </li>
+                    <li class="w-1/4">
+                        {{ code.usedAt ? new Date(code.usedAt).toLocaleDateString('en-GB', { day:"numeric", month:"long", year:"numeric" }) : '' }}
                     </li>
                 </ul>
             </div>
