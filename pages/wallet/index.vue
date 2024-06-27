@@ -92,7 +92,9 @@
 
     onMounted(()=>{
         if(kycCompleted.value){
-            fetchAccountBalance(jwt?.token, apiURL);
+            setTimeout(() => {
+                fetchAccountBalance(jwt?.token, apiURL);
+            }, 2000)
         }
     })
 
@@ -108,11 +110,6 @@
     const showWalletDetailsModal: Ref<boolean> = ref(false);
 
     const showWalletFundingModal: Ref<boolean> = ref(false);
-
-    const walletDetails: Ref<null | Wallet> = ref({
-        account_no: '0072018906',
-        bank_name: 'STERLING BANK'
-    });
 
     const showWalletWithdrawalModal: Ref<boolean> = ref(false);
 
