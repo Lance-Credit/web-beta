@@ -35,30 +35,30 @@ export const useWalletStore = defineStore('wallet', () =>
         }
 
         async function fetchAccountBalance(token: string, apiUrl: string) {
-            
-            const { data: { value: result }, error } = await useFetch(`${apiUrl}/v1/wallets`, {
+            const data = await $fetch(`${apiUrl}/v1/wallets`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
                 }
             });
-            
-            if(result){
-                if((result as any).success && !(result as any).error){
-                    balance.value = (result as any).data.balance / 100;
-                    transactions.value = (result as any).data.transactions;
+
+            if(data){
+                if((data as any).success && !(data as any).error){
+                    balance.value = (data as any).data.balance / 100;
+                    transactions.value = (data as any).data.transactions;
                 }
-            }else if(error){
+            }else if((data as any).error){
                 balance.value = 0;
                 transactions.value = [];
-                // console.log(error.value?.data);
             }
         }
         
         return { balance, transactions, fetchAccountBalance, linkedAccount, fetchUserLinkedAccountAndBalance }
     },
     {
-        persist: true,
+        persist: {
+            storage: persistedState.localStorage,
+          },
     }
 )
