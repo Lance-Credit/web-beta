@@ -5,9 +5,9 @@ export const useFetchLoanSettings = () => {
 
     const fetchLoanSettings = async() => {
         
-        const { data: { value: jwt } } = await useFetch('/api/token');
-        
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/loans/settings`,{
+        const jwt = await $fetch('/api/token');
+
+        const result = await $fetch(`${apiURL}/v1/loans/settings`,{
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",
@@ -15,11 +15,9 @@ export const useFetchLoanSettings = () => {
             }
         });
 
-        if(result){
-            if((result as any).success && !(result as any).error){
-                return (result as any).data;
-            }
-        }else if(error){
+        if ((result as any).success && !(result as any).error) {
+            return (result as any).data;
+        } else {
             // console.log(error.value?.data);
             return null;
         }

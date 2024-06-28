@@ -31,7 +31,7 @@ export const useNotificationsStore = defineStore('notifications', () =>
 
         async function fetchNotifications(token: string, apiUrl: string) {
             
-            const { data: { value: result }, error } = await useFetch(`${apiUrl}/v1/notifications`, {
+            const result = await $fetch(`${apiUrl}/v1/notifications`, {
                 method: 'GET',
                 headers: { 
                     "Content-Type": "application/json",
@@ -39,13 +39,11 @@ export const useNotificationsStore = defineStore('notifications', () =>
                 }
             });
     
-            if(result){
-                if((result as any).success && !(result as any).error){
-                    console.log((result as any).data.notifications);
-                    // notifications.value = result.data.notifications;
-                }
-            }else if(error){
-                console.log(error.value?.data);
+            if ((result as any).success && !(result as any).error) {
+                console.log((result as any).data.notifications);
+                // notifications.value = result.data.notifications;
+            } else {
+                console.log((result as any).error);
             }
         }
         

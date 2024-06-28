@@ -35,7 +35,7 @@ export const useWalletStore = defineStore('wallet', () =>
         }
 
         async function fetchAccountBalance(token: string, apiUrl: string) {
-            const data = await $fetch(`${apiUrl}/v1/wallets`, {
+            const result = await $fetch(`${apiUrl}/v1/wallets`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -43,12 +43,10 @@ export const useWalletStore = defineStore('wallet', () =>
                 }
             });
 
-            if(data){
-                if((data as any).success && !(data as any).error){
-                    balance.value = (data as any).data.balance / 100;
-                    transactions.value = (data as any).data.transactions;
-                }
-            }else if((data as any).error){
+            if ((result as any).success && !(result as any).error) {
+                balance.value = (result as any).data.balance / 100;
+                transactions.value = (result as any).data.transactions;
+            } else {
                 balance.value = 0;
                 transactions.value = [];
             }
