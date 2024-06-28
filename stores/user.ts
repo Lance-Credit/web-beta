@@ -16,7 +16,7 @@ export const useUserStore = defineStore('user', () =>
 
         async function fetchUserProfile(token: string, apiUrl: string) {
             
-            const { data: { value: result }, error } = await useFetch(`${apiUrl}/v1/profile`, {
+            const result = await $fetch(`${apiUrl}/v1/profile`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -25,7 +25,7 @@ export const useUserStore = defineStore('user', () =>
             });
             
 
-            if((result as any).success && !(result as any).error){
+            if ((result as any).success && !(result as any).error) {
                 // console.log(result);
                 userProfile.value = {
                     "id": '',
@@ -51,8 +51,8 @@ export const useUserStore = defineStore('user', () =>
 
                 fetchKycStatus(token, apiUrl);
 
-            }else if(error){
-                // console.log(error.value?.data);
+            } else {
+                console.log((result as any).error);
             }
         }
         

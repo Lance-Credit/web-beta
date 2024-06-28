@@ -84,7 +84,7 @@
             const signedIn = await signIn('credentials', { email: loginFormValues.email, password: loginFormValues.password, redirect: false, callbackUrl: '/dashboard' })
 
             if(!(signedIn as any).error){
-                const { data: { value: jwt } } = await useFetch('/api/token');
+                const jwt: { token: string } = await $fetch('/api/token');
 
                 await fetchUserProfile(jwt?.token, apiURL);
 

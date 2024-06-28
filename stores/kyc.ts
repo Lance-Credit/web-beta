@@ -42,7 +42,7 @@ export const useKYCStore = defineStore('kyc', () =>
 
         async function fetchUserVerifications(token: string, apiUrl: string) {
             
-            const { data: { value: result }, error } = await useFetch(`${apiUrl}/v1/verifications`, {
+            const result = await $fetch(`${apiUrl}/v1/verifications`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -50,7 +50,7 @@ export const useKYCStore = defineStore('kyc', () =>
                 }
             });            
 
-            if((result as any).success && !(result as any).error){
+            if ((result as any).success && !(result as any).error) {
                 if(
                     (result as any).data.phone && (result as any).data.phone.verificationStatus == 'successful' &&
                     (result as any).data.email && (result as any).data.email.verificationStatus == 'successful'
@@ -74,8 +74,8 @@ export const useKYCStore = defineStore('kyc', () =>
                     kycItems.value.personalDetails.completed = false;
                 }
 
-            }else if(error){
-                // console.log(error.value?.data);
+            } else {
+                console.log((result as any).error);
             }
         }
         

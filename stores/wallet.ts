@@ -10,7 +10,7 @@ export const useWalletStore = defineStore('wallet', () =>
 
         async function fetchUserLinkedAccountAndBalance(token: string, apiUrl: string) {
             
-            const { data: { value: result }, error } = await useFetch(`${apiUrl}/v1/accounts`, {
+            const result = await $fetch(`${apiUrl}/v1/accounts`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -18,19 +18,16 @@ export const useWalletStore = defineStore('wallet', () =>
                 }
             });
             
-            if(result){
-                if((result as any).success && !(result as any).error){
-    
-                    if((result as any).data.hasLinkedAccount){
-                        linkedAccount.value = (result as any).data.beneficiary;
-                        fetchAccountBalance(token, apiUrl);
-                    }else{
-                        linkedAccount.value = null;
-                    }
+            if ((result as any).success && !(result as any).error) {
+                if((result as any).data.hasLinkedAccount){
+                    linkedAccount.value = (result as any).data.beneficiary;
+                    fetchAccountBalance(token, apiUrl);
+                }else{
+                    linkedAccount.value = null;
                 }
-            }else if(error){
+            } else {
                 linkedAccount.value = null;
-                // console.log(error.value?.data);
+                // console.log((result as any).error);
             }
         }
 
