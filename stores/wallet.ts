@@ -1,15 +1,14 @@
-import { defineStore } from 'pinia';
-
 export const useWalletStore = defineStore('wallet', () => 
     {
         const balance: Ref<number> = ref(0);
 
         const transactions: Ref<Transaction[]> = ref([]);
 
+        const hasDirectDebit: Ref<boolean>  = ref(false);
+        
         const linkedAccount: Ref<Beneficiary | null>  = ref(null);
 
         async function fetchUserLinkedAccountAndBalance(token: string, apiUrl: string) {
-            
             const result = await $fetch(`${apiUrl}/v1/accounts`, {
                 method: 'GET',
                 headers: {
@@ -21,6 +20,7 @@ export const useWalletStore = defineStore('wallet', () =>
             if ((result as any).success && !(result as any).error) {
                 if((result as any).data.hasLinkedAccount){
                     linkedAccount.value = (result as any).data.beneficiary;
+                    hasDirectDebit.value = (result as any).hasDirectDebit
                     fetchAccountBalance(token, apiUrl);
                 }else{
                     linkedAccount.value = null;
@@ -49,7 +49,7 @@ export const useWalletStore = defineStore('wallet', () =>
             }
         }
         
-        return { balance, transactions, fetchAccountBalance, linkedAccount, fetchUserLinkedAccountAndBalance }
+        return { balance, hasDirectDebit, transactions, fetchAccountBalance, linkedAccount, fetchUserLinkedAccountAndBalance }
     },
     {
         persist: {

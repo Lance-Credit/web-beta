@@ -175,6 +175,8 @@
     import * as yup from 'yup';
 
     const { fetchLoanHistory } = useLoanHistoryStore();
+    const { hasDirectDebit } = storeToRefs(useWalletStore());
+    const { fetchUserLinkedAccountAndBalance } = useWalletStore();
 
     const props = defineProps<{
         loanSettings?: {
@@ -239,20 +241,18 @@
     async function calculateLoanSummary(){
         if(loanRequestFormFilled.value){
             loanSummary.value = null;
-            const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/loans/summary?principal=${loanRequestFormValues.loanAmount}&tenure=${loanRequestFormValues.loanDuration}`,{
+            const result = await $fetch(`${apiURL}/v1/loans/summary?principal=${loanRequestFormValues.loanAmount}&tenure=${loanRequestFormValues.loanDuration}`,{
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${jwt.token}`
+                    "Authorization": `Bearer ${jwt?.token}`
                 }
             });
     
-            if(result){
-                if((result as any).success && !(result as any).error){
-                    loanSummary.value = (result as any).data;
-                }
-            }else if(error){
-                // console.log(error.value?.data);
+            if((result as any).success && !(result as any).error){
+                loanSummary.value = (result as any).data;
+            }else {
+                // console.log(result.error);
             }
         }
     }
@@ -260,29 +260,65 @@
     async function submitLoanApplication(){
 
         submittingLoanApplication.value = true;
-        
 
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/loans`, {
-            method: 'POST',
-            headers: { 
-                "Content-Type": "application/json",
-                "Authorization" : `Bearer ${jwt?.token}`
-            },
-            body: {
-                "source": "web",
-                "amount": parseInt(loanRequestFormValues.loanAmount),
-                "tenure": parseInt(loanRequestFormValues.loanDuration)
-            }
-        });
-
-        if(result){
-            if((result as any).success && !(result as any).error){
+        if(hasDirectDebit.value){
+    
+            const result = await $fetch(`${apiURL}/v1/loans`, {
+                method: 'POST',
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization" : `Bearer ${jwt?.token}`
+                },
+                body: {
+                    "source": "web",
+                    "amount": parseInt(loanRequestFormValues.loanAmount),
+                    "tenure": parseInt(loanRequestFormValues.loanDuration)
+                }
+            });
+    
+            if ((result as any).success && !(result as any).error) {
                 loanApplicationSuccess.value = true;
                 submittingLoanApplication.value = false;
                 fetchLoanHistory(jwt?.token, apiURL);
+            } else {
+                submittingLoanApplication.value = false;
+                // console.log(result.error);
             }
-        }else if(error){
-            // console.log(error.value?.data);
+        } else {
+            const result = await $fetch(`${apiURL}/v1/accounts/direct_debit`, {
+                method: 'POST',
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization" : `Bearer ${jwt?.token}`
+                }
+            });
+    
+            if ((result as any).success && !(result as any).error) {
+
+                setTimeout(confirmUserHasDirectDebit, 180000);
+
+                navigateTo(
+                    (result as any).data.link,
+                    {
+                        external: true,
+                        open: { target: '_blank'}
+                    }
+                );
+            } else {
+                // console.log(result.error);
+            }
+        }
+    }
+
+    async function confirmUserHasDirectDebit(){
+        if(hasDirectDebit.value){
+            submittingLoanApplication.value = false;
+            submitLoanApplication();
+        }else{
+            setTimeout(async() => {
+                await fetchUserLinkedAccountAndBalance(jwt?.token, apiURL);
+                confirmUserHasDirectDebit();
+            }, 120000);
         }
     }
 
