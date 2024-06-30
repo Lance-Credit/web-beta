@@ -238,6 +238,7 @@
                 
                     onClose: function () {
                       console.log('Widget closed');
+                      startingDojahKyc.value = false;
                     }
                 };
                 
