@@ -249,6 +249,7 @@
         layout: 'dashboard'
     });
 
+    const { fetchKycStatus } = useKYCStore();
     const { kycItems, kycCompleted } = storeToRefs(useKYCStore());
 
     const { balance, transactions } = storeToRefs(useWalletStore());
@@ -340,6 +341,8 @@
             if(!loanHistory.value.length){
                 fetchLoanHistory(jwt?.token, apiURL);
             };
+        }else{
+            fetchKycStatus(jwt?.token, apiURL)
         }
 
         useHead({
