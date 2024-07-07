@@ -12,11 +12,17 @@
                     <p class="mb-6 text-lance-black-60">
                         Hey Lancer, Welcome back
                     </p>
-                    <div class="mb-8">
-                        <Form-EmailInput class="mb-4" placeholder="Email address" label="Email address" v-bind="loginForm.email" :error="loginFormErrors.email"></Form-EmailInput>
-                        <Form-PasswordInput class="mb-2" placeholder="Password" label="Password" v-bind="loginForm.password" :error="loginFormErrors.password"></Form-PasswordInput>
+                    <form @keyup.enter="submitLogInForm" class="mb-8">
+                        <Form-EmailInput
+                            class="mb-4" placeholder="Email address" label="Email address" v-model="loginForm.email[0].value"
+                            v-bind="loginForm.email[1].value" :error="loginFormErrors.email"
+                        />
+                        <Form-PasswordInput
+                            class="mb-2" placeholder="Password" label="Password" v-model="loginForm.password[0].value"
+                            v-bind="loginForm.password[1].value" :error="loginFormErrors.password"
+                        />
                         <NuxtLink to="/auth/password/reset" class="text-[#1E1721] text-sm leading-[24px]">Forgot password?</NuxtLink>
-                    </div>
+                    </form>
                     <Form-ErrorNotification v-if="loginError" :message="loginError" />
                     <button @click="submitLogInForm" class="mb-6 btn w-full btn-primary" :disabled="!loginFormFilled || submittingLoginForm">Login to your account</button>
                     <NuxtLink to="/" class="flex gap-2 justify-center text-lance-black-60">
@@ -46,25 +52,17 @@
         },
     });
 
-    const { values: loginFormValues, errors: loginFormErrors, defineComponentBinds } = useForm({
+    const { values: loginFormValues, errors: loginFormErrors, defineField } = useForm({
         validationSchema: yup.object({
             email: yup.string().email().required().label('Email Address'),
             password: yup.string().required().label('Password')
         })
     });
 
-    const loginForm = reactive({
-        email: defineComponentBinds('email', {
-            mapProps: state => ({
-              error: state.errors[0],
-            }),
-        }),
-        password: defineComponentBinds('password', {
-            mapProps: state => ({
-              error: state.errors[0],
-            }),
-        })
-    });
+    const loginForm = {
+        email: defineField('email'),
+        password: defineField('password'),
+    };
 
     const loginFormFilled = computed(()=>{
         return loginFormValues.email && !loginFormErrors.value.email &&
@@ -76,7 +74,7 @@
     const loginError: Ref<string> = ref('');
 
     async function submitLogInForm(){
-        if(loginForm.email && loginForm.password){
+        if(loginFormFilled.value){
             submittingLoginForm.value = true;
 
             const { signIn } = useAuth();
