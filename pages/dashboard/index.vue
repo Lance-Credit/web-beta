@@ -232,7 +232,7 @@
             @@close-loan-instructions-modal="showLoanInstructions = false"
             @@continue-loan-request-process="showLoanRequestProcess"
         />
-        <KYC-IncompleteKycNotificationModal v-if="!kycCompleted" v-show="showKycIncompleteModal" @@close-kyc-incomplete-modal="showKycIncompleteModal = false" />
+        <KYC-IncompleteKycNotificationModal v-if="!kycCompleted" v-show="showKycIncompleteModal" @@close-kyc-incomplete-modal="showKycIncompleteModal = false; showKycSummary = true;" />
     </div>
     <Loans-RequestProcess v-show="continueLoanRequestProcess" @@close-loan-application-modal="continueLoanRequestProcess = false" :loan-settings="loanSettings" />
 </template>
