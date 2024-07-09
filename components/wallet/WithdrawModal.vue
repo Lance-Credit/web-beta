@@ -243,7 +243,7 @@
 
     const props = defineProps<{
         walletBalance: any | number,
-        linkedAccount: Beneficiary
+        linkedAccount: Beneficiary | null
     }>();
 
     const { fetchAccountBalance } = useWalletStore();
