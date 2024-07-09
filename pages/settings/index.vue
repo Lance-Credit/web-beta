@@ -376,11 +376,11 @@
                                             </defs>
                                         </svg>
                                         <div class="tracking-[-0.16px]">
-                                            <p class="text-[#1E1721] font-medium">{{ linkedAccount.accountName }}</p>
-                                            <p class="text-lance-black-60">{{ linkedAccount.accountNumber }}</p>
+                                            <p class="text-[#1E1721] font-medium">{{ linkedAccount?.accountName }}</p>
+                                            <p class="text-lance-black-60">{{ linkedAccount?.accountNumber }}</p>
                                         </div>
                                     </div>
-                                    <p class="text-lance-black-50 text-sm leading-[21px]">{{ linkedAccount.bankName }}</p>
+                                    <p class="text-lance-black-50 text-sm leading-[21px]">{{ linkedAccount?.bankName }}</p>
                                 </li>
                             </ul>
                         </div>
@@ -676,7 +676,7 @@
                                 <p class="w-[320px] text-[#1E1721] font-medium tracking-[-0.16px]">New Password</p>
                                 <div class="w-[376px]">
                                     <Form-PasswordInput class="mb-2" placeholder="New Password" label="New Password" v-model="settingsForm.newPassword[0].value" v-bind="settingsForm.newPassword[1].value" :error="settingsFormErrors.newPassword" />
-                                    <Form-PasswordRuleGuide :password="settingsFormValues.newPassword"/>
+                                    <Form-PasswordRuleGuide v-show="settingsForm.newPassword[0].value" :password="settingsFormValues.newPassword"/>
                                 </div>
                             </div>
                         </div>
@@ -888,7 +888,7 @@
             confPassword: yup.string().required().oneOf([yup.ref('newPassword')], "Passwords don't match").label('Password Confirmation')
         })
     });
-    setFieldValue('newPassword', '');
+    // setFieldValue('newPassword', '');
     if(userProfile.value.maritalStatus){
         setFieldValue('maritalStatus', userProfile.value.maritalStatus);
     }

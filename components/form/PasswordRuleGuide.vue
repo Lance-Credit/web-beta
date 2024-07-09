@@ -64,7 +64,7 @@
 <script setup lang="ts">
 
     const props = defineProps<{
-        password: string
+        password: string | any
     }>();
 
     const hasLowerCase = computed(() => {
