@@ -191,7 +191,10 @@
                         </div>
                         <div v-show="editingPersonalDetails" class="flex items-center gap-4">
                             <button @click="editingPersonalDetails = false" class="btn btn-secondary">Cancel</button>
-                            <button @click="savePersonalDetails" class="gap-4 btn btn-primary" :disabled="!personalDetailsFilled || savingPersonalDetails">Save changes</button>
+                            <button @click="savePersonalDetails" class="gap-4 btn btn-primary" :class="{'loading' : savingPersonalDetails}" :disabled="!personalDetailsFilled || savingPersonalDetails">
+                                <span v-show="!savingPersonalDetails">Save changes</span>
+                                <Loader-Basic v-show="savingPersonalDetails" bg="#FFF" fg="#C3E48E" />
+                            </button>
                         </div>
                     </div>
                     <div v-show="!editingPersonalDetails">
@@ -408,7 +411,10 @@
                             </p>
                             <p class="text-lance-black-60">Add your bank account and complete your pending KYC process</p>
                         </div>
-                        <button @click="!kycCompleted ? showKycIncompleteModal = true : connectAccount" class="btn btn-primary w-[282px]" :disabled="addingNewAccount">Add new account</button>
+                        <button @click="!kycCompleted ? showKycIncompleteModal = true : connectAccount" class="btn btn-primary w-[282px]" :class="{'loading' : addingNewAccount}" :disabled="addingNewAccount">
+                            <span v-show="!addingNewAccount">Add new account</span>
+                            <Loader-Basic v-show="addingNewAccount" bg="#FFF" fg="#C3E48E" />
+                        </button>
                     </div>
                 </div>
 
@@ -439,7 +445,10 @@
                         </div>
                         <div v-show="editingNextOfKinDetails" class="flex items-center gap-4">
                             <button @click="editingNextOfKinDetails = false" class="btn btn-secondary">Cancel</button>
-                            <button @click="saveNextOfKinDetails" class="gap-4 btn btn-primary" :disabled="!nextOfKinDetailsFilled || savingNextOfKinDetails">Save changes</button>
+                            <button @click="saveNextOfKinDetails" class="gap-4 btn btn-primary" :class="{'loading' : savingNextOfKinDetails}" :disabled="!nextOfKinDetailsFilled || savingNextOfKinDetails">
+                                <span v-show="!savingNextOfKinDetails">Save changes</span>
+                                <Loader-Basic v-show="savingNextOfKinDetails" bg="#FFF" fg="#C3E48E" />
+                            </button>
                         </div>
                     </div>
                     <div v-show="!editingNextOfKinDetails">
@@ -661,7 +670,10 @@
                             </p>
                         </div>
                         <div class="flex items-center gap-4">
-                            <button @click="updatePassword" class="gap-4 btn btn-primary" :disabled="!newPasswordFilled || savingNewPassword">Update Password</button>
+                            <button @click="updatePassword" class="gap-4 btn btn-primary" :class="{'loading' : savingNewPassword}" :disabled="!newPasswordFilled || savingNewPassword">
+                                <span v-show="!savingNewPassword">Update Password</span>
+                                <Loader-Basic v-show="savingNewPassword" bg="#FFF" fg="#C3E48E" />
+                            </button>
                         </div>
                     </div>
                     <div>

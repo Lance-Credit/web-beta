@@ -20,20 +20,41 @@
     cursor: pointer;
     outline-color: transparent;
 }
-.btn:disabled{
-    background: #DAE0E0;
-    color: #FFF;
-}
 .btn-primary{
     background: #052926;
     color: #FFF;
 }
+.btn-primary:hover{
+    background: #052926;
+    color: #C8E993;
+}
+.btn-primary:disabled{
+    background: #DAE0E0;
+    color: #FFF;
+}
+.btn-primary.loading:disabled{
+    background: #052926;
+}
 .btn-secondary{
     background: transparent;
-    border: 1px solid #0A4F4D;
-    color: #0A4F4D;
+    border: 1px solid #052926;
+    color: #052926;
+}
+.btn-secondary:hover{
+    background: #EEFADC;
+}
+.btn-secondary:disabled{
+    background: transparent;
+    border-color: #EBF0F0;
+    color: #A3ADAD;
+}
+.btn-secondary.loading:hover{
+    background: #EEFADC;
 }
 .btn-tertiary{
     background: #FFF;
     color: #052926;
+}
+.btn-tertiary:disabled{
+    color: #DAE0E0;
 }

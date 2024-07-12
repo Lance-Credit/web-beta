@@ -24,7 +24,13 @@
                         <NuxtLink to="/auth/password/reset" class="text-[#1E1721] text-sm leading-[24px]">Forgot password?</NuxtLink>
                     </form>
                     <Form-ErrorNotification v-if="loginError" :message="loginError" />
-                    <button @click="submitLogInForm" class="mb-6 btn w-full btn-primary" :disabled="!loginFormFilled || submittingLoginForm">Login to your account</button>
+                    <button
+                        @click="submitLogInForm" class="mb-6 btn w-full btn-primary" :class="{'loading' : submittingLoginForm}"
+                        :disabled="!loginFormFilled || submittingLoginForm"
+                    >
+                        <span v-show="!submittingLoginForm">Login to your account</span>
+                        <Loader-Basic v-show="submittingLoginForm" bg="#FFF" fg="#C3E48E" />
+                    </button>
                     <NuxtLink to="/" class="flex gap-2 justify-center text-lance-black-60">
                         Don’t have an account?<span class="text-lance-green font-medium">Create an account</span>
                     </NuxtLink>

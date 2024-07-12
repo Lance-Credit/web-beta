@@ -161,7 +161,10 @@
                 </div>
                 <div class="flex items-center gap-[14px]">
                     <button @click="activeTab = 'request'" class="btn btn-tertiary w-full" :disabled="submittingLoanApplication">Back</button>
-                    <button @click="submitLoanApplication" class="btn btn-primary w-full" :disabled="submittingLoanApplication">Submit Request</button>
+                    <button @click="submitLoanApplication" class="btn btn-primary w-full" :class="{'loading' : submittingLoanApplication}" :disabled="submittingLoanApplication">
+                        <span v-show="!submittingLoanApplication">Submit Request</span>
+                        <Loader-Basic v-show="submittingLoanApplication" bg="#FFF" fg="#C3E48E" />
+                    </button>
                 </div>
             </div>
         </div>

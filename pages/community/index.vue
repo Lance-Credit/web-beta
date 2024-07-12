@@ -31,8 +31,9 @@
                         Our community codes system is a framework designed to promote trust and safety within our lending and borrowing community. These codes establish a set of guidelines and standards that all members agree to follow, ensuring ethical conduct and fostering a positive environment for all participants.
                     </p>
                 </div>
-                <button @click="fetchCommunityCodes" class="btn btn-primary w-[282px]" :disabled="fetchingCommunityCodes">
-                    Invite Someone
+                <button @click="fetchCommunityCodes" class="btn btn-primary w-[282px]" :class="{'loading' : fetchingCommunityCodes}" :disabled="fetchingCommunityCodes">
+                    <span v-show="!fetchingCommunityCodes">Invite Someone</span>
+                    <Loader-Basic v-show="fetchingCommunityCodes" bg="#FFF" fg="#C3E48E" />
                 </button>
             </div>
             <div v-show="showCommunityCodes" class="p-6 text-sm leading-6">
@@ -52,12 +53,12 @@
                 </ul>
                 <ul @click="showCommunityCodeDetails(code)" v-for="(code, key) in communityCodes" :key="key" class="flex items-center py-6 border-b border-solid border-lance-black-5 text-lance-black cursor-pointer">
                     <li class="w-1/4">
-                        {{ code.code }}
+                        {{ code?.code }}
                     </li>
                     <li class="w-1/4">
                         <p
                             class="text-xs leading-6 w-[94px] rounded-[31px] text-center"
-                            :class="code.used ? 'text-lance-green bg-lance-green-10' : 'text-lance-black-50 bg-lance-black-10'"
+                            :class="code?.used ? 'text-lance-green bg-lance-green-10' : 'text-lance-black-50 bg-lance-black-10'"
                         >
                             {{ code.used ? 'Active' : 'Inactive'}}
                         </p>

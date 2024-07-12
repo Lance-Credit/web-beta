@@ -90,9 +90,9 @@
                 <button @click="emit('@close-loan-instructions-modal')" class="btn btn-tertiary w-full">Back</button>
                 <button
                     @click="emit('@continue-loan-request-process')" class="btn btn-primary w-full"
-                    :disabled="!formValues.termsOfUse || formErrors.termsOfUse"
+                    :disabled="!(formValues.termsOfUse && !formErrors.termsOfUse)"
                 >
-                        Continue
+                    Continue
                 </button>
             </div>
         </div>

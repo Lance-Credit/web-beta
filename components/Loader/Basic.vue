@@ -1,5 +1,5 @@
 <template>
-    <div class="spinner"></div>
+    <div class="spinner" :style="[`border-color: ${bg}`,`border-right-color: ${fg}`]"></div>
 </template>
 
 <style scoped>
@@ -9,8 +9,6 @@
         height: 24px;
         border-radius: 50%;
         border: 2px solid;
-        border-color: rgba(10, 79, 77, 0.2);
-        border-right-color: #0a4f4d;
         animation: spinner-d3wgkg 0.8s infinite linear;
     }
 
@@ -20,3 +18,15 @@
         }
     }
 </style>
+
+<script setup lang="ts">
+
+    withDefaults(defineProps<{
+        bg: string,
+        fg: string
+    }>(), {
+        bg: 'rgba(10,79,77,0.2)',
+        fg: '#0a4f4d'
+    });
+
+</script>

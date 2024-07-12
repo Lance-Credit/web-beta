@@ -45,7 +45,10 @@
 
                             <Form-ErrorNotification v-if="communityCodeErrorResponse" :message="communityCodeErrorResponse" />
 
-                            <button @click="submitCommunityCode" class="mb-6 btn w-full btn-primary" :disabled="!signupFormValues.communityCode || submittingCommunityCode">Continue</button>
+                            <button @click="submitCommunityCode" class="mb-6 btn w-full btn-primary" :class="{'loading' : submittingCommunityCode}" :disabled="!signupFormValues.communityCode || submittingCommunityCode">
+                                <span v-show="!submittingCommunityCode">Continue</span>
+                                <Loader-Basic v-show="submittingCommunityCode" bg="#FFF" fg="#C3E48E" />
+                            </button>
                             <NuxtLink to="/auth/login" class="flex gap-2 justify-center text-lance-black-60">
                                 Already have an account?<span class="text-lance-green font-medium">Login</span>
                             </NuxtLink>
@@ -69,7 +72,10 @@
 
                             <Form-ErrorNotification v-if="signupErrorResponse" :message="signupErrorResponse" />
 
-                            <button @click="submitSignUpForm" class="mb-6 btn w-full btn-primary" :disabled="!signupFormFilled || submittingSignupForm">Continue</button>
+                            <button @click="submitSignUpForm" class="mb-6 btn w-full btn-primary" :class="{'loading' : submittingSignupForm}" :disabled="!signupFormFilled || submittingSignupForm">
+                                <span v-show="!submittingSignupForm">Continue</span>
+                                <Loader-Basic v-show="submittingSignupForm" bg="#FFF" fg="#C3E48E" />
+                            </button>
                             <NuxtLink to="/auth/login" class="flex gap-2 justify-center text-lance-black-60">
                                 Already have an account?<span class="text-lance-green font-medium">Login</span>
                             </NuxtLink>
@@ -89,7 +95,13 @@
 
                             <Form-ErrorNotification v-if="phoneVerificationCodeErrorResponse" :message="phoneVerificationCodeErrorResponse" />
 
-                            <button @click="submitPhoneVerificationCode" class="mb-6 btn w-full btn-primary" :disabled="!(signupFormValues.phoneVerificationCode && !signupFormErrors.phoneVerificationCode) || submittingPhoneVerificationCode">Continue</button>
+                            <button
+                                @click="submitPhoneVerificationCode" class="mb-6 btn w-full btn-primary" :class="{'loading' : submittingPhoneVerificationCode}"
+                                :disabled="!(signupFormValues.phoneVerificationCode && !signupFormErrors.phoneVerificationCode) || submittingPhoneVerificationCode"
+                            >
+                                <span v-show="!submittingPhoneVerificationCode">Continue</span>
+                                <Loader-Basic v-show="submittingPhoneVerificationCode" bg="#FFF" fg="#C3E48E" />
+                            </button>
                             <p v-show="showResendPhoneVerificationCode" class="flex gap-2 justify-center text-lance-black-60">
                                 Didn’t get the code?<span @click="resendPhoneVerificationCode" class="text-lance-green font-medium cursor-pointer">Resend code</span>
                             </p>
@@ -108,7 +120,12 @@
 
                             <Form-ErrorNotification v-if="emailVerificationCodeErrorResponse" :message="emailVerificationCodeErrorResponse" />
 
-                            <button @click="submitEmailVerificationCode" class="mb-6 btn w-full btn-primary" :disabled="!(signupFormValues.emailVerificationCode && !signupFormErrors.emailVerificationCode) || submittingEmailVerificationCode">Continue</button>
+                            <button
+                                @click="submitEmailVerificationCode" class="mb-6 btn w-full btn-primary" :class="{'loading' : submittingEmailVerificationCode}"
+                                :disabled="!(signupFormValues.emailVerificationCode && !signupFormErrors.emailVerificationCode) || submittingEmailVerificationCode">
+                                <span v-show="!submittingEmailVerificationCode">Continue</span>
+                                <Loader-Basic v-show="submittingEmailVerificationCode" bg="#FFF" fg="#C3E48E" />
+                            </button>
                             <p v-show="showResendEmailVerificationCode" class="flex gap-2 justify-center text-lance-black-60">
                                 Didn’t get the code?<span @click="resendEmailVerificationCode" class="text-lance-green font-medium cursor-pointer">Resend code</span>
                             </p>
