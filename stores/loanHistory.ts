@@ -45,9 +45,9 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
             });
     
             if ((result as any).success && !(result as any).error) {
-                loanHistory.value = (result as any).data.loans;
+                loanHistory.value = (result as any).data;
             } else {
-                // console.log(error.value?.data);
+                // console.log((result as any).error);
             }
         }
         
