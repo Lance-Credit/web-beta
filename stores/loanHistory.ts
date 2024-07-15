@@ -24,10 +24,16 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
             return null;
         });
 
+        const activeLoanTotalPaid = computed(() => {
+            return activeLoan.value
+                ? activeLoan.value.totalRepayments * activeLoan.value.monthlyPaymentAmount
+                : 0;
+        });
+
         const percentageLoanPaid = computed(() => {
             const loan: Loan | null | undefined = activeLoan.value;
             if(loan){
-                return (loan.totalRepayments / loan.amount) * 100;
+                return (activeLoanTotalPaid.value / loan.totalRepaymentAmount) * 100;
             }
             return 100;
         });
@@ -44,6 +50,13 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
     
             if ((result as any).success && !(result as any).error) {
                 loanHistory.value = (result as any).data;
+                loanHistory.value = (result as any).data.map((loan: Loan) => {
+                    loan.amount = loan.amount / 100;
+                    loan.totalRepaymentAmount = loan.totalRepaymentAmount / 100;
+                    loan.monthlyPaymentAmount = loan.monthlyPaymentAmount / 100;
+                    
+                    return loan;
+                });
             } else {
                 // console.log((result as any).error);
             }
@@ -53,7 +66,16 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
             loanHistory.value = []
         }
         
-        return { loanHistory, activeLoan, pendingLoans, completedLoans, percentageLoanPaid, fetchLoanHistory, $reset }
+        return {
+            $reset,
+            activeLoan,
+            loanHistory,
+            pendingLoans,
+            completedLoans,
+            fetchLoanHistory,
+            percentageLoanPaid,
+            activeLoanTotalPaid
+        }
     },
     {
         persist: true,

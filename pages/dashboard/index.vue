@@ -101,7 +101,7 @@
                         </p>
                     </div>
                     <div class="mb-0.5 flex items-center justify-between text-[rgba(255,255,255,0.90)] text-sm">
-                        <p>Paid: <span class="font-semibold">N {{ activeLoan ? (activeLoan.totalRepayments).toLocaleString() : '0'}}</span></p>
+                        <p>Paid: <span class="font-semibold">N {{ activeLoanTotalPaid.toLocaleString() }}</span></p>
                         <p>Total Loan Received : <span class="font-semibold">N {{ activeLoan ? (activeLoan.amount).toLocaleString() : '0'}}</span></p>
                     </div>
                     <div class="h-2 w-full rounded-lg bg-white" style="box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.10) inset;">
@@ -332,7 +332,7 @@
         continueKycProcess.value = true;
     }
 
-    const { activeLoan, loanHistory, percentageLoanPaid } = storeToRefs(useLoanHistoryStore());
+    const { activeLoan, loanHistory, percentageLoanPaid, activeLoanTotalPaid } = storeToRefs(useLoanHistoryStore());
     const { fetchLoanHistory } = useLoanHistoryStore();
     
     onMounted(()=>{

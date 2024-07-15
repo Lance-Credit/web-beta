@@ -14,7 +14,7 @@
                     <div class="rounded-xl bg-white border border-solid border-lance-black-10 py-6 px-10">
                         <p class="text-lance-black-50 text-sm leading-5">Next Repayment</p>
                         <p class="mt-[-12px] text-lance-black text-4xl font-bold leading-[55.93px] tracking-[0.36px]">
-                            {{ (activeLoan.amount).toLocaleString() }}
+                            {{ (activeLoan.monthlyPaymentAmount).toLocaleString() }}
                         </p>
                         <p class="mb-3 flex gap-1.5 items-center">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -38,9 +38,9 @@
                         </p>
                         <div class="mb-3 rounded-lg bg-lance-green-5 py-2 px-4">
                             <div class="flex items-center justify-between mb-1 text-lance-black-60 text-sm leading-5">
-                                <p>Paid: <span class="font-semibold">N {{ (activeLoan.totalRepayments)?.toLocaleString() }}</span></p>
+                                <p>Paid: <span class="font-semibold">N {{ activeLoanTotalPaid.toLocaleString() }}</span></p>
                                 <p>
-                                    Balance : <span class="font-semibold">N {{ (activeLoan.amount - activeLoan.totalRepayments).toLocaleString() }}</span>
+                                    Balance : <span class="font-semibold">N {{ (activeLoan.totalRepaymentAmount - activeLoanTotalPaid).toLocaleString() }}</span>
                                 </p>
                             </div>
                             <div class="h-2 w-full rounded-lg bg-lance-green-10" style="box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.10) inset;">
@@ -212,7 +212,7 @@
 
     const { fetchLoanSettings } = useFetchLoanSettings();
 
-    const { loanHistory, activeLoan, pendingLoans, percentageLoanPaid, completedLoans } = storeToRefs(useLoanHistoryStore());
+    const { loanHistory, activeLoan, pendingLoans, activeLoanTotalPaid, percentageLoanPaid, completedLoans } = storeToRefs(useLoanHistoryStore());
     const { fetchLoanHistory } = useLoanHistoryStore();
     
     onMounted(async()=>{

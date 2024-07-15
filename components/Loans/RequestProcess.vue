@@ -244,7 +244,7 @@
     async function calculateLoanSummary(){
         if(loanRequestFormFilled.value){
             loanSummary.value = null;
-            const result = await $fetch(`${apiURL}/v1/loans/summary?principal=${loanRequestFormValues.loanAmount}&tenure=${loanRequestFormValues.loanDuration}`,{
+            const result = await $fetch(`${apiURL}/v1/loans/summary?principal=${loanRequestFormValues.loanAmount * 100}&tenure=${loanRequestFormValues.loanDuration}`,{
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -253,9 +253,12 @@
             });
     
             if((result as any).success && !(result as any).error){
-                loanSummary.value = (result as any).data;
+                const returnedLoanSummary = (result as any).data;
+                returnedLoanSummary.monthlyPaymentAmount = returnedLoanSummary.monthlyPaymentAmount / 100;
+                returnedLoanSummary.totalRepaymentAmount = returnedLoanSummary.totalRepaymentAmount / 100
+                loanSummary.value = returnedLoanSummary;
             }else {
-                // console.log(result.error);
+                // console.log((result as any).error);
             }
         }
     }
@@ -274,7 +277,7 @@
                 },
                 body: {
                     "source": "web",
-                    "amount": parseInt(loanRequestFormValues.loanAmount),
+                    "amount": parseInt(loanRequestFormValues.loanAmount) * 100,
                     "tenure": parseInt(loanRequestFormValues.loanDuration)
                 }
             });
