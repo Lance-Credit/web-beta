@@ -65,15 +65,18 @@
                         <p class="text-lance-black-60">How would you like to pay your loan?</p>
                     </div>
                     <form  class="flex flex-col gap-6">
-                        <!-- <Form-RadioInput type="radio" name="repaymentOption" value="nextRepayment">
+                        <Form-RadioInput type="radio" name="repaymentOption" value="nextRepayment">
                             <p class="text-lance-black text-sm">
-                                Pay Next Instalment of <span class="font-bold">N{{ (loan?.repayments[0].amount)?.toLocaleString() }}</span>
+                                Pay Next Instalment of <span class="font-bold">N{{ (loan?.monthlyPaymentAmount)?.toLocaleString() }}</span>
                             </p>
-                        </Form-RadioInput> -->
+                        </Form-RadioInput>
         
                         <Form-RadioInput type="radio" name="repaymentOption" value="full">
                             <p class="text-lance-black text-sm">
-                                 Make full repayment of <span class="font-bold">N{{ (loan?.totalRepaymentAmount)?.toLocaleString() }}</span>
+                                 Make full repayment of
+                                 <span class="font-bold">
+                                    N{{ remainingPayment.toLocaleString() }}
+                                </span>
                             </p>
                         </Form-RadioInput>
         
@@ -85,7 +88,7 @@
                     </form>
                     <div class="flex gap-6">
                         <button @click="emit('@close-loan-repayment-modal')" class="btn btn-tertiary w-full">Back</button>
-                        <button @click="continueRepayment = true" class="btn btn-primary w-full" :disabled="!(repaymentFormValues.repaymentOption && repaymentFormErrors.repaymentOption)">Make Repayment</button>
+                        <button @click="continueRepayment = true" class="btn btn-primary w-full" :disabled="!(repaymentFormValues.repaymentOption && !repaymentFormErrors.repaymentOption)">Make Repayment</button>
                     </div>
                 </div>
     
@@ -95,7 +98,7 @@
                         <p class="text-lance-black-60">Provide the amount you would like to repay</p>
                     </div>
                     <div>
-                        <Form-MoneyInput placeholder="Amount" label="Amount" v-bind="repaymentForm.repaymentAmount" :error="repaymentFormErrors.repaymentAmount" class="mb-4" />
+                        <Form-MoneyInput placeholder="Amount" label="Amount" v-model="repaymentForm.repaymentAmount[0].value" v-bind="repaymentForm.repaymentAmount[1].value" :error="repaymentFormErrors.repaymentAmount" class="mb-4" />
                         <div class="flex items-center gap-2 py-2 px-4 rounded-lg bg-lance-green-5">
                             <div class="w-8 h-8 rounded-full flex items-center justify-center bg-lance-green border border-solid border-lance-green">
                                 <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -185,13 +188,16 @@
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M16.4563 14.0254H12.8569C12.5809 14.0254 12.3569 13.8014 12.3569 13.5254C12.3569 13.2494 12.5809 13.0254 12.8569 13.0254H16.4563C16.7323 13.0254 16.9563 13.2494 16.9563 13.5254C16.9563 13.8014 16.7323 14.0254 16.4563 14.0254Z" fill="#052926"/>
                             </svg>
                             <p class="text-sm leading-5">Loan Balance:
-                                <span class="font-bold">N{{ (loan?.totalRepaymentAmount - chosenAmount).toLocaleString() }}</span>
+                                <span class="font-bold">N{{ (remainingPayment - chosenAmount).toLocaleString() }}</span>
                             </p>
                         </div>
                     </div>
                     <div class="flex gap-6">
                         <button @click="continueRepayment = false" class="btn btn-tertiary w-full">Cancel</button>
-                        <button @click="makeRepayment" class="btn btn-primary w-full" :disabled="makingRepayment">Proceed</button>
+                        <button @click="makeRepayment" class="btn btn-primary w-full" :class="{'loading' : makingRepayment}" :disabled="makingRepayment">
+                            <span v-show="!makingRepayment">Proceed</span>
+                            <Loader-Basic v-show="makingRepayment" bg="#FFF" fg="#C3E48E" />
+                        </button>
                     </div>
                 </div>
             </div>
@@ -208,7 +214,13 @@
         walletBalance: number
     }>();
 
-    const { values: repaymentFormValues, errors: repaymentFormErrors, defineComponentBinds } = useForm({
+    const { activeLoanTotalPaid } = storeToRefs(useLoanHistoryStore());
+
+    const remainingPayment = computed(() => {
+        return props.loan ? props.loan.totalRepaymentAmount - activeLoanTotalPaid.value : 0;
+    })
+
+    const { values: repaymentFormValues, errors: repaymentFormErrors, defineField } = useForm({
         validationSchema: yup.object({
             repaymentOption: yup.string().required().label('Repayment Option'),
             repaymentAmount: yup.number().required().
@@ -217,13 +229,9 @@
         })
     });
 
-    const repaymentForm = reactive({
-        repaymentAmount: defineComponentBinds('repaymentAmount', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        })
-    });
+    const repaymentForm = {
+        repaymentAmount: defineField('repaymentAmount')
+    };
 
     const  chosenAmount = computed(() => {
         if(repaymentFormValues.repaymentAmount){
@@ -235,7 +243,7 @@
         }
 
         if(repaymentFormValues.repaymentOption == 'nextRepayment'){
-            return props.loan?.repayments[0].amount;
+            return props.loan?.monthlyPaymentAmount;
         }
         return 0
     });
@@ -246,13 +254,30 @@
 
     const successfulRepayment: Ref<boolean> = ref(false);
 
+    const { apiURL } = useRuntimeConfig().public;
+    const { data: { value: jwt } } = await useFetch('/api/token');
+
     async function makeRepayment(){
         makingRepayment.value = true;
 
-        setTimeout(()=>{
+        const installment = repaymentFormValues.repaymentOption == 'full' ? 'full' : 'partial';
+
+        const result = await $fetch(`${apiURL}/v1/loans/${props.loan?.reference}/repayments?installment=${installment}`, {
+            method: 'GET',
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization" : `Bearer ${jwt?.token}`
+            }    
+        });
+    
+        if ((result as any).success && !(result as any).error) {
             makingRepayment.value = false;
             successfulRepayment.value = true;
-        }, 5000)
+        } else {
+            // console.log((result as any).error);
+            makingRepayment.value = false;
+            successfulRepayment.value = false;
+        }
     }
 
 

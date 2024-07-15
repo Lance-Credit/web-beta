@@ -4,6 +4,8 @@ interface Loan {
     status: string,
     tenure: number,
     dueDate: string,
+    reference: string,
+    nextPaymentDate: string,
     totalRepayments: number,
     repayments: LoanRepayment[],
     totalRepaymentAmount: number,
@@ -12,5 +14,5 @@ interface Loan {
 
 interface LoanRepayment {
     amount: number,
-    date: string
+    paid_at: string
 }
