@@ -1,4 +1,3 @@
-import { defineStore } from 'pinia';
 import { useKYCStore } from './kyc';
 
 export const useUserStore = defineStore('user', () => 
@@ -55,8 +54,12 @@ export const useUserStore = defineStore('user', () =>
                 console.log((result as any).error);
             }
         }
+
+        function $reset() {
+            userProfile.value = null
+        }
         
-        return { userProfile, fullName, fetchUserProfile }
+        return { userProfile, fullName, fetchUserProfile, $reset }
     },
     {
         persist: true,

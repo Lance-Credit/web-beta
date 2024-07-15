@@ -1,5 +1,3 @@
-import { defineStore } from 'pinia';
-
 export const useNotificationsStore = defineStore('notifications', () => 
     {
         const notifications = ref([
@@ -46,8 +44,12 @@ export const useNotificationsStore = defineStore('notifications', () =>
                 console.log((result as any).error);
             }
         }
+
+        function $reset() {
+            notifications.value = []
+        }
         
-        return { notifications, fetchNotifications }
+        return { notifications, fetchNotifications, $reset }
     },
     {
         persist: true,

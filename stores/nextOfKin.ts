@@ -1,10 +1,12 @@
-import { defineStore } from 'pinia';
-
 export const useNextOfKinStore = defineStore('nextOfKin', () => 
     {
         const nextOfKinDetails: Ref<NextOfKinDetails | null> = ref(null);
+
+        function $reset() {
+            nextOfKinDetails.value = null;
+        }
         
-        return { nextOfKinDetails }
+        return { nextOfKinDetails, $reset }
     },
     {
         persist: true,

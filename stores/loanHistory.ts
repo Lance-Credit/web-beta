@@ -1,5 +1,3 @@
-import { defineStore } from 'pinia';
-
 export const useLoanHistoryStore = defineStore('loanHistory', () => 
     {
 
@@ -27,7 +25,7 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
         });
 
         const percentageLoanPaid = computed(() => {
-            const loan: Loan | null = activeLoan.value;
+            const loan: Loan | null | undefined = activeLoan.value;
             if(loan){
                 return (loan.totalRepayments / loan.amount) * 100;
             }
@@ -50,8 +48,12 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
                 // console.log((result as any).error);
             }
         }
+
+        function $reset() {
+            loanHistory.value = []
+        }
         
-        return { loanHistory, activeLoan, pendingLoans, completedLoans, percentageLoanPaid, fetchLoanHistory }
+        return { loanHistory, activeLoan, pendingLoans, completedLoans, percentageLoanPaid, fetchLoanHistory, $reset }
     },
     {
         persist: true,

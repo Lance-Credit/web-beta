@@ -1,4 +1,3 @@
-import { defineStore } from 'pinia';
 import { useWalletStore } from './wallet';
 
 export const useKYCStore = defineStore('kyc', () => 
@@ -78,8 +77,28 @@ export const useKYCStore = defineStore('kyc', () =>
                 console.log((result as any).error);
             }
         }
+
+        function $reset() {
+            kycItems.value = {
+                account: {
+                    completed: false
+                },
+                personalDetails: {
+                    completed: false
+                },
+                kyc: {
+                    completed: false
+                },
+                id: {
+                    completed: false
+                },
+                linkedBankAccount: {
+                    completed: false
+                }
+            };
+        }
         
-        return { kycItems, kycCompleted, fetchKycStatus }
+        return { kycItems, kycCompleted, fetchKycStatus, $reset }
     },
     {
         persist: true,

@@ -48,8 +48,15 @@ export const useWalletStore = defineStore('wallet', () =>
                 transactions.value = [];
             }
         }
+
+        function $reset() {
+            balance.value = 0;
+            transactions.value = [];
+            hasDirectDebit.value = false;
+            linkedAccount.value = null;
+        }
         
-        return { balance, hasDirectDebit, transactions, fetchAccountBalance, linkedAccount, fetchUserLinkedAccountAndBalance }
+        return { balance, hasDirectDebit, transactions, fetchAccountBalance, linkedAccount, fetchUserLinkedAccountAndBalance, $reset }
     },
     {
         persist: {
