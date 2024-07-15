@@ -237,7 +237,7 @@
     
     async function loanRepaymentSuccessful(){
         showLoanRepaymentModal.value = false;
-        fetchLoanHistory();
+        fetchLoanHistory(jwt?.token, apiURL);
     }
 
 </script>

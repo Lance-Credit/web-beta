@@ -335,21 +335,24 @@
     const { activeLoan, loanHistory, percentageLoanPaid } = storeToRefs(useLoanHistoryStore());
     const { fetchLoanHistory } = useLoanHistoryStore();
     
-    onMounted(async()=>{
-        if(kycCompleted.value){
-            loanSettings.value = await fetchLoanSettings();
-            if(!loanHistory.value.length){
-                fetchLoanHistory(jwt?.token, apiURL);
-            };
-        }else{
-            fetchKycStatus(jwt?.token, apiURL)
-        }
+    onMounted(()=>{
+        setTimeout(async() => {
+            if(kycCompleted.value){
+                loanSettings.value = await fetchLoanSettings();
+                if(!loanHistory.value.length){
+                    fetchLoanHistory(jwt?.token, apiURL);
+                };
+            }else{
+                await fetchKycStatus(jwt?.token, apiURL);
+                
+                useHead({
+                    script: [
+                        !kycCompleted.value ? { src: 'https://widget.dojah.io/widget.js', body: true } : ''
+                    ]
+                });
+            }
+        }, 2000)
 
-        useHead({
-            script: [
-                !kycCompleted.value ? { src: 'https://widget.dojah.io/widget.js', body: true } : ''
-            ]
-        });
     });
     
     const creditScore = computed(() => {
