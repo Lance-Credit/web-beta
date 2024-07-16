@@ -164,11 +164,8 @@
                                         <path d="M9.16665 9.16699H4.16665C3.70641 9.16699 3.33331 9.54009 3.33331 10.0003C3.33331 10.4606 3.70641 10.8337 4.16665 10.8337H9.16665L10.8333 10.8337H15.8333C16.2936 10.8337 16.6666 10.4606 16.6666 10.0003C16.6666 9.54009 16.2936 9.16699 15.8333 9.16699H10.8333H9.16665Z" fill="#E70A3F"/>
                                     </svg>
                                 </div>
-                                <p v-if="transaction.txnType == 'loan-repay'">
-                                    Loan Repayment
-                                </p>
-                                <p v-else>
-                                    {{ transaction.txnType == 'credit' ? 'Wallet Top-Up' : 'Wallet Withdrawal'}}
+                                <p>
+                                    {{ transaction.txnTypeForUi }}
                                 </p>
                             </li>
                             <li class="font-medium basis-[30%]">N {{ (transaction.amount/100).toLocaleString() }}</li>

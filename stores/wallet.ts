@@ -42,7 +42,32 @@ export const useWalletStore = defineStore('wallet', () =>
 
             if ((result as any).success && !(result as any).error) {
                 balance.value = (result as any).data.balance / 100;
-                transactions.value = (result as any).data.transactions;
+
+                const transactionArray = (result as any).data.transactions.map((transaction: Transaction) => {
+                    switch (transaction.subType) {
+                        case 'wallet_funding':
+                            transaction.txnTypeForUi = 'Wallet Top-Up'
+                            break;
+                        case 'wallet_withdrawal':
+                            transaction.txnTypeForUi = 'Wallet Withdrawal'
+                            break;
+                        case 'fees':
+                            transaction.txnTypeForUi = 'Fees'
+                            break;
+                        case 'loan_disbursement':
+                            transaction.txnTypeForUi = 'Loan Disbursement'
+                            break;
+                        case 'loan_repayment':
+                            transaction.txnTypeForUi = 'Loan Repayment'
+                            break;
+                        default:
+                            transaction.txnTypeForUi = 'Transaction'
+                            break;
+                    }
+
+                    return transaction;
+                })
+                transactions.value = transactionArray;
             } else {
                 balance.value = 0;
                 transactions.value = [];
