@@ -6,11 +6,11 @@ export const useLogout = () => {
       
     const { signOut } = useAuth();
 
+    signOut();
     const pinia = getActivePinia();
     
     pinia._s.forEach((store) => store.$reset())
 
-    signOut();
 
   }
 

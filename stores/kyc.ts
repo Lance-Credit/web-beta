@@ -1,5 +1,7 @@
 import { useWalletStore } from './wallet';
 
+const { apiFetch } = useApiFetch();
+
 export const useKYCStore = defineStore('kyc', () => 
     {
         const { linkedAccount } = storeToRefs(useWalletStore());
@@ -28,26 +30,20 @@ export const useKYCStore = defineStore('kyc', () =>
             kycItems.value.linkedBankAccount.completed;
         })
 
-        async function fetchKycStatus(token: string, apiUrl: string) {
+        async function fetchKycStatus() {
             
-            await fetchUserVerifications(token, apiUrl);
+            await fetchUserVerifications();
 
             const { fetchUserLinkedAccountAndBalance } = useWalletStore();
 
-            await fetchUserLinkedAccountAndBalance(token, apiUrl);
+            await fetchUserLinkedAccountAndBalance();
 
             kycItems.value.linkedBankAccount.completed = linkedAccount.value ? true : false;
         }
 
-        async function fetchUserVerifications(token: string, apiUrl: string) {
+        async function fetchUserVerifications() {
             
-            const result = await $fetch(`${apiUrl}/v1/verifications`, {
-                method: 'GET',
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                }
-            });            
+            const result = await apiFetch('verifications');
 
             if ((result as any).success && !(result as any).error) {
                 if(
@@ -74,7 +70,7 @@ export const useKYCStore = defineStore('kyc', () =>
                 }
 
             } else {
-                console.log((result as any).error);
+                // console.log((result as any).error);
             }
         }
 

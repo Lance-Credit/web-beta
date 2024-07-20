@@ -44,20 +44,15 @@
     const { fetchNotifications } = useNotificationsStore();
     const { notifications } = storeToRefs(useNotificationsStore());
 
-    const { apiURL } = useRuntimeConfig().public;
-
-    const headers = useRequestHeaders(['cookie']) as HeadersInit;
-    const { data: { value: jwt } } = await useFetch('/api/token');
-
     onMounted(() => {
-        fetchNotifications(jwt?.token, apiURL);
+        fetchNotifications();
     });
 
     const showLoanOfferView: Ref<boolean> = ref(false);
 
     const selectedNotification = ref(null);
 
-    function showLoanOffer(notification){
+    function showLoanOffer(notification: any){
         showLoanOfferView.value = true;
         selectedNotification.value = notification;
     }

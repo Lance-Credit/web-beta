@@ -19,7 +19,7 @@ export default NuxtAuthHandler({
 
             async authorize(credentials: LoginFormData) {
                 
-                const response = await fetch(`${apiURL}/v1/auth/login`, {
+                const response = await fetch(`${apiURL}/auth/login`, {
                     method: 'POST',
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({email: credentials.email, password: credentials.password})

@@ -15,8 +15,10 @@
                     <button
                         @click="fundWallet"
                         class="btn btn-primary w-full"
-                        :disabled="!(fundingFormValues.fundingAmount && !fundingFormErrors.fundingAmount)">
-                            Continue
+                        :class="{'loading' : fundingWallet}"
+                        :disabled="!(fundingFormValues.fundingAmount && !fundingFormErrors.fundingAmount) || fundingWallet">
+                            <span v-show="!fundingWallet">Continue</span>
+                            <Loader-Basic v-show="fundingWallet" bg="#FFF" fg="#C3E48E" />
                     </button>
                 </div>
             </div>
@@ -42,30 +44,30 @@
         emit('@close-wallet-funding-modal');
     }
 
-    const { apiURL } = useRuntimeConfig().public;
-    const { data: { value: jwt } } = await useFetch('/api/token');
-
     const fundingError: Ref<string> = ref('');
 
+    const { apiFetch } = useApiFetch();
+
+    const fundingWallet: Ref<boolean> = ref(false);
+
     async function fundWallet(){
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/wallets`, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${jwt?.token}`
-            },
-            body: {
+        fundingWallet.value = true;
+
+        const result = await apiFetch(
+            'wallets',
+            'POST',
+            {
                 "amount": parseInt(fundingFormValues.fundingAmount) * 100
             }
-        });
+        );
         
-        if(result){
-            if((result as any).success && !(result as any).error){
-                navigateTo((result as any).data.link, {external: true});
-            }
-        }else if(error){
-            fundingError.value = error.value?.data.error
-            // console.log(error.value?.data);
+        if((result as any).success && !(result as any).error){
+            fundingWallet.value = false;
+            navigateTo((result as any).data.link, {external: true});
+        } else {
+            // console.log((result as any).error);
+            fundingWallet.value = false;
+            fundingError.value = (result as any).error;
         }
     }
 

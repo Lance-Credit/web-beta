@@ -5,7 +5,7 @@ import { useWalletStore } from '@/stores/wallet';
 
 export const useAddBankAccount = () => {
     
-    const { apiURL } = useRuntimeConfig().public;
+    const { apiFetch } = useApiFetch();
     const { monoKey } = useRuntimeConfig().public;
     const { fullName, userProfile } = storeToRefs(useUserStore());
     
@@ -13,7 +13,7 @@ export const useAddBankAccount = () => {
     
         const customer = {
             name: fullName.value,
-            email: userProfile.value.email,
+            email: userProfile.value?.email,
         };
         
         const config = {
@@ -33,27 +33,19 @@ export const useAddBankAccount = () => {
     
     const addNewAccount = async(code: string) => {
 
-        const { data: { value: jwt } } = await useFetch('/api/token');
-        const { fetchUserLinkedAccountAndBalance } = useWalletStore();
+        const { fetchKycStatus } = useKYCStore();
 
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/accounts`, {
-            method: 'POST',
-            headers: { 
-                "Content-Type": "application/json",
-                "Authorization" : `Bearer ${jwt?.token}`
-            },
-            body: {
-                code
-            }
-        });
-        
-        if(result){
-            if((result as any).success && !(result as any).error){
+        try {
+            const result = await apiFetch('accounts', 'POST', { code });
+            
+            if ((result as any).success && !(result as any).error) {
                 // console.log('success',result);
-                fetchUserLinkedAccountAndBalance(jwt?.token, apiURL);
+                fetchKycStatus();
+            } else {
+                // console.log((result as any).error);
             }
-        }else if(error){
-            // console.log(error.value?.data);
+        } catch (error) {
+            // console.log((error as any).response)
         }
     }
 

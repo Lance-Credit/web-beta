@@ -187,70 +187,60 @@
 
     const { dojahAppId, dojahPublicKey, dojahWidgetId } = useRuntimeConfig().public;
 
-    const { apiURL } = useRuntimeConfig().public;
-
-    const { data: { value: jwt } } = await useFetch('/api/token');
+    const { apiFetch } = useApiFetch();
 
     async function startDojahKyc(){
         startingDojahKyc.value = true;
 
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/verifications/kyc`, {
-            method: 'POST',
-            headers: { 
-                "Content-Type": "application/json",
-                "Authorization" : `Bearer ${jwt?.token}`
-            }
-        });
+        const result = await apiFetch('verifications/kyc', 'POST');
 
-        if(result){
-            if((result as any).success && !(result as any).error){
+        if((result as any).success && !(result as any).error){
 
-                const options = {
-                    app_id: dojahAppId,
-                    p_key: dojahPublicKey,
-                    type: 'custom',
-        
-                    user_data: {
-                        residence_country: 'NG',
-                        email: userProfile.value.email,
-                        last_name: userProfile.value.lastName,
-                        first_name: userProfile.value.firstName,
-                    },
-                    
-                    // metadata: {
-                    //   user_id: '12xxxxsxsxsxssx1',
-                    // },
-        
-                    reference_id: (result as any).data.dojahReference,
-                    
-                    config: {
-                      widget_id: dojahWidgetId
-                    },
-        
-                    onSuccess: function (response) {
-                        //   console.log('Success', response);
-                        confirmDojahComplete();
-                    },
-                    
-                    onError: function (err) {
-                        console.log('Error', err);
-                    },
+            const options = {
+                app_id: dojahAppId,
+                p_key: dojahPublicKey,
+                type: 'custom',
+    
+                user_data: {
+                    residence_country: 'NG',
+                    email: userProfile.value?.email,
+                    last_name: userProfile.value?.lastName,
+                    first_name: userProfile.value?.firstName,
+                },
                 
-                    onClose: function () {
-                      console.log('Widget closed');
-                      startingDojahKyc.value = false;
-                    }
-                };
+                // metadata: {
+                //   user_id: '12xxxxsxsxsxssx1',
+                // },
+    
+                reference_id: (result as any).data.dojahReference,
                 
-                const connect = new Connect(options);
+                config: {
+                    widget_id: dojahWidgetId
+                },
+    
+                onSuccess: function (response) {
+                    //   console.log('Success', response);
+                    confirmDojahComplete();
+                },
                 
-                connect.setup();
+                onError: function (err) {
+                    console.log('Error', err);
+                },
+            
+                onClose: function () {
+                    console.log('Widget closed');
+                    startingDojahKyc.value = false;
+                }
+            };
+            
+            const connect = new Connect(options);
+            
+            connect.setup();
 
-                
-                connect.open();
-            }
-        }else if(error){
-            // console.log(error.value?.data);
+            
+            connect.open();
+        } else {
+            // console.log((result as any).error);
         }
     }
     
@@ -260,7 +250,7 @@
             activeStep.value = 'bankAccount';
         }else{
             setTimeout(async() => {
-                await fetchKycStatus(jwt?.token, apiURL);
+                await fetchKycStatus();
                 confirmDojahComplete();
             }, 120000);
         }

@@ -229,9 +229,6 @@
 
     const loanApplicationSuccess: Ref<boolean> = ref(false);
 
-    const { apiURL } = useRuntimeConfig().public;
-
-    const { data: { value: jwt } } = await useFetch('/api/token');
 
     const loanSummary: Ref<{
         "monthlyPaymentAmount": number,
@@ -241,16 +238,12 @@
         "processingFee": number
     } | null> = ref(null);
     
+    const { apiFetch } = useApiFetch();
+
     async function calculateLoanSummary(){
         if(loanRequestFormFilled.value){
             loanSummary.value = null;
-            const result = await $fetch(`${apiURL}/v1/loans/summary?principal=${loanRequestFormValues.loanAmount * 100}&tenure=${loanRequestFormValues.loanDuration}`,{
-                method: 'GET',
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${jwt?.token}`
-                }
-            });
+            const result = await apiFetch('loans/summary?principal=${loanRequestFormValues.loanAmount * 100}&tenure=${loanRequestFormValues.loanDuration}');
     
             if((result as any).success && !(result as any).error){
                 const returnedLoanSummary = (result as any).data;
@@ -258,7 +251,7 @@
                 returnedLoanSummary.totalRepaymentAmount = returnedLoanSummary.totalRepaymentAmount / 100
                 loanSummary.value = returnedLoanSummary;
             }else {
-                // console.log((result as any).error);
+                console.log((result as any).error);
             }
         }
     }
@@ -269,35 +262,26 @@
 
         if(hasDirectDebit.value){
     
-            const result = await $fetch(`${apiURL}/v1/loans`, {
-                method: 'POST',
-                headers: { 
-                    "Content-Type": "application/json",
-                    "Authorization" : `Bearer ${jwt?.token}`
-                },
-                body: {
+            const result = await apiFetch(
+                'loans',
+                'POST',
+                {
                     "source": "web",
                     "amount": parseInt(loanRequestFormValues.loanAmount) * 100,
                     "tenure": parseInt(loanRequestFormValues.loanDuration)
                 }
-            });
+            );
     
             if ((result as any).success && !(result as any).error) {
                 loanApplicationSuccess.value = true;
                 submittingLoanApplication.value = false;
-                fetchLoanHistory(jwt?.token, apiURL);
+                fetchLoanHistory();
             } else {
                 submittingLoanApplication.value = false;
                 // console.log(result.error);
             }
         } else {
-            const result = await $fetch(`${apiURL}/v1/accounts/direct_debit`, {
-                method: 'POST',
-                headers: { 
-                    "Content-Type": "application/json",
-                    "Authorization" : `Bearer ${jwt?.token}`
-                }
-            });
+            const result = await apiFetch('accounts/direct_debit', 'POST');
     
             if ((result as any).success && !(result as any).error) {
 
@@ -322,7 +306,7 @@
             submitLoanApplication();
         }else{
             setTimeout(async() => {
-                await fetchUserLinkedAccountAndBalance(jwt?.token, apiURL);
+                await fetchUserLinkedAccountAndBalance();
                 confirmUserHasDirectDebit();
             }, 120000);
         }

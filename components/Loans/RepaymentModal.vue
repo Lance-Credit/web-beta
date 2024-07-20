@@ -254,21 +254,14 @@
 
     const successfulRepayment: Ref<boolean> = ref(false);
 
-    const { apiURL } = useRuntimeConfig().public;
-    const { data: { value: jwt } } = await useFetch('/api/token');
+    const { apiFetch } = useApiFetch();
 
     async function makeRepayment(){
         makingRepayment.value = true;
 
         const installment = repaymentFormValues.repaymentOption == 'full' ? 'full' : 'partial';
 
-        const result = await $fetch(`${apiURL}/v1/loans/${props.loan?.reference}/repayments?installment=${installment}`, {
-            method: 'GET',
-            headers: { 
-                "Content-Type": "application/json",
-                "Authorization" : `Bearer ${jwt?.token}`
-            }    
-        });
+        const result = await apiFetch(`loans/${props.loan?.reference}/repayments?installment=${installment}`);
     
         if ((result as any).success && !(result as any).error) {
             makingRepayment.value = false;

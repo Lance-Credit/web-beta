@@ -1,3 +1,5 @@
+const { apiFetch } = useApiFetch();
+
 export const useNotificationsStore = defineStore('notifications', () => 
     {
         const notifications = ref([
@@ -27,15 +29,9 @@ export const useNotificationsStore = defineStore('notifications', () =>
             }
         ]);
 
-        async function fetchNotifications(token: string, apiUrl: string) {
+        async function fetchNotifications() {
             
-            const result = await $fetch(`${apiUrl}/v1/notifications`, {
-                method: 'GET',
-                headers: { 
-                    "Content-Type": "application/json",
-                    "Authorization" : `Bearer ${token}`
-                }
-            });
+            const result = await apiFetch('notifications');
     
             if ((result as any).success && !(result as any).error) {
                 console.log((result as any).data.notifications);

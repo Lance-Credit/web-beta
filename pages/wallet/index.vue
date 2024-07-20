@@ -84,17 +84,14 @@
 
     const showKycIncompleteModal: Ref<boolean> = ref(false);
 
-    const { apiURL } = useRuntimeConfig().public;
-
     const { fetchAccountBalance } = useWalletStore();
     const { balance, transactions, linkedAccount } = storeToRefs(useWalletStore());
 
-    const { data: { value: jwt } } = await useFetch('/api/token');
 
     onMounted(()=>{
         setTimeout(() => {
             if(kycCompleted.value){
-                fetchAccountBalance(jwt?.token, apiURL);
+                fetchAccountBalance();
             }
         }, 2000);
     })

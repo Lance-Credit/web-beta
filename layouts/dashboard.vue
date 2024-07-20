@@ -187,12 +187,9 @@
     const { fetchNotifications } = useNotificationsStore();
     const { notifications } = storeToRefs(useNotificationsStore());
 
-    const { apiURL } = useRuntimeConfig().public;
-
-    const { data: { value: jwt } } = await useFetch('/api/token');
     
     onMounted(() => {
-        fetchNotifications(jwt?.token, apiURL);
+        fetchNotifications();
     });
 
 </script>

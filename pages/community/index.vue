@@ -53,12 +53,12 @@
                 </ul>
                 <ul @click="showCommunityCodeDetails(code)" v-for="(code, key) in communityCodes" :key="key" class="flex items-center py-6 border-b border-solid border-lance-black-5 text-lance-black cursor-pointer">
                     <li class="w-1/4">
-                        {{ code?.code }}
+                        {{ code.code }}
                     </li>
                     <li class="w-1/4">
                         <p
                             class="text-xs leading-6 w-[94px] rounded-[31px] text-center"
-                            :class="code?.used ? 'text-lance-green bg-lance-green-10' : 'text-lance-black-50 bg-lance-black-10'"
+                            :class="code.used ? 'text-lance-green bg-lance-green-10' : 'text-lance-black-50 bg-lance-black-10'"
                         >
                             {{ code.used ? 'Active' : 'Inactive'}}
                         </p>
@@ -86,41 +86,31 @@
 
     const showCommunityCodes: Ref<boolean> = ref(false);
     
-    const communityCodes: Ref<CommunityCode | null> = ref(null);
+    const communityCodes: Ref<CommunityCode[] | null> = ref(null);
 
     const fetchingCommunityCodes: Ref<boolean> = ref(false);
 
-    const { apiURL } = useRuntimeConfig().public;
-
-    const { data: { value: jwt } } = await useFetch('/api/token');
+    const { apiFetch } = useApiFetch();
 
     async function fetchCommunityCodes(){
 
         fetchingCommunityCodes.value = true;
 
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/community-codes`,{
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${jwt?.token}`
-            }
-        });
+        const result = await apiFetch('community-codes');
 
-        if(result){
-            if((result as any).success && !(result as any).error){
-                communityCodes.value = (result as any).data;
-                showCommunityCodes.value = true;
-                fetchingCommunityCodes.value = false;
-            }
-        }else if(error){
-            // console.log(error.value?.data);
+        if((result as any).success && !(result as any).error){
+            communityCodes.value = (result as any).data;
+            showCommunityCodes.value = true;
+            fetchingCommunityCodes.value = false;
+        } else {
+            // console.log((result as any).error);
         }
     }
     const selectedCode: Ref<CommunityCode | null> = ref(null);
 
     const showCommunityCodeDetailsModal: Ref<boolean> = ref(false);
 
-    function showCommunityCodeDetails(code: CommunityCode){
+    function showCommunityCodeDetails(code: CommunityCode | any){
         showCommunityCodeDetailsModal.value = true;
         selectedCode.value = code;
     }

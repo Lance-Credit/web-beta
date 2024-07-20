@@ -1,3 +1,5 @@
+const { apiFetch } = useApiFetch();
+
 export const useWalletStore = defineStore('wallet', () => 
     {
         const balance: Ref<number> = ref(0);
@@ -8,20 +10,14 @@ export const useWalletStore = defineStore('wallet', () =>
         
         const linkedAccount: Ref<Beneficiary | null>  = ref(null);
 
-        async function fetchUserLinkedAccountAndBalance(token: string, apiUrl: string) {
-            const result = await $fetch(`${apiUrl}/v1/accounts`, {
-                method: 'GET',
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                }
-            });
+        async function fetchUserLinkedAccountAndBalance() {
+            const result = await apiFetch('accounts');
             
             if ((result as any).success && !(result as any).error) {
                 if((result as any).data.hasLinkedAccount){
                     linkedAccount.value = (result as any).data.beneficiary;
                     hasDirectDebit.value = (result as any).hasDirectDebit
-                    fetchAccountBalance(token, apiUrl);
+                    fetchAccountBalance();
                 }else{
                     linkedAccount.value = null;
                 }
@@ -31,14 +27,8 @@ export const useWalletStore = defineStore('wallet', () =>
             }
         }
 
-        async function fetchAccountBalance(token: string, apiUrl: string) {
-            const result = await $fetch(`${apiUrl}/v1/wallets`, {
-                method: 'GET',
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                }
-            });
+        async function fetchAccountBalance() {
+            const result = await apiFetch('wallets');
 
             if ((result as any).success && !(result as any).error) {
                 balance.value = (result as any).data.balance / 100;

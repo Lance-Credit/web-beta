@@ -2,7 +2,7 @@
     <div v-show="!continueLoanRequestProcess">
         <KYC-Process v-if="!kycCompleted" v-show="continueKycProcess" @@stop-kyc-process="continueKycProcess = false" />
 
-        <div v-show="!continueKycProcess">
+        <div v-show="!continueKycProcess || kycCompleted">
             <div class="mb-8 flex items-center justify-between">
                 <div>
                     <p class="mb-1 text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px]">
@@ -304,10 +304,6 @@
 
     
 
-    const { apiURL } = useRuntimeConfig().public;
-
-    const { data: { value: jwt } } = await useFetch('/api/token');
-
     const loanSettings: Ref<{
         "defaultRate": number,
         "minRate": number,
@@ -371,10 +367,10 @@
             if(kycCompleted.value){
                 loanSettings.value = await fetchLoanSettings();
                 if(!loanHistory.value.length){
-                    fetchLoanHistory(jwt?.token, apiURL);
+                    fetchLoanHistory();
                 };
             }else{
-                await fetchKycStatus(jwt?.token, apiURL);
+                await fetchKycStatus();
                 
                 useHead({
                     script: [

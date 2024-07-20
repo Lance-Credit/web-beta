@@ -174,8 +174,6 @@
 
     const { fetchUserProfile } = useUserStore();
     
-    const { apiURL } = useRuntimeConfig().public;
-    
     definePageMeta({
         middleware: 'auth',
         auth: {
@@ -250,21 +248,22 @@
         return `You have successfully created an account and joined the community through <span class="text-lance-black font-medium">${communityCodeOwner.value}.</span>`;
     })
 
+    const { apiFetch } = useApiFetch();
+
     async function submitCommunityCode(){
 
         submittingCommunityCode.value = true;
 
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/onboarding/community-code?communityCode=${signupFormValues.communityCode}`);
+        const result = await apiFetch(`onboarding/community-code?communityCode=${signupFormValues.communityCode}`);
 
-        if(result){
-            if((result as any).success && !(result as any).error){
-                submittingCommunityCode.value = false;
-                communityCodeOwner.value = (result as any).data.owner;
-                communityCodeFilled.value = true;
-            }
-        }else if(error){
+        if ((result as any).success && !(result as any).error) {
             submittingCommunityCode.value = false;
-            communityCodeErrorResponse.value = error.value?.data.error;
+            communityCodeOwner.value = (result as any).data.owner;
+            communityCodeFilled.value = true;
+        } else {
+            // console.log((result as any).error);
+            submittingCommunityCode.value = false;
+            communityCodeErrorResponse.value = (result as any).error;
         }
     }
 
@@ -299,10 +298,10 @@
 
         submittingSignupForm.value = true;
 
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/auth/register`, {
-            method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: {
+        const result = await apiFetch(
+            'auth/register',
+            'POST',
+            {
                 "source": "web",
                 "email": signupFormValues.email,
                 "lastName": signupFormValues.lastName,
@@ -311,16 +310,15 @@
                 "firstName": signupFormValues.firstName,
                 "communityCode": signupFormValues.communityCode
             }
-        });
+        );
     
-        if(result){
-            if((result as any).success && !(result as any).error){
-                signUpSuccess.value = true;
-                authToken.value = (result as any).data.token.verification;
-                processShowResendEmailVerificationCode();
-            }
-        }else if(error){
-            signupErrorResponse.value = error.value?.data.error;
+        if((result as any).success && !(result as any).error){
+            signUpSuccess.value = true;
+            authToken.value = (result as any).data.token.verification;
+            processShowResendEmailVerificationCode();
+        } else {
+            // console.log((result as any).error);
+            signupErrorResponse.value = (result as any).error;
             submittingSignupForm.value = false;
         }
     }
@@ -331,29 +329,36 @@
 
     const emailVerificationCodeErrorResponse: Ref<string> = ref('');
 
+    const { apiURL } = useRuntimeConfig().public;
+
     async function submitEmailVerificationCode(){
         
         submittingEmailVerificationCode.value = true;
         
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/onboarding/verification`,{
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                "x-verification-token": `Bearer ${authToken.value}`
-            },
-            body: {
-                "token": signupFormValues.emailVerificationCode,
-                "type": "email"
-            }
-        });
-        
-        if(result){
+        try {
+            const result = await $fetch(`${apiURL}/onboarding/verification`,{
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-verification-token": `Bearer ${authToken.value}`
+                },
+                body: {
+                    "token": signupFormValues.emailVerificationCode,
+                    "type": "email"
+                }
+            });
+            
             if((result as any).success && !(result as any).error){
                 emailVerified.value = true;
                 processShowResendPhoneVerificationCode();
+            } else {
+                // console.log((result as any).error);
+                emailVerificationCodeErrorResponse.value = (result as any).error;
+                submittingEmailVerificationCode.value = false;
             }
-        }else if(error){
-            emailVerificationCodeErrorResponse.value = error.value?.data.error;
+        } catch (error) {
+            // console.log((error as any).response);
+            emailVerificationCodeErrorResponse.value = (error as any).response._data.error;
             submittingEmailVerificationCode.value = false;
         }
     }
@@ -361,15 +366,17 @@
     async function resendEmailVerificationCode(){
         showResendEmailVerificationCode.value = false;
         
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/onboarding/verification?type=email`,{
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-                "x-verification-token": `Bearer ${authToken.value}`
-            }
-        });
-        if(error){
-            emailVerificationCodeErrorResponse.value = error.value?.data.error;
+        try {
+            await $fetch(`${apiURL}/onboarding/verification?type=email`, {
+                method: 'GET',
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-verification-token": `Bearer ${authToken.value}`
+                }
+            });
+        } catch (error) {
+            // console.log((error as any).response);
+            emailVerificationCodeErrorResponse.value = (error as any).response._data.error;
         }
         
         processShowResendEmailVerificationCode();
@@ -391,36 +398,41 @@
 
         submittingPhoneVerificationCode.value = true;
 
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/onboarding/verification`,{
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                "x-verification-token": `Bearer ${authToken.value}`
-            },
-            body: {
-                "token": signupFormValues.phoneVerificationCode,
-                "type": "phone"
-            }
-        });
-
-        if(result){
+        try {
+            const result = await $fetch(`${apiURL}/onboarding/verification`, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-verification-token": `Bearer ${authToken.value}`
+                },
+                body: {
+                    "token": signupFormValues.phoneVerificationCode,
+                    "type": "phone"
+                }
+            });
+    
             if((result as any).success && !(result as any).error){
+                console.log(result);
                 verificationCodeSubmitted.value = true;
-
+    
                 const { signIn } = useAuth();
             
                 const signedIn = await signIn('credentials', { email: signupFormValues.email, password: signupFormValues.password, redirect: false, callbackUrl: '/dashboard' })
-
+    
                 if(!(signedIn as any).error){
-                    const { data: { value: jwt } } = await useFetch('/api/token');
-
-                    await fetchUserProfile(jwt?.token, apiURL);
-
+    
+                    await fetchUserProfile();
+    
                     await navigateTo('/dashboard');
                 }
+            } else {
+                // console.log((result as any).error);
+                phoneVerificationCodeErrorResponse.value = (result as any).error;
+                submittingPhoneVerificationCode.value = false;
             }
-        }else if(error){
-            phoneVerificationCodeErrorResponse.value = error.value?.data.error;
+        } catch (error) {
+            // console.log((error as any).response);
+            phoneVerificationCodeErrorResponse.value = (error as any).response._data.error;
             submittingPhoneVerificationCode.value = false;
         }
     }
@@ -429,16 +441,17 @@
 
         showResendPhoneVerificationCode.value = false;
 
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/onboarding/verification?type=phone`,{
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-                "x-verification-token": `Bearer ${authToken.value}`
-            }
-        });
-
-        if(error){
-            phoneVerificationCodeErrorResponse.value = error.value?.data.error;
+        try {
+            await $fetch(`${apiURL}/onboarding/verification?type=phone`, {
+                method: 'GET',
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-verification-token": `Bearer ${authToken.value}`
+                }
+            });
+        } catch (error) {
+            // console.log((error as any).response);
+            phoneVerificationCodeErrorResponse.value = (error as any).response._data.error;
         }
 
         processShowResendPhoneVerificationCode();

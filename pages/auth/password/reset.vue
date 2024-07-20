@@ -51,7 +51,10 @@
                                 </svg>
                             </button>
                             <p class="flex gap-2 justify-center text-lance-black-60">
-                                Didn’t get the code?<span class="text-lance-green font-medium">Resend code</span>
+                                Didn’t get the code?
+                                <span @click="submitResetPasswordRequestForm" class="text-lance-green font-medium cursor-pointer">
+                                    Resend code
+                                </span>
                             </p>
                         </div>
                     </div>
@@ -119,8 +122,6 @@
 
     import * as yup from 'yup';
 
-    const { apiURL } = useRuntimeConfig().public;
-
     const { values: passwordResetFormValues, errors: passwordResetFormErrors, setFieldValue, defineComponentBinds } = useForm({
         validationSchema: yup.object({
             email: yup.string().email().required().label('Email Address'),
@@ -171,26 +172,27 @@
 
     const passwordResetToken: Ref<string> = ref('');
 
+    const { apiFetch } = useApiFetch();
+    
     async function submitResetPasswordRequestForm(){
 
         submittingResetPasswordRequestForm.value = true;
 
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/auth/password/reset`, {
-            method: 'PATCH',
-            headers: { "Content-Type": "application/json" },
-            body: {
-                "email": passwordResetFormValues.email,
+        const result = await apiFetch(
+            'auth/password/reset',
+            'PATCH',
+            {
+                "email": passwordResetFormValues.email
             }
-        });
+        );
 
-        if(result){
-            if((result as any).success && !(result as any).error){
-                submittingResetPasswordRequestForm.value = false;
-                emailFormSubmitted.value = true;
-                passwordResetToken.value = (result as any).data.token
-            }
-        }else if(error){
-            resetPasswordFormRequestError.value = error.value?.data.error;
+        if((result as any).success && !(result as any).error){
+            submittingResetPasswordRequestForm.value = false;
+            emailFormSubmitted.value = true;
+            passwordResetToken.value = (result as any).data.token
+        } else {
+            // console.log((result as any).error);
+            resetPasswordFormRequestError.value = (result as any).error;
             submittingResetPasswordRequestForm.value = false;
         }
     }
@@ -210,30 +212,38 @@
     
     const submittingNewPasswordForm: Ref<boolean> = ref(false);
 
+    const { apiURL } = useRuntimeConfig().public;
+
     async function submitNewPasswordForm(){
 
         submittingNewPasswordForm.value = true;
 
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/auth/password/reset/complete`, {
-            method: 'PATCH',
-            headers: { 
-                "Content-Type": "application/json",
-                "x-password-reset" : `Bearer ${passwordResetToken.value}`
-            },
-            body: {
-                "otp": passwordResetFormValues.verificationCode,
-                "password": passwordResetFormValues.password
-            }
-        });
-
-        if(result){
+        try {
+            const result = await $fetch(`${apiURL}/auth/password/reset/complete`, {
+                method: 'PATCH',
+                headers: { 
+                    "Content-Type": "application/json",
+                    "x-password-reset" : `Bearer ${passwordResetToken.value}`
+                },
+                body: {
+                    "otp": passwordResetFormValues.verificationCode,
+                    "password": passwordResetFormValues.password
+                }
+            });
+            
             if((result as any).success && !(result as any).error){
                 submittingNewPasswordForm.value = false;
                 newPasswordFormSubmitted.value = true;
+            } else {
+                // console.log((result as any).error);
+                verificationCodeFormSubmitted.value = false;
+                verificationCodeErrorResponse.value = (result as any).error;
+                submittingNewPasswordForm.value = false;
             }
-        }else if(error){
+        } catch (error) {
+            // console.log(error);
             verificationCodeFormSubmitted.value = false;
-            verificationCodeErrorResponse.value = error.value?.data.error;
+            verificationCodeErrorResponse.value = (error as any).response._data.error;
             submittingNewPasswordForm.value = false;
         }
     }

@@ -220,10 +220,6 @@
         continueLoanRequestProcess.value = true;
     }
 
-    const { apiURL } = useRuntimeConfig().public;
-
-    const { data: { value: jwt } } = await useFetch('/api/token');
-
     const loanSettings: Ref<{
         "defaultRate": number,
         "minRate": number,
@@ -242,7 +238,7 @@
         if(kycCompleted.value){
             loanSettings.value = await fetchLoanSettings();
             if(!loanHistory.value.length){
-                fetchLoanHistory(jwt?.token, apiURL);
+                fetchLoanHistory();
             };
         }
     });
@@ -260,7 +256,7 @@
     
     async function loanRepaymentSuccessful(){
         showLoanRepaymentModal.value = false;
-        fetchLoanHistory(jwt?.token, apiURL);
+        fetchLoanHistory();
     }
 
 </script>

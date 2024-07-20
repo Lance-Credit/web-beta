@@ -48,8 +48,6 @@
 
     const { fetchUserProfile } = useUserStore();
 
-    const { apiURL } = useRuntimeConfig().public;
-
     definePageMeta({
         middleware: 'auth',
         auth: {
@@ -88,9 +86,8 @@
             const signedIn = await signIn('credentials', { email: loginFormValues.email, password: loginFormValues.password, redirect: false, callbackUrl: '/dashboard' })
 
             if(!(signedIn as any).error){
-                const jwt: { token: string } = await $fetch('/api/token');
 
-                await fetchUserProfile(jwt?.token, apiURL);
+                await fetchUserProfile();
 
                 await navigateTo('/dashboard');
             }else{

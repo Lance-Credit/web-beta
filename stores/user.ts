@@ -1,5 +1,7 @@
 import { useKYCStore } from './kyc';
 
+const { apiFetch } = useApiFetch();
+
 export const useUserStore = defineStore('user', () => 
     {
         const userProfile: Ref<User | null> = ref(null);
@@ -13,16 +15,9 @@ export const useUserStore = defineStore('user', () =>
             return '';
         });
 
-        async function fetchUserProfile(token: string, apiUrl: string) {
+        async function fetchUserProfile() {
             
-            const result = await $fetch(`${apiUrl}/v1/profile`, {
-                method: 'GET',
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-            
+            const result = await apiFetch('profile');
 
             if ((result as any).success && !(result as any).error) {
                 // console.log(result);
@@ -48,10 +43,10 @@ export const useUserStore = defineStore('user', () =>
 
                 const { fetchKycStatus } = useKYCStore();
 
-                fetchKycStatus(token, apiUrl);
+                fetchKycStatus();
 
             } else {
-                console.log((result as any).error);
+                // console.log((result as any).error);
             }
         }
 

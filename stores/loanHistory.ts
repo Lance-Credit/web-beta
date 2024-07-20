@@ -1,3 +1,5 @@
+const { apiFetch } = useApiFetch();
+
 export const useLoanHistoryStore = defineStore('loanHistory', () => 
     {
 
@@ -38,15 +40,8 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
             return 100;
         });
 
-        async function fetchLoanHistory(token: string, apiURL: string){
-            const result = await $fetch(`${apiURL}/v1/loans?role=borrower`, {
-                method: 'GET',
-                headers: { 
-                    "Content-Type": "application/json",
-                    "Authorization" : `Bearer ${token}`
-                },
-        
-            });
+        async function fetchLoanHistory(){
+            const result = await apiFetch('loans?role=borrower');
     
             if ((result as any).success && !(result as any).error) {
                 loanHistory.value = (result as any).data;

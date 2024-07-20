@@ -213,13 +213,13 @@
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             First Name
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile.firstName }}</p>
+                                        <p class="text-lance-black">{{ userProfile?.firstName }}</p>
                                     </div>
                                     <div>
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             Email Address
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile.email }}</p>
+                                        <p class="text-lance-black">{{ userProfile?.email }}</p>
                                     </div>
                                 </div>
                                 <div class="flex flex-col gap-6 basis-[185px]">
@@ -227,13 +227,13 @@
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             Marital Status
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile.maritalStatus ? userProfile.maritalStatus[0].toUpperCase() + userProfile.maritalStatus.substring(1) : '--' }}</p>
+                                        <p class="text-lance-black">{{ userProfile?.maritalStatus ? userProfile?.maritalStatus[0].toUpperCase() + userProfile?.maritalStatus.substring(1) : '--' }}</p>
                                     </div>
                                     <div>
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             Education Level
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile.educationLevel ? userProfile.educationLevel[0].toUpperCase() + userProfile.educationLevel.substring(1) + ' Education' : '--' }}</p>
+                                        <p class="text-lance-black">{{ userProfile?.educationLevel ? userProfile?.educationLevel[0].toUpperCase() + userProfile?.educationLevel.substring(1) + ' Education' : '--' }}</p>
                                     </div>
                                 </div>
                                 <div class="flex flex-col gap-6 basis-[185px]">
@@ -241,13 +241,13 @@
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             Last Name
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile.lastName }}</p>
+                                        <p class="text-lance-black">{{ userProfile?.lastName }}</p>
                                     </div>
                                     <div>
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             Phone Number
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile.phoneNumber }}</p>
+                                        <p class="text-lance-black">{{ userProfile?.phoneNumber }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -260,13 +260,13 @@
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             State
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile.residentialAddress.state || '--' }}</p>
+                                        <p class="text-lance-black">{{ userProfile?.residentialAddress.state || '--' }}</p>
                                     </div>
                                     <div>
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             Residential Address
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile.residentialAddress.street || '--' }}</p>
+                                        <p class="text-lance-black">{{ userProfile?.residentialAddress.street || '--' }}</p>
                                     </div>
                                 </div>
                                 <div class="flex flex-col gap-6 basis-[185px]">
@@ -274,7 +274,7 @@
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             LGA
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile.residentialAddress.lga || '--' }}</p>
+                                        <p class="text-lance-black">{{ userProfile?.residentialAddress.lga || '--' }}</p>
                                     </div>
                                 </div>
                                 <div class="flex flex-col gap-6 basis-[185px]">
@@ -282,7 +282,7 @@
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             City
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile.residentialAddress.city || '--' }}</p>
+                                        <p class="text-lance-black">{{ userProfile?.residentialAddress.city || '--' }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -792,7 +792,7 @@
             title="Password Change Success"
             text="Your password has been changed successfully. Kindly use new password for next login."
             button-text="Continue"
-            @@auth-modal-action="signOut()"
+            @@auth-modal-action="logOut()"
         >
             <div class="w-[192px] h-[192px] rounded-full bg-[#D6F0AD] flex justify-center items-center mx-auto">
                 <svg width="164" height="185" viewBox="0 0 164 185" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -863,7 +863,7 @@
         layout: 'dashboard'
     });
     
-    const { signOut } = useAuth();
+    const { logOut } = useLogout();
 
     const showKycIncompleteModal: Ref<boolean> = ref(false);
 
@@ -901,22 +901,22 @@
         })
     });
     // setFieldValue('newPassword', '');
-    if(userProfile.value.maritalStatus){
+    if(userProfile.value?.maritalStatus){
         setFieldValue('maritalStatus', userProfile.value.maritalStatus);
     }
-    if(userProfile.value.educationLevel){
+    if(userProfile.value?.educationLevel){
         setFieldValue('educationLevel', userProfile.value.educationLevel);
     }
-    if(userProfile.value.residentialAddress.lga){
+    if(userProfile.value?.residentialAddress.lga){
         setFieldValue('lga', userProfile.value.residentialAddress.lga);
     }
-    if(userProfile.value.residentialAddress.city){
+    if(userProfile.value?.residentialAddress.city){
         setFieldValue('city', userProfile.value.residentialAddress.city);
     }
-    if(userProfile.value.residentialAddress.state){
+    if(userProfile.value?.residentialAddress.state){
         setFieldValue('state', userProfile.value.residentialAddress.state);
     }
-    if(userProfile.value.residentialAddress.street){
+    if(userProfile.value?.residentialAddress.street){
         setFieldValue('residentialAddress', userProfile.value.residentialAddress.street);
     }
     
@@ -1002,20 +1002,14 @@
 
     const savingPersonalDetails: Ref<boolean> = ref(false);
 
-    
-    const { apiURL } = useRuntimeConfig().public;
-
-    const { data: { value: jwt } } = await useFetch('/api/token');
+    const { apiFetch } = useApiFetch();
 
     async function savePersonalDetails(){
         savingPersonalDetails.value = true;
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/profile`, {
-            method: 'PATCH',
-            headers: { 
-                "Content-Type": "application/json",
-                "Authorization" : `Bearer ${jwt?.token}`
-            },
-            body: {
+        const result = await apiFetch(
+            'profile',
+            'PATCH',
+            {
                 maritalStatus: settingsFormValues.maritalStatus,
                 levelOfEducation: settingsFormValues.educationLevel,
                 residentialAddress: {
@@ -1025,12 +1019,13 @@
                     state: settingsFormValues.state,
                     country: 'NG'
                 },
-
             }
-        });
+        );
 
-        if(result){
-            if((result as any).success && !(result as any).error){
+        if((result as any).success && !(result as any).error){
+            savingPersonalDetails.value = false;
+
+            if (userProfile.value) {
                 userProfile.value.maritalStatus = (result as any).data.profile.maritalStatus;
                 userProfile.value.educationLevel = (result as any).data.profile.levelOfEducation;
                 userProfile.value.residentialAddress.city = (result as any).data.profile.residentialAddress.city;
@@ -1039,8 +1034,9 @@
                 userProfile.value.residentialAddress.state = (result as any).data.profile.residentialAddress.state;
                 userProfile.value.residentialAddress.street = (result as any).data.profile.residentialAddress.street;
             }
-        }else if(error){
-            // console.log(error.value?.data);
+        }else {
+            savingPersonalDetails.value = false;
+            // console.log((result as any).error);
         }
     }
 
@@ -1108,27 +1104,21 @@
     async function updatePassword(){
         savingNewPassword.value = true;
 
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/auth/password`, {
-            method: 'PATCH',
-            headers: { 
-                "Content-Type": "application/json",
-                "Authorization" : `Bearer ${jwt?.token}`
-            },
-            body: {
+        const result = await apiFetch(
+            'auth/password',
+            'PATCH',
+            {
                 "oldPassword": settingsFormValues.currPassword,
                 "newPassword": settingsFormValues.newPassword,
                 "confirmPassword": settingsFormValues.confPassword
             }
-        });
+        );
 
-        if(result){
-            if((result as any).success && !(result as any).error){
-                // console.log(result);
-                passwordUpdated.value = true;
-            }
-        }else if(error){
+        if((result as any).success && !(result as any).error){
+            passwordUpdated.value = true;
+        } else {
             savingNewPassword.value = false;
-            // console.log(error.value?.data);
+            // console.log((result as any).error);
         }
     }
 

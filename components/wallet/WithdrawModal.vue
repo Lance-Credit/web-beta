@@ -260,8 +260,8 @@
             .typeError('Destination Account Number is required').label('Destination Account Number'),
         })
     });
-    setFieldValue('destinationBankName', props.linkedAccount.bankName);
-    setFieldValue('destinationAccountNumber', props.linkedAccount.accountNumber);
+    setFieldValue('destinationBankName', props.linkedAccount?.bankName);
+    setFieldValue('destinationAccountNumber', props.linkedAccount?.accountNumber);
     
     const withdrawalForm = {
         withdrawalAmount: defineField('withdrawalAmount'),
@@ -273,33 +273,25 @@
 
     const withdrawalSuccessful: Ref<boolean | null> = ref(null);
 
-    const { apiURL } = useRuntimeConfig().public;
-
-    const { data: { value: jwt } } = await useFetch('/api/token');
+    const { apiFetch } = useApiFetch();
 
     async function processWithdrawal(){
         processingWithdrawal.value = true;
 
-        const { data: { value: result }, error } = await useFetch(`${apiURL}/v1/wallets/withdraw`, {
-            method: 'POST',
-            headers: { 
-                "Content-Type": "application/json",
-                "Authorization" : `Bearer ${jwt?.token}`
-            },
-            body: {
+        const result = await apiFetch(
+            'wallets/withdraw',
+            'POST',
+            {
                 "amount": parseInt(withdrawalFormValues.withdrawalAmount) * 100
             }
+        );
     
-        });
-    
-        if(result){
-            if((result as any).success && !(result as any).error){
-                processingWithdrawal.value = false;
-                withdrawalSuccessful.value = true;
-                fetchAccountBalance(jwt?.token, apiURL);
-            }
-        }else if(error){
-            console.log(error.value?.data);
+        if((result as any).success && !(result as any).error){
+            processingWithdrawal.value = false;
+            withdrawalSuccessful.value = true;
+            fetchAccountBalance();
+        } else {
+            // console.log((result as any).error);
             processingWithdrawal.value = false;
             activeTab.value = 'failed';
         }
