@@ -35,23 +35,15 @@ export default defineNuxtConfig({
       },
     ],
   ],
+  piniaPersistedstate: {
+    storage: 'localStorage'
+  },
   alias: {
     'pinia': "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs",
     'pinia-plugin-persistedstate': "/node_modules/@pinia-plugin-persistedstate/nuxt/node_modules/pinia-plugin-persistedstate/dist/index.mjs",
   },
   auth: {
-    // The module is enabled. Change this to disable the module
     isEnabled: true,
-    // provider: {
-    //   type: 'local',
-    //   endpoints: {
-    //     signIn: { path: '/login', method: 'post' },
-    //     signOut: { path: '/logout', method: 'post' },
-    //     signUp: { path: '/register', method: 'post' },
-    //     getSession: { path: '/session', method: 'get' }
-    //   },
-    //   token: { signInResponseTokenPointer: '/token/accessToken' },
-    // }
   },
   css: ['~/assets/css/main.css'],
 })

@@ -28,25 +28,20 @@ export const useApiFetch = () => {
       });
 
       if ((result as any).success && !(result as any).error) {
-          console.log('inside api fetch success');
-          console.log(result);
+          // console.log(result);
           return {
             success: true,
             data: (result as any).data
           }
       } else {
-          console.log('inside api fetch failure');
-          console.log((result as any).error);
+          // console.log((result as any).error);
           return {
             success: false,
             error: (result as any).error
           }
       }
     } catch (error) {
-      console.log('inside api fetch try error');
-      console.log(error);
-      console.log((error as any).response);
-
+      // console.log((error as any).response);
       if((error as any).response && (error as any).response.status == 401){
         logOut();
       } else {

@@ -74,8 +74,6 @@ export const useWalletStore = defineStore('wallet', () =>
         return { balance, hasDirectDebit, transactions, fetchAccountBalance, linkedAccount, fetchUserLinkedAccountAndBalance, $reset }
     },
     {
-        persist: {
-            storage: persistedState.localStorage,
-          },
+        persist: true,
     }
 )
