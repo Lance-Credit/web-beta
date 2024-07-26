@@ -20,9 +20,13 @@ export const useWalletStore = defineStore('wallet', () =>
                     fetchAccountBalance();
                 }else{
                     linkedAccount.value = null;
+                    balance.value = 0;
+                    transactions.value = [];
                 }
             } else {
                 linkedAccount.value = null;
+                balance.value = 0;
+                transactions.value = [];
                 // console.log((result as any).error);
             }
         }
