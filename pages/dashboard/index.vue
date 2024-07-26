@@ -366,9 +366,7 @@
         setTimeout(async() => {
             if(kycCompleted.value){
                 loanSettings.value = await fetchLoanSettings();
-                if(!loanHistory.value.length){
-                    fetchLoanHistory();
-                };
+                fetchLoanHistory();
             }else{
                 await fetchKycStatus();
                 
