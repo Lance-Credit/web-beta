@@ -359,8 +359,8 @@
         continueKycProcess.value = true;
     }
 
-    const { activeLoan, loanHistory, percentageLoanPaid, activeLoanTotalPaid } = storeToRefs(useLoanHistoryStore());
-    const { fetchLoanHistory } = useLoanHistoryStore();
+    const { activeLoan, percentageLoanPaid, activeLoanTotalPaid } = storeToRefs(useLoanHistoryStore());
+    const { fetchLoanHistory, $reset } = useLoanHistoryStore();
     
     onMounted(()=>{
         setTimeout(async() => {
@@ -368,6 +368,9 @@
                 loanSettings.value = await fetchLoanSettings();
                 fetchLoanHistory();
             }else{
+                // reset loanHistory
+                $reset();
+
                 await fetchKycStatus();
                 
                 useHead({
