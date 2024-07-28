@@ -103,6 +103,7 @@
             showCommunityCodes.value = true;
             fetchingCommunityCodes.value = false;
         } else {
+            fetchingCommunityCodes.value = false;
             // console.log((result as any).error);
         }
     }
