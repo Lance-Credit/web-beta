@@ -212,8 +212,12 @@
         let listArray = [];
 
         for (let i = 1; i <= totalMonthPeriod; i++) {
+            let durationInWords = 'months'
+            if (i == 1) {
+                durationInWords = 'month'
+            }
             listArray.push({
-                label: i+' month',
+                label: `${i} ${durationInWords}`,
                 value: i.toString()
             });
         }
@@ -243,7 +247,7 @@
     async function calculateLoanSummary(){
         if(loanRequestFormFilled.value){
             loanSummary.value = null;
-            const result = await apiFetch('loans/summary?principal=${loanRequestFormValues.loanAmount * 100}&tenure=${loanRequestFormValues.loanDuration}');
+            const result = await apiFetch(`loans/summary?tenure=${loanRequestFormValues.loanDuration}&principal=${loanRequestFormValues.loanAmount * 100}`);
     
             if((result as any).success && !(result as any).error){
                 const returnedLoanSummary = (result as any).data;
