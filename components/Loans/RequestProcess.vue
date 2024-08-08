@@ -255,7 +255,7 @@
                 returnedLoanSummary.totalRepaymentAmount = returnedLoanSummary.totalRepaymentAmount / 100
                 loanSummary.value = returnedLoanSummary;
             }else {
-                console.log((result as any).error);
+                // console.log((result as any).error);
             }
         }
     }
@@ -288,9 +288,10 @@
             const result = await apiFetch('accounts/direct_debit', 'POST');
     
             if ((result as any).success && !(result as any).error) {
-
-                setTimeout(confirmUserHasDirectDebit, 180000);
-
+                setTimeout(async() => {
+                    await fetchUserLinkedAccountAndBalance();
+                    await confirmUserHasDirectDebit();
+                }, 180000);
                 navigateTo(
                     (result as any).data.link,
                     {
@@ -311,7 +312,7 @@
         }else{
             setTimeout(async() => {
                 await fetchUserLinkedAccountAndBalance();
-                confirmUserHasDirectDebit();
+                await confirmUserHasDirectDebit();
             }, 120000);
         }
     }
