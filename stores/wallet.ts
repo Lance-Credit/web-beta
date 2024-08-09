@@ -16,7 +16,7 @@ export const useWalletStore = defineStore('wallet', () =>
             if ((result as any).success && !(result as any).error) {
                 if((result as any).data.hasLinkedAccount){
                     linkedAccount.value = (result as any).data.beneficiary;
-                    hasDirectDebit.value = (result as any).hasDirectDebit
+                    hasDirectDebit.value = (result as any).data.hasDirectDebit
                     fetchAccountBalance();
                 }else{
                     linkedAccount.value = null;
