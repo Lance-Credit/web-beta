@@ -34,7 +34,9 @@
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M5.014 2.71965C3.28533 2.71965 2.33333 3.64165 2.33333 5.31565V11.3483C2.33333 13.059 3.28533 14.0003 5.014 14.0003H10.6527C12.3813 14.0003 13.3333 13.0763 13.3333 11.399V5.31565C13.336 4.49231 13.1147 3.85231 12.6753 3.41231C12.2233 2.95898 11.5267 2.71965 10.6587 2.71965H5.014ZM10.6527 15.0001H5.01401C2.74401 15.0001 1.33334 13.6008 1.33334 11.3481V5.31548C1.33334 3.09682 2.74401 1.71948 5.01401 1.71948H10.6587C11.798 1.71948 12.74 2.06082 13.3833 2.70548C14.008 3.33282 14.3367 4.23482 14.3333 5.31682V11.3988C14.3333 13.6201 12.9227 15.0001 10.6527 15.0001Z" fill="#041111" fill-opacity="0.6"/>
                                 </g>
                             </svg>
-                            <span class="text-lance-black text-sm leading-5">Due: {{ activeLoan.dueDate }}</span>
+                            <span class="text-lance-black text-sm leading-5">
+                                Due: {{ activeLoan ? new Date(activeLoan.dueDate).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) : '- -'}}
+                            </span>
                         </p>
                         <div class="mb-3 rounded-lg bg-lance-green-5 py-2 px-4">
                             <div class="flex items-center justify-between mb-1 text-lance-black-60 text-sm leading-5">
@@ -88,12 +90,15 @@
                                         <p class="text-xs leading-[16.8px]">
                                             Date Paid:
                                             <span class="font-semibold">
-                                                {{ new Date(repayment.paid_at).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) }}
+                                                {{ repayment.paid_at ? new Date(repayment.paid_at).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) : '' }}
                                             </span>
                                         </p>
                                     </div>
-                                    <p class="w-[81px] h-8 rounded-[31px] bg-[rgba(12,180,59,0.04)] flex items-center justify-center py-1">
+                                    <p v-if="repayment.paid_at" class="w-[81px] h-8 rounded-[31px] bg-[rgba(12,180,59,0.04)] flex items-center justify-center py-1">
                                         <span class="text-[#0CB43B] text-sm font-medium">Paid</span>
+                                    </p>
+                                    <p v-else class="w-[81px] h-8 rounded-[31px] bg-lance-green-5 border border-solid border-lance-green flex items-center justify-center py-1">
+                                        <span class="text-lance-green text-sm font-medium">Due</span>
                                     </p>
                                 </li>
                                 <li v-if="activeLoan.monthlyPaymentAmount" class="flex items-center justify-between">
@@ -109,9 +114,6 @@
                                     <p class="w-[81px] h-8 rounded-[31px] bg-lance-black-5 flex items-center justify-center py-1">
                                         <span class="text-lance-black-50 text-sm font-medium">Upcoming</span>
                                     </p>
-                                    <!-- <p class="w-[81px] h-8 rounded-[31px] bg-lance-green-5 border border-solid border-lance-green flex items-center justify-center py-1">
-                                        <span class="text-lance-green text-sm font-medium">Due</span>
-                                    </p> -->
                                 </li>
                             </ul>
                         </div>
