@@ -6,7 +6,7 @@
             <div class="mb-8 flex items-center justify-between">
                 <div>
                     <p class="mb-1 text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px]">
-                        Good afternoon, {{ userProfile?.firstName }}
+                        Good afternoon, {{ `${userProfile?.firstName[0].toUpperCase()}${userProfile?.firstName.substring(1)}` }}
                     </p>
                     <p class="flex items-center gap-2">
                         <span class="text-lance-black-60 leading-[26px]">Referral Code:</span>
