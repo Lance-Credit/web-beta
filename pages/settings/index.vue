@@ -837,7 +837,7 @@
                 </svg>
             </div>
         </Auth-Modal>
-        <KYC-IncompleteKycNotificationModal v-if="!kycCompleted" v-show="showKycIncompleteModal" @@close-kyc-incomplete-modal="navigateTo('/dashboard')" />
+        <KYC-IncompleteKycNotificationModal v-if="!kycCompleted" v-show="showKycIncompleteModal" @@close-kyc-incomplete-modal="navigateTo('/dashboard?start_kyc=true')" />
     </div>
 </template>
 

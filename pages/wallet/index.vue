@@ -67,7 +67,7 @@
         <!-- <Wallet-DetailsModal @@closeWalletDetailsModal="showWalletDetailsModal = false" v-show="showWalletDetailsModal" :wallet="walletDetails" /> -->
         <Wallet-WithdrawModal @@closeWalletWithdrawalModal="showWalletWithdrawalModal = false" v-if="linkedAccount && showWalletWithdrawalModal" :wallet-balance="balance" :linked-account="linkedAccount" />
         <Wallet-FundingModal @@closeWalletFundingModal="showWalletFundingModal = false" v-if="showWalletFundingModal" />
-        <KYC-IncompleteKycNotificationModal v-if="!kycCompleted" v-show="showKycIncompleteModal" @@close-kyc-incomplete-modal="navigateTo('/dashboard')" />
+        <KYC-IncompleteKycNotificationModal v-if="!kycCompleted" v-show="showKycIncompleteModal" @@close-kyc-incomplete-modal="navigateTo('/dashboard?start_kyc=true')" />
     </div>
 </template>
 

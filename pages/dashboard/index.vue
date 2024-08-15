@@ -363,6 +363,10 @@
     const { fetchLoanHistory, $reset } = useLoanHistoryStore();
     
     onMounted(()=>{
+        const route = useRoute();
+        if(route.query.start_kyc == 'true' && !kycCompleted.value) {
+            showKycSummary.value = true
+        }
         setTimeout(async() => {
             if(kycCompleted.value){
                 loanSettings.value = await fetchLoanSettings();
