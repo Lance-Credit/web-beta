@@ -15,7 +15,7 @@
                                 Don’t stress, Happens to the best of us
                             </p>
                             <div class="mb-8">
-                                <Form-EmailInput class="mb-4" placeholder="Email address" label="Email address" v-bind="passwordResetForm.email" :error="passwordResetFormErrors.email"></Form-EmailInput>
+                                <Form-EmailInput class="mb-4" placeholder="Email address" label="Email address" v-model="passwordResetForm.email[0].value" v-bind="passwordResetForm.email[1].value" :error="passwordResetFormErrors.email"/>
                             </div>
                             <Form-ErrorNotification v-if="resetPasswordFormRequestError" :message="resetPasswordFormRequestError" />
                             <button
@@ -40,7 +40,7 @@
                                 Input the 6-digit verification code we sent to your email address to activate your account.
                             </p>
                             <div class="mb-8">
-                                <Form-TextInput placeholder="Verification Code" label="Verification Code" v-bind="passwordResetForm.verificationCode" :error="passwordResetFormErrors.verificationCode"></Form-TextInput>
+                                <Form-TextInput placeholder="Verification Code" label="Verification Code" v-model="passwordResetForm.verificationCode[0].value" v-bind="passwordResetForm.verificationCode[1].value" :error="passwordResetFormErrors.verificationCode"/>
                             </div>
                             <Form-ErrorNotification v-if="verificationCodeErrorResponse" :message="verificationCodeErrorResponse" />
                             <button @click="verificationCodeFormSubmitted = true" class="mb-6 btn btn-primary w-full gap-4" :disabled="!verificationCodeFormFilled">
@@ -66,9 +66,9 @@
                             Input the 6-digit verification code we sent to your email address to activate your account.
                         </p>
                         <div class="mb-8">
-                            <Form-PasswordInput class="mb-2" placeholder="Password" label="Password" v-bind="passwordResetForm.password" :error="passwordResetFormErrors.password"></Form-PasswordInput>
+                            <Form-PasswordInput class="mb-2" placeholder="Password" label="Password" v-model="passwordResetForm.password[0].value" v-bind="passwordResetForm.password[1].value" :error="passwordResetFormErrors.password"/>
                             <Form-PasswordRuleGuide :password="passwordResetFormValues.password"/>
-                            <Form-PasswordInput placeholder="Confirm Password" label="Confirm Password" v-bind="passwordResetForm.conf_password" :error="passwordResetFormErrors.conf_password"></Form-PasswordInput>
+                            <Form-PasswordInput placeholder="Confirm Password" label="Confirm Password" v-model="passwordResetForm.conf_password[0].value" v-bind="passwordResetForm.conf_password[1].value" :error="passwordResetFormErrors.conf_password"></Form-PasswordInput>
                         </div>
                         <button
                             @click="submitNewPasswordForm" class="mb-6 btn btn-primary w-full gap-4" :class="{'loading' : submittingNewPasswordForm}"
@@ -122,7 +122,7 @@
 
     import * as yup from 'yup';
 
-    const { values: passwordResetFormValues, errors: passwordResetFormErrors, setFieldValue, defineComponentBinds } = useForm({
+    const { values: passwordResetFormValues, errors: passwordResetFormErrors, setFieldValue, defineField } = useForm({
         validationSchema: yup.object({
             email: yup.string().email().required().label('Email Address'),
             verificationCode: yup.string().required().matches(/^[0-9]+$/, "Verification Code is required")
@@ -135,28 +135,12 @@
     });
     setFieldValue('password', '');
     
-    const passwordResetForm = reactive({
-        email: defineComponentBinds('email', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        }),
-        verificationCode: defineComponentBinds('verificationCode', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        }),
-        password: defineComponentBinds('password', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        }),
-        conf_password: defineComponentBinds('conf_password', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        })
-    });
+    const passwordResetForm = {
+        email: defineField('email'),
+        verificationCode: defineField('verificationCode'),
+        password: defineField('password'),
+        conf_password: defineField('conf_password')
+    };
 
     const emailFormSubmitted: Ref<boolean> = ref(false);
 
