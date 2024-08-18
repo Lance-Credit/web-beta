@@ -335,16 +335,16 @@
                             <div class="flex gap-[86px]">
                                 <div class="flex flex-col gap-6 basis-[376px]">
                                     <Form-TextInput placeholder="Residential Address" label="Residential Address" v-model="settingsForm.residentialAddress[0].value" v-bind="settingsForm.residentialAddress[1].value" :error="settingsFormErrors.residentialAddress" />
-                                    <Form-SelectInput
-                                        :options="lgaListOptions" placeholder="LGA" label="LGA"
-                                        v-model="settingsForm.lga[0].value" v-bind="settingsForm.lga[1].value" :error="settingsFormErrors.lga"
-                                    />
+                                    <Form-TextInput placeholder="City" label="City" v-model="settingsForm.city[0].value" v-bind="settingsForm.city[1].value" :error="settingsFormErrors.city" />
                                 </div>
                                 <div class="flex flex-col gap-6 basis-[376px]">
-                                    <Form-TextInput placeholder="City" label="City" v-model="settingsForm.city[0].value" v-bind="settingsForm.city[1].value" :error="settingsFormErrors.city" />
                                     <Form-SelectInput
                                         :options="stateListOptions" placeholder="State" label="State"
                                         v-model="settingsForm.state[0].value" v-bind="settingsForm.state[1].value" :error="settingsFormErrors.state"
+                                    />
+                                    <Form-SelectInput
+                                        :options="lgaListOptions" placeholder="LGA" label="LGA"
+                                        v-model="settingsForm.lga[0].value" v-bind="settingsForm.lga[1].value" :error="settingsFormErrors.lga"
                                     />
                                 </div>
                             </div>
