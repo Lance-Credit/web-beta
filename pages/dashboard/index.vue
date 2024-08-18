@@ -263,7 +263,7 @@
             @@close-loan-instructions-modal="showLoanInstructions = false"
             @@continue-loan-request-process="showLoanRequestProcess"
         />
-        <KYC-IncompleteKycNotificationModal v-if="!kycCompleted" v-show="showKycIncompleteModal" @@close-kyc-incomplete-modal="showKycIncompleteModal = false; showKycSummary = true;" />
+        <KYC-IncompleteKycNotificationModal v-if="!kycCompleted" v-show="showKycIncompleteModal" @@proceed-to-kyc-process="showKycIncompleteModal = false; showKycSummary = true;" @@close-kyc-incomplete-modal="showKycIncompleteModal = false;" />
     </div>
     <Loans-RequestProcess v-show="continueLoanRequestProcess" @@close-loan-application-modal="continueLoanRequestProcess = false" :loan-settings="loanSettings" />
 </template>

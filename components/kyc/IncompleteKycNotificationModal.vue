@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed z-20 top-0 left-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex justify-center items-center">
+    <div @click.self="emit('@close-kyc-incomplete-modal')" class="fixed z-20 top-0 left-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex justify-center items-center">
         <div class="bg-white w-[466px] p-10 rounded-3xl relative">
             <div class="flex flex-col gap-8">
                 <div class="w-[192px] h-[192px] rounded-full bg-[#D6F0AD] flex justify-center items-center mx-auto">
@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="flex gap-6">
-                    <button @click="emit('@close-kyc-incomplete-modal')" class="btn btn-primary w-full">Proceed to KYC Verification</button>
+                    <button @click="emit('@proceed-to-kyc-process')" class="btn btn-primary w-full">Proceed to KYC Verification</button>
                 </div>
             </div>
         </div>
@@ -42,5 +42,6 @@
 
     const emit = defineEmits<{
         '@close-kyc-incomplete-modal': []
+        '@proceed-to-kyc-process': []
     }>();
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed z-20 top-0 left-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex justify-center items-center">
+    <div @click.self="emit('@close-wallet-details-modal')" class="fixed z-20 top-0 left-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex justify-center items-center">
         <div class="bg-white w-[466px] p-10 rounded-3xl flex flex-col gap-6">
             <div>
                 <p class="mb-1 text-lance-black font-medium text-2xl leading-[26px] tracking-[-0.24px]">Fund Wallet</p>

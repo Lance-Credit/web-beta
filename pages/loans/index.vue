@@ -187,7 +187,7 @@
             @@successful-loan-repayment="loanRepaymentSuccessful"
             v-show="showLoanRepaymentModal" :loan="activeLoan" :wallet-balance="balance"
         />
-        <KYC-IncompleteKycNotificationModal v-if="!kycCompleted" v-show="showKycIncompleteModal" @@close-kyc-incomplete-modal="navigateTo('/dashboard?start_kyc=true')" />
+        <KYC-IncompleteKycNotificationModal v-if="!kycCompleted" v-show="showKycIncompleteModal" @@proceed-to-kyc-process="navigateTo('/dashboard?start_kyc=true')" @@close-kyc-incomplete-modal="showKycIncompleteModal = false;" />
         <Loans-Instructions
             v-show="showLoanInstructions && loanSettings"
             :loan-settings="loanSettings"

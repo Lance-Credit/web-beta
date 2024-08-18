@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed z-20 top-0 left-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex justify-end">
+    <div @click.self="emit('@close-transaction-details-modal')" class="fixed z-20 top-0 left-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex justify-end">
         <div class="bg-white w-[581px] h-full">
             <div @click="emit('@close-transaction-details-modal')" class="p-10 flex gap-4 items-center border-b border-solid border-[rgba(10,79,77,0.10)] cursor-pointer">
                 <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">

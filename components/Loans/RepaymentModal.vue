@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed z-20 top-0 left-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex items-center justify-center">
+    <div @click.self="emit('@close-loan-repayment-modal')" class="fixed z-20 top-0 left-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex items-center justify-center">
         <div v-if="successfulRepayment" class="bg-white w-[466px] rounded-3xl p-10">
             <div v-show="continueRepayment">
                 <div class="flex flex-col gap-8">
