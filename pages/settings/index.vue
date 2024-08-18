@@ -722,7 +722,7 @@
                             </div>
                             <ul class="basis-[calc(100%-383px)]">
                                 <li v-for="(faq, key) in faqList" :key="key" class="py-4 border-b border-solid border-lance-black-10">
-                                    <div @click="openedFaq = key" class="mb-1 flex items-center justify-between cursor-pointer">
+                                    <div @click="openedFaq == key ? openedFaq = null : openedFaq = key" class="mb-1 flex items-center justify-between cursor-pointer">
                                         <p class="text-[#1E1721] font-medium tracking-[-0.16px]">
                                             {{ faq.title }}
                                         </p>
