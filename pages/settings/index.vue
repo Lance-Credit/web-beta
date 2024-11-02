@@ -272,17 +272,17 @@
                                 <div class="flex flex-col gap-6 basis-[185px]">
                                     <div>
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
-                                            LGA
+                                            City
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile?.residentialAddress.lga || '--' }}</p>
+                                        <p class="text-lance-black">{{ userProfile?.residentialAddress.city || '--' }}</p>
                                     </div>
                                 </div>
                                 <div class="flex flex-col gap-6 basis-[185px]">
                                     <div>
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
-                                            City
+                                            Address
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile?.residentialAddress.city || '--' }}</p>
+                                        <p class="text-lance-black">{{ userProfile?.residentialAddress.street || '--' }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -341,10 +341,6 @@
                                     <Form-SelectInput
                                         :options="stateListOptions" placeholder="State" label="State"
                                         v-model="settingsForm.state[0].value" v-bind="settingsForm.state[1].value" :error="settingsFormErrors.state"
-                                    />
-                                    <Form-SelectInput
-                                        :options="lgaListOptions" placeholder="LGA" label="LGA"
-                                        v-model="settingsForm.lga[0].value" v-bind="settingsForm.lga[1].value" :error="settingsFormErrors.lga"
                                     />
                                 </div>
                             </div>
@@ -907,9 +903,6 @@
     if(userProfile.value?.educationLevel){
         setFieldValue('educationLevel', userProfile.value.educationLevel);
     }
-    if(userProfile.value?.residentialAddress.lga){
-        setFieldValue('lga', userProfile.value.residentialAddress.lga);
-    }
     if(userProfile.value?.residentialAddress.city){
         setFieldValue('city', userProfile.value.residentialAddress.city);
     }
@@ -924,7 +917,6 @@
         maritalStatus : defineField('maritalStatus'),
         educationLevel : defineField('educationLevel'),
         residentialAddress : defineField('residentialAddress'),
-        lga : defineField('lga'),
         city : defineField('city'),
         state : defineField('state'),
 
@@ -977,13 +969,6 @@
         }
     ];
 
-    const lgaListOptions = [
-        {
-            label: 'Lagos Mainland',
-            value: 'Lagos Mainland'
-        }
-    ];
-
     const stateListOptions = [
         {
             label: 'Lagos',
@@ -995,7 +980,6 @@
         return settingsFormValues.maritalStatus && !settingsFormErrors.value.maritalStatus &&
         settingsFormValues.educationLevel && !settingsFormErrors.value.educationLevel &&
         settingsFormValues.residentialAddress && !settingsFormErrors.value.residentialAddress &&
-        settingsFormValues.lga && !settingsFormErrors.value.lga &&
         settingsFormValues.city && !settingsFormErrors.value.city &&
         settingsFormValues.state && !settingsFormErrors.value.state;
     });
@@ -1015,7 +999,6 @@
                 residentialAddress: {
                     street: settingsFormValues.residentialAddress,
                     city: settingsFormValues.city,
-                    lga: settingsFormValues.lga,
                     state: settingsFormValues.state,
                     country: 'NG'
                 },
@@ -1030,7 +1013,6 @@
                 userProfile.value.educationLevel = (result as any).data.profile.levelOfEducation;
                 userProfile.value.residentialAddress.city = (result as any).data.profile.residentialAddress.city;
                 userProfile.value.residentialAddress.country = (result as any).data.profile.residentialAddress.country;
-                userProfile.value.residentialAddress.lga = (result as any).data.profile.residentialAddress.lga;
                 userProfile.value.residentialAddress.state = (result as any).data.profile.residentialAddress.state;
                 userProfile.value.residentialAddress.street = (result as any).data.profile.residentialAddress.street;
             }
