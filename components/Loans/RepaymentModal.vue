@@ -117,7 +117,7 @@
                         </div>
                     </div>
                     <div class="flex gap-6">
-                        <button @click="emit('@close-loan-repayment-modal')" class="btn btn-tertiary w-full">Back</button>
+                        <button @click="resetRepaymentChoice" class="btn btn-tertiary w-full">Back</button>
                         <button @click="continueRepayment = true" class="btn btn-primary w-full" :disabled="!(repaymentFormValues.repaymentAmount && !repaymentFormErrors.repaymentAmount)">Continue</button>
                     </div>
                 </div>
@@ -220,7 +220,7 @@
         return props.loan ? props.loan.totalRepaymentAmount - activeLoanTotalPaid.value : 0;
     })
 
-    const { values: repaymentFormValues, errors: repaymentFormErrors, defineField } = useForm({
+    const { values: repaymentFormValues, errors: repaymentFormErrors, setFieldValue, defineField } = useForm({
         validationSchema: yup.object({
             repaymentOption: yup.string().required().label('Repayment Option'),
             repaymentAmount: yup.number().required().
@@ -245,7 +245,7 @@
         if(repaymentFormValues.repaymentOption == 'nextRepayment'){
             return props.loan?.monthlyPaymentAmount;
         }
-        return 0
+        return 0;
     });
 
     const continueRepayment: Ref<boolean> = ref(false);
@@ -273,6 +273,10 @@
         }
     }
 
+    async function resetRepaymentChoice(){
+        setFieldValue('repaymentOption', undefined);
+        emit('@close-loan-repayment-modal')
+    }    
 
     const emit = defineEmits<{
         '@close-loan-repayment-modal': [],
