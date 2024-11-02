@@ -154,13 +154,10 @@
                         </svg>
                         <div v-if="notifications.length" class="w-2 h-2 absolute top-3 right-2.5 bg-[#E70A3F] rounded-full"></div>
                     </NuxtLink>
-                    <div class="flex items-center gap-2">
+                    <NuxtLink to="/settings" class="flex items-center gap-2">
                         <div class="w-[44px] h-[44px] rounded-full bg-cover bg-[#9BA6B9] bg-[url('/assets/img/kofo.jpg')]"></div>
                         <p class="text-[#1E1721] font-medium">{{ fullName }}</p>
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M2.97982 5.31295C3.15733 5.13544 3.43511 5.1193 3.63085 5.26454L3.68693 5.31295L8.00004 9.62584L12.3132 5.31295C12.4907 5.13544 12.7684 5.1193 12.9642 5.26454L13.0203 5.31295C13.1978 5.49046 13.2139 5.76824 13.0687 5.96398L13.0203 6.02006L8.35359 10.6867C8.17608 10.8642 7.89831 10.8804 7.70257 10.7351L7.64649 10.6867L2.97982 6.02006C2.78456 5.8248 2.78456 5.50821 2.97982 5.31295Z" fill="#656167"/>
-                        </svg>
-                    </div>
+                    </NuxtLink>
                 </div>
             </div>
             <div class="bg-[#FAFAFA] mt-[72px] min-h-[calc(100%-72px)] p-8">
