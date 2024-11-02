@@ -115,7 +115,7 @@
                 <div class="basis-[421px] py-8 px-6 rounded-xl bg-white border border-solid border-lance-green-10 grow">
                     <p class="mb-3 flex items-center justify-between">
                         <span class="text-[#0E0B10] text-xl leading-[26px] font-medium tracking-[-0.2px]">Credit Score</span>
-                        <NuxtLink class="text-lance-green font-medium">Learn more</NuxtLink>
+                        <NuxtLink to="/settings?tab=credit-score" class="text-lance-green font-medium">Learn more</NuxtLink>
                     </p>
                     <p class="mb-[18.2px] text-lance-black-60 tracking-[-0.16px]">Your Lance credit score determines how much you</p>
                     <div class="w-[236px] mx-auto relative text-center pt-[63.8px]">

@@ -1045,6 +1045,10 @@
 
     onMounted(()=>{
         fetchNextOfKinDetails();
+        const route = useRoute();
+        if(route.query.tab == 'credit-score') {
+            activeTab.value = 'creditScore'
+        }
     });
 
 
