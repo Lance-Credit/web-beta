@@ -1,20 +1,20 @@
 <template>
     <div v-show="!continueLoanRequestProcess">
         <p class="mb-[30px] text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px]">Loans</p>
-        <div v-if="!loanHistory.length" class="rounded-xl bg-white border border-solid border-lance-black-10 p-[115px] pb-[162px] text-center">
+        <div v-show="!loanHistory.length" class="rounded-xl bg-white border border-solid border-lance-black-10 p-[115px] pb-[162px] text-center">
             <Loans-NoActiveLoan @@show-loan-instructions="kycCompleted ? showLoanInstructions = true : showKycIncompleteModal = true" />
         </div>
 
-        <div v-else class="flex gap-[25px]">
+        <div v-show="loanHistory.length" class="flex gap-[25px]">
             <div class="basis-2/4">
-                <div v-if="!activeLoan" class="rounded-xl bg-white border border-solid border-lance-black-10 py-[132.5px] px-[96.5px] text-center">
+                <div v-show="!activeLoan" class="rounded-xl bg-white border border-solid border-lance-black-10 py-[132.5px] px-[96.5px] text-center">
                     <Loans-NoActiveLoan @@show-loan-instructions="kycCompleted ? showLoanInstructions = true : showKycIncompleteModal = true" />
                 </div>
-                <div v-else class="flex flex-col gap-4">
+                <div v-show="activeLoan" class="flex flex-col gap-4">
                     <div class="rounded-xl bg-white border border-solid border-lance-black-10 py-6 px-10">
                         <p class="text-lance-black-50 text-sm leading-5">Next Repayment</p>
                         <p class="mt-[-12px] text-lance-black text-4xl font-bold leading-[55.93px] tracking-[0.36px]">
-                            {{ (activeLoan.monthlyPaymentAmount).toLocaleString() }}
+                            {{ activeLoan ? (activeLoan.monthlyPaymentAmount).toLocaleString() : '' }}
                         </p>
                         <p class="mb-3 flex gap-1.5 items-center">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -42,7 +42,7 @@
                             <div class="flex items-center justify-between mb-1 text-lance-black-60 text-sm leading-5">
                                 <p>Paid: <span class="font-semibold">N {{ activeLoanTotalPaid.toLocaleString() }}</span></p>
                                 <p>
-                                    Balance : <span class="font-semibold">N {{ (activeLoan.totalRepaymentAmount - activeLoanTotalPaid).toLocaleString() }}</span>
+                                    Balance : <span class="font-semibold">N {{ activeLoan ? (activeLoan.totalRepaymentAmount - activeLoanTotalPaid).toLocaleString() : '' }}</span>
                                 </p>
                             </div>
                             <div class="h-2 w-full rounded-lg bg-lance-green-10" style="box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.10) inset;">
@@ -59,7 +59,7 @@
                             Repayment Timeline
                         </p>
                         <div class="h-[275px] overflow-y-scroll flex gap-4">
-                            <div class="px-[2.335px] pt-[6.33px] flex flex-col items-center">
+                            <div v-if="activeLoan" class="px-[2.335px] pt-[6.33px] flex flex-col items-center">
                                 <div v-for="(repayment, key) in activeLoan.repayments" :key="key" class="flex flex-col items-center">
                                     <div class="w-0.5 h-[48.66px] bg-[#063A4F] opacity-10" v-if="key != 0"></div>
                                     <div
@@ -83,7 +83,7 @@
                                     </div>
                                 </div> -->
                             </div>
-                            <ul class="flex flex-col gap-8 grow">
+                            <ul v-if="activeLoan" class="flex flex-col gap-8 grow">
                                 <li v-for="(repayment, key) in activeLoan.repayments" :key="key" class="flex items-center justify-between">
                                     <div class="text-lance-black">
                                         <p class="leading-[22.4px] font-semibold">{{ (repayment.amount).toLocaleString() }}</p>
@@ -239,9 +239,7 @@
     onMounted(async()=>{
         if(kycCompleted.value){
             loanSettings.value = await fetchLoanSettings();
-            if(!loanHistory.value.length){
-                fetchLoanHistory();
-            };
+            fetchLoanHistory();
         }
     });
 
