@@ -8,13 +8,13 @@
                     </div>
                     <div class="text-lance-black text-center">
                         <p class="mb-2 font-aventa text-2xl leading-8 tracking-[-0.24px] font-semibold">
-                            Successful Repayment
+                            {{ repaymentResponseMessage }}
                         </p>
                         <p class="text-lance-black-60">
                             We see you and we appreciate it
                         </p>
                     </div>
-                    <button @click="emit('@successful-loan-repayment')" class="btn btn-primary">Close</button>
+                    <button @click="resetSuccessfulRepaymentModal" class="btn btn-primary">Close</button>
                 </div>
             </div>
         </div>
@@ -175,6 +175,8 @@
     const makingRepayment: Ref<boolean> = ref(false);
 
     const successfulRepayment: Ref<boolean> = ref(false);
+    
+    const repaymentResponseMessage: Ref<string> = ref('We see you and we appreciate it');
 
     const { apiFetch } = useApiFetch();
 
@@ -193,12 +195,21 @@
             makingRepayment.value = false;
             successfulRepayment.value = false;
         }
+        repaymentResponseMessage.value = (result as any).message;
     }
 
-    async function resetRepaymentChoice(){
+    function resetRepaymentChoice(){
         setFieldValue('repaymentOption', undefined);
         emit('@close-loan-repayment-modal')
     }    
+
+    function resetSuccessfulRepaymentModal(){
+        continueRepayment.value = false;
+        successfulRepayment.value = false;
+        emit('@successful-loan-repayment');
+        setFieldValue('repaymentOption', undefined);
+    }
+
 
     const emit = defineEmits<{
         '@close-loan-repayment-modal': [],

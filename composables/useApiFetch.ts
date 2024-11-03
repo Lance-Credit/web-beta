@@ -31,7 +31,8 @@ export const useApiFetch = () => {
           // console.log(result);
           return {
             success: true,
-            data: (result as any).data
+            data: (result as any).data,
+            message: (result as any).message
           }
       } else {
           // console.log((result as any).error);
