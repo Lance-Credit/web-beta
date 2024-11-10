@@ -313,12 +313,12 @@
                             <p class="mb-6 text-[#1E1721] font-medium tracking-[-0.16px]">Personal Details</p>
                             <div class="flex gap-[86px]">
                                 <div class="flex flex-col gap-6 basis-[376px]">
-                                    <Form-TextInput label="First Name" v-model="userProfile.firstName" :disabled="true" />
-                                    <Form-TextInput label="Email address" v-model="userProfile.email" :disabled="true" />
-                                    <Form-TextInput label="Phone number" v-model="userProfile.phoneNumber" :disabled="true" />
+                                    <Form-TextInput label="First Name" v-model="settingsForm.firstName" :disabled="true" />
+                                    <Form-TextInput label="Email address" v-model="settingsForm.email" :disabled="true" />
+                                    <Form-TextInput label="Phone number" v-model="settingsForm.phoneNumber" :disabled="true" />
                                 </div>
                                 <div class="flex flex-col gap-6 basis-[376px]">
-                                    <Form-TextInput label="Last Name" v-model="userProfile.lastName" :disabled="true" />
+                                    <Form-TextInput label="Last Name" v-model="settingsForm.lastName" :disabled="true" />
                                     <Form-SelectInput
                                         :options="maritalStatusListOptions" placeholder="Marital Status" label="Marital Status" v-model="settingsForm.maritalStatus[0].value"
                                         v-bind="settingsForm.maritalStatus[1].value" :error="settingsFormErrors.maritalStatus"
@@ -935,6 +935,11 @@
     
     
     const settingsForm = {
+        email: userProfile.value?.email,
+        firstName: userProfile.value?.firstName,
+        lastName: userProfile.value?.lastName,
+        phoneNumber: userProfile.value?.phoneNumber,
+
         maritalStatus : defineField('maritalStatus'),
         educationLevel : defineField('educationLevel'),
         residentialAddress : defineField('residentialAddress'),
