@@ -18,5 +18,12 @@ interface NextOfKinDetails {
     lastName: string,
     firstName: string,
     phoneNumber: string,
-    relationship: string
+    relationship: string,
+    address: {
+        city: string
+        country: string
+        lga: string
+        state: string
+        street: string
+    }
 }

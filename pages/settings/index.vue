@@ -260,13 +260,13 @@
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             State
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile?.residentialAddress.state || '--' }}</p>
+                                        <p class="text-lance-black">{{ userProfile?.address.state || '--' }}</p>
                                     </div>
                                     <div>
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             Residential Address
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile?.residentialAddress.street || '--' }}</p>
+                                        <p class="text-lance-black">{{ userProfile?.address.street || '--' }}</p>
                                     </div>
                                 </div>
                                 <div class="flex flex-col gap-6 basis-[185px]">
@@ -274,7 +274,7 @@
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             City
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile?.residentialAddress.city || '--' }}</p>
+                                        <p class="text-lance-black">{{ userProfile?.address.city || '--' }}</p>
                                     </div>
                                 </div>
                                 <div class="flex flex-col gap-6 basis-[185px]">
@@ -282,7 +282,7 @@
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             Address
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile?.residentialAddress.street || '--' }}</p>
+                                        <p class="text-lance-black">{{ userProfile?.address.street || '--' }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -484,7 +484,9 @@
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             Relationship
                                         </p>
-                                        <p class="text-lance-black">{{ nextOfKinDetails?.relationship || '--' }}</p>
+                                        <p class="text-lance-black">
+                                            {{ nextOfKinDetails?.relationship ? nextOfKinDetails?.relationship[0].toUpperCase() + nextOfKinDetails?.relationship.substring(1) : '--' }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -903,15 +905,34 @@
     if(userProfile.value?.educationLevel){
         setFieldValue('educationLevel', userProfile.value.educationLevel);
     }
-    if(userProfile.value?.residentialAddress.city){
-        setFieldValue('city', userProfile.value.residentialAddress.city);
+    if(userProfile.value?.address.city){
+        setFieldValue('city', userProfile.value.address.city);
     }
-    if(userProfile.value?.residentialAddress.state){
-        setFieldValue('state', userProfile.value.residentialAddress.state);
+    if(userProfile.value?.address.state){
+        setFieldValue('state', userProfile.value.address.state);
     }
-    if(userProfile.value?.residentialAddress.street){
-        setFieldValue('residentialAddress', userProfile.value.residentialAddress.street);
+    if(userProfile.value?.address.street){
+        setFieldValue('residentialAddress', userProfile.value.address.street);
     }
+
+
+    if(nextOfKinDetails.value?.firstName){
+        setFieldValue('nextOfKinFirstName', nextOfKinDetails.value.firstName);
+    }
+    if(nextOfKinDetails.value?.lastName){
+        setFieldValue('nextOfKinLastName', nextOfKinDetails.value.lastName);
+    }
+    if(nextOfKinDetails.value?.relationship){
+        setFieldValue('nextOfKinRelationship', nextOfKinDetails.value.relationship);
+    }
+    if(nextOfKinDetails.value?.email){
+        setFieldValue('nextOfKinEmail', nextOfKinDetails.value.email);
+    }
+    if(nextOfKinDetails.value?.phoneNumber){
+        setFieldValue('nextOfKinPhoneNumber', nextOfKinDetails.value.phoneNumber);
+    }
+    
+    
     
     const settingsForm = {
         maritalStatus : defineField('maritalStatus'),
@@ -987,6 +1008,7 @@
     const savingPersonalDetails: Ref<boolean> = ref(false);
 
     const { apiFetch } = useApiFetch();
+    const { formattedPhoneNumberForPayload } = useFormattedPhoneNumberForPayload();
 
     async function savePersonalDetails(){
         savingPersonalDetails.value = true;
@@ -996,11 +1018,11 @@
             {
                 maritalStatus: settingsFormValues.maritalStatus,
                 levelOfEducation: settingsFormValues.educationLevel,
-                residentialAddress: {
+                address: {
                     street: settingsFormValues.residentialAddress,
                     city: settingsFormValues.city,
                     state: settingsFormValues.state,
-                    country: 'NG'
+                    country: 'Nigeria'
                 },
             }
         );
@@ -1011,10 +1033,10 @@
             if (userProfile.value) {
                 userProfile.value.maritalStatus = (result as any).data.profile.maritalStatus;
                 userProfile.value.educationLevel = (result as any).data.profile.levelOfEducation;
-                userProfile.value.residentialAddress.city = (result as any).data.profile.residentialAddress.city;
-                userProfile.value.residentialAddress.country = (result as any).data.profile.residentialAddress.country;
-                userProfile.value.residentialAddress.state = (result as any).data.profile.residentialAddress.state;
-                userProfile.value.residentialAddress.street = (result as any).data.profile.residentialAddress.street;
+                userProfile.value.address.city = (result as any).data.profile.address.city;
+                userProfile.value.address.country = (result as any).data.profile.address.country;
+                userProfile.value.address.state = (result as any).data.profile.address.state;
+                userProfile.value.address.street = (result as any).data.profile.address.street;
             }
         }else {
             savingPersonalDetails.value = false;
@@ -1026,7 +1048,6 @@
 
 
     onMounted(()=>{
-        fetchNextOfKinDetails();
         const route = useRoute();
         if(route.query.tab == 'credit-score') {
             activeTab.value = 'creditScore'
@@ -1046,8 +1067,32 @@
 
     const nextOfKinRelationshipListOptions = [
         {
-            label: 'Sister',
-            value: 'Sister'
+            label: 'Sibling',
+            value: 'sibling'
+        },
+        {
+            label: 'Parent',
+            value: 'parent'
+        },
+        {
+            label: 'Spouse',
+            value: 'spouse'
+        },
+        {
+            label: 'Child',
+            value: 'child'
+        },
+        {
+            label: 'Friend',
+            value: 'friend'
+        },
+        {
+            label: 'Guardian',
+            value: 'guardian'
+        },
+        {
+            label: 'Relative',
+            value: 'relative'
         }
     ];
 
@@ -1063,18 +1108,64 @@
         settingsFormValues.nextOfKinEmail && !settingsFormErrors.value.nextOfKinEmail;
     });
 
-    async function fetchNextOfKinDetails(){
-        if(!nextOfKinDetails.value){
-            console.log('fetching next of kin details.');
-            // if there is a next of kin DetailsModal,
-            console.log('update in store.');
-        }else{
-            console.log('set initial values for next of kin form')
-        }
-    }
     async function saveNextOfKinDetails(){
-        console.log('next of kin details saved');
-        console.log('update next of kin store');
+        savingNextOfKinDetails.value = true;
+
+        const result = await apiFetch(
+            'profile',
+            'PATCH',
+            {
+                nextOfKin: {
+                    email: settingsFormValues.nextOfKinEmail,
+                    lastName: settingsFormValues.nextOfKinLastName,
+                    firstName: settingsFormValues.nextOfKinFirstName,
+                    relationship: settingsFormValues.nextOfKinRelationship,
+                    address: {
+                        country: 'Nigeria',
+                        city: settingsFormValues.city,
+                        state: settingsFormValues.state,
+                        street: settingsFormValues.residentialAddress
+                    },
+                    mobile: formattedPhoneNumberForPayload(settingsFormValues.nextOfKinPhoneNumber)
+                },
+
+            }
+        );
+
+        if((result as any).success && !(result as any).error){
+            savingNextOfKinDetails.value = false;
+
+            if (nextOfKinDetails.value) {
+                nextOfKinDetails.value.email = (result as any).data.profile.nextOfKin.email;
+                nextOfKinDetails.value.lastName = (result as any).data.profile.nextOfKin.lastName;
+                nextOfKinDetails.value.firstName = (result as any).data.profile.nextOfKin.firstName;
+                nextOfKinDetails.value.phoneNumber = (result as any).data.profile.nextOfKin.phoneNumber;
+                nextOfKinDetails.value.address.lga = (result as any).data.profile.nextOfKin.address.lga;
+                nextOfKinDetails.value.relationship = (result as any).data.profile.nextOfKin.relationship;
+                nextOfKinDetails.value.address.city = (result as any).data.profile.nextOfKin.address.city;
+                nextOfKinDetails.value.address.state = (result as any).data.profile.nextOfKin.address.state;
+                nextOfKinDetails.value.address.street = (result as any).data.profile.nextOfKin.address.street;
+                nextOfKinDetails.value.address.country = (result as any).data.profile.nextOfKin.address.country;
+            } else {
+                nextOfKinDetails.value = {
+                    email: (result as any).data.profile.nextOfKin.email,
+                    lastName: (result as any).data.profile.nextOfKin.lastName,
+                    firstName: (result as any).data.profile.nextOfKin.firstName,
+                    phoneNumber: (result as any).data.profile.nextOfKin.phoneNumber,
+                    relationship: (result as any).data.profile.nextOfKin.relationship,
+                    address: {
+                        lga: (result as any).data.profile.nextOfKin.address.lga,
+                        city: (result as any).data.profile.nextOfKin.address.city,
+                        state: (result as any).data.profile.nextOfKin.address.state,
+                        street: (result as any).data.profile.nextOfKin.address.street,
+                        country: (result as any).data.profile.nextOfKin.address.country
+                    }
+                }
+            }
+        }else {
+            savingNextOfKinDetails.value = false;
+            // console.log((result as any).error);
+        }
     }
 
     const newPasswordFilled = computed(() => {

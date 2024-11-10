@@ -173,6 +173,8 @@
     import * as yup from 'yup';
 
     const { fetchUserProfile } = useUserStore();
+
+    const { formattedPhoneNumberForPayload } = useFormattedPhoneNumberForPayload();
     
     definePageMeta({
         middleware: 'auth',
@@ -288,15 +290,6 @@
         }
     });
 
-    const formattedPhoneNumberForPayload = computed(() => {
-        if ((signupFormValues.phoneNumber).substring(0,1) == '0') {
-            return '234'+(signupFormValues.phoneNumber).substring(1);
-        } else if ((signupFormValues.phoneNumber).substring(0,4) == '+234') {
-            return (signupFormValues.phoneNumber).substring(1);
-        }
-        return signupFormValues.phoneNumber;
-    })
-
     const signupErrorResponse: Ref<string> = ref('');
 
     const authToken: Ref<string> = ref('');
@@ -316,8 +309,8 @@
                 "lastName": signupFormValues.lastName,
                 "password": signupFormValues.password,
                 "firstName": signupFormValues.firstName,
-                "mobile": formattedPhoneNumberForPayload.value,
-                "communityCode": signupFormValues.communityCode
+                "communityCode": signupFormValues.communityCode,
+                "mobile": formattedPhoneNumberForPayload(signupFormValues.phoneNumber)
             }
         );
     

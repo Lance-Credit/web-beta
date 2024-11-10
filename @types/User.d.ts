@@ -8,7 +8,7 @@ interface User {
     profilePicture: string,
     maritalStatus: string,
     educationLevel: string,
-    residentialAddress: {
+    address: {
         city: string
         country: string
         lga: string

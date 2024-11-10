@@ -1,9 +1,13 @@
 import { useKYCStore } from './kyc';
 
+import { useNextOfKinStore } from './nextOfKin';
+
 const { apiFetch } = useApiFetch();
 
 export const useUserStore = defineStore('user', () => 
     {
+        const { nextOfKinDetails } = storeToRefs(useNextOfKinStore());
+
         const userProfile: Ref<User | null> = ref(null);
 
         const fullName = computed(()=>{
@@ -20,7 +24,6 @@ export const useUserStore = defineStore('user', () =>
             const result = await apiFetch('profile');
 
             if ((result as any).success && !(result as any).error) {
-                // console.log(result);
                 userProfile.value = {
                     "id": '',
                     "email": (result as any).data.email,
@@ -31,12 +34,28 @@ export const useUserStore = defineStore('user', () =>
                     "profilePicture": '',
                     "maritalStatus": (result as any).data.profile.maritalStatus,
                     "educationLevel": (result as any).data.profile.levelOfEducation,
-                    "residentialAddress": {
-                        "city": (result as any).data.profile.residentialAddress?.city,
-                        "country": (result as any).data.profile.residentialAddress?.country,
-                        "lga": (result as any).data.profile.residentialAddress?.lga,
-                        "state": (result as any).data.profile.residentialAddress?.state,
-                        "street": (result as any).data.profile.residentialAddress?.street,
+                    "address": {
+                        "city": (result as any).data.profile.address?.city,
+                        "country": (result as any).data.profile.address?.country,
+                        "lga": (result as any).data.profile.address?.lga,
+                        "state": (result as any).data.profile.address?.state,
+                        "street": (result as any).data.profile.address?.street,
+                    },
+
+                }
+
+                nextOfKinDetails.value = {
+                    "email": (result as any).data.profile.nextOfKin?.email,
+                    "lastName": (result as any).data.profile.nextOfKin?.lastName,
+                    "firstName": (result as any).data.profile.nextOfKin?.firstName,
+                    "phoneNumber": (result as any).data.profile.nextOfKin?.phoneNumber,
+                    "relationship": (result as any).data.profile.nextOfKin?.relationship,
+                    "address": {
+                        "lga": (result as any).data.profile.nextOfKin?.address.lga,
+                        "city": (result as any).data.profile.nextOfKin?.address.city,
+                        "state": (result as any).data.profile.nextOfKin?.address.state,
+                        "street": (result as any).data.profile.nextOfKin?.address.street,
+                        "country": (result as any).data.profile.nextOfKin?.address.country
                     },
 
                 }

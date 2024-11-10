@@ -14,9 +14,6 @@ export const useApiFetch = () => {
     
 
 
-
-
-
     try {
       const result = await $fetch(`${apiURL}/${endpoint}`,{
           method: method,
