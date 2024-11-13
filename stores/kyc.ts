@@ -47,21 +47,21 @@ export const useKYCStore = defineStore('kyc', () =>
 
             if ((result as any).success && !(result as any).error) {
                 if(
-                    (result as any).data.phone && (result as any).data.phone.verificationStatus == 'successful' &&
-                    (result as any).data.email && (result as any).data.email.verificationStatus == 'successful'
+                    (result as any).data.verification.phone && (result as any).data.verification.phone.verificationStatus == 'successful' &&
+                    (result as any).data.verification.email && (result as any).data.verification.email.verificationStatus == 'successful'
                 ){
                     kycItems.value.account.completed = true;
                 }else{
                     kycItems.value.account.completed = false;
                 }
 
-                if((result as any).data.kyc && (result as any).data.kyc.verificationStatus == 'successful'){
+                if((result as any).data.verification.kyc && (result as any).data.verification.kyc.verificationStatus == 'successful'){
                     kycItems.value.kyc.completed = true;
                 }else{
                     kycItems.value.kyc.completed = false;
                 }
                 
-                if((result as any).data.kyc && (result as any).data.kyc.verificationStatus == 'successful'){
+                if((result as any).data.verification.kyc && (result as any).data.verification.kyc.verificationStatus == 'successful'){
                     kycItems.value.id.completed = true;
                     kycItems.value.personalDetails.completed = true;
                 }else{
