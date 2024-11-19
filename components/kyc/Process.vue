@@ -208,11 +208,7 @@
                     first_name: userProfile.value?.firstName,
                 },
                 
-                // metadata: {
-                //   user_id: '12xxxxsxsxsxssx1',
-                // },
-    
-                reference_id: (result as any).data.dojahReference,
+                reference_id: (result as any).data.sessionReference,
                 
                 config: {
                     widget_id: dojahWidgetId
