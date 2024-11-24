@@ -161,7 +161,7 @@
         }
 
         if(repaymentFormValues.repaymentOption == 'full'){
-            return props.loan?.amount;
+            return props.loan?.totalRepaymentAmount;
         }
 
         if(repaymentFormValues.repaymentOption == 'nextRepayment'){
