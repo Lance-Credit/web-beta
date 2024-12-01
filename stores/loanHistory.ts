@@ -28,7 +28,7 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
 
         const activeLoanTotalPaid = computed(() => {
             return activeLoan.value
-                ? activeLoan.value.totalRepayments * activeLoan.value.monthlyPaymentAmount
+                ? (activeLoan.value.repayments).reduce((total, repayment): number => total + repayment.amount, 0)
                 : 0;
         });
 

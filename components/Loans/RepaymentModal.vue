@@ -8,10 +8,10 @@
                     </div>
                     <div class="text-lance-black text-center">
                         <p class="mb-2 font-aventa text-2xl leading-8 tracking-[-0.24px] font-semibold">
-                            {{ repaymentResponseMessage }}
+                            {{ repaymentFormValues.repaymentMethod == 'wallet' ? 'Successful Repayment' : '' }}
                         </p>
                         <p class="text-lance-black-60">
-                            We see you and we appreciate it
+                            {{ repaymentResponseMessage ? repaymentResponseMessage : 'We see you and we appreciate it' }}
                         </p>
                     </div>
                     <button @click="resetSuccessfulRepaymentModal" class="btn btn-primary">Close</button>
@@ -119,8 +119,8 @@
                     <span v-show="repaymentFormValues.repaymentMethod == 'wallet' && walletBalance < chosenAmount" class="mt-[-4px] mb-2 text-[#E70A3F] text-xs ml-4">
                         Insufficient Funds. Top up your wallet and try again
                     </span>
-                    <Form-RepaymentMethodRadioInput type="radio" name="repaymentMethod" value="online">
-                        <div class="w-8 h-8 rounded-full flex items-center justify-center" :class="repaymentFormValues.repaymentMethod != 'online' ? 'bg-lance-green-5' : ''">
+                    <Form-RepaymentMethodRadioInput type="radio" name="repaymentMethod" value="link">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center" :class="repaymentFormValues.repaymentMethod != 'link' ? 'bg-lance-green-5' : ''">
                             <svg v-show="repaymentFormValues.repaymentMethod != 'online'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <g clip-path="url(#clip0_6539_27189)">
                                     <path d="M8 14C11.3137 14 14 11.3137 14 8C14 4.68629 11.3137 2 8 2C4.68629 2 2 4.68629 2 8C2 11.3137 4.68629 14 8 14Z" stroke="#052926" stroke-miterlimit="10"/>
@@ -262,20 +262,29 @@
     async function makeRepayment(){
         makingRepayment.value = true;
 
-        const medium = repaymentFormValues.repaymentMethod == 'wallet' ? 'wallet' : 'online';
+        const medium = repaymentFormValues.repaymentMethod == 'wallet' ? 'wallet' : 'link';
         const installment = repaymentFormValues.repaymentOption == 'full' ? 'full' : 'partial';
 
-        const result = await apiFetch(`loans/${props.loan?.reference}/repayments?installment=${installment}&medium=link`, 'POST');
-    
+        const result = await apiFetch(`loans/${props.loan?.reference}/repayments?installment=${installment}&medium=${medium}`, 'POST');
         if ((result as any).success && !(result as any).error) {
             makingRepayment.value = false;
             successfulRepayment.value = true;
+            repaymentResponseMessage.value = (result as any).message;
+
+            if (medium === 'link'){
+                navigateTo(
+                    (result as any).data.link,
+                    {
+                        external: true,
+                        open: { target: '_blank'}
+                    }
+                );
+            }
         } else {
             // console.log((result as any).error);
             makingRepayment.value = false;
             successfulRepayment.value = false;
         }
-        repaymentResponseMessage.value = (result as any).message;
     }
 
     function resetRepaymentChoice(){
