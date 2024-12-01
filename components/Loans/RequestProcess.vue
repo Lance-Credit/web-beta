@@ -251,8 +251,9 @@
     
             if((result as any).success && !(result as any).error){
                 const returnedLoanSummary = (result as any).data;
+                returnedLoanSummary.processingFee = returnedLoanSummary.processingFee / 100;
                 returnedLoanSummary.monthlyPaymentAmount = returnedLoanSummary.monthlyPaymentAmount / 100;
-                returnedLoanSummary.totalRepaymentAmount = returnedLoanSummary.totalRepaymentAmount / 100
+                returnedLoanSummary.totalRepaymentAmount = returnedLoanSummary.totalRepaymentAmount / 100;
                 loanSummary.value = returnedLoanSummary;
             }else {
                 // console.log((result as any).error);
