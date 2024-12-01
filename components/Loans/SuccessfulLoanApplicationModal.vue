@@ -24,7 +24,7 @@
                             Loan Application Sent
                         </p>
                         <p class="text-lance-black-60">
-                            We’ve gotten your loan application,  and will let you get back to you with a loan offer in less than 2 hours via email and your notifications.
+                            We’ve gotten your loan application, and will get back to you with a loan offer in less than 2 hours via email and your notifications.
                         </p>
                     </div>
                     <button @click="emit('@close-loan-application-modal')" class="btn btn-primary w-full">Continue</button>

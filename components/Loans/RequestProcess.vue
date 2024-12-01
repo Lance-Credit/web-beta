@@ -313,7 +313,7 @@
             setTimeout(async() => {
                 await fetchUserLinkedAccountAndBalance();
                 await confirmUserHasDirectDebit();
-            }, 120000);
+            }, 60000);
         }
     }
 
