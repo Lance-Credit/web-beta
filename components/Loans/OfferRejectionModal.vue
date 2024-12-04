@@ -45,15 +45,18 @@
                         </Form-RadioInput>
                     </li>
                 </ul>
-                <Form-TextInput placeholder="Tell us why you’re rejecting this offer" label="Tell us why you’re rejecting this offer" v-bind="rejectionFeedbackForm.rejectionFeedback" :error="rejectionFeedbackFormErrors.rejectionFeedback" />
+                <Form-TextInput placeholder="Tell us why you’re rejecting this offer" label="Tell us why you’re rejecting this offer" v-model="rejectionFeedbackForm.rejectionFeedback[0].value" v-bind="rejectionFeedbackForm.rejectionFeedback[1].value" :error="rejectionFeedbackFormErrors.rejectionFeedback" />
                 <div class="flex items-center gap-6">
                     <button @click="emit('@close-offer-rejection-modal')" class="btn btn-tertiary w-full" :disabled="savingRejectionFeedback"
                     >
                         Back
                     </button>
-                    <button @click="saveRejectionFeedback" class="btn btn-primary w-full" :disabled="savingRejectionFeedback || !rejectionFeedbackFormFilled"
+                    <button
+                        @click="saveRejectionFeedback" class="btn w-full btn-primary" :class="{'loading' : savingRejectionFeedback}"
+                        :disabled="savingRejectionFeedback || !rejectionFeedbackFormFilled"
                     >
-                        Continue
+                        <span v-show="!savingRejectionFeedback">Continue</span>
+                        <Loader-Basic v-show="savingRejectionFeedback" bg="#FFF" fg="#C3E48E" />
                     </button>
                 </div>
             </div>
@@ -118,22 +121,24 @@
 
     import * as yup from 'yup';
 
-    const { values: rejectionFeedbackFormValues, errors: rejectionFeedbackFormErrors, defineComponentBinds } = useForm({
+    const props = defineProps<{
+        loan: Loan
+    }>();
+
+    const { apiFetch } = useApiFetch();
+
+    const { values: rejectionFeedbackFormValues, errors: rejectionFeedbackFormErrors, defineField } = useForm({
         validationSchema: yup.object({
             rejectionFeedback: yup.string().required().label('Rejection Feedback'),
         })
     });
 
-    const rejectionFeedbackForm = reactive({
-        rejectionFeedback: defineComponentBinds('rejectionFeedback', {
-            mapProps: state => ({
-                error: state.errors[0],
-            }),
-        })
-    });
+    const rejectionFeedbackForm = {
+        rejectionFeedback: defineField('rejectionFeedback')
+    };
 
     const rejectionFeedbackFormFilled = computed(() => {
-        return rejectionFeedbackFormValues.rejectionFeedback && !rejectionFeedbackFormErrors.rejectionFeedback;
+        return rejectionFeedbackFormValues.rejectionFeedback && !rejectionFeedbackFormErrors.value.rejectionFeedback;
     });
 
     const rejectionFeedbackSaved: Ref<boolean> = ref(false);
@@ -143,9 +148,20 @@
     async function saveRejectionFeedback(){
         savingRejectionFeedback.value = true;
 
-        setTimeout(()=>{
+        const result = await apiFetch(
+            `loans/${props.loan.reference}`,
+            'PATCH',
+            {
+                "operation":"acceptOrDecline",
+                "acceptOrDecline": "decline"
+            }
+        );
+
+        if((result as any).success && !(result as any).error){
             rejectionFeedbackSaved.value = true;
-        }, 5000)
+        } else {
+            // console.log((result as any).error);
+        }
     }
 
     const emit = defineEmits<{

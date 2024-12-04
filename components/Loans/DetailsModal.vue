@@ -56,8 +56,6 @@
         loan: null | Loan
     }>();
 
-    const { defaultInterestRate } = useRuntimeConfig().public;
-
     const emit = defineEmits<{
         '@close-loan-details-modal': []
     }>();

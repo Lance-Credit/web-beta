@@ -19,6 +19,13 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
             return null;
         });
 
+        const declinedLoans = computed(() => {
+            if(loanHistory.value.length){
+                return loanHistory.value.filter((loan: Loan)=> loan.status == 'declined');
+            }
+            return null;
+        });
+
         const completedLoans = computed(() => {
             if(loanHistory.value.length){
                 return loanHistory.value.filter((loan: Loan)=> loan.status == 'paid');
@@ -73,6 +80,7 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
             activeLoan,
             loanHistory,
             pendingLoans,
+            declinedLoans,
             completedLoans,
             fetchLoanHistory,
             percentageLoanPaid,

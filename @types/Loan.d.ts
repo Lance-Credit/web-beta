@@ -5,9 +5,12 @@ interface Loan {
     tenure: number,
     dueDate: string,
     reference: string,
+    feeCharged: number,
+    adminApproved: boolean,
     nextPaymentDate: string,
     totalRepayments: number,
     repayments: LoanRepayment[],
+    totalInterestAmount: number,
     totalRepaymentAmount: number,
     monthlyPaymentAmount: number,
 }

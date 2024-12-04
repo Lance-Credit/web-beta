@@ -5,18 +5,18 @@
             <div class="flex flex-col gap-6 w-[376px] mx-auto">
                 <div
                     class="p-4 rounded border border-solid"
-                    :class="notification?.approved ? 'border-lance-green bg-lance-green-5' : 'border-[#5D242D] bg-[rgba(93,36,45,0.05)]'"
+                    :class="loan?.status === 'inactive' ? 'border-lance-green bg-lance-green-5' : 'border-[#E70A3F] bg-[rgba(231,10,63,0.05)]'"
                 >
-                    <p v-if="notification?.approved" class="text-lance-green text-sm">
+                    <p v-if="loan?.status === 'inactive'" class="text-lance-green text-sm">
                         Your offer has been accepted and is valid for <span class="text-lance-black font-medium">24 hours</span>.
                     </p>
-                    <p v-else class="text-[#5D242D]">Your loan offer was not approved.</p>
+                    <p v-else class="text-[#E70A3F]">Your loan offer was not approved.</p>
                 </div>
 
-                <div v-if="notification?.approved" class="rounded-lg border border-solid border-lance-black bg-[rgba(236,255,77,0.05)]">
+                <div v-if="loan?.status === 'inactive'" class="rounded-lg border border-solid border-lance-black bg-[rgba(236,255,77,0.05)]">
                     <div class="p-6 bg-lance-green-5 text-center">
                         <p class="mb-1 text-lance-black-50 text-sm">Total Repayment Amount</p>
-                        <p class="text-lance-green text-xl font-semibold leading-[30px]">N{{ (notification?.loan.loanAmount)?.toLocaleString() }}</p>
+                        <p class="text-lance-green text-xl font-semibold leading-[30px]">N{{ (loan?.amount)?.toLocaleString() }}</p>
                     </div>
                     <ul class="pt-8 pb-6 px-4">
                         <li class="flex items-center justify-between pb-4 border-b border-solid border-b-lance-green-5">
@@ -32,7 +32,7 @@
                                 </svg>
                                 <span>Loan Amount</span>
                             </p>
-                            <p class="text-lance-black">N{{ (notification?.loan.loanAmount)?.toLocaleString() }}</p>
+                            <p class="text-lance-black">N{{ (loan?.amount)?.toLocaleString() }}</p>
                         </li>
                         <li class="flex items-center justify-between py-4 border-b border-solid border-b-lance-green-5">
                             <p class="text-lance-black-70 text-sm leading-[21px] flex items-center gap-2">
@@ -51,9 +51,9 @@
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M14.2109 19.4192H7.04093C4.2351 19.4192 2.3501 17.4484 2.3501 14.5151V7.78008C2.3501 4.84257 4.2351 2.86841 7.04093 2.86841H13.0976C13.4426 2.86841 13.7226 3.14841 13.7226 3.49341C13.7226 3.83841 13.4426 4.11841 13.0976 4.11841H7.04093C4.95093 4.11841 3.6001 5.55507 3.6001 7.78008V14.5151C3.6001 16.7692 4.91843 18.1692 7.04093 18.1692H14.2109C16.3009 18.1692 17.6518 16.7351 17.6518 14.5151V8.64924C17.6518 8.30424 17.9318 8.02424 18.2768 8.02424C18.6218 8.02424 18.9018 8.30424 18.9018 8.64924V14.5151C18.9018 17.4484 17.0168 19.4192 14.2109 19.4192Z" fill="#041111" fill-opacity="0.5"/>
                                     </g>
                                 </svg>
-                                <span>Interest Rate ({{ defaultInterestRate }}%)</span>
+                                <span>Interest Rate ({{ loan?.rate }}%)</span>
                             </p>
-                            <p class="text-lance-black">N{{ totalInterest.toLocaleString() }}</p>
+                            <p class="text-lance-black">N{{ (loan?.totalInterestAmount/100).toLocaleString() }}</p>
                         </li>
                         <li class="flex items-center justify-between py-4 border-b border-solid border-b-lance-green-5">
                             <p class="text-lance-black-70 text-sm leading-[21px] flex items-center gap-2">
@@ -74,7 +74,7 @@
                                 </svg>
                                 <span>Processing Fee ({{ defaultProcessingFeeRate }}%)</span>
                             </p>
-                            <p class="text-lance-black">N{{ processingFee.toLocaleString() }}</p>
+                            <p class="text-lance-black">N{{ loan?.feeCharged.toLocaleString() }}</p>
                         </li>
                         <li class="flex items-center justify-between py-4 border-b border-solid border-b-lance-green-5">
                             <p class="text-lance-black-70 text-sm leading-[21px] flex items-center gap-2">
@@ -95,7 +95,7 @@
                                 </svg>
                                 <span>Repayment</span>
                             </p>
-                            <p class="text-lance-black">N {{ (totalRepayment/notification.loan.loanDuration).toLocaleString() }} monthly</p>
+                            <p class="text-lance-black">N {{ (loan?.monthlyPaymentAmount).toLocaleString() }} monthly</p>
                         </li>
                         <li class="flex items-center justify-between py-4 border-b border-solid border-b-lance-green-5">
                             <p class="text-lance-black-70 text-sm leading-[21px] flex items-center gap-2">
@@ -105,7 +105,7 @@
                                 </svg>
                                 <span>Duration</span>
                             </p>
-                            <p class="text-lance-black">{{ notification.loan.loanDuration }} months</p>
+                            <p class="text-lance-black">{{ loan?.tenure }} months</p>
                         </li>
                         <li class="flex items-center justify-between pt-4">
                             <p class="text-lance-black-70 text-sm leading-[21px] flex items-center gap-2">
@@ -124,7 +124,7 @@
                         <div>
                             <p class="mb-1 text-lance-black-50 text-sm leading-5">Loan Amount</p>
                             <p class="text-lance-green text-xl font-semibold leading-[30px]">
-                                N{{ (notification?.loan.loanAmount)?.toLocaleString() }}
+                                N{{ (loan?.amount)?.toLocaleString() }}
                             </p>
                         </div>
                         <p class="text-lance-black-70 text-sm leading-[21px]">Reasons below</p>
@@ -179,51 +179,33 @@
                     </ul>
                 </div>
 
-                <div v-if="notification?.approved" class="flex items-center gap-[14px]">
+                <div v-if="loan?.status === 'inactive'" class="flex items-center gap-[14px]">
                     <button @click="showLoanOfferRejectionModal = true" class="btn btn-tertiary w-full" :disabled="acceptingLoanOffer">Reject Offer</button>
-                    <button @click="acceptLoanOffer" class="btn btn-primary w-full" :disabled="acceptingLoanOffer">Accept Offer</button>
+                    <button
+                        @click="acceptLoanOffer" class="btn w-full btn-primary" :class="{'loading' : acceptingLoanOffer}"
+                        :disabled="acceptingLoanOffer"
+                    >
+                        <span v-show="!acceptingLoanOffer">Accept Offer</span>
+                        <Loader-Basic v-show="acceptingLoanOffer" bg="#FFF" fg="#C3E48E" />
+                    </button>
                 </div>
             </div>
         </div>
 
         <Loans-OfferAcceptanceModal v-if="loanOfferAcceptanceSuccess" />
-        <Loans-OfferRejectionModal v-if="showLoanOfferRejectionModal"  @@close-offer-rejection-modal="showLoanOfferRejectionModal = false" />
+        <Loans-OfferRejectionModal v-if="showLoanOfferRejectionModal" :loan="loan"  @@close-offer-rejection-modal="showLoanOfferRejectionModal = false" />
     </div>
 </template>
 
 <script setup lang="ts">
 
     const props = defineProps<{
-        notification: any;
+        loan: Loan
     }>();
 
-    const { defaultInterestRate } = useRuntimeConfig().public;
+    const { apiFetch } = useApiFetch();
+
     const { defaultProcessingFeeRate } = useRuntimeConfig().public;
-
-    const totalInterest = computed(() => {
-        if(props.notification){
-            return (
-                props.notification.loan.loanAmount * 
-                (parseInt(defaultInterestRate)/100)) * 
-                props.notification.loan.loanDuration;
-        }
-        return 0;
-    });
-
-    const processingFee = computed(() => {
-        if(props.notification){
-            return props.notification.loan.loanAmount * (parseInt(defaultProcessingFeeRate)/100);
-        }
-        return 0;
-    });
-
-    const totalRepayment = computed(() => {
-        if(props.notification){
-            const principal = props.notification.loan.loanAmount;
-            return principal + totalInterest.value;
-        }
-        return 0;
-    });
 
     const acceptingLoanOffer: Ref<boolean> = ref(false);
     
@@ -232,20 +214,23 @@
     const showLoanOfferRejectionModal: Ref<boolean> = ref(false);
 
     async function acceptLoanOffer(){
-        acceptingLoanOffer.value = true;
-        setTimeout(()=>{
+        acceptingLoanOffer.value = true;       
+        
+        const result = await apiFetch(
+            `loans/${props.loan.reference}`,
+            'PATCH',
+            {
+                "operation":"acceptOrDecline",
+                "acceptOrDecline": "accept"
+            }
+        );
+
+        if((result as any).success && !(result as any).error){
+            acceptingLoanOffer.value = false;
             loanOfferAcceptanceSuccess.value = true;
-        }, 5000);
-
-        // mark notification as read
-    }
-
-    async function rejectLoanOffer(){
-        setTimeout(()=>{
-            showLoanOfferRejectionModal.value = true;
-        }, 5000);
-
-        // mark notification as read
+        } else {
+            // console.log((result as any).error);
+        }
     }
 
 </script>
