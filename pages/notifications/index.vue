@@ -58,10 +58,7 @@
 
     async function showLoanOffer(notification: Notification){
         if(notification.metadata.resourceType === 'loan') {
-            const result = await apiFetch(
-                `loans/${notification.metadata.reference}`,
-                'GET'
-            );
+            const result = await apiFetch(`loans/${notification.metadata.reference}`);
 
             if((result as any).success && !(result as any).error){
                 if((result as any).data.status === 'inactive' && (result as any).data.adminApproved) {
