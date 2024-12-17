@@ -751,7 +751,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="mt-6 flex justify-between items-center py-4 px-6 rounded-lg bg-lance-green-5 cursor-pointer">
+                    <NuxtLink to="mailto:support@lancecredit.com" class="mt-6 flex justify-between items-center py-4 px-6 rounded-lg bg-lance-green-5">
                         <div class="flex gap-2 items-center">
                             <div class="w-8 h-8 bg-lance-green-5 rounded-full flex items-center justify-center">
                                 <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -765,7 +765,7 @@
                         <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M7.96967 19.8643C7.7034 19.598 7.6792 19.1814 7.89705 18.8878L7.96967 18.8037L14.439 12.334L7.96967 5.86431C7.7034 5.59805 7.6792 5.18138 7.89705 4.88777L7.96967 4.80365C8.23594 4.53739 8.6526 4.51318 8.94621 4.73104L9.03033 4.80365L16.0303 11.8037C16.2966 12.0699 16.3208 12.4866 16.1029 12.7802L16.0303 12.8643L9.03033 19.8643C8.73744 20.1572 8.26256 20.1572 7.96967 19.8643Z" fill="black"/>
                         </svg>
-                    </div>
+                    </NuxtLink>
                 </div>
 
                 <div v-show="activeTab == 'about'">
