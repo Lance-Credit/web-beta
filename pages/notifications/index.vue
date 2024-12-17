@@ -13,7 +13,7 @@
                     <p class="mb-6 text-[#656167] font-medium">{{ new Date(notification.created_at).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) }}</p>
                     <div class="flex items-center gap-4">
                         <div v-if="!notification.read" class="w-2.5 h-2.5 rounded-full bg-[#E70A3F]"></div>
-                        <div @click="showLoanOffer(notification)" class="flex items-center justify-between cursor-pointer grow">
+                        <div @click="showNotification(notification)" class="flex items-center justify-between cursor-pointer grow">
                             <div>
                                 <p class="mb-1 text-lance-black font-medium">{{ notification.title }}
                                     <span class="font-normal text-lance-black-60">| {{ new Date(notification.created_at).toLocaleTimeString('en-US') }}</span>
@@ -28,6 +28,7 @@
                 </li>
             </ul>
         </div>
+        <Loans-DetailsModal @@close-loan-details-modal="showSelectedLoanDetails = false" v-show="showSelectedLoanDetails" :loan="fetchedLoan" />
         <Loans-OfferView v-show="showLoanOfferView" :loan="fetchedLoan" />
     </div>
 </template>
@@ -53,17 +54,27 @@
     const fetchedLoan: Ref<Loan | null> = ref(null);
 
     const showLoanOfferView: Ref<boolean> = ref(false);
+    
+    const showSelectedLoanDetails: Ref<boolean> = ref(false);
 
     const selectedNotification = ref(null);
 
-    async function showLoanOffer(notification: Notification){
+    async function showNotification(notification: Notification){
+        if(notification.metadata.resourceType === 'loan') {
+            showLoanOfferOrDetails(notification);
+        }
+    }
+
+    async function showLoanOfferOrDetails(notification: Notification){
         if(notification.metadata.resourceType === 'loan') {
             const result = await apiFetch(`loans/${notification.metadata.reference}`);
 
             if((result as any).success && !(result as any).error){
-                if((result as any).data.status === 'inactive' && (result as any).data.adminApproved) {
+                fetchedLoan.value = (result as any).data;
+                if(((result as any).data.status === 'inactive' && (result as any).data.adminApproved) || (result as any).data.status === 'declined') {
                     showLoanOfferView.value = true;
-                    fetchedLoan.value = (result as any).data;
+                } else {
+                    showSelectedLoanDetails.value = true;
                 }
             } else {
                 // console.log((result as any).error);
