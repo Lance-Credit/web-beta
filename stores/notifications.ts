@@ -7,7 +7,6 @@ export const useNotificationsStore = defineStore('notifications', () =>
         async function fetchNotifications() {
             
             const result = await apiFetch('notifications');
-            console.log("🚀 ~ fetchNotifications ~ result:", result)
     
             if ((result as any).success && !(result as any).error) {
                 notifications.value = result.data;
