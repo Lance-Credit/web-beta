@@ -51,9 +51,9 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
             const result = await apiFetch('loans?role=borrower');
     
             if ((result as any).success && !(result as any).error) {
-                loanHistory.value = (result as any).data;
                 loanHistory.value = (result as any).data.map((loan: Loan) => {
                     loan.amount = loan.amount / 100;
+                    loan.totalRepayments = loan.totalRepayments / 100;
                     loan.totalRepaymentAmount = loan.totalRepaymentAmount / 100;
                     loan.monthlyPaymentAmount = loan.monthlyPaymentAmount / 100;
 

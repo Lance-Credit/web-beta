@@ -125,73 +125,28 @@
                     <p class="mb-6 text-[#1E1721] text-xl font-medium leading-[26px] tracking-[-0.2px]">Loan History</p>
                     <ul class="flex flex-col gap-4">
                         <li
-                            @click="viewLoanDetails(activeLoan)" v-if="activeLoan"
+                            @click="viewLoanDetails(loan)" v-for="(loan, key) in loanHistory" :key="key"
                             class="py-3 px-6 rounded-2xl border border-solid border-lance-black-10 flex items-center justify-between cursor-pointer">
                             <div class="basis-1/3">
                                 <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Amount</p>
-                                <p class="text-black text-sm font-medium leading-5">N {{ (activeLoan.amount).toLocaleString() }}</p>
+                                <p class="text-black text-sm font-medium leading-5">N {{ (loan.amount).toLocaleString() }}</p>
                             </div>
                             <div class="basis-1/3">
                                 <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Duration</p>
-                                <p class="text-black text-sm font-medium leading-5">{{ activeLoan.tenure }} Months</p>
+                                <p class="text-black text-sm font-medium leading-5">{{ loan.tenure }} Months</p>
                             </div>
                             <div class="basis-1/3">
                                 <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Status</p>
-                                <p class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(12,180,59,0.04)] text-[#0CB43B]">
+                                <p v-if="loan.status === 'active'" class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(12,180,59,0.04)] text-[#0CB43B]">
                                     Active
                                 </p>
-                            </div>
-                        </li>
-                        <li
-                            @click="viewLoanDetails(loan)" v-for="(loan, key) in pendingLoans" :key="key"
-                            class="py-3 px-6 rounded-2xl border border-solid border-lance-black-10 flex items-center justify-between cursor-pointer">
-                            <div class="basis-1/3">
-                                <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Amount</p>
-                                <p class="text-black text-sm font-medium leading-5">N {{ (loan.amount).toLocaleString() }}</p>
-                            </div>
-                            <div class="basis-1/3">
-                                <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Duration</p>
-                                <p class="text-black text-sm font-medium leading-5">{{ loan.tenure }} Months</p>
-                            </div>
-                            <div class="basis-1/3">
-                                <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Status</p>
-                                <p class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(255,138,0,0.06)] text-[#FF8A00]">
+                                <p v-if="loan.status === 'inactive'" class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(255,138,0,0.06)] text-[#FF8A00]">
                                     Pending
                                 </p>
-                            </div>
-                        </li>
-                        <li
-                            @click="viewLoanDetails(loan)" v-for="(loan, key) in declinedLoans" :key="key"
-                            class="py-3 px-6 rounded-2xl border border-solid border-lance-black-10 flex items-center justify-between cursor-pointer">
-                            <div class="basis-1/3">
-                                <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Amount</p>
-                                <p class="text-black text-sm font-medium leading-5">N {{ (loan.amount).toLocaleString() }}</p>
-                            </div>
-                            <div class="basis-1/3">
-                                <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Duration</p>
-                                <p class="text-black text-sm font-medium leading-5">{{ loan.tenure }} Months</p>
-                            </div>
-                            <div class="basis-1/3">
-                                <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Status</p>
-                                <p class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-lance-black-5 text-lance-black-50">
+                                <p v-if="loan.status === 'declined'" class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-lance-black-5 text-lance-black-50">
                                     Declined
                                 </p>
-                            </div>
-                        </li>
-                        <li
-                            @click="viewLoanDetails(loan)" v-for="(loan, key) in completedLoans" :key="key"
-                            class="py-3 px-6 rounded-2xl border border-solid border-lance-black-10 flex items-center justify-between cursor-pointer">
-                            <div class="basis-1/3">
-                                <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Amount</p>
-                                <p class="text-black text-sm font-medium leading-5">N {{ (loan.amount).toLocaleString() }}</p>
-                            </div>
-                            <div class="basis-1/3">
-                                <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Duration</p>
-                                <p class="text-black text-sm font-medium leading-5">{{ loan.tenure }} Months</p>
-                            </div>
-                            <div class="basis-1/3">
-                                <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Status</p>
-                                <p class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-lance-black-5 text-lance-black-50">
+                                <p v-if="loan.status === 'paid'" class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-lance-black-5 text-lance-black-50">
                                     Completed
                                 </p>
                             </div>
@@ -257,9 +212,6 @@
     const {
         activeLoan,
         loanHistory,
-        pendingLoans,
-        declinedLoans,
-        completedLoans,
         percentageLoanPaid,
         activeLoanTotalPaid
     } = storeToRefs(useLoanHistoryStore());
