@@ -31,10 +31,6 @@
                         <p class="text-lance-black-70 text-sm leading-[21px]">Monthly Repayment</p>
                         <p class="text-lance-black">N{{ (loan?.monthlyPaymentAmount)?.toLocaleString() }} every month</p>
                     </li>
-                    <li class="flex items-center justify-between pt-4">
-                        <p class="text-lance-black-70 text-sm leading-[21px]">Purpose</p>
-                        <p class="text-lance-black">Wedding</p>
-                    </li>
                 </ul>
                 <div v-show="loan?.status != 'paid'" class="mt-4 p-6 rounded-lg border border-solid border-lance-black bg-[rgba(236,255,77,0.05)]">
                     <div class="flex items-center justify-between">
