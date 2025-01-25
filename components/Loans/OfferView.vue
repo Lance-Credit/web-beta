@@ -115,7 +115,7 @@
                                 </svg>
                                 <span>End Date</span>
                             </p>
-                            <p class="text-lance-black">9th October, 2024</p>
+                            <p class="text-lance-black">{{ loan ? new Date(loan.dueDate).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) : '- -'}}</p>
                         </li>
                     </ul>
                 </div>

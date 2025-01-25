@@ -36,7 +36,7 @@
                                     </g>
                                 </svg>
                                 <span class="text-lance-black text-sm leading-5">
-                                    Due: {{ activeLoan ? new Date(activeLoan.dueDate).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) : '- -'}}
+                                    Due: {{ activeLoan ? new Date(activeLoan.nextPaymentDate).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) : '- -'}}
                                 </span>
                             </p>
                             <div class="mb-3 rounded-lg bg-lance-green-5 py-2 px-4">
