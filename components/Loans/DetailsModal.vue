@@ -6,7 +6,7 @@
                 <div>
                     <p class="text-lance-black-50 text-sm leading-5">Total Amount Repaid</p>
                     <p class="mt-[-12px] text-lance-black text-4xl font-bold leading-[55.93px] tracking-[0.36px]">
-                        {{ (loan?.totalRepayments)?.toLocaleString() }}
+                        {{ loan?.totalRepayments ? (loan.totalRepayments/100)?.toLocaleString() : 0 }}
                     </p>
                 </div>
                 <p class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-lance-black-5 text-lance-black-50">
