@@ -70,7 +70,21 @@
             const result = await apiFetch(`loans/${notification.metadata.reference}`);
 
             if((result as any).success && !(result as any).error){
+
+                (result as any).data.amount = (result as any).data.amount / 100;
+                (result as any).data.totalRepayments = (result as any).data.totalRepayments / 100;
+                (result as any).data.totalRepaymentAmount = (result as any).data.totalRepaymentAmount / 100;
+                (result as any).data.monthlyPaymentAmount = (result as any).data.monthlyPaymentAmount / 100;
+
+                const repayments = (result as any).data.repayments.map((repayment: any) => {
+                    repayment.amount = repayment.amount / 100;
+                    return repayment;
+                });
+                
+                (result as any).data.repayments = repayments;
+
                 fetchedLoan.value = (result as any).data;
+
                 if(((result as any).data.status === 'inactive' && (result as any).data.adminApproved) || (result as any).data.status === 'declined') {
                     showLoanOfferView.value = true;
                 } else {
