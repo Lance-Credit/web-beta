@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-show="!continueLoanRequestProcess && !showLoanOfferView">
+        <div v-show="!continueLoanRequestProcess">
             <p class="mb-[30px] text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px]">Loans</p>
             <div v-show="!loanHistory.length" class="rounded-xl bg-white border border-solid border-lance-black-10 p-[115px] pb-[162px] text-center">
                 <Loans-NoActiveLoan @@show-loan-instructions="kycCompleted ? showLoanInstructions = true : showKycIncompleteModal = true" />
@@ -170,7 +170,7 @@
             />
         </div>
         <Loans-RequestProcess v-show="continueLoanRequestProcess" @@close-loan-application-modal="continueLoanRequestProcess = false" :loan-settings="loanSettings" />
-        <Loans-OfferView v-show="showLoanOfferView" :loan="selectedLoan" />
+        <Loans-OfferView @@close-loan-details-modal="showLoanOfferView = false" v-show="showLoanOfferView" :loan="selectedLoan" />
     </div>
 </template>
 

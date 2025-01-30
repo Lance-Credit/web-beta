@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-show="!showLoanOfferView">
+        <div>
             <div class="mb-[30px] flex items-center justify-between">
                 <p class="text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px]">Notifications</p>
                 <p class="text-[#1E1721] text-sm cursor-pointer">Mark all as read</p>
@@ -29,7 +29,7 @@
             </ul>
         </div>
         <Loans-DetailsModal @@close-loan-details-modal="showSelectedLoanDetails = false" v-show="showSelectedLoanDetails" :loan="fetchedLoan" />
-        <Loans-OfferView v-show="showLoanOfferView" :loan="fetchedLoan" />
+        <Loans-OfferView @@close-loan-details-modal="showLoanOfferView = false" v-show="showLoanOfferView" :loan="fetchedLoan" />
     </div>
 </template>
 
