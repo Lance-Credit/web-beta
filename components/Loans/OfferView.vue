@@ -1,12 +1,9 @@
 <template>
-    <div
-        @click.self="emit('@close-loan-details-modal')" class="fixed z-20 top-0 left-0 w-screen h-screen backdrop-blur-[2px] flex items-center justify-center"
-        :class="loan?.status === 'declined' ? 'bg-lance-black-20' : 'bg-lance-black-70'"
-    >
+    <div @click.self="emit('@close-loan-details-modal')" class="fixed z-20 top-0 left-0 w-screen h-screen backdrop-blur-[2px] flex items-center justify-center bg-lance-black-70">
         <div class="flex flex-col gap-6 w-[376px] mx-auto">
             <div
-                class="p-4 rounded border border-solid"
-                :class="loan?.status === 'inactive' ? 'border-lance-green bg-lance-green-5' : 'border-[#E70A3F] bg-[rgba(231,10,63,0.05)]'"
+                class="p-4 rounded border border-solid bg-white"
+                :class="loan?.status === 'inactive' ? 'border-lance-green' : 'border-[#E70A3F]'"
             >
                 <p v-if="loan?.status === 'inactive'" class="text-lance-green text-sm">
                     Your offer has been accepted and is valid for <span class="text-lance-black font-medium">24 hours</span>.
@@ -14,7 +11,7 @@
                 <p v-else class="text-[#E70A3F]">Your loan offer was not approved.</p>
             </div>
     
-            <div v-if="loan?.status === 'inactive'" class="rounded-lg border border-solid border-lance-black bg-[rgba(236,255,77,0.05)]">
+            <div v-if="loan?.status === 'inactive'" class="rounded-lg border border-solid border-lance-black bg-white">
                 <div class="p-6 bg-lance-green-5 text-center">
                     <p class="mb-1 text-lance-black-50 text-sm">Total Repayment Amount</p>
                     <p class="text-lance-green text-xl font-semibold leading-[30px]">N{{ (loan?.amount)?.toLocaleString() }}</p>
