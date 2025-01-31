@@ -18,6 +18,7 @@ export default {
       'lance-black': '#041111',
       'lance-black-5': 'rgba(4,17,17,0.05)',
       'lance-black-10': 'rgba(4,17,17,0.10)',
+      'lance-black-20': 'rgba(4,17,17,0.20)',
       'lance-black-50': 'rgba(4,17,17,0.50)',
       'lance-black-60': 'rgba(4,17,17,0.60)',
       'lance-black-70': 'rgba(4,17,17,0.70)',
