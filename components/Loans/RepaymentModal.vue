@@ -156,51 +156,12 @@
                     <NuxtLink v-if="repaymentFormValues.repaymentMethod == 'wallet' && walletBalance < chosenAmount" to="wallet" class="btn btn-primary w-full">
                         <span>Fund Wallet</span>
                     </NuxtLink>
-                    <button v-else @click="makeRepayment" class="btn btn-primary w-full" :disabled="!(repaymentFormValues.repaymentMethod && !repaymentFormErrors.repaymentMethod)">
+                    <button v-else @click="makeRepayment" class="btn btn-primary w-full"
+                        :disabled="!(repaymentFormValues.repaymentMethod && !repaymentFormErrors.repaymentMethod) || makingRepayment">
                         <span>Make Repayment</span>
                     </button>
                 </div>
             </div>
-            <!-- <div v-show="continueRepayment">
-                <div class="flex flex-col gap-8">
-                    <div class="w-[192px] h-[192px] rounded-full flex items-center justify-center bg-[#D6F0AD] mx-auto">
-                        <img src="/assets/img/icons/thumbs-up.png" alt="">
-                    </div>
-                    <div class="text-lance-black">
-                        <p class="mb-2 font-aventa text-2xl leading-8 tracking-[-0.24px] font-semibold text-center">
-                            Confirm Repayment
-                        </p>
-                        <p class="mb-4 text-center text-lance-black-60">
-                            You’re about to make a repayment of 
-                            <span class="text-lance-black font-medium">N {{ chosenAmount.toLocaleString() }}</span>
-                        </p>
-                        <div class="py-2 px-4 rounded-lg bg-lance-green-5 flex items-center gap-2">
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="16" cy="16" r="15.5" fill="#0A4F4D" stroke="#0A4F4D"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M22.5925 18.5973H19.8938C18.6291 18.5973 17.5998 17.5686 17.5991 16.3046C17.5991 15.0393 18.6285 14.0099 19.8938 14.0093H22.5925C22.8685 14.0093 23.0925 14.2333 23.0925 14.5093C23.0925 14.7853 22.8685 15.0093 22.5925 15.0093H19.8938C19.1798 15.0099 18.5991 15.5906 18.5991 16.3039C18.5991 17.0166 19.1805 17.5973 19.8938 17.5973H22.5925C22.8685 17.5973 23.0925 17.8213 23.0925 18.0973C23.0925 18.3733 22.8685 18.5973 22.5925 18.5973Z" fill="#052926"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M20.1987 16.7622H19.9907C19.7147 16.7622 19.4907 16.5382 19.4907 16.2622C19.4907 15.9862 19.7147 15.7622 19.9907 15.7622H20.1987C20.4747 15.7622 20.6987 15.9862 20.6987 16.2622C20.6987 16.5382 20.4747 16.7622 20.1987 16.7622Z" fill="#052926"/>
-                                <mask id="mask0_3139_13336" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="9" y="10" width="15" height="13">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.33325 10H23.0923V22.7819H9.33325V10Z" fill="white"/>
-                                </mask>
-                                <g mask="url(#mask0_3139_13336)">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3317 11C11.6783 11 10.333 12.3453 10.333 13.9987V18.7833C10.333 20.4367 11.6783 21.782 13.3317 21.782H19.0943C20.7477 21.782 22.0923 20.4367 22.0923 18.7833V13.9987C22.0923 12.3453 20.7477 11 19.0943 11H13.3317ZM19.0943 22.782H13.3317C11.127 22.782 9.33301 20.988 9.33301 18.7833V13.9987C9.33301 11.7933 11.127 10 13.3317 10H19.0943C21.299 10 23.0923 11.7933 23.0923 13.9987V18.7833C23.0923 20.988 21.299 22.782 19.0943 22.782Z" fill="#052926"/>
-                                </g>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.4563 14.0254H12.8569C12.5809 14.0254 12.3569 13.8014 12.3569 13.5254C12.3569 13.2494 12.5809 13.0254 12.8569 13.0254H16.4563C16.7323 13.0254 16.9563 13.2494 16.9563 13.5254C16.9563 13.8014 16.7323 14.0254 16.4563 14.0254Z" fill="#052926"/>
-                            </svg>
-                            <p class="text-sm leading-5">Loan Balance:
-                                <span class="font-bold">N{{ (remainingPayment - chosenAmount).toLocaleString() }}</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="flex gap-6">
-                        <button @click="continueRepayment = false" class="btn btn-tertiary w-full">Cancel</button>
-                        <button @click="makeRepayment" class="btn btn-primary w-full" :class="{'loading' : makingRepayment}" :disabled="makingRepayment">
-                            <span v-show="!makingRepayment">Proceed</span>
-                            <Loader-Basic v-show="makingRepayment" bg="#FFF" fg="#C3E48E" />
-                        </button>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </div>
 </template>
@@ -267,8 +228,12 @@
 
         const result = await apiFetch(`loans/${props.loan?.reference}/repayments?installment=${installment}&medium=${medium}`, 'POST');
         if ((result as any).success && !(result as any).error) {
-            makingRepayment.value = false;
-            successfulRepayment.value = true;
+            
+            if (medium === 'wallet') {
+                makingRepayment.value = false;
+                successfulRepayment.value = true;
+            }
+
             repaymentResponseMessage.value = (result as any).message;
 
             if (medium === 'link'){
