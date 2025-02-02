@@ -19,6 +19,10 @@
                         <p class="text-lance-black-70 text-sm leading-[21px]">Loan Amount</p>
                         <p class="text-lance-black">N{{ (loan?.amount)?.toLocaleString() }}</p>
                     </li>
+                    <li class="flex items-center justify-between pb-4 border-b border-solid border-b-lance-green-5">
+                        <p class="text-lance-black-70 text-sm leading-[21px]">Reference</p>
+                        <p class="text-lance-black text-sm">{{ loan?.reference }}</p>
+                    </li>
                     <li class="flex items-center justify-between py-4 border-b border-solid border-b-lance-green-5">
                         <p class="text-lance-black-70 text-sm leading-[21px]">Interest Rate</p>
                         <p class="text-lance-black">{{ loan?.rate }}% pa</p>
