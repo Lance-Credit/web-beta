@@ -17,35 +17,49 @@
                         </Form-RadioInput>
                     </li>
                     <li>
-                        <Form-RadioInput type="radio" name="rejectionFeedback" value="I found a better loaning platform">
+                        <Form-RadioInput type="radio" name="rejectionFeedback" value="Monthly payments are too high">
                             <p class="text-lance-black text-sm">
-                                I found a better loaning platform
+                                Monthly payments are too high
                             </p>
                         </Form-RadioInput>
                     </li>
                     <li>
-                        <Form-RadioInput type="radio" name="rejectionFeedback" value="I found a better loaning platform">
+                        <Form-RadioInput type="radio" name="rejectionFeedback" value="Loan terms are not flexible enough">
                             <p class="text-lance-black text-sm">
-                                I found a better loaning platform
+                                Loan terms are not flexible enough
                             </p>
                         </Form-RadioInput>
                     </li>
                     <li>
-                        <Form-RadioInput type="radio" name="rejectionFeedback" value="I found a better loaning platform">
+                        <Form-RadioInput type="radio" name="rejectionFeedback" value="Approval process took too long">
                             <p class="text-lance-black text-sm">
-                                I found a better loaning platform
+                                Approval process took too long
                             </p>
                         </Form-RadioInput>
                     </li>
                     <li>
-                        <Form-RadioInput type="radio" name="rejectionFeedback" value="I found a better loaning platform">
+                        <Form-RadioInput type="radio" name="rejectionFeedback" value="Chose another lender with better terms">
                             <p class="text-lance-black text-sm">
-                                I found a better loaning platform
+                                Chose another lender with better terms
+                            </p>
+                        </Form-RadioInput>
+                    </li>
+                    <li>
+                        <Form-RadioInput type="radio" name="rejectionFeedback" value="Not satisfied with fees or additional charges">
+                            <p class="text-lance-black text-sm">
+                                Not satisfied with fees or additional charges
+                            </p>
+                        </Form-RadioInput>
+                    </li>
+                    <li>
+                        <Form-RadioInput type="radio" name="rejectionFeedback" value="Other">
+                            <p class="text-lance-black text-sm">
+                                Other (please specify the reason for rejection)
                             </p>
                         </Form-RadioInput>
                     </li>
                 </ul>
-                <Form-TextInput placeholder="Tell us why you’re rejecting this offer" label="Tell us why you’re rejecting this offer" v-model="rejectionFeedbackForm.rejectionFeedback[0].value" v-bind="rejectionFeedbackForm.rejectionFeedback[1].value" :error="rejectionFeedbackFormErrors.rejectionFeedback" />
+                <Form-TextInput v-show="rejectionFeedbackFormValues.rejectionFeedback == 'Other'" placeholder="Tell us why you’re rejecting this offer" label="Tell us why you’re rejecting this offer" v-model="rejectionFeedbackForm.rejectionFeedbackOther[0].value" v-bind="rejectionFeedbackForm.rejectionFeedbackOther[1].value" :error="rejectionFeedbackFormErrors.rejectionFeedbackOther" />
                 <div class="flex items-center gap-6">
                     <button @click="emit('@close-offer-rejection-modal')" class="btn btn-tertiary w-full" :disabled="savingRejectionFeedback"
                     >
@@ -134,11 +148,15 @@
     });
 
     const rejectionFeedbackForm = {
-        rejectionFeedback: defineField('rejectionFeedback')
+        rejectionFeedback: defineField('rejectionFeedback'),
+        rejectionFeedbackOther: defineField('rejectionFeedbackOther')
     };
 
     const rejectionFeedbackFormFilled = computed(() => {
-        return rejectionFeedbackFormValues.rejectionFeedback && !rejectionFeedbackFormErrors.value.rejectionFeedback;
+        if (rejectionFeedbackFormValues.rejectionFeedback !== 'Other') {
+            return rejectionFeedbackFormValues.rejectionFeedback && !rejectionFeedbackFormErrors.value.rejectionFeedback;
+        }
+        return rejectionFeedbackFormValues.rejectionFeedbackOther && !rejectionFeedbackFormErrors.value.rejectionFeedbackOther;
     });
 
     const rejectionFeedbackSaved: Ref<boolean> = ref(false);
