@@ -39,7 +39,7 @@
                         </defs>
                     </svg>
                 </div>
-                <p class="text-lance-black-60">Your KYC process will begin soon.</p>
+                <p class="text-lance-black-60">{{ dojahMessage }}</p>
             </div>
         </div>
     </div>
@@ -47,8 +47,8 @@
 
 <script setup lang="ts">
 
-    // const emit = defineEmits<{
-    //     '@close-dojah-modal': []
-    // }>();
+    defineProps<{
+        dojahMessage: string
+    }>();
 
 </script>

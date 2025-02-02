@@ -118,7 +118,10 @@
                     <p>Don't worry, it's quick and completely secure!</p>
                     <div class="flex items-center gap-3.5">
                         <button @click="emit('@stop-kyc-process')" class="btn btn-tertiary w-full">Back</button>
-                        <button @click="startDojahKyc" class="btn btn-primary w-full">Proceed</button>
+                        <button @click="startDojahKyc" class="mb-6 btn w-full btn-primary" :class="{'loading' : startingDojahKyc}" :disabled="startingDojahKyc">
+                            <span v-show="!startingDojahKyc">Proceed</span>
+                            <Loader-Basic v-show="startingDojahKyc" bg="#FFF" fg="#C3E48E" />
+                        </button>
                     </div>
                 </div>
                 <div v-if="activeStep == 'bankAccount'" class="w-[376px] mx-auto flex flex-col gap-8">
@@ -167,7 +170,7 @@
             </div>
         </div>
 
-        <KYC-DojahModal v-show="startingDojahKyc" />
+        <KYC-DojahModal v-show="startingDojahKyc" :dojahMessage="dojahModalVerificationMessage" />
         <KYC-MonoModal v-show="startingMonoKyc" />
     </div>
 </template>
@@ -188,6 +191,8 @@
     const { dojahAppId, dojahPublicKey, dojahWidgetId } = useRuntimeConfig().public;
 
     const { apiFetch } = useApiFetch();
+
+    const dojahModalVerificationMessage: Ref<string> = ref('Your KYC process will begin soon.');
 
     async function startDojahKyc(){
         startingDojahKyc.value = true;
@@ -216,6 +221,7 @@
     
                 onSuccess: function (response) {
                     //   console.log('Success', response);
+                    dojahModalVerificationMessage.value = 'Your KYC is pending. We will notify you shortly.'
                     confirmDojahComplete();
                 },
                 
@@ -248,7 +254,7 @@
             setTimeout(async() => {
                 await fetchKycStatus();
                 confirmDojahComplete();
-            }, 120000);
+            }, 60000);
         }
     }
     
