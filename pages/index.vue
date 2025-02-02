@@ -217,7 +217,7 @@
             firstName: yup.string().required().label('First Name'),
             lastName: yup.string().required().label('Last Name'),
             email: yup.string().email().required().label('Email Address'),
-            phoneNumber: yup.string().required().label('Phone Number'),
+            phoneNumber: yup.string().required().length(11).label('Phone Number'),
             password: yup.string().required()
             .matches(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$"), 'Password is not in correct format')
             .matches(/^.{8,}$/, 'Password must be a minimum of 8 characters in length').label('Password'),
