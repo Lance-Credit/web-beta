@@ -4,6 +4,7 @@ interface Loan {
     status: string,
     tenure: number,
     dueDate: string,
+    feeAmount: number,
     reference: string,
     feeCharged: number,
     adminApproved: boolean,

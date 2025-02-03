@@ -5,9 +5,6 @@ export default defineNuxtConfig({
     public: {
       apiURL: process.env.API_URL || "https://staging-core-api.lancecredit.com/v1",
 
-      defaultInterestRate: process.env.DEFAULT_INTEREST_RATE || "5",
-      defaultProcessingFeeRate: process.env.DEFAULT_PROCESSING_FEE_RATE || "1",
-
       monoKey: process.env.MONO_KEY || 'test_pk_WjmkB85mktPkjnjfIRYS',
       
       dojahAppId: process.env.DOJAH_APP_ID || "63887b462e85a5003640f7e0",
@@ -46,5 +43,16 @@ export default defineNuxtConfig({
     isEnabled: true,
   },
   css: ['~/assets/css/main.css'],
-  ssr: false
+  ssr: false,
+  // nitro: {
+  //   baseURL: "http://localhost:8000",
+  //   prerender: {
+  //     crawlLinks: true,
+  //     failOnError: false, 
+  //   },
+  // },
+  // routeRules: {
+  //   "/**": { swr: true },
+  //   "/dashboard/**": { ssr: false },
+  // },
 })

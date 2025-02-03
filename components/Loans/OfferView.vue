@@ -91,9 +91,9 @@
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M14.2109 19.4192H7.04093C4.2351 19.4192 2.3501 17.4484 2.3501 14.5151V7.78008C2.3501 4.84257 4.2351 2.86841 7.04093 2.86841H13.0976C13.4426 2.86841 13.7226 3.14841 13.7226 3.49341C13.7226 3.83841 13.4426 4.11841 13.0976 4.11841H7.04093C4.95093 4.11841 3.6001 5.55507 3.6001 7.78008V14.5151C3.6001 16.7692 4.91843 18.1692 7.04093 18.1692H14.2109C16.3009 18.1692 17.6518 16.7351 17.6518 14.5151V8.64924C17.6518 8.30424 17.9318 8.02424 18.2768 8.02424C18.6218 8.02424 18.9018 8.30424 18.9018 8.64924V14.5151C18.9018 17.4484 17.0168 19.4192 14.2109 19.4192Z" fill="#041111" fill-opacity="0.5"/>
                                 </g>
                             </svg>
-                            <span>Processing Fee ({{ defaultProcessingFeeRate }}%)</span>
+                            <span>Processing Fee ({{ loan?.feeCharged * 100 }}%)</span>
                         </p>
-                        <p class="text-lance-black">N{{ loan?.feeCharged.toLocaleString() }}</p>
+                        <p class="text-lance-black">N{{ (loan?.feeAmount / 100).toLocaleString() }}</p>
                     </li>
                     <li class="flex items-center justify-between py-4 border-b border-solid border-b-lance-green-5">
                         <p class="text-lance-black-70 text-sm leading-[21px] flex items-center gap-2">
@@ -221,8 +221,6 @@
     }>();
 
     const { apiFetch } = useApiFetch();
-
-    const { defaultProcessingFeeRate } = useRuntimeConfig().public;
 
     const acceptingLoanOffer: Ref<boolean> = ref(false);
     

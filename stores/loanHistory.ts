@@ -66,7 +66,6 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
                     
                     return loan;
                 });
-                console.log("🚀 ~ loanHistory.value= ~ loanHistory.value:", loanHistory.value)
             } else {
                 // console.log((result as any).error);
             }
