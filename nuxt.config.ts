@@ -43,16 +43,5 @@ export default defineNuxtConfig({
     isEnabled: true,
   },
   css: ['~/assets/css/main.css'],
-  ssr: false,
-  // nitro: {
-  //   baseURL: "http://localhost:8000",
-  //   prerender: {
-  //     crawlLinks: true,
-  //     failOnError: false, 
-  //   },
-  // },
-  // routeRules: {
-  //   "/**": { swr: true },
-  //   "/dashboard/**": { ssr: false },
-  // },
+  ssr: true
 })
