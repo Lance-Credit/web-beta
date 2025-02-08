@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+
   runtimeConfig: {
     public: {
       apiURL: process.env.API_URL || "https://staging-core-api.lancecredit.com/v1",
@@ -12,6 +13,7 @@ export default defineNuxtConfig({
       dojahPublicKey: process.env.DOJAH_PUBLIC_KEY || "test_pk_BArg1e8S34jyNwf03lujrmp0q"
     }
   },
+
   components: [
     { path: '~/components/kyc', prefix: 'KYC' },
     { path: '~/components/form', prefix: 'Form' },
@@ -20,6 +22,7 @@ export default defineNuxtConfig({
     { path: '~/components/wallet', prefix: 'Wallet' },
     '~/components'
   ],
+
   modules: [
     '@pinia/nuxt',
     '@nuxtjs/tailwindcss',
@@ -32,16 +35,18 @@ export default defineNuxtConfig({
       },
     ],
   ],
+
   piniaPersistedstate: {
     storage: 'localStorage'
   },
-  alias: {
-    'pinia': "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs",
-    'pinia-plugin-persistedstate': "/node_modules/@pinia-plugin-persistedstate/nuxt/node_modules/pinia-plugin-persistedstate/dist/index.mjs",
-  },
+  
   auth: {
     isEnabled: true,
   },
+
   css: ['~/assets/css/main.css'],
-  ssr: true
+
+  ssr: true,
+
+  compatibilityDate: '2025-02-08',
 })
