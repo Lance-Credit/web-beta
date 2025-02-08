@@ -24,7 +24,6 @@ export default NuxtAuthHandler({
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({email: credentials.email, password: credentials.password})
                 });
-                console.log("🚀 ~ authorize ~ response:", response)
     
                 const data = await response.json();
 

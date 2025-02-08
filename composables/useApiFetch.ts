@@ -1,7 +1,7 @@
 const { logOut } = useLogout();
 
 export const useApiFetch = () => {
-    
+
   const apiFetch = async(
     endpoint: string,
     method: any = 'GET',
@@ -10,16 +10,14 @@ export const useApiFetch = () => {
     
     const { apiURL } = useRuntimeConfig().public;
     
-    const jwt = await $fetch('/api/token');
+    const { apiToken } = storeToRefs(useTokenStore());
     
-
-
     try {
       const result = await $fetch(`${apiURL}/${endpoint}`,{
           method: method,
           headers: {
               "Content-Type": "application/json",
-              "Authorization": `Bearer ${jwt?.token}`
+              "Authorization": `Bearer ${apiToken.value}`
           },
           body: body
       });

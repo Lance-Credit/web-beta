@@ -46,6 +46,8 @@
 
     import { useUserStore } from '@/stores/user';
 
+    const { fetchApiToken } = useTokenStore();
+
     const { fetchUserProfile } = useUserStore();
 
     definePageMeta({
@@ -86,7 +88,8 @@
             const signedIn = await signIn('credentials', { email: loginFormValues.email, password: loginFormValues.password, redirect: false, callbackUrl: '/dashboard' })
 
             if(!(signedIn as any).error){
-
+                await fetchApiToken();
+                
                 await fetchUserProfile();
 
                 await navigateTo('/dashboard');

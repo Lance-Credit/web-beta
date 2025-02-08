@@ -220,8 +220,8 @@
     
     onMounted(async()=>{
         if(kycCompleted.value){
-            loanSettings.value = await fetchLoanSettings();
             fetchLoanHistory();
+            loanSettings.value = await fetchLoanSettings();
         }
     });
 

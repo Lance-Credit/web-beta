@@ -20,7 +20,11 @@ export const useUserStore = defineStore('user', () =>
         });
 
         async function fetchUserProfile() {
-            
+
+            const { fetchKycStatus } = useKYCStore();
+
+            fetchKycStatus();
+
             const result = await apiFetch('profile');
 
             if ((result as any).success && !(result as any).error) {
@@ -57,12 +61,7 @@ export const useUserStore = defineStore('user', () =>
                         "street": (result as any).data.profile.nextOfKin?.address.street,
                         "country": (result as any).data.profile.nextOfKin?.address.country
                     },
-
                 }
-
-                const { fetchKycStatus } = useKYCStore();
-
-                fetchKycStatus();
 
             } else {
                 // console.log((result as any).error);

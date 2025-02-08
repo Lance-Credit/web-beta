@@ -359,23 +359,24 @@
         continueKycProcess.value = true;
     }
 
-    const { activeLoan, percentageLoanPaid, activeLoanTotalPaid } = storeToRefs(useLoanHistoryStore());
     const { fetchLoanHistory, $reset } = useLoanHistoryStore();
+    const { activeLoan, percentageLoanPaid, activeLoanTotalPaid } = storeToRefs(useLoanHistoryStore());
     
     onMounted(()=>{
         const route = useRoute();
         if(route.query.start_kyc == 'true' && !kycCompleted.value) {
             showKycSummary.value = true
         }
+
         setTimeout(async() => {
             if(kycCompleted.value){
-                loanSettings.value = await fetchLoanSettings();
                 fetchLoanHistory();
+                loanSettings.value = await fetchLoanSettings();
             }else{
                 // reset loanHistory
                 $reset();
 
-                await fetchKycStatus();
+                fetchKycStatus();
                 
                 useHead({
                     script: [
@@ -383,7 +384,7 @@
                     ]
                 });
             }
-        }, 2000)
+        }, 1000)
 
     });
     

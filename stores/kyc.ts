@@ -32,11 +32,11 @@ export const useKYCStore = defineStore('kyc', () =>
 
         async function fetchKycStatus() {
             
-            await fetchUserVerifications();
-
             const { fetchUserLinkedAccountAndBalance } = useWalletStore();
-
-            await fetchUserLinkedAccountAndBalance();
+            
+            fetchUserLinkedAccountAndBalance();
+            
+            await fetchUserVerifications();
 
             kycItems.value.linkedBankAccount.completed = linkedAccount.value ? true : false;
         }
