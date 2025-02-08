@@ -1,5 +1,3 @@
-import { getActivePinia } from 'pinia'
-
 export const useLogout = () => {
 
   const logOut = async() => {
@@ -7,10 +5,6 @@ export const useLogout = () => {
     const { signOut } = useAuth();
 
     signOut();
-    const pinia = getActivePinia();
-    
-    pinia._s.forEach((store) => store.$reset())
-
 
   }
 

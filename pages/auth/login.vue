@@ -46,9 +46,11 @@
 
     import { useUserStore } from '@/stores/user';
 
+    const { $resetKYC } = useKYCStore();
+    
     const { fetchApiToken } = useTokenStore();
-
-    const { fetchUserProfile } = useUserStore();
+    
+    const { $resetUserProfile, fetchUserProfile } = useUserStore();
 
     definePageMeta({
         middleware: 'auth',
@@ -90,6 +92,9 @@
             if(!(signedIn as any).error){
                 await fetchApiToken();
                 
+                $resetKYC();
+                $resetUserProfile();
+
                 await fetchUserProfile();
 
                 await navigateTo('/dashboard');

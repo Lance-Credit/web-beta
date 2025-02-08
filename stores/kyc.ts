@@ -93,8 +93,28 @@ export const useKYCStore = defineStore('kyc', () =>
                 }
             };
         }
+
+        function $resetKYC() {
+            kycItems.value = {
+                account: {
+                    completed: false
+                },
+                personalDetails: {
+                    completed: false
+                },
+                kyc: {
+                    completed: false
+                },
+                id: {
+                    completed: false
+                },
+                linkedBankAccount: {
+                    completed: false
+                }
+            };
+        }
         
-        return { kycItems, kycCompleted, fetchKycStatus, $reset }
+        return { kycItems, kycCompleted, fetchKycStatus, $reset, $resetKYC }
     },
     {
         persist: true,
