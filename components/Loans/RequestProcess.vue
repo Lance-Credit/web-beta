@@ -290,8 +290,8 @@
     
             if ((result as any).success && !(result as any).error) {
                 setTimeout(async() => {
-                    await fetchUserLinkedAccountAndBalance();
-                    await confirmUserHasDirectDebit();
+                    fetchUserLinkedAccountAndBalance();
+                    confirmUserHasDirectDebit();
                 }, 180000);
                 navigateTo(
                     (result as any).data.link,

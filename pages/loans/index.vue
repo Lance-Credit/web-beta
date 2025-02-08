@@ -15,7 +15,7 @@
                         <div class="rounded-xl bg-white border border-solid border-lance-black-10 py-6 px-10">
                             <p class="text-lance-black-50 text-sm leading-5">Next Repayment</p>
                             <p class="mt-[-12px] text-lance-black text-4xl font-bold leading-[55.93px] tracking-[0.36px]">
-                                {{ activeLoan ? (activeLoan.monthlyPaymentAmount).toLocaleString() : '' }}
+                                {{ activeLoan ? (activeLoan.monthlyRepaymentAmount).toLocaleString() : '' }}
                             </p>
                             <p class="mb-3 flex gap-1.5 items-center">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -104,7 +104,7 @@
                                     </li>
                                     <li v-if="activeLoan.monthlyPaymentAmount" class="flex items-center justify-between">
                                         <div class="text-lance-black">
-                                            <p class="leading-[22.4px] font-semibold">{{ (activeLoan.monthlyPaymentAmount).toLocaleString() }}</p>
+                                            <p class="leading-[22.4px] font-semibold">{{ (activeLoan.monthlyRepaymentAmount).toLocaleString() }}</p>
                                             <p class="text-xs leading-[16.8px]">
                                                 Date Due:
                                                 <span class="font-semibold">

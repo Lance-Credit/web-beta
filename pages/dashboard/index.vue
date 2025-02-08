@@ -77,7 +77,7 @@
                     <p class="mb-8 text-[rgba(255,255,255,0.80)] font-medium">Next Repayment</p>
                     <div class="mb-4 pb-7 border-b border-solid border-[rgba(255,255,255,0.20)]">
                         <p class="mb-1 text-white text-[28px] leading-[36px] tracking-[0.28px] font-semibold">
-                            N {{ activeLoan ? (activeLoan.monthlyPaymentAmount).toLocaleString() : '0.00'}}
+                            N {{ activeLoan ? (activeLoan.monthlyRepaymentAmount).toLocaleString() : '0.00'}}
                         </p>
                         <p class="text-[rgba(255,255,255,0.90)] text-sm flex items-center gap-2">
                             <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -214,7 +214,7 @@
                         <li class="py-4 border-b border-solid border-lance-green-10 flex items-center justify-between">
                             <div>
                                 <p class="mb-1 text-lance-black font-medium leading-[26px]">
-                                    N{{ (activeLoan.monthlyPaymentAmount).toLocaleString() }}
+                                    N{{ (activeLoan.monthlyRepaymentAmount).toLocaleString() }}
                                 </p>
                                 <p class="flex gap-2 items-center">
                                     <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -13,7 +13,7 @@ interface Loan {
     repayments: LoanRepayment[],
     totalInterestAmount: number,
     totalRepaymentAmount: number,
-    monthlyPaymentAmount: number,
+    monthlyRepaymentAmount: number
 }
 
 interface LoanRepayment {
