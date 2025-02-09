@@ -15,12 +15,31 @@ export default defineNuxtConfig({
   },
 
   components: [
-    { path: '~/components/kyc', prefix: 'KYC' },
-    { path: '~/components/form', prefix: 'Form' },
+    {
+      path: '~/components/kyc',
+      prefix: 'KYC',
+      isAsync: true
+    },
+    {
+      path: '~/components/form',
+      prefix: 'Form',
+      isAsync: true
+    },
     { path: '~/components/auth', prefix: 'Auth' },
-    { path: '~/components/loans', prefix: 'Loans' },
-    { path: '~/components/wallet', prefix: 'Wallet' },
-    '~/components'
+    {
+      path: '~/components/loans',
+      prefix: 'Loans',
+      isAsync: true
+    },
+    {
+      path: '~/components/wallet',
+      prefix: 'Wallet',
+      isAsync: true
+    },
+    {
+      path: '~/components',
+      isAsync: true
+    },
   ],
 
   modules: [
@@ -46,7 +65,18 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
-  ssr: true,
+  // nitro: {
+  //   baseURL: "http://localhost:8000",
+  //   prerender: {
+  //     crawlLinks: true,
+  //     failOnError: false, 
+  //   },
+  // },
+  // routeRules: {
+  //   "/**": { swr: true },
+  //   "/dashboard/**": { ssr: false },
+  // },
+  ssr: false,
 
   compatibilityDate: '2025-02-08',
 })
