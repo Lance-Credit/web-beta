@@ -172,7 +172,11 @@
 
     import * as yup from 'yup';
 
-    const { fetchUserProfile } = useUserStore();
+    const { $resetKYC } = useKYCStore();
+    
+    const { fetchApiToken } = useTokenStore();
+    
+    const { $resetUserProfile, fetchUserProfile } = useUserStore();
 
     const { formattedPhoneNumberForPayload } = useFormattedPhoneNumberForPayload();
     
@@ -422,10 +426,15 @@
                 const signedIn = await signIn('credentials', { email: signupFormValues.email, password: signupFormValues.password, redirect: false, callbackUrl: '/dashboard' })
     
                 if(!(signedIn as any).error){
+
+                    await fetchApiToken();
+                
+                    $resetKYC();
+                    $resetUserProfile();
     
-                    await fetchUserProfile();
+                    fetchUserProfile();
     
-                    await navigateTo('/dashboard');
+                    navigateTo('/dashboard');
                 }
             } else {
                 // console.log((result as any).error);

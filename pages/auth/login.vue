@@ -95,9 +95,9 @@
                 $resetKYC();
                 $resetUserProfile();
 
-                await fetchUserProfile();
+                fetchUserProfile();
 
-                await navigateTo('/dashboard');
+                navigateTo('/dashboard');
             }else{
                 loginError.value = (signedIn as any).error;
                 submittingLoginForm.value = false;
