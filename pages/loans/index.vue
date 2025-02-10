@@ -242,8 +242,7 @@
     function viewLoanDetails(loan: Loan){
         selectedLoan.value = loan;
 
-        if((loan.status === 'inactive' && loan.adminApproved) || loan.status === 'declined') {
-            selectedLoan.value = loan;
+        if(loan.status === 'inactive' && loan.adminApproved) {
             showLoanOfferView.value = true;
         } else {
             showSelectedLoanDetails.value = true;

@@ -72,7 +72,6 @@
             if((result as any).success && !(result as any).error){
 
                 (result as any).data.amount = (result as any).data.amount / 100;
-                (result as any).data.totalRepayments = (result as any).data.totalRepayments / 100;
                 (result as any).data.totalRepaymentAmount = (result as any).data.totalRepaymentAmount / 100;
                 (result as any).data.monthlyRepaymentAmount = (result as any).data.monthlyRepaymentAmount / 100;
 

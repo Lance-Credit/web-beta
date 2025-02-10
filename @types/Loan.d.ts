@@ -10,7 +10,6 @@ interface Loan {
     feeCharged: number,
     adminApproved: boolean,
     nextPaymentDate: string,
-    totalRepayments: number,
     repayments: LoanRepayment[],
     totalInterestAmount: number,
     totalRepaymentAmount: number,
