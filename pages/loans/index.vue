@@ -61,60 +61,46 @@
                             </p>
                             <div class="h-[275px] overflow-y-scroll flex gap-4">
                                 <div v-if="activeLoan" class="px-[2.335px] pt-[6.33px] flex flex-col items-center">
-                                    <div v-for="(repayment, key) in activeLoan.repayments" :key="key" class="flex flex-col items-center">
+                                    <div v-for="(repayment, key) in activeLoan.schedule" :key="key" class="flex flex-col items-center">
                                         <div class="w-0.5 h-[48.66px] bg-[#063A4F] opacity-10" v-if="key != 0"></div>
                                         <div
-                                            class="w-[23.333px] h-[23.333px] rounded-full border-[1.75px] border-solid border-lance-green bg-[#ECFF4D] flex items-center justify-center"
+                                            class="w-[23.333px] h-[23.333px] rounded-full border-[1.75px] border-solid flex items-center justify-center"
+                                            :class="[{ 'bg-[#ECFF4D]' : repayment.paid_at }, Date.now() > new Date(repayment.dueDate).getTime() ? 'border-lance-green' : 'border-lance-green-30']"
                                         >
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="8" viewBox="0 0 11 8" fill="none">
+                                            <svg v-if="repayment.paid_at" xmlns="http://www.w3.org/2000/svg" width="11" height="8" viewBox="0 0 11 8" fill="none">
                                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M4.28231 7.31015C4.05948 7.31015 3.83431 7.22498 3.66398 7.05348L0.894314 4.28498C0.552481 3.94315 0.552481 3.39015 0.894314 3.04831C1.23615 2.70648 1.78915 2.70648 2.13098 3.04831L4.28231 5.19731L9.20098 0.279813C9.54282 -0.0620209 10.0958 -0.0620209 10.4376 0.279813C10.7795 0.621646 10.7795 1.17465 10.4376 1.51648L4.90065 7.05348C4.73031 7.22498 4.50631 7.31015 4.28231 7.31015Z" fill="#0A4F4D"/>
                                             </svg>
                                         </div>
                                     </div>
-    
-                                    <div class="flex flex-col items-center">
-                                        <div class="w-0.5 h-[48.66px] bg-[#063A4F] opacity-10"></div>
-                                        <div class="w-[23.333px] h-[23.333px] rounded-full border-[1.75px] border-solid border-lance-green-30 bg-white"></div>
-                                    </div>
-                                    <!-- <div class="flex flex-col items-center">
-                                        <div class="w-0.5 h-[48.66px] bg-[#063A4F] opacity-10"></div>
-                                        <div
-                                            class="w-[23.333px] h-[23.333px] rounded-full border-[1.75px] border-solid flex items-center justify-center"
-                                        >
-                                        </div>
-                                    </div> -->
                                 </div>
                                 <ul v-if="activeLoan" class="flex flex-col gap-8 grow">
-                                    <li v-for="(repayment, key) in activeLoan.repayments" :key="key" class="flex items-center justify-between">
+                                    <li v-for="(repayment, key) in activeLoan.schedule" :key="key" class="flex items-center justify-between">
                                         <div class="text-lance-black">
                                             <p class="leading-[22.4px] font-semibold">{{ (repayment.amount).toLocaleString() }}</p>
-                                            <p class="text-xs leading-[16.8px]">
+                                            <p v-if="repayment.paid_at" class="text-xs leading-[16.8px]">
                                                 Date Paid:
                                                 <span class="font-semibold">
                                                     {{ repayment.paid_at ? new Date(repayment.paid_at).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) : '' }}
+                                                </span>
+                                            </p>
+                                            <p v-else class="text-xs leading-[16.8px]">
+                                                Date Due:
+                                                <span class="font-semibold">
+                                                    {{ new Date(repayment.dueDate).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) }}
                                                 </span>
                                             </p>
                                         </div>
                                         <p v-if="repayment.paid_at" class="w-[81px] h-8 rounded-[31px] bg-[rgba(12,180,59,0.04)] flex items-center justify-center py-1">
                                             <span class="text-[#0CB43B] text-sm font-medium">Paid</span>
                                         </p>
-                                        <p v-else class="w-[81px] h-8 rounded-[31px] bg-lance-green-5 border border-solid border-lance-green flex items-center justify-center py-1">
-                                            <span class="text-lance-green text-sm font-medium">Due</span>
-                                        </p>
-                                    </li>
-                                    <li v-if="activeLoan.monthlyRepaymentAmount" class="flex items-center justify-between">
-                                        <div class="text-lance-black">
-                                            <p class="leading-[22.4px] font-semibold">{{ (activeLoan.monthlyRepaymentAmount).toLocaleString() }}</p>
-                                            <p class="text-xs leading-[16.8px]">
-                                                Date Due:
-                                                <span class="font-semibold">
-                                                    {{ new Date(activeLoan.nextPaymentDate).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) }}
-                                                </span>
-                                            </p>
+                                        <div v-else>
+                                            <div v-if="Date.now() < new Date(repayment.dueDate).getTime()" class="w-[81px] py-1 text-center rounded-[31px] bg-lance-black-5 text-lance-black-50 text-sm font-medium leading-6">
+                                                Upcoming
+                                            </div>
+                                            <div v-else class="w-[81px] py-1 text-center rounded-[31px] border border-solid border-[#E70A3F] bg-[rgba(231,10,63,0.05)] text-[#E70A3F] text-sm font-medium leading-6">
+                                                Due
+                                            </div>
                                         </div>
-                                        <p class="w-[81px] h-8 rounded-[31px] bg-lance-black-5 flex items-center justify-center py-1">
-                                            <span class="text-lance-black-50 text-sm font-medium">Upcoming</span>
-                                        </p>
                                     </li>
                                 </ul>
                             </div>

@@ -77,12 +77,12 @@
                 (result as any).data.totalRepaymentAmount = (result as any).data.totalRepaymentAmount / 100;
                 (result as any).data.monthlyRepaymentAmount = (result as any).data.monthlyRepaymentAmount / 100;
 
-                const repayments = (result as any).data.repayments.map((repayment: any) => {
-                    repayment.amount = repayment.amount / 100;
-                    return repayment;
+                const schedules = (result as any).data.schedule.map((schedule: any) => {
+                    schedule.amount = schedule.amount / 100;
+                    return schedule;
                 });
                 
-                (result as any).data.repayments = repayments;
+                (result as any).data.schedule = schedules;
 
                 fetchedLoan.value = (result as any).data;
 

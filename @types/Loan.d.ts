@@ -10,13 +10,15 @@ interface Loan {
     feeCharged: number,
     adminApproved: boolean,
     nextPaymentDate: string,
-    repayments: LoanRepayment[],
+    schedule: LoanSchedule[],
     totalInterestAmount: number,
     totalRepaymentAmount: number,
     monthlyRepaymentAmount: number
 }
 
-interface LoanRepayment {
+interface LoanSchedule {
     amount: number,
+    status: string,
+    dueDate: string,
     paid_at: string
 }

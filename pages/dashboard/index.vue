@@ -180,7 +180,7 @@
                         <NuxtLink class="text-lance-green font-medium">Learn more</NuxtLink>
                     </p>
                     <ul>
-                        <li v-for="(repayment, key) in activeLoan.repayments" :key="key" class="py-4 border-b border-solid border-lance-green-10 flex items-center justify-between">
+                        <li v-for="(repayment, key) in activeLoan.schedule" :key="key" class="py-4 border-b border-solid border-lance-green-10 flex items-center justify-between">
                             <div>
                                 <p class="mb-1 text-lance-black font-medium leading-[26px]">
                                     N{{ (repayment.amount).toLocaleString() }}
@@ -204,48 +204,21 @@
                                         </g>
                                     </svg>
                                     <span class="text-lance-black-50 text-sm leading-5">
-                                        Paid: {{ new Date(repayment.paid_at).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) }}
+                                        Due: {{ new Date(repayment.dueDate).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) }}
                                     </span>
                                 </p>
                             </div>
-                            <p class="w-[81px] h-8 rounded-[31px] bg-[rgba(12,180,59,0.04)] flex items-center justify-center py-1">
+                            <p v-if="repayment.paid_at" class="w-[81px] h-8 rounded-[31px] bg-[rgba(12,180,59,0.04)] flex items-center justify-center py-1">
                                 <span class="text-[#0CB43B] text-sm font-medium">Paid</span>
                             </p>
-                        </li>
-                        <li class="py-4 border-b border-solid border-lance-green-10 flex items-center justify-between">
-                            <div>
-                                <p class="mb-1 text-lance-black font-medium leading-[26px]">
-                                    N{{ (activeLoan.monthlyRepaymentAmount).toLocaleString() }}
-                                </p>
-                                <p class="flex gap-2 items-center">
-                                    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M14.0247 6.7251H2.14203C1.86603 6.7251 1.64203 6.5011 1.64203 6.2251C1.64203 5.9491 1.86603 5.7251 2.14203 5.7251H14.0247C14.3007 5.7251 14.5247 5.9491 14.5247 6.2251C14.5247 6.5011 14.3007 6.7251 14.0247 6.7251Z" fill="#041111" fill-opacity="0.5"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M11.0478 9.32861C10.7718 9.32861 10.5452 9.10461 10.5452 8.82861C10.5452 8.55261 10.7658 8.32861 11.0418 8.32861H11.0478C11.3238 8.32861 11.5478 8.55261 11.5478 8.82861C11.5478 9.10461 11.3238 9.32861 11.0478 9.32861Z" fill="#041111" fill-opacity="0.5"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.08952 9.32861C7.81352 9.32861 7.58685 9.10461 7.58685 8.82861C7.58685 8.55261 7.80752 8.32861 8.08352 8.32861H8.08952C8.36552 8.32861 8.58952 8.55261 8.58952 8.82861C8.58952 9.10461 8.36552 9.32861 8.08952 9.32861Z" fill="#041111" fill-opacity="0.5"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.12498 9.32861C4.84898 9.32861 4.62164 9.10461 4.62164 8.82861C4.62164 8.55261 4.84298 8.32861 5.11898 8.32861H5.12498C5.40098 8.32861 5.62498 8.55261 5.62498 8.82861C5.62498 9.10461 5.40098 9.32861 5.12498 9.32861Z" fill="#041111" fill-opacity="0.5"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M11.0478 11.9199C10.7718 11.9199 10.5452 11.6959 10.5452 11.4199C10.5452 11.1439 10.7658 10.9199 11.0418 10.9199H11.0478C11.3238 10.9199 11.5478 11.1439 11.5478 11.4199C11.5478 11.6959 11.3238 11.9199 11.0478 11.9199Z" fill="#041111" fill-opacity="0.5"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.08952 11.9199C7.81352 11.9199 7.58685 11.6959 7.58685 11.4199C7.58685 11.1439 7.80752 10.9199 8.08352 10.9199H8.08952C8.36552 10.9199 8.58952 11.1439 8.58952 11.4199C8.58952 11.6959 8.36552 11.9199 8.08952 11.9199Z" fill="#041111" fill-opacity="0.5"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.12498 11.9199C4.84898 11.9199 4.62164 11.6959 4.62164 11.4199C4.62164 11.1439 4.84298 10.9199 5.11898 10.9199H5.12498C5.40098 10.9199 5.62498 11.1439 5.62498 11.4199C5.62498 11.6959 5.40098 11.9199 5.12498 11.9199Z" fill="#041111" fill-opacity="0.5"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.776 3.98306C10.5 3.98306 10.276 3.75906 10.276 3.48306V1.28906C10.276 1.01306 10.5 0.789062 10.776 0.789062C11.052 0.789062 11.276 1.01306 11.276 1.28906V3.48306C11.276 3.75906 11.052 3.98306 10.776 3.98306Z" fill="#041111" fill-opacity="0.5"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.39056 3.98306C5.11456 3.98306 4.89056 3.75906 4.89056 3.48306V1.28906C4.89056 1.01306 5.11456 0.789062 5.39056 0.789062C5.66656 0.789062 5.89056 1.01306 5.89056 1.28906V3.48306C5.89056 3.75906 5.66656 3.98306 5.39056 3.98306Z" fill="#041111" fill-opacity="0.5"/>
-                                        <mask id="mask0_3412_17963" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="1" y="1" width="14" height="15">
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M1.58038 1.8418H14.5804V15.1224H1.58038V1.8418Z" fill="white"/>
-                                        </mask>
-                                        <g mask="url(#mask0_3412_17963)">
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.26104 2.84172C3.53237 2.84172 2.58037 3.76372 2.58037 5.43772V11.4704C2.58037 13.181 3.53237 14.1224 5.26104 14.1224H10.8997C12.6284 14.1224 13.5804 13.1984 13.5804 11.521V5.43772C13.583 4.61438 13.3617 3.97438 12.9224 3.53438C12.4704 3.08105 11.7737 2.84172 10.9057 2.84172H5.26104ZM10.8997 15.1225H5.26105C2.99105 15.1225 1.58038 13.7231 1.58038 11.4705V5.4378C1.58038 3.21913 2.99105 1.8418 5.26105 1.8418H10.9057C12.0451 1.8418 12.9871 2.18313 13.6304 2.8278C14.2551 3.45513 14.5837 4.35713 14.5804 5.43913V11.5211C14.5804 13.7425 13.1697 15.1225 10.8997 15.1225Z" fill="#041111" fill-opacity="0.5"/>
-                                        </g>
-                                    </svg>
-                                    <span class="text-lance-black-50 text-sm leading-5">
-                                        Due: {{ new Date(activeLoan.nextPaymentDate).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) }}
-                                    </span>
-                                </p>
+                            <div v-else>
+                                <div v-if="Date.now() < new Date(repayment.dueDate).getTime()" class="w-[81px] py-1 text-center rounded-[31px] bg-lance-black-5 text-lance-black-50 text-sm font-medium leading-6">
+                                    Upcoming
+                                </div>
+                                <div v-else class="w-[81px] py-1 text-center rounded-[31px] border border-solid border-[#E70A3F] bg-[rgba(231,10,63,0.05)] text-[#E70A3F] text-sm font-medium leading-6">
+                                    Due
+                                </div>
                             </div>
-                            <div class="w-[81px] py-1 text-center rounded-[31px] bg-lance-black-5 text-lance-black-50 text-sm font-medium leading-6">
-                                Upcoming
-                            </div>
-                            <!-- <div class="w-[81px] py-1 text-center rounded-[31px] border border-solid border-[#5D242D] bg-[rgba(93,36,45,0.05)] text-[#5D242D] text-sm font-medium leading-6">
-                                Due
-                            </div> -->
                         </li>
                     </ul>
                 </div>
