@@ -34,7 +34,7 @@ export const useKYCStore = defineStore('kyc', () =>
             
             const { fetchUserLinkedAccountAndBalance } = useWalletStore();
             
-            fetchUserLinkedAccountAndBalance();
+            await fetchUserLinkedAccountAndBalance();
             
             await fetchUserVerifications();
 

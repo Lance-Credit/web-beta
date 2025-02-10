@@ -184,7 +184,9 @@
     const { kycItems } = storeToRefs(useKYCStore());
     const { userProfile } = storeToRefs(useUserStore());
     
-    const activeStep: Ref<string> = ref(kycItems.value.kyc.completed ? 'bankAccount' : 'personalDetails');
+    const activeStep = computed(() => {
+        return kycItems.value.kyc.completed ? 'bankAccount' : 'personalDetails'
+    });
 
     const startingDojahKyc: Ref<boolean> = ref(false);
 
