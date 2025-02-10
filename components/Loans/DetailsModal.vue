@@ -33,7 +33,7 @@
                     </li>
                     <li class="flex items-center justify-between py-4 border-b border-solid border-b-lance-green-5">
                         <p class="text-lance-black-70 text-sm leading-[21px]">Monthly Repayment</p>
-                        <p class="text-lance-black">N{{ (loan?.monthlyPaymentAmount)?.toLocaleString() }} every month</p>
+                        <p class="text-lance-black">N{{ (loan?.monthlyRepaymentAmount)?.toLocaleString() }} every month</p>
                     </li>
                 </ul>
                 <div v-show="loan?.status != 'paid'" class="mt-4 p-6 rounded-lg border border-solid border-lance-black bg-[rgba(236,255,77,0.05)]">

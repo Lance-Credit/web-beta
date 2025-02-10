@@ -74,7 +74,7 @@
                 (result as any).data.amount = (result as any).data.amount / 100;
                 (result as any).data.totalRepayments = (result as any).data.totalRepayments / 100;
                 (result as any).data.totalRepaymentAmount = (result as any).data.totalRepaymentAmount / 100;
-                (result as any).data.monthlyPaymentAmount = (result as any).data.monthlyPaymentAmount / 100;
+                (result as any).data.monthlyRepaymentAmount = (result as any).data.monthlyRepaymentAmount / 100;
 
                 const repayments = (result as any).data.repayments.map((repayment: any) => {
                     repayment.amount = repayment.amount / 100;

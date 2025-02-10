@@ -137,7 +137,7 @@
                                 </svg>
                                 <span>Repayment</span>
                             </p>
-                            <p class="text-lance-black">N {{ (loanSummary?.monthlyPaymentAmount)?.toLocaleString() }} monthly</p>
+                            <p class="text-lance-black">N {{ (loanSummary?.monthlyRepaymentAmount)?.toLocaleString() }} monthly</p>
                         </li>
                     </ul>
                     <div class="mt-4 p-6 rounded-lg border border-solid border-lance-black bg-[rgba(236,255,77,0.05)]">
@@ -235,11 +235,11 @@
 
 
     const loanSummary: Ref<{
-        "monthlyPaymentAmount": number,
-        "totalRepaymentAmount": number,
         "rate": number,
         "tenure": number,
         "processingFee": number
+        "totalRepaymentAmount": number,
+        "monthlyRepaymentAmount": number
     } | null> = ref(null);
     
     const { apiFetch } = useApiFetch();
@@ -252,7 +252,7 @@
             if((result as any).success && !(result as any).error){
                 const returnedLoanSummary = (result as any).data;
                 returnedLoanSummary.processingFee = returnedLoanSummary.processingFee / 100;
-                returnedLoanSummary.monthlyPaymentAmount = returnedLoanSummary.monthlyPaymentAmount / 100;
+                returnedLoanSummary.monthlyRepaymentAmount = returnedLoanSummary.monthlyRepaymentAmount / 100;
                 returnedLoanSummary.totalRepaymentAmount = returnedLoanSummary.totalRepaymentAmount / 100;
                 loanSummary.value = returnedLoanSummary;
             }else {

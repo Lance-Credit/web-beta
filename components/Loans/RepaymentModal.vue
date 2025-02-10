@@ -28,7 +28,7 @@
                     <form  class="flex flex-col gap-6">
                         <Form-RadioInput type="radio" name="repaymentOption" value="nextRepayment">
                             <p class="text-lance-black text-sm">
-                                Pay Next Instalment of <span class="font-bold">N{{ (loan?.monthlyPaymentAmount)?.toLocaleString() }}</span>
+                                Pay Next Instalment of <span class="font-bold">N{{ (loan?.monthlyRepaymentAmount)?.toLocaleString() }}</span>
                             </p>
                         </Form-RadioInput>
         
@@ -205,7 +205,7 @@
         }
 
         if(repaymentFormValues.repaymentOption == 'nextRepayment'){
-            return props.loan?.monthlyPaymentAmount;
+            return props.loan?.monthlyRepaymentAmount;
         }
         return 0;
     });

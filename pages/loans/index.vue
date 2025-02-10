@@ -102,7 +102,7 @@
                                             <span class="text-lance-green text-sm font-medium">Due</span>
                                         </p>
                                     </li>
-                                    <li v-if="activeLoan.monthlyPaymentAmount" class="flex items-center justify-between">
+                                    <li v-if="activeLoan.monthlyRepaymentAmount" class="flex items-center justify-between">
                                         <div class="text-lance-black">
                                             <p class="leading-[22.4px] font-semibold">{{ (activeLoan.monthlyRepaymentAmount).toLocaleString() }}</p>
                                             <p class="text-xs leading-[16.8px]">
@@ -140,13 +140,21 @@
                                 <p v-if="loan.status === 'active'" class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(12,180,59,0.04)] text-[#0CB43B]">
                                     Active
                                 </p>
-                                <p v-if="loan.status === 'inactive'" class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(255,138,0,0.06)] text-[#FF8A00]">
-                                    Pending
+                                <div v-if="loan.status === 'inactive'">
+                                    <p v-if="loan.adminApproved" class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(211,229,227,0.20)] text-[#086120]">
+                                        Approved
+                                    </p>
+                                    <p v-else class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(255,138,0,0.06)] text-[#FF8A00]">
+                                        Pending
+                                    </p>
+                                </div>
+                                <p v-if="(loan.status === 'declined' && loan.declinedBy === 'borrower')" class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(93,36,45,0.04)] text-[rgba(93,36,45,0.90)]">
+                                    Rejected
                                 </p>
-                                <p v-if="loan.status === 'declined'" class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-lance-black-5 text-lance-black-50">
+                                <p v-if="(loan.status === 'declined' && loan.declinedBy === 'lender')" class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(250,206,202,0.20)] text-[#BC251B]">
                                     Declined
                                 </p>
-                                <p v-if="loan.status === 'paid'" class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-lance-black-5 text-lance-black-50">
+                                <p v-if="loan.status === 'paid'" class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[#EBF0F0] text-[#485252]">
                                     Completed
                                 </p>
                             </div>

@@ -6,6 +6,7 @@ interface Loan {
     dueDate: string,
     feeAmount: number,
     reference: string,
+    declinedBy: string,
     feeCharged: number,
     adminApproved: boolean,
     nextPaymentDate: string,

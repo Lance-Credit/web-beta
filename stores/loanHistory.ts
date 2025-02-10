@@ -55,7 +55,7 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
                     loan.amount = loan.amount / 100;
                     loan.totalRepayments = loan.totalRepayments / 100;
                     loan.totalRepaymentAmount = loan.totalRepaymentAmount / 100;
-                    loan.monthlyPaymentAmount = loan.monthlyPaymentAmount / 100;
+                    loan.monthlyRepaymentAmount = loan.monthlyRepaymentAmount / 100;
 
                     const repayments = loan.repayments.map((repayment) => {
                         repayment.amount = repayment.amount / 100;
