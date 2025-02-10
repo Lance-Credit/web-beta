@@ -12,9 +12,9 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
             return null;
         });
 
-        const pendingLoans = computed(() => {
+        const approvedLoan = computed(() => {
             if(loanHistory.value.length){
-                return loanHistory.value.filter((loan: Loan)=> loan.status == 'inactive');
+                return loanHistory.value.filter((loan: Loan) => loan.adminApproved && loan.status == 'inactive');
             }
             return null;
         });
@@ -78,7 +78,7 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
             $reset,
             activeLoan,
             loanHistory,
-            pendingLoans,
+            approvedLoan,
             declinedLoans,
             completedLoans,
             fetchLoanHistory,

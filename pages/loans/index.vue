@@ -178,7 +178,7 @@
             />
         </div>
         <Loans-RequestProcess v-show="continueLoanRequestProcess" @@close-loan-application-modal="continueLoanRequestProcess = false" :loan-settings="loanSettings" />
-        <Loans-OfferView @@close-loan-details-modal="showLoanOfferView = false" v-show="showLoanOfferView" :loan="selectedLoan" />
+        <Loans-OfferView v-if="approvedLoan" @@close-loan-details-modal="showLoanOfferView = false" v-show="showLoanOfferView" :loan="selectedLoan" />
     </div>
 </template>
 
@@ -220,6 +220,7 @@
     const {
         activeLoan,
         loanHistory,
+        approvedLoan,
         percentageLoanPaid,
         activeLoanTotalPaid
     } = storeToRefs(useLoanHistoryStore());

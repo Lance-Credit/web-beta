@@ -170,8 +170,9 @@
             `loans/${props.loan.reference}`,
             'PATCH',
             {
+                "acceptOrDecline": "decline",
                 "operation":"acceptOrDecline",
-                "acceptOrDecline": "decline"
+                "reason": rejectionFeedbackFormValues.rejectionFeedback !== 'Other' ? rejectionFeedbackFormValues.rejectionFeedback : rejectionFeedbackFormValues.rejectionFeedbackOther
             }
         );
 

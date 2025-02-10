@@ -29,7 +29,7 @@
             </ul>
         </div>
         <Loans-DetailsModal @@close-loan-details-modal="showSelectedLoanDetails = false" v-show="showSelectedLoanDetails" :loan="fetchedLoan" />
-        <Loans-OfferView @@close-loan-details-modal="showLoanOfferView = false" v-show="showLoanOfferView" :loan="fetchedLoan" />
+        <Loans-OfferView v-if="approvedLoan" @@close-loan-details-modal="showLoanOfferView = false" v-show="showLoanOfferView" :loan="fetchedLoan" />
     </div>
 </template>
 
@@ -44,6 +44,8 @@
     
     const { fetchNotifications } = useNotificationsStore();
     const { notifications } = storeToRefs(useNotificationsStore());
+
+    const { approvedLoan } = storeToRefs(useLoanHistoryStore());
 
     onMounted(() => {
         fetchNotifications();
