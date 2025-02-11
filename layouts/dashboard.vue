@@ -111,7 +111,7 @@
                             <span>Settings</span>
                         </NuxtLink>
                     </li>
-                    <li @click="logOut()" class="cursor-pointer">
+                    <li @click="logUserOut" class="cursor-pointer">
                         <div class="py-3 pl-6 pr-[17.25px] flex gap-4 items-center">
                             <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M9.3193 20H4.4333C1.9893 20 0.000301361 18.011 0.000301361 15.565V4.436C0.000301361 1.99 1.9893 0 4.4333 0H9.3083C11.7543 0 13.7443 1.99 13.7443 4.436V5.368C13.7443 5.782 13.4083 6.118 12.9943 6.118C12.5803 6.118 12.2443 5.782 12.2443 5.368V4.436C12.2443 2.816 10.9273 1.5 9.3083 1.5H4.4333C2.8163 1.5 1.5003 2.816 1.5003 4.436V15.565C1.5003 17.184 2.8163 18.5 4.4333 18.5H9.3193C10.9313 18.5 12.2443 17.188 12.2443 15.576V14.633C12.2443 14.219 12.5803 13.883 12.9943 13.883C13.4083 13.883 13.7443 14.219 13.7443 14.633V15.576C13.7443 18.016 11.7583 20 9.3193 20Z" fill="#041111" fill-opacity="0.6"/>
@@ -178,6 +178,15 @@
 
     const { fetchNotifications } = useNotificationsStore();
     const { notifications } = storeToRefs(useNotificationsStore());
+
+    const loggingUserOut: Ref<boolean> = ref(false);
+
+    function logUserOut() {
+        if(!loggingUserOut.value) {
+            loggingUserOut.value = true;
+            logOut();
+        }
+    }
 
     
     onMounted(() => {
