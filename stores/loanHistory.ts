@@ -44,7 +44,12 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
 
         const activeLoanTotalPaid = computed(() => {
             return activeLoan.value
-                ? (activeLoan.value.schedule).reduce((total, repayment): number => total + repayment.amount, 0)
+                ? (activeLoan.value.schedule).reduce((total, repayment): number => {
+                    if(repayment.status === 'paid'){
+                        return total + repayment.amount;
+                    }
+                    return total;
+                }, 0)
                 : 0;
         });
 

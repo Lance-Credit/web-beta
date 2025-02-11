@@ -195,7 +195,7 @@
                                     </span>
                                 </p>
                             </div>
-                            <p v-if="repayment.paid_at" class="w-[81px] h-8 rounded-[31px] bg-[rgba(12,180,59,0.04)] flex items-center justify-center py-1">
+                            <p v-if="repayment.status === 'paid'" class="w-[81px] h-8 rounded-[31px] bg-[rgba(12,180,59,0.04)] flex items-center justify-center py-1">
                                 <span class="text-[#0CB43B] text-sm font-medium">Paid</span>
                             </p>
                             <div v-else>
