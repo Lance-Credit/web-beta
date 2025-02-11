@@ -50,6 +50,7 @@
     
     const { fetchApiToken } = useTokenStore();
     
+    const { fetchLoanHistory } = useLoanHistoryStore();
     const { $resetUserProfile, fetchUserProfile } = useUserStore();
 
     definePageMeta({
@@ -90,14 +91,16 @@
             const signedIn = await signIn('credentials', { email: loginFormValues.email, password: loginFormValues.password, redirect: false, callbackUrl: '/dashboard' })
 
             if(!(signedIn as any).error){
-                await fetchApiToken();
+                navigateTo('/dashboard');
                 
                 $resetKYC();
                 $resetUserProfile();
 
+                await fetchApiToken();
+
                 fetchUserProfile();
 
-                navigateTo('/dashboard');
+                fetchLoanHistory();
             }else{
                 loginError.value = (signedIn as any).error;
                 submittingLoginForm.value = false;

@@ -179,9 +179,11 @@
 
     const showKycIncompleteModal: Ref<boolean> = ref(false);
         
-    const { kycItems, kycCompleted } = storeToRefs(useKYCStore());
-
     const { balance } = storeToRefs(useWalletStore());
+
+    const { loanSettings } = storeToRefs(useLoanHistoryStore());
+        
+    const { kycItems, kycCompleted } = storeToRefs(useKYCStore());
 
     const showLoanInstructions: Ref<boolean> = ref(false);
 
@@ -191,17 +193,6 @@
         showLoanInstructions.value = false;
         continueLoanRequestProcess.value = true;
     }
-
-    const loanSettings: Ref<{
-        "defaultRate": number,
-        "minRate": number,
-        "maxRate": number,
-        "minDuration": number,
-        "maxDuration": number,
-        "processingFee": number
-    } | null> = ref(null);
-
-    const { fetchLoanSettings } = useFetchLoanSettings();
 
     const {
         activeLoan,
@@ -216,7 +207,6 @@
     onMounted(async()=>{
         if(kycCompleted.value){
             fetchLoanHistory();
-            loanSettings.value = await fetchLoanSettings();
         }
     });
 

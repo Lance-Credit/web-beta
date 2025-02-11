@@ -5,6 +5,15 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
 
         const loanHistory: Ref<Loan[]> = ref([]);
 
+        const loanSettings: Ref<{
+            "minRate": number,
+            "maxRate": number,
+            "defaultRate": number,
+            "minDuration": number,
+            "maxDuration": number,
+            "processingFee": number
+        } | null> = ref(null);
+
         const activeLoan = computed(() => {
             if(loanHistory.value.length){
                 return loanHistory.value.find((loan: Loan)=> loan.status == 'active');
@@ -48,6 +57,8 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
         });
 
         async function fetchLoanHistory(){
+            fetchLoanSettings();
+
             const result = await apiFetch('loans?role=borrower');
     
             if ((result as any).success && !(result as any).error) {
@@ -70,6 +81,17 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
             }
         }
 
+        async function fetchLoanSettings() {
+            const result = await apiFetch('loans/settings');
+    
+            if ((result as any).success && !(result as any).error) {
+                loanSettings.value = (result as any).data;
+            } else {
+                // console.log(error.value?.data);
+                loanSettings.value = null;
+            }
+        }
+
         function $reset() {
             loanHistory.value = []
         }
@@ -78,6 +100,7 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
             $reset,
             activeLoan,
             loanHistory,
+            loanSettings,
             approvedLoan,
             declinedLoans,
             completedLoans,

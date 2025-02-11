@@ -254,7 +254,6 @@
         layout: 'dashboard'
     });
 
-    const { fetchKycStatus } = useKYCStore();
     const { kycItems, kycCompleted } = storeToRefs(useKYCStore());
 
     const { balance, transactions } = storeToRefs(useWalletStore());
@@ -275,24 +274,6 @@
         showLoanInstructions.value = false;
         continueLoanRequestProcess.value = true;
     }
-
-    
-
-    const loanSettings: Ref<{
-        "defaultRate": number,
-        "minRate": number,
-        "maxRate": number,
-        "minDuration": number,
-        "maxDuration": number,
-        "processingFee": number
-    } | null> = ref(null);
-
-    const { fetchLoanSettings } = useFetchLoanSettings();
-    
-
-
-
-
 
 
     const showKycIncompleteModal: Ref<boolean> = ref(false);
@@ -333,7 +314,7 @@
         continueKycProcess.value = true;
     }
 
-    const { fetchLoanHistory, $reset } = useLoanHistoryStore();
+    const { loanSettings } = storeToRefs(useLoanHistoryStore());
     const { activeLoan, percentageLoanPaid, activeLoanTotalPaid } = storeToRefs(useLoanHistoryStore());
     
     onMounted(()=>{
@@ -343,22 +324,14 @@
         }
 
         setTimeout(async() => {
-            if(kycCompleted.value){
-                fetchLoanHistory();
-                loanSettings.value = await fetchLoanSettings();
-            }else{
-                // reset loanHistory
-                $reset();
-
-                fetchKycStatus();
-                
+            if(!kycCompleted.value){
                 useHead({
                     script: [
                         !kycCompleted.value ? { src: 'https://widget.dojah.io/widget.js', body: true } : ''
                     ]
                 });
             }
-        }, 1000)
+        }, 1000);
 
     });
     
