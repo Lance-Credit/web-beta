@@ -51,7 +51,7 @@
                         Date Used
                     </li>
                 </ul>
-                <ul @click="showCommunityCodeDetails(code)" v-for="(code, key) in communityCodes" :key="key" class="flex items-center py-6 border-b border-solid border-lance-black-5 text-lance-black cursor-pointer">
+                <ul @click="!code.used ? showCommunityCodeDetails(code) : ''" v-for="(code, key) in communityCodes" :key="key" class="flex items-center py-6 border-b border-solid border-lance-black-5 text-lance-black cursor-pointer">
                     <li class="w-1/4">
                         {{ code.code }}
                     </li>
@@ -60,7 +60,7 @@
                             class="text-xs leading-6 w-[94px] rounded-[31px] text-center"
                             :class="code.used ? 'text-lance-green bg-lance-green-10' : 'text-lance-black-50 bg-lance-black-10'"
                         >
-                            {{ code.used ? 'Active' : 'Inactive'}}
+                            {{ code.used ? 'Inactive' : 'Active'}}
                         </p>
                     </li>
                     <li class="w-1/4">
