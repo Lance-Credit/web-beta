@@ -57,47 +57,49 @@
                 </div>
             </div>
             <div class="mb-6 flex gap-6">
-                <div
-                    class="p-6 pt-8 basis-[421px] rounded-xl border border-solid border-lance-green-20 bg-lance-green
-                    bg-[url('/assets/img/active-loan-bg-gradient.svg')] bg-no-repeat bg-right grow"
-                >
-                    <p class="mb-8 text-[rgba(255,255,255,0.80)] font-medium">Next Repayment</p>
-                    <div class="mb-4 pb-7 border-b border-solid border-[rgba(255,255,255,0.20)]">
-                        <p class="mb-1 text-white text-[28px] leading-[36px] tracking-[0.28px] font-semibold">
-                            N {{ activeLoan ? (activeLoan.monthlyRepaymentAmount).toLocaleString() : '0.00'}}
-                        </p>
-                        <p class="text-[rgba(255,255,255,0.90)] text-sm flex items-center gap-2">
-                            <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M14.0247 6.60303H2.14206C1.86606 6.60303 1.64206 6.37903 1.64206 6.10303C1.64206 5.82703 1.86606 5.60303 2.14206 5.60303H14.0247C14.3007 5.60303 14.5247 5.82703 14.5247 6.10303C14.5247 6.37903 14.3007 6.60303 14.0247 6.60303Z" fill="white" fill-opacity="0.9"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M11.0478 9.20654C10.7718 9.20654 10.5451 8.98254 10.5451 8.70654C10.5451 8.43054 10.7658 8.20654 11.0418 8.20654H11.0478C11.3238 8.20654 11.5478 8.43054 11.5478 8.70654C11.5478 8.98254 11.3238 9.20654 11.0478 9.20654Z" fill="white" fill-opacity="0.9"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.08946 9.20654C7.81346 9.20654 7.58679 8.98254 7.58679 8.70654C7.58679 8.43054 7.80746 8.20654 8.08346 8.20654H8.08946C8.36546 8.20654 8.58946 8.43054 8.58946 8.70654C8.58946 8.98254 8.36546 9.20654 8.08946 9.20654Z" fill="white" fill-opacity="0.9"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M5.12498 9.20654C4.84898 9.20654 4.62164 8.98254 4.62164 8.70654C4.62164 8.43054 4.84298 8.20654 5.11898 8.20654H5.12498C5.40098 8.20654 5.62498 8.43054 5.62498 8.70654C5.62498 8.98254 5.40098 9.20654 5.12498 9.20654Z" fill="white" fill-opacity="0.9"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M11.0478 11.7974C10.7718 11.7974 10.5451 11.5734 10.5451 11.2974C10.5451 11.0214 10.7658 10.7974 11.0418 10.7974H11.0478C11.3238 10.7974 11.5478 11.0214 11.5478 11.2974C11.5478 11.5734 11.3238 11.7974 11.0478 11.7974Z" fill="white" fill-opacity="0.9"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.08946 11.7974C7.81346 11.7974 7.58679 11.5734 7.58679 11.2974C7.58679 11.0214 7.80746 10.7974 8.08346 10.7974H8.08946C8.36546 10.7974 8.58946 11.0214 8.58946 11.2974C8.58946 11.5734 8.36546 11.7974 8.08946 11.7974Z" fill="white" fill-opacity="0.9"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M5.12498 11.7974C4.84898 11.7974 4.62164 11.5734 4.62164 11.2974C4.62164 11.0214 4.84298 10.7974 5.11898 10.7974H5.12498C5.40098 10.7974 5.62498 11.0214 5.62498 11.2974C5.62498 11.5734 5.40098 11.7974 5.12498 11.7974Z" fill="white" fill-opacity="0.9"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M10.776 3.8605C10.5 3.8605 10.276 3.6365 10.276 3.3605V1.1665C10.276 0.890504 10.5 0.666504 10.776 0.666504C11.052 0.666504 11.276 0.890504 11.276 1.1665V3.3605C11.276 3.6365 11.052 3.8605 10.776 3.8605Z" fill="white" fill-opacity="0.9"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M5.39059 3.8605C5.11459 3.8605 4.89059 3.6365 4.89059 3.3605V1.1665C4.89059 0.890504 5.11459 0.666504 5.39059 0.666504C5.66659 0.666504 5.89059 0.890504 5.89059 1.1665V3.3605C5.89059 3.6365 5.66659 3.8605 5.39059 3.8605Z" fill="white" fill-opacity="0.9"/>
-                                <mask id="mask0_7513_4069" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="1" y="1" width="14" height="14">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M1.58038 1.71924H14.5804V14.9998H1.58038V1.71924Z" fill="white"/>
-                                </mask>
-                                <g mask="url(#mask0_7513_4069)">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5.26101 2.7194C3.53234 2.7194 2.58034 3.6414 2.58034 5.3154V11.3481C2.58034 13.0587 3.53234 14.0001 5.26101 14.0001H10.8997C12.6283 14.0001 13.5803 13.0761 13.5803 11.3987V5.3154C13.583 4.49207 13.3617 3.85207 12.9223 3.41207C12.4703 2.95873 11.7737 2.7194 10.9057 2.7194H5.26101ZM10.8997 14.9999H5.26105C2.99105 14.9999 1.58038 13.6006 1.58038 11.3479V5.31524C1.58038 3.09657 2.99105 1.71924 5.26105 1.71924H10.9057C12.0451 1.71924 12.9871 2.06057 13.6304 2.70524C14.2551 3.33257 14.5837 4.23457 14.5804 5.31657V11.3986C14.5804 13.6199 13.1697 14.9999 10.8997 14.9999Z" fill="white" fill-opacity="0.9"/>
-                                </g>
-                            </svg>
-                            <span>Due: {{ activeLoan ? new Date(activeLoan.dueDate).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) : '- -'}}</span>
-                        </p>
+                <div class="flex gap-6 basis-[718px] grow">
+                    <div
+                        class="p-6 pt-8 basis-[421px] rounded-xl border border-solid border-lance-green-20 bg-lance-green
+                        bg-[url('/assets/img/active-loan-bg-gradient.svg')] bg-no-repeat bg-right grow"
+                    >
+                        <p class="mb-8 text-[rgba(255,255,255,0.80)] font-medium">Next Repayment</p>
+                        <div class="mb-4 pb-7 border-b border-solid border-[rgba(255,255,255,0.20)]">
+                            <p class="mb-1 text-white text-[28px] leading-[36px] tracking-[0.28px] font-semibold">
+                                N {{ activeLoan ? (activeLoan.monthlyRepaymentAmount).toLocaleString() : '0.00'}}
+                            </p>
+                            <p class="text-[rgba(255,255,255,0.90)] text-sm flex items-center gap-2">
+                                <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14.0247 6.60303H2.14206C1.86606 6.60303 1.64206 6.37903 1.64206 6.10303C1.64206 5.82703 1.86606 5.60303 2.14206 5.60303H14.0247C14.3007 5.60303 14.5247 5.82703 14.5247 6.10303C14.5247 6.37903 14.3007 6.60303 14.0247 6.60303Z" fill="white" fill-opacity="0.9"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M11.0478 9.20654C10.7718 9.20654 10.5451 8.98254 10.5451 8.70654C10.5451 8.43054 10.7658 8.20654 11.0418 8.20654H11.0478C11.3238 8.20654 11.5478 8.43054 11.5478 8.70654C11.5478 8.98254 11.3238 9.20654 11.0478 9.20654Z" fill="white" fill-opacity="0.9"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.08946 9.20654C7.81346 9.20654 7.58679 8.98254 7.58679 8.70654C7.58679 8.43054 7.80746 8.20654 8.08346 8.20654H8.08946C8.36546 8.20654 8.58946 8.43054 8.58946 8.70654C8.58946 8.98254 8.36546 9.20654 8.08946 9.20654Z" fill="white" fill-opacity="0.9"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5.12498 9.20654C4.84898 9.20654 4.62164 8.98254 4.62164 8.70654C4.62164 8.43054 4.84298 8.20654 5.11898 8.20654H5.12498C5.40098 8.20654 5.62498 8.43054 5.62498 8.70654C5.62498 8.98254 5.40098 9.20654 5.12498 9.20654Z" fill="white" fill-opacity="0.9"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M11.0478 11.7974C10.7718 11.7974 10.5451 11.5734 10.5451 11.2974C10.5451 11.0214 10.7658 10.7974 11.0418 10.7974H11.0478C11.3238 10.7974 11.5478 11.0214 11.5478 11.2974C11.5478 11.5734 11.3238 11.7974 11.0478 11.7974Z" fill="white" fill-opacity="0.9"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.08946 11.7974C7.81346 11.7974 7.58679 11.5734 7.58679 11.2974C7.58679 11.0214 7.80746 10.7974 8.08346 10.7974H8.08946C8.36546 10.7974 8.58946 11.0214 8.58946 11.2974C8.58946 11.5734 8.36546 11.7974 8.08946 11.7974Z" fill="white" fill-opacity="0.9"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5.12498 11.7974C4.84898 11.7974 4.62164 11.5734 4.62164 11.2974C4.62164 11.0214 4.84298 10.7974 5.11898 10.7974H5.12498C5.40098 10.7974 5.62498 11.0214 5.62498 11.2974C5.62498 11.5734 5.40098 11.7974 5.12498 11.7974Z" fill="white" fill-opacity="0.9"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M10.776 3.8605C10.5 3.8605 10.276 3.6365 10.276 3.3605V1.1665C10.276 0.890504 10.5 0.666504 10.776 0.666504C11.052 0.666504 11.276 0.890504 11.276 1.1665V3.3605C11.276 3.6365 11.052 3.8605 10.776 3.8605Z" fill="white" fill-opacity="0.9"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5.39059 3.8605C5.11459 3.8605 4.89059 3.6365 4.89059 3.3605V1.1665C4.89059 0.890504 5.11459 0.666504 5.39059 0.666504C5.66659 0.666504 5.89059 0.890504 5.89059 1.1665V3.3605C5.89059 3.6365 5.66659 3.8605 5.39059 3.8605Z" fill="white" fill-opacity="0.9"/>
+                                    <mask id="mask0_7513_4069" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="1" y="1" width="14" height="14">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M1.58038 1.71924H14.5804V14.9998H1.58038V1.71924Z" fill="white"/>
+                                    </mask>
+                                    <g mask="url(#mask0_7513_4069)">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.26101 2.7194C3.53234 2.7194 2.58034 3.6414 2.58034 5.3154V11.3481C2.58034 13.0587 3.53234 14.0001 5.26101 14.0001H10.8997C12.6283 14.0001 13.5803 13.0761 13.5803 11.3987V5.3154C13.583 4.49207 13.3617 3.85207 12.9223 3.41207C12.4703 2.95873 11.7737 2.7194 10.9057 2.7194H5.26101ZM10.8997 14.9999H5.26105C2.99105 14.9999 1.58038 13.6006 1.58038 11.3479V5.31524C1.58038 3.09657 2.99105 1.71924 5.26105 1.71924H10.9057C12.0451 1.71924 12.9871 2.06057 13.6304 2.70524C14.2551 3.33257 14.5837 4.23457 14.5804 5.31657V11.3986C14.5804 13.6199 13.1697 14.9999 10.8997 14.9999Z" fill="white" fill-opacity="0.9"/>
+                                    </g>
+                                </svg>
+                                <span>Due: {{ activeLoan ? new Date(activeLoan.dueDate).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) : '- -'}}</span>
+                            </p>
+                        </div>
+                        <div class="mb-0.5 flex items-center justify-between text-[rgba(255,255,255,0.90)] text-sm">
+                            <p>Paid: <span class="font-semibold">N {{ activeLoanTotalPaid.toLocaleString() }}</span></p>
+                            <p>Total Loan Received : <span class="font-semibold">N {{ activeLoan ? (activeLoan.amount).toLocaleString() : '0'}}</span></p>
+                        </div>
+                        <div class="h-2 w-full rounded-lg bg-white" style="box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.10) inset;">
+                            <div class="h-full rounded-lg" style="background: linear-gradient(90deg, #E8FF28 -2.03%, #09837F 101.29%);" :style="`width: ${percentageLoanPaid}%`"></div>
+                        </div>
                     </div>
-                    <div class="mb-0.5 flex items-center justify-between text-[rgba(255,255,255,0.90)] text-sm">
-                        <p>Paid: <span class="font-semibold">N {{ activeLoanTotalPaid.toLocaleString() }}</span></p>
-                        <p>Total Loan Received : <span class="font-semibold">N {{ activeLoan ? (activeLoan.amount).toLocaleString() : '0'}}</span></p>
+                    <div class="py-8 px-6 flex flex-col justify-between rounded-xl bg-white border border-solid border-lance-green-10 grow">
+                        <p class="text-lance-black-60 font-medium">Wallet Balance</p>
+                        <p class="text-lance-black text-[28px] leading-8 font-semibold tracking-[-0.28px]">N {{ balance.toLocaleString() }}</p>
                     </div>
-                    <div class="h-2 w-full rounded-lg bg-white" style="box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.10) inset;">
-                        <div class="h-full rounded-lg" style="background: linear-gradient(90deg, #E8FF28 -2.03%, #09837F 101.29%);" :style="`width: ${percentageLoanPaid}%`"></div>
-                    </div>
-                </div>
-                <div class="basis-[273px] py-8 px-6 flex flex-col justify-between rounded-xl bg-white border border-solid border-lance-green-10 grow">
-                    <p class="text-lance-black-60 font-medium">Wallet Balance</p>
-                    <p class="text-lance-black text-[28px] leading-8 font-semibold tracking-[-0.28px]">N {{ balance.toLocaleString() }}</p>
                 </div>
                 <div class="basis-[421px] py-8 px-6 rounded-xl bg-white border border-solid border-lance-green-10 grow">
                     <p class="mb-3 flex items-center justify-between">
