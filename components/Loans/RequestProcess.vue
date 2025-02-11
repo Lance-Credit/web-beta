@@ -170,6 +170,10 @@
         </div>
 
         <Loans-SuccessfulLoanApplicationModal v-if="loanApplicationSuccess" @@close-loan-application-modal="emit('@close-loan-application-modal')" />
+        <Loans-PaystackDirectDebitModal
+            v-if="!hasDirectDebit" v-show="showDirectDebitInfoModal"
+            @@close-paystack-direct-debit-modal="showDirectDebitInfoModal = false; submittingLoanApplication = false;" @@continue-paystack-direct-debit="setupDirectDebit"
+        />
     </div>
 </template>
 
@@ -260,7 +264,9 @@
             }
         }
     }
-        
+    
+    const showDirectDebitInfoModal: Ref<boolean> = ref(false);
+
     async function submitLoanApplication(){
 
         submittingLoanApplication.value = true;
@@ -286,28 +292,33 @@
                 // console.log(result.error);
             }
         } else {
-            const result = await apiFetch('accounts/direct_debit', 'POST');
+            showDirectDebitInfoModal.value = true;
+        }
+    }
+
+    async function setupDirectDebit() {
+        const result = await apiFetch('accounts/direct_debit', 'POST');
     
-            if ((result as any).success && !(result as any).error) {
-                setTimeout(async() => {
-                    fetchUserLinkedAccountAndBalance();
-                    confirmUserHasDirectDebit();
-                }, 180000);
-                navigateTo(
-                    (result as any).data.link,
-                    {
-                        external: true,
-                        open: { target: '_blank'}
-                    }
-                );
-            } else {
-                // console.log(result.error);
-            }
+        if ((result as any).success && !(result as any).error) {
+            setTimeout(async() => {
+                fetchUserLinkedAccountAndBalance();
+                confirmUserHasDirectDebit();
+            }, 180000);
+            navigateTo(
+                (result as any).data.link,
+                {
+                    external: true,
+                    open: { target: '_blank'}
+                }
+            );
+        } else {
+            // console.log(result.error);
         }
     }
 
     async function confirmUserHasDirectDebit(){
         if(hasDirectDebit.value){
+            showDirectDebitInfoModal.value = false;
             submittingLoanApplication.value = false;
             submitLoanApplication();
         }else{
