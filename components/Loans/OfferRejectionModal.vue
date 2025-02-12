@@ -10,23 +10,9 @@
                 </div>
                 <ul class="flex flex-col gap-4">
                     <li>
-                        <Form-RadioInput type="radio" name="rejectionFeedback" value="I no longer need this loan">
+                        <Form-RadioInput type="radio" name="rejectionFeedback" value="Interest rate too high">
                             <p class="text-lance-black text-sm">
-                                I no longer need this loan
-                            </p>
-                        </Form-RadioInput>
-                    </li>
-                    <li>
-                        <Form-RadioInput type="radio" name="rejectionFeedback" value="Monthly payments are too high">
-                            <p class="text-lance-black text-sm">
-                                Monthly payments are too high
-                            </p>
-                        </Form-RadioInput>
-                    </li>
-                    <li>
-                        <Form-RadioInput type="radio" name="rejectionFeedback" value="Loan terms are not flexible enough">
-                            <p class="text-lance-black text-sm">
-                                Loan terms are not flexible enough
+                                Interest rate too high
                             </p>
                         </Form-RadioInput>
                     </li>
@@ -38,16 +24,16 @@
                         </Form-RadioInput>
                     </li>
                     <li>
-                        <Form-RadioInput type="radio" name="rejectionFeedback" value="Chose another lender with better terms">
+                        <Form-RadioInput type="radio" name="rejectionFeedback" value="Repayment terms not suitable">
                             <p class="text-lance-black text-sm">
-                                Chose another lender with better terms
+                                Repayment terms not suitable
                             </p>
                         </Form-RadioInput>
                     </li>
                     <li>
-                        <Form-RadioInput type="radio" name="rejectionFeedback" value="Not satisfied with fees or additional charges">
+                        <Form-RadioInput type="radio" name="rejectionFeedback" value="Found a better offer elsewhere">
                             <p class="text-lance-black text-sm">
-                                Not satisfied with fees or additional charges
+                                Found a better offer elsewhere
                             </p>
                         </Form-RadioInput>
                     </li>
