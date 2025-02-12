@@ -198,7 +198,27 @@
 
     const activeTab: Ref<string> = ref('request');
 
-    const { values: loanRequestFormValues, errors: loanRequestFormErrors, defineField } = useForm({
+    onMounted(async()=>{
+        const route = useRoute();
+        if(route.query.continue_loan_request == 'true'){
+            if(
+                Number(route.query.amount) && 
+                Number(route.query.duration) &&
+                props.loanSettings?.maxDuration &&
+                Number(route.query.duration) <= props.loanSettings.maxDuration / 30
+            ) {
+                setFieldValue('loanAmount', Number(route.query.amount));
+                setFieldValue('loanDuration', Number(route.query.duration));
+                await calculateLoanSummary();
+                activeTab.value = 'summary';
+                submitLoanApplication();
+            } else {
+                navigateTo('/loans');
+            }
+        }
+    });
+
+    const { values: loanRequestFormValues, errors: loanRequestFormErrors, setFieldValue, defineField } = useForm({
         validationSchema: yup.object({
             loanAmount: yup.number().required().typeError('Loan amount is required').label('Loan Amount'),
             loanDuration: yup.number().required().label('Loan Duration')

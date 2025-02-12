@@ -1,5 +1,5 @@
 <template>
-    <div v-show="!continueLoanRequestProcess">
+    <div v-if="!continueLoanRequestProcess">
         <KYC-Process v-if="!kycCompleted" v-show="continueKycProcess" @@stop-kyc-process="continueKycProcess = false" />
 
         <div v-show="!continueKycProcess || kycCompleted">
@@ -228,7 +228,7 @@
         />
         <KYC-IncompleteKycNotificationModal v-if="!kycCompleted" v-show="showKycIncompleteModal" @@proceed-to-kyc-process="showKycIncompleteModal = false; showKycSummary = true;" @@close-kyc-incomplete-modal="showKycIncompleteModal = false;" />
     </div>
-    <Loans-RequestProcess v-show="continueLoanRequestProcess" @@close-loan-application-modal="continueLoanRequestProcess = false" :loan-settings="loanSettings" />
+    <Loans-RequestProcess v-if="continueLoanRequestProcess" v-show="continueLoanRequestProcess" @@close-loan-application-modal="continueLoanRequestProcess = false" :loan-settings="loanSettings" />
 </template>
 <style>
     circle.fg {
