@@ -195,13 +195,13 @@
         repaymentAmount: defineField('repaymentAmount')
     };
 
-    const  chosenAmount = computed(() => {
+    const chosenAmount = computed(() => {
         if(repaymentFormValues.repaymentAmount){
             return repaymentFormValues.repaymentAmount;
         }
 
         if(repaymentFormValues.repaymentOption == 'full'){
-            return props.loan?.totalRepaymentAmount;
+            return remainingPayment.value;
         }
 
         if(repaymentFormValues.repaymentOption == 'nextRepayment'){
