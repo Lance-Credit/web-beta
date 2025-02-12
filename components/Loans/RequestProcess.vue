@@ -307,8 +307,7 @@
             navigateTo(
                 (result as any).data.link,
                 {
-                    external: true,
-                    open: { target: '_blank'}
+                    external: true
                 }
             );
         } else {
