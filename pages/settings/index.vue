@@ -212,13 +212,31 @@
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             First Name
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile?.firstName }}</p>
+                                        <p class="text-lance-black">
+                                            {{ userProfile?.firstName ? userProfile?.firstName[0].toUpperCase() + userProfile?.firstName.substring(1).toLowerCase() : '--' }}
+                                        </p>
                                     </div>
+                                    <div>
+                                        <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
+                                            Last Name
+                                        </p>
+                                        <p class="text-lance-black">
+                                            {{ userProfile?.lastName ? userProfile?.lastName[0].toUpperCase() + userProfile?.lastName.substring(1).toLowerCase() : '--' }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-6 basis-[185px]">
                                     <div>
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             Email Address
                                         </p>
                                         <p class="text-lance-black">{{ userProfile?.email }}</p>
+                                    </div>
+                                    <div>
+                                        <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
+                                            Phone Number
+                                        </p>
+                                        <p class="text-lance-black">{{ userProfile?.phoneNumber }}</p>
                                     </div>
                                 </div>
                                 <div class="flex flex-col gap-6 basis-[185px]">
@@ -226,27 +244,13 @@
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             Marital Status
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile?.maritalStatus ? userProfile?.maritalStatus[0].toUpperCase() + userProfile?.maritalStatus.substring(1) : '--' }}</p>
+                                        <p class="text-lance-black">{{ userProfile?.maritalStatus ? userProfile.maritalStatus[0].toUpperCase() + userProfile?.maritalStatus.substring(1) : '--' }}</p>
                                     </div>
                                     <div>
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             Education Level
                                         </p>
-                                        <p class="text-lance-black">{{ userProfile?.educationLevel ? userProfile?.educationLevel[0].toUpperCase() + userProfile?.educationLevel.substring(1) + ' Education' : '--' }}</p>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col gap-6 basis-[185px]">
-                                    <div>
-                                        <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
-                                            Last Name
-                                        </p>
-                                        <p class="text-lance-black">{{ userProfile?.lastName }}</p>
-                                    </div>
-                                    <div>
-                                        <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
-                                            Phone Number
-                                        </p>
-                                        <p class="text-lance-black">{{ userProfile?.phoneNumber }}</p>
+                                        <p class="text-lance-black">{{ userProfile?.educationLevel ? userProfile.educationLevel[0].toUpperCase() + userProfile?.educationLevel.substring(1) + ' Education' : '--' }}</p>
                                     </div>
                                 </div>
                             </div>
