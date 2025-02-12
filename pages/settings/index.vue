@@ -202,7 +202,6 @@
                             <div class="w-[64px] h-[64px] rounded-full bg-[#9BA6B9] bg-[url('/assets/img/kofo.jpg')] bg-cover bg-no-repeat"></div>
                             <div>
                                 <p class="text-[#1E1721] font-medium tracking-[-0.16px]">{{ fullName }}</p>
-                                <p class="text-lance-black-60 text-sm leading-[21px]">Referred by: Ndebe Wisdom</p>
                             </div>
                         </div>
                         <div class="py-6 border-b border-solid border-lance-black-5">
@@ -306,7 +305,6 @@
                             <div class="w-[64px] h-[64px] rounded-full bg-[#9BA6B9] bg-[url('/assets/img/kofo.jpg')] bg-cover bg-no-repeat"></div>
                             <div>
                                 <p class="text-[#1E1721] font-medium tracking-[-0.16px]">{{ fullName }}</p>
-                                <p class="text-lance-black-60 text-sm leading-[21px]">Referred by: Ndebe Wisdom</p>
                             </div>
                         </div>
                         <div class="py-6 border-b border-solid border-lance-black-5">
