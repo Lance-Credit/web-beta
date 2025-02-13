@@ -58,7 +58,7 @@
                     <li class="w-1/4">
                         <p
                             class="text-xs leading-6 w-[94px] rounded-[31px] text-center"
-                            :class="code.used ? 'text-lance-green bg-lance-green-10' : 'text-lance-black-50 bg-lance-black-10'"
+                            :class="!code.used ? 'text-lance-green bg-lance-green-10' : 'text-lance-black-50 bg-lance-black-10'"
                         >
                             {{ code.used ? 'Inactive' : 'Active'}}
                         </p>
