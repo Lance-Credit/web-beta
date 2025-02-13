@@ -28,6 +28,9 @@
                 </p>
             </div>
             <div>
+                <p v-show="loanReferenceCopied" class="mb-2 py-2 px-4 text-center text-[#272E2E] text-sm leading-6 rounded-[4px] border border-solid border-[#DAE0E0] bg-[#FAFCFC]">
+                    Copied to clipboard
+                </p>
                 <div v-if="loan?.status === 'declined' && loan?.declinedBy === 'borrower'" class="mb-2 bg-[rgba(236,255,77,0.05)] px-4 py-6 rounded-lg border border-solid border-lance-green">
                     <p class="text-lance-black-70 text-sm leading-[21px]">Reasons for Rejection: {{ loan?.declinedReason }}</p>
                 </div>
@@ -138,7 +141,15 @@
     }>();
 
     function copyReferenceCode(){
+        showLoanReferenceCopied();
         navigator.clipboard.writeText(props.loan?.reference as string);
+    }
+
+    const loanReferenceCopied:Ref <boolean> = ref(false);
+
+    function showLoanReferenceCopied() {
+        loanReferenceCopied.value = true;
+        setTimeout(()=> loanReferenceCopied.value = false, 5000);
     }
 
     const emit = defineEmits<{
