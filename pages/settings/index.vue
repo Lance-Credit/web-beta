@@ -1979,6 +1979,7 @@
         if((result as any).success && !(result as any).error){
             savingPersonalDetails.value = false;
             personalDetailsUpdated.value = true;
+            editingPersonalDetails.value = false;
 
             if (userProfile.value) {
                 userProfile.value.maritalStatus = (result as any).data.profile.maritalStatus;
@@ -2087,6 +2088,7 @@
         if((result as any).success && !(result as any).error){
             savingNextOfKinDetails.value = false;
             nextOfKinDetailsUpdated.value = true;
+            editingNextOfKinDetails.value = false;
 
             if (nextOfKinDetails.value) {
                 nextOfKinDetails.value.email = (result as any).data.profile.nextOfKin.email;
