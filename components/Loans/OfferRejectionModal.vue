@@ -111,7 +111,7 @@
                         Your loan offer has been rejected, and your feedback has been recorded.
                     </p>
                 </div>
-                <NuxtLink to="/loans" class="btn btn-primary">Go to Loans</NuxtLink>
+                <NuxtLink to="/loans" :external="true" class="btn btn-primary">Go to Loans</NuxtLink>
             </div>
         </div>
     </div>
