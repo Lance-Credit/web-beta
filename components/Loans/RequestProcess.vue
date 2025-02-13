@@ -64,7 +64,7 @@
                                 </svg>
                                 <span>Loan Amount</span>
                             </p>
-                            <p class="text-lance-black">N {{ (loanRequestFormValues.loanAmount)?.toLocaleString() }}</p>
+                            <p class="text-lance-black">N {{ Number(loanRequestFormValues.loanAmount)?.toLocaleString() }}</p>
                         </li>
                         <li class="flex items-center justify-between py-4 border-b border-solid border-b-lance-green-5">
                             <p class="text-lance-black-70 text-sm leading-[21px] flex items-center gap-2">

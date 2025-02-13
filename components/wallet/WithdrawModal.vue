@@ -131,10 +131,10 @@
                         <p v-if="!processingWithdrawal" class="mb-8">
                             You’re about to transfer
                             <span class="font-medium text-lance-black">
-                                N {{ withdrawalFormValues.withdrawalAmount.toLocaleString() }}
+                                N {{ Number(withdrawalFormValues.withdrawalAmount).toLocaleString() }}
                             </span> to
                             <span class="font-medium text-lance-black">
-                                {{ linkedAccount.accountName.toUpperCase() }}, {{ withdrawalFormValues.destinationBankName }}.
+                                {{ linkedAccount?.accountName.toUpperCase() }}, {{ withdrawalFormValues.destinationBankName }}.
                             </span>
                         </p>
                         <p v-else>
@@ -158,7 +158,7 @@
                     </p>
                     <div class="text-lance-black-60 text-center">
                         <p>
-                            God go continue to strengthen you boss, you can continue to <NuxtLink to="/loans" class="font-medium text-lance-black">Loans.</NuxtLink>
+                            God go continue to strengthen you boss, you can continue to <NuxtLink to="/wallets" class="font-medium text-lance-black">Wallets.</NuxtLink>
                         </p>
                     </div>
                 </div>

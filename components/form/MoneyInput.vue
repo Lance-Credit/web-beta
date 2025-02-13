@@ -7,7 +7,7 @@
             <div class="flex items-center gap-1">
                 <span v-if="inputFocused || value">N</span>
                 <input
-                    type="number" :placeholder="placeholder" v-model.number="value"
+                    type="text" :placeholder="placeholder" v-model="value"
                     @focusin="inputFocused = true" @focusout="inputFocused = false"
                     @change="emit('@money-changed')"
                     class="text-lance-black outline-none font-gelion font-normal text-base w-full appearance-none"
@@ -30,18 +30,21 @@
     const props = defineProps<{
         label: string,
         error?: string,
-        modelValue?: number | string,
-        placeholder: string
+        placeholder: string,
+        modelValue?: number | string
     }>();
 
     const inputFocused: Ref<boolean> = ref(false);
 
     const value = computed({
         get() {
-          return props.modelValue;
+            if(props.modelValue){
+                return (Number(props.modelValue))?.toLocaleString();
+            }
+            return undefined;
         },
         set(value: undefined | number | string) {
-          emit('update:modelValue', value);
+          emit('update:modelValue', (value as string)?.replaceAll(',',''));
         }
     });
 

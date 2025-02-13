@@ -6,7 +6,7 @@
             <div class="mb-8 flex items-center justify-between">
                 <div>
                     <p class="mb-1 text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px]">
-                        Good afternoon, {{ `${userProfile?.firstName[0].toUpperCase()}${userProfile?.firstName.substring(1)}` }}
+                        Good afternoon, {{ userProfile?.firstName ? `${userProfile?.firstName[0].toUpperCase()}${userProfile?.firstName.substring(1)}` : '' }}
                     </p>
                 </div>
                 <div class="flex gap-4 items-center">
