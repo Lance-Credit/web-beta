@@ -264,7 +264,7 @@
 
         if ((result as any).success && !(result as any).error) {
             submittingCommunityCode.value = false;
-            communityCodeOwner.value = (result as any).data.owner;
+            communityCodeOwner.value = (result as any).data.firstName;
             communityCodeFilled.value = true;
         } else {
             // console.log((result as any).error);
