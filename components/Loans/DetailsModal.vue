@@ -20,12 +20,18 @@
                         {{ (loan?.amount)?.toLocaleString() }}
                     </p>
                 </div>
-                <p class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(250,206,202,0.20)] text-[#BC251B]">
+                <p v-if="loan?.declinedBy === 'lender'" class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(250,206,202,0.20)] text-[#BC251B]">
                     Declined
+                </p>
+                <p v-else class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(93,36,45,0.04)] text-[rgba(93,36,45,0.90)]">
+                    Rejected
                 </p>
             </div>
             <div>
-                <div v-if="loan?.status === 'declined'" class="rounded-lg border border-solid border-lance-black bg-white">
+                <div v-if="loan?.status === 'declined' && loan?.declinedBy === 'borrower'" class="mb-2 bg-[rgba(236,255,77,0.05)] px-4 py-6 rounded-lg border border-solid border-lance-green">
+                    <p class="text-lance-black-70 text-sm leading-[21px]">Reasons for Rejection: {{ loan?.declinedReason }}</p>
+                </div>
+                <div v-if="loan?.status === 'declined' && loan?.declinedBy === 'lender'" class="rounded-lg border border-solid border-lance-black bg-white">
                     <div class="py-6 px-4 bg-lance-green-5 flex items-center justify-between">
                         <p class="text-lance-black-70 text-sm leading-[21px]">Reasons below</p>
                     </div>

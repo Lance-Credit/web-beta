@@ -9,6 +9,7 @@ interface Loan {
     declinedBy: string,
     feeCharged: number,
     adminApproved: boolean,
+    declinedReason: string,
     nextPaymentDate: string,
     schedule: LoanSchedule[],
     totalInterestAmount: number,
