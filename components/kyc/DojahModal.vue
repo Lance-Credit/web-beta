@@ -39,16 +39,8 @@
                         </defs>
                     </svg>
                 </div>
-                <p class="text-lance-black-60">{{ dojahMessage }}</p>
+                <p class="text-lance-black-60">Your KYC process will begin soon.</p>
             </div>
         </div>
     </div>
 </template>
-
-<script setup lang="ts">
-
-    defineProps<{
-        dojahMessage: string
-    }>();
-
-</script>

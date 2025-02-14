@@ -118,9 +118,9 @@
                     <p>Don't worry, it's quick and completely secure!</p>
                     <div class="flex items-center gap-3.5">
                         <button @click="emit('@stop-kyc-process')" class="btn btn-tertiary w-full">Back</button>
-                        <button @click="startDojahKyc" class="mb-6 btn w-full btn-primary" :class="{'loading' : initiatingDojahKyc}" :disabled="initiatingDojahKyc">
-                            <span v-show="!initiatingDojahKyc">Proceed</span>
-                            <Loader-Basic v-show="initiatingDojahKyc" bg="#FFF" fg="#C3E48E" />
+                        <button @click="startDojahKyc" class="mb-6 btn w-full btn-primary" :class="{'loading' : startingDojahKyc}" :disabled="startingDojahKyc">
+                            <span v-show="!startingDojahKyc">Proceed</span>
+                            <Loader-Basic v-show="startingDojahKyc" bg="#FFF" fg="#C3E48E" />
                         </button>
                     </div>
                 </div>
@@ -170,7 +170,8 @@
             </div>
         </div>
 
-        <KYC-DojahModal v-show="startingDojahKyc" :dojahMessage="dojahModalVerificationMessage" />
+        <KYC-DojahModal v-show="startingDojahKyc" />
+        <KYC-UnderReviewModal v-show="showKycSubmittedModal" @@close-kyc-under-review-modal="confirmDojahComplete(); showKycSubmittedModal = false" @@back-to-dashboard="kycBackToDashboard" />
         <KYC-MonoModal v-show="startingMonoKyc" />
     </div>
 </template>
@@ -190,28 +191,23 @@
 
     const startingDojahKyc: Ref<boolean> = ref(false);
 
-    const initiatingDojahKyc: Ref<boolean> = ref(false);
-
     const { dojahAppId, dojahPublicKey, dojahWidgetId } = useRuntimeConfig().public;
 
     const { apiFetch } = useApiFetch();
 
-    const dojahModalVerificationMessage: Ref<string> = ref('Your KYC process will begin soon.');
-
-    onMounted(() => {
-        if(kycItems.value.kyc.dojahInitiated) {
-            dojahModalVerificationMessage.value = 'Your KYC is pending. We will notify you shortly.';
-            startingDojahKyc.value = true;
-            confirmDojahComplete();
-        }
-    })
+    const showKycSubmittedModal: Ref<boolean> = ref(false);
 
     async function startDojahKyc(){
         if(!userProfile) {
             return;
         }
+
+        if(kycItems.value.kyc.dojahInitiated) {
+            showKycSubmittedModal.value = true;
+            return;
+        }
+
         startingDojahKyc.value = true;
-        initiatingDojahKyc.value = true;
 
         const result = await apiFetch('verifications/kyc', 'POST');
 
@@ -237,18 +233,20 @@
     
                 onSuccess: function (response: any) {
                     //   console.log('Success', response);
-                    dojahModalVerificationMessage.value = 'Your KYC is pending. We will notify you shortly.';
+                    startingDojahKyc.value = false;
+                    kycItems.value.kyc.dojahInitiated = true;
+                    showKycSubmittedModal.value = true;
                     confirmDojahComplete();
                 },
                 
                 onError: function (err: any) {
                     console.log('Error', err);
-                    initiatingDojahKyc.value = false;
+                    startingDojahKyc.value = false;
                 },
             
                 onClose: function () {
                     console.log('Widget closed');
-                    initiatingDojahKyc.value = false;
+                    startingDojahKyc.value = false;
                 }
             };
             
@@ -262,12 +260,20 @@
             // console.log((result as any).error);
         }
     }
+
+    function kycBackToDashboard() {
+        showKycSubmittedModal.value = false;
+        confirmDojahComplete();
+        navigateTo(
+            '/dashboard',
+            {
+                external: true
+            }
+        );
+    }
     
     async function confirmDojahComplete(){
-        if(kycItems.value.kyc.completed){
-            startingDojahKyc.value = false;
-            initiatingDojahKyc.value = false;
-        }else{
+        if(!kycItems.value.kyc.completed){
             setTimeout(async() => {
                 await fetchKycStatus();
                 confirmDojahComplete();

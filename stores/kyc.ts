@@ -61,12 +61,6 @@ export const useKYCStore = defineStore('kyc', () =>
                 }else{
                     kycItems.value.kyc.completed = false;
                 }
-
-                if((result as any).data.verification.kyc && (result as any).data.verification.kyc.verificationStatus == 'initiated'){
-                    kycItems.value.kyc.dojahInitiated = true;
-                }else{
-                    kycItems.value.kyc.dojahInitiated = false;
-                }
                 
                 if((result as any).data.verification.kyc && (result as any).data.verification.kyc.verificationStatus == 'successful'){
                     kycItems.value.id.completed = true;
