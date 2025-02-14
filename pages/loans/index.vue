@@ -179,8 +179,8 @@
 
     const showKycIncompleteModal: Ref<boolean> = ref(false);
     
-    const { balance } = storeToRefs(useWalletStore());
     const { fetchUserLinkedAccountAndBalance } = useWalletStore();
+    const { balance, hasDirectDebit } = storeToRefs(useWalletStore());
 
     const { loanSettings } = storeToRefs(useLoanHistoryStore());
         
@@ -189,12 +189,7 @@
     const showLoanInstructions: Ref<boolean> = ref(false);
 
     const continueLoanRequestProcess: Ref<boolean> = ref(false);
-
-    function showLoanRequestProcess(){
-        showLoanInstructions.value = false;
-        continueLoanRequestProcess.value = true;
-    }
-
+        
     const {
         activeLoan,
         loanHistory,
@@ -202,6 +197,14 @@
         percentageLoanPaid,
         activeLoanTotalPaid
     } = storeToRefs(useLoanHistoryStore());
+
+    function showLoanRequestProcess(){
+        if(!loanHistory.value.length || !hasDirectDebit.value){
+            fetchUserLinkedAccountAndBalance();
+        }
+        showLoanInstructions.value = false;
+        continueLoanRequestProcess.value = true;
+    }
 
     const { fetchLoanHistory } = useLoanHistoryStore();
 

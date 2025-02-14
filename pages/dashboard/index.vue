@@ -245,19 +245,12 @@
 
     const { kycItems, kycCompleted } = storeToRefs(useKYCStore());
 
-    const { balance, transactions } = storeToRefs(useWalletStore());
+    const { fetchUserLinkedAccountAndBalance } = useWalletStore();
+    const { balance, hasDirectDebit, transactions } = storeToRefs(useWalletStore());
 
     const { userProfile } = storeToRefs(useUserStore());
 
     const showLoanInstructions: Ref<boolean> = ref(false);
-    
-    const continueLoanRequestProcess: Ref<boolean> = ref(false);
-
-    function showLoanRequestProcess(){
-        showLoanInstructions.value = false;
-        continueLoanRequestProcess.value = true;
-    }
-
 
     const showKycIncompleteModal: Ref<boolean> = ref(false);
 
@@ -297,9 +290,19 @@
         continueKycProcess.value = true;
     }
 
-    const { loanSettings } = storeToRefs(useLoanHistoryStore());
-    const { activeLoan, percentageLoanPaid, activeLoanTotalPaid } = storeToRefs(useLoanHistoryStore());
+    const { activeLoan, loanSettings, loanHistory, percentageLoanPaid, activeLoanTotalPaid } = storeToRefs(useLoanHistoryStore());
     
+
+    const continueLoanRequestProcess: Ref<boolean> = ref(false);
+        
+    function showLoanRequestProcess(){
+        if(!loanHistory.value.length || !hasDirectDebit.value){
+            fetchUserLinkedAccountAndBalance();
+        }
+        showLoanInstructions.value = false;
+        continueLoanRequestProcess.value = true;
+    }
+
     onMounted(()=>{
         const route = useRoute();
         if(route.query.start_kyc == 'true' && !kycCompleted.value) {
