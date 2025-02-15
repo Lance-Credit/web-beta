@@ -155,7 +155,11 @@
                         <div v-if="notifications.length" class="w-2 h-2 absolute top-3 right-2.5 bg-[#E70A3F] rounded-full"></div>
                     </NuxtLink>
                     <NuxtLink to="/settings" class="flex items-center gap-2">
-                        <div class="w-[44px] h-[44px] rounded-full bg-cover bg-[#9BA6B9] bg-[url('/assets/img/kofo.jpg')]"></div>
+                        <div v-if="!userProfile?.profilePicture" class="w-[44px] h-[44px] rounded-full bg-contain bg-no-repeat bg-[url('/assets/img/user.png')]"></div>
+                        <!-- <div v-else>
+                            <div v-if="userProfile?.gender === 'male'" class="w-[44px] h-[44px] rounded-full bg-cover bg-[#9BA6B9] bg-[url('/assets/img/male_avatar.png')]"></div>
+                            <div v-else class="w-[44px] h-[44px] rounded-full bg-cover bg-[#9BA6B9] bg-[url('/assets/img/female_avatar.png')]"></div>
+                        </div> -->
                         <p class="text-[#1E1721] font-medium">{{ fullName }}</p>
                     </NuxtLink>
                 </div>
@@ -174,7 +178,9 @@
 
     const { logOut } = useLogout();
 
-    const { fullName } = storeToRefs(useUserStore());
+    const { fullName, userProfile } = storeToRefs(useUserStore());
+    console.log("🚀 ~ userProfile:", userProfile)
+    console.log("🚀 ~ userProfile:", userProfile?.value?.profilePicture)
 
     const { fetchNotifications } = useNotificationsStore();
     const { notifications } = storeToRefs(useNotificationsStore());

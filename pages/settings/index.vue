@@ -199,7 +199,7 @@
                     </div>
                     <div v-show="!editingPersonalDetails">
                         <div class="py-6 border-b border-solid border-lance-black-5 flex items-center gap-6">
-                            <div class="w-[64px] h-[64px] rounded-full bg-[#9BA6B9] bg-[url('/assets/img/kofo.jpg')] bg-cover bg-no-repeat"></div>
+                            <div class="w-[64px] h-[64px] rounded-full bg-[url('/assets/img/user.png')] bg-contain bg-no-repeat"></div>
                             <div>
                                 <p class="text-[#1E1721] font-medium tracking-[-0.16px]">{{ fullName }}</p>
                             </div>
