@@ -24,11 +24,8 @@
                     </div>
                     <div class="py-1 px-6 rounded-[31px]" :class="transaction?.txnType == 'credit' ? 'bg-lance-green-5' : 'bg-[rgba(93,36,45,0.05)]'">
                         <p class="text-sm leading-[24px]" :class="transaction?.txnType == 'credit' ? 'text-lance-green' : 'text-[#5D242D]'">
-                            <span v-if="transaction?.txnType == 'loan-repay'">
-                                Loan Repayment
-                            </span>
-                            <span v-else>
-                                {{ transaction?.txnType == 'credit' ? 'Wallet Top-Up' : 'Wallet Withdrawal'}}
+                            <span>
+                                {{ transaction?.txnTypeForUi }}
                             </span>
                         </p>
                     </div>
@@ -82,7 +79,7 @@
     const props = defineProps<{
         transaction: null | Transaction
     }>();
-
+    
     function copyTransactionReference(){
         const text = props.transaction?.reference || '';
         navigator.clipboard.writeText(text);
