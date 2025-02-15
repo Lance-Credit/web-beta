@@ -30,6 +30,9 @@
                         </p>
                     </div>
                 </div>
+                <p v-show="transactionReferenceCopied" class="my-2 py-2 px-4 text-center text-[#272E2E] text-sm leading-6 rounded-[4px] border border-solid border-[#DAE0E0] bg-[#FAFCFC]">
+                    Copied to clipboard
+                </p>
                 <div class="mt-6 p-6 rounded-2xl bg-lance-black-5">
                     <ul class="tracking-[-0.16px] border-solid">
                         <li class="flex gap-2 pb-[18px] border-b border-[rgba(10,79,77,0.05)]">
@@ -83,6 +86,14 @@
     function copyTransactionReference(){
         const text = props.transaction?.reference || '';
         navigator.clipboard.writeText(text);
+        showTransactionReferenceCopied();
+    }
+
+    const transactionReferenceCopied:Ref <boolean> = ref(false);
+
+    function showTransactionReferenceCopied() {
+        transactionReferenceCopied.value = true;
+        setTimeout(()=> transactionReferenceCopied.value = false, 5000);
     }
 
     const emit = defineEmits<{
