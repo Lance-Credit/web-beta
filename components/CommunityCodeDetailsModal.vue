@@ -1,5 +1,5 @@
 <template>
-    <div  @click.self="emit('@close-community-code-details-modal')" class="fixed z-20 top-0 left-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex justify-center items-center">
+    <div @click.self="emit('@close-community-code-details-modal')" class="fixed z-20 top-0 left-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex justify-center items-center">
         <div class="bg-white w-[466px] p-10 rounded-3xl flex flex-col gap-6">
             <p class="text-lance-black font-medium text-xl leading-[26px] tracking-[-0.24px]">Your Code</p>
             <div class="text-center py-6 rounded-lg bg-lance-green-5 border border-solid border-lance-green">
@@ -56,7 +56,12 @@
                     </li>
                 </ul>
             </div>
-            <button @click="emit('@close-community-code-details-modal')" class="btn btn-primary">Close</button>
+            <div>
+                <p v-show="communityCodeCopied" class="mb-2 py-2 px-4 text-center text-[#272E2E] text-sm leading-6 rounded-[4px] border border-solid border-[#DAE0E0] bg-[#FAFCFC]">
+                    Copied to clipboard
+                </p>
+                <button @click="emit('@close-community-code-details-modal')" class="btn btn-primary w-full">Close</button>
+            </div>
         </div>
     </div>
 </template>
@@ -70,6 +75,14 @@
     function copyCode(){
         const text = props.code?.code || '';
         navigator.clipboard.writeText(text);
+        showCommunityCodeCopied();
+    }
+
+    const communityCodeCopied:Ref <boolean> = ref(false);
+
+    function showCommunityCodeCopied() {
+        communityCodeCopied.value = true;
+        setTimeout(()=> communityCodeCopied.value = false, 5000);
     }
 
     const emit = defineEmits<{
