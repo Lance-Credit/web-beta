@@ -93,13 +93,14 @@
             const signedIn = await signIn('credentials', { email: loginFormValues.email, password: loginFormValues.password, redirect: false, callbackUrl: '/dashboard' })
 
             if(!(signedIn as any).error){
-                navigateTo('/dashboard');
                 
                 const pinia = getActivePinia();
-    
-                pinia._s.forEach((store) => store.$reset());
-
+                
+                await pinia._s.forEach((store) => store.$reset());
+                
                 await fetchApiToken();
+                
+                navigateTo('/dashboard');
 
                 fetchUserProfile();
 
