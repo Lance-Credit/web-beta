@@ -199,7 +199,7 @@
     } = storeToRefs(useLoanHistoryStore());
 
     function showLoanRequestProcess(){
-        if(!loanHistory.value.length || !hasDirectDebit.value){
+        if(!loanHistory.value.length && !hasDirectDebit.value){
             fetchUserLinkedAccountAndBalance();
         }
         showLoanInstructions.value = false;

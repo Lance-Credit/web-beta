@@ -795,7 +795,7 @@
                                 </svg>
                             </div>
                             <p class="text-lance-black-60 tracking-[-0.16px]">
-                                By requiring a referral code, we ensure that our community remains a curated space of like-minded individuals who are genuinely invested in growth, collaboration, and support. This exclusive entry requirement not only guarantees the quality of connections but also opens the doors to unique benefits and opportunities reserved for our esteemed members.
+                                At Lance Credit, we're here to help you take control of your finances with ease. With our platform, you can give and receive loans within your trusted network or request funds directly quickly and on your terms. We're not just about lending; we're about empowering you to achieve your goals and build a stronger financial future with the people who matter most.
                             </p>
                         </div>
                     </div>
@@ -2158,24 +2158,24 @@
 
     const faqList = [
         {
-            title: 'Why do I need a referral code to join Lance?',
-            text: 'By requiring a referral code, we ensure that our community remains a curated space of like-minded individuals who are genuinely invested in growth, collaboration, and support. This exclusive entry requirement not only guarantees the quality of connections but also opens the doors to unique benefits and opportunities reserved for our esteemed members.'
+            title: 'What is Lance Credit, and how does it work?',
+            text: 'Lance Credit is a platform that helps individuals and businesses access loans quickly and easily. Users can currently request loans from each other or directly through the platform and manage their credit efficiently.'
         },
         {
-            title: 'Why do I need a referral code to join Lance?',
-            text: 'By requiring a referral code, we ensure that our community remains a curated space of like-minded individuals who are genuinely invested in growth, collaboration, and support. This exclusive entry requirement not only guarantees the quality of connections but also opens the doors to unique benefits and opportunities reserved for our esteemed members.'
+            title: 'Who can apply for a loan with Lance Credit?',
+            text: 'Individuals and small business owners who meet our eligibility criteria can apply for loans on our platform.'
         },
         {
-            title: 'Why do I need a referral code to join Lance?',
-            text: 'By requiring a referral code, we ensure that our community remains a curated space of like-minded individuals who are genuinely invested in growth, collaboration, and support. This exclusive entry requirement not only guarantees the quality of connections but also opens the doors to unique benefits and opportunities reserved for our esteemed members.'
+            title: 'Can I lend money to others on the platform?',
+            text: 'Currently, Lance Credit supports giving and receiving loans within your trusted network (available currently on mobile). Check our terms for details.'
         },
         {
-            title: 'Why do I need a referral code to join Lance?',
-            text: 'By requiring a referral code, we ensure that our community remains a curated space of like-minded individuals who are genuinely invested in growth, collaboration, and support. This exclusive entry requirement not only guarantees the quality of connections but also opens the doors to unique benefits and opportunities reserved for our esteemed members.'
+            title: 'Is my information secure on Lance Credit?',
+            text: 'Yes, we prioritize your privacy and use advanced security measures to keep your information safe.'
         },
         {
-            title: 'Why do I need a referral code to join Lance?',
-            text: 'By requiring a referral code, we ensure that our community remains a curated space of like-minded individuals who are genuinely invested in growth, collaboration, and support. This exclusive entry requirement not only guarantees the quality of connections but also opens the doors to unique benefits and opportunities reserved for our esteemed members.'
+            title: 'How long does it take to get approved for a loan?',
+            text: 'It typically takes less than 24 hours for your loan to get approved once you meet our eligibility criteria.'
         }
     ]
 
