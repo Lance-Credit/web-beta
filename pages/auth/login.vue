@@ -43,6 +43,8 @@
 <script setup lang="ts">
 
     import * as yup from 'yup';
+    
+    import { getActivePinia } from 'pinia'
 
     import { useUserStore } from '@/stores/user';
 
@@ -93,8 +95,9 @@
             if(!(signedIn as any).error){
                 navigateTo('/dashboard');
                 
-                $resetKYC();
-                $resetUserProfile();
+                const pinia = getActivePinia();
+    
+                pinia._s.forEach((store) => store.$reset());
 
                 await fetchApiToken();
 
