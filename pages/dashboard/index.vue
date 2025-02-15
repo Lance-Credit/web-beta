@@ -6,7 +6,7 @@
             <div class="mb-8 flex items-center justify-between">
                 <div>
                     <p class="mb-1 text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px]">
-                        Good afternoon, {{ userProfile?.firstName ? `${userProfile?.firstName[0].toUpperCase()}${userProfile?.firstName.substring(1)}` : '' }}
+                        Good {{dayTimeGreeting}}, {{ userProfile?.firstName ? `${userProfile?.firstName[0].toUpperCase()}${userProfile?.firstName.substring(1)}` : '' }}
                     </p>
                 </div>
                 <div class="flex gap-4 items-center">
@@ -249,6 +249,22 @@
     const { balance, hasDirectDebit, transactions } = storeToRefs(useWalletStore());
 
     const { userProfile } = storeToRefs(useUserStore());
+
+    const dayTimeGreeting = computed(() => {
+        const currHour = new Date().getHours();
+
+        switch (true) {
+            case currHour < 12 :
+                return 'morning';
+                break;
+            case currHour < 18:
+                return 'afternoon';
+                break;
+            default:
+                return 'evening';
+                break;
+        }
+    })
 
     const showLoanInstructions: Ref<boolean> = ref(false);
 
