@@ -179,8 +179,6 @@
     const { logOut } = useLogout();
 
     const { fullName, userProfile } = storeToRefs(useUserStore());
-    console.log("🚀 ~ userProfile:", userProfile)
-    console.log("🚀 ~ userProfile:", userProfile?.value?.profilePicture)
 
     const { fetchNotifications } = useNotificationsStore();
     const { notifications } = storeToRefs(useNotificationsStore());
