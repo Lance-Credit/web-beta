@@ -61,6 +61,7 @@ export default defineNuxtConfig({
   
   auth: {
     isEnabled: true,
+    baseURL: process.env.AUTH_ORIGIN
   },
 
   css: ['~/assets/css/main.css'],
