@@ -1,12 +1,12 @@
 import { NuxtAuthHandler } from '#auth'
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const { apiURL } = useRuntimeConfig().public;
+const { apiURL, authSecret } = useRuntimeConfig().public;
 
 
 export default NuxtAuthHandler({
     // A secret string you define, to ensure correct encryption
-    secret: process.env.AUTH_SECRET,
+    secret: `${authSecret}`,
     pages: {
         signIn: '/auth/login'
     },
