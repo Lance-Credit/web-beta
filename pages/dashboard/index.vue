@@ -243,6 +243,7 @@
         layout: 'dashboard'
     });
 
+    const { fetchKycStatus } = useKYCStore();
     const { kycItems, kycCompleted, waitedForKycFetch } = storeToRefs(useKYCStore());
 
     const { fetchUserLinkedAccountAndBalance } = useWalletStore();
@@ -302,6 +303,7 @@
     const continueKycProcess: Ref<boolean> = ref(false);
 
     function showKycProcess(){
+        fetchKycStatus();
         showKycSummary.value = false;
         continueKycProcess.value = true;
     }
@@ -323,6 +325,10 @@
         const route = useRoute();
         if(route.query.start_kyc == 'true' && !kycCompleted.value) {
             showKycSummary.value = true
+        }
+
+        if(!kycItems.value.kyc.completed){
+            fetchKycStatus();
         }
 
         setTimeout(async() => {

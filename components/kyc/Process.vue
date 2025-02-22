@@ -172,6 +172,7 @@
 
         <KYC-DojahModal v-show="startingDojahKyc" />
         <KYC-UnderReviewModal v-show="showKycSubmittedModal" @@close-kyc-under-review-modal="confirmDojahComplete(); showKycSubmittedModal = false" @@back-to-dashboard="kycBackToDashboard" />
+        <KYC-ReviewFailedModal v-show="showKycFailedModal" @@close-kyc-review-failed-modal="showKycFailedModal = false" />
         <KYC-MonoModal v-show="startingMonoKyc" />
     </div>
 </template>
@@ -197,13 +198,21 @@
 
     const showKycSubmittedModal: Ref<boolean> = ref(false);
 
+    const showKycFailedModal: Ref<boolean> = ref(false);
+
     async function startDojahKyc(){
         if(!userProfile) {
             return;
         }
 
-        if(kycItems.value.kyc.dojahInitiated) {
+        if(kycItems.value.kyc.state == 'pending') {
             showKycSubmittedModal.value = true;
+            confirmDojahComplete();
+            return;
+        }
+
+        if(kycItems.value.kyc.state == 'failed') {
+            showKycFailedModal.value = true;
             return;
         }
 
@@ -234,14 +243,16 @@
                 onSuccess: function (response: any) {
                     //   console.log('Success', response);
                     startingDojahKyc.value = false;
-                    kycItems.value.kyc.dojahInitiated = true;
+                    kycItems.value.kyc.state = 'pending';
                     showKycSubmittedModal.value = true;
                     confirmDojahComplete();
                 },
                 
                 onError: function (err: any) {
-                    console.log('Error', err);
+                    // console.log('Error', err);
+                    kycItems.value.kyc.state = 'failed';
                     startingDojahKyc.value = false;
+                    showKycFailedModal.value = true;
                 },
             
                 onClose: function () {
@@ -263,7 +274,6 @@
 
     function kycBackToDashboard() {
         showKycSubmittedModal.value = false;
-        confirmDojahComplete();
         navigateTo(
             '/dashboard',
             {
@@ -274,10 +284,13 @@
     
     async function confirmDojahComplete(){
         if(!kycItems.value.kyc.completed){
-            setTimeout(async() => {
+            const requeryKyc = setInterval(async() => {
                 await fetchKycStatus();
-                confirmDojahComplete();
-            }, 60000);
+            }, 30000);
+
+            setTimeout(async() => {
+                clearInterval(requeryKyc);
+            }, 180000);
         }
     }
     

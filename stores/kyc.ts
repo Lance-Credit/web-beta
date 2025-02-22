@@ -15,7 +15,7 @@ export const useKYCStore = defineStore('kyc', () =>
             },
             kyc: {
                 completed: false,
-                dojahInitiated: false
+                state: ''
             },
             id: {
                 completed: false
@@ -52,6 +52,8 @@ export const useKYCStore = defineStore('kyc', () =>
                 
                 waitedForKycFetch.value = true;
 
+                kycItems.value.kyc.state = (result as any).data.verification.kyc.verificationStatus;
+
                 if(
                     (result as any).data.verification.phone && (result as any).data.verification.phone.verificationStatus == 'successful' &&
                     (result as any).data.verification.email && (result as any).data.verification.email.verificationStatus == 'successful'
@@ -63,14 +65,10 @@ export const useKYCStore = defineStore('kyc', () =>
 
                 if((result as any).data.verification.kyc && (result as any).data.verification.kyc.verificationStatus == 'successful'){
                     kycItems.value.kyc.completed = true;
-                }else{
-                    kycItems.value.kyc.completed = false;
-                }
-                
-                if((result as any).data.verification.kyc && (result as any).data.verification.kyc.verificationStatus == 'successful'){
                     kycItems.value.id.completed = true;
                     kycItems.value.personalDetails.completed = true;
                 }else{
+                    kycItems.value.kyc.completed = false;
                     kycItems.value.id.completed = false;
                     kycItems.value.personalDetails.completed = false;
                 }
@@ -90,7 +88,7 @@ export const useKYCStore = defineStore('kyc', () =>
                 },
                 kyc: {
                     completed: false,
-                    dojahInitiated: false
+                    state: ''
                 },
                 id: {
                     completed: false
@@ -113,7 +111,7 @@ export const useKYCStore = defineStore('kyc', () =>
                 },
                 kyc: {
                     completed: false,
-                    dojahInitiated: false
+                    state: ''
                 },
                 id: {
                     completed: false
