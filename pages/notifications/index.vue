@@ -86,7 +86,7 @@
 
                 fetchedLoan.value = (result as any).data;
 
-                if(((result as any).data.status === 'inactive' && (result as any).data.adminApproved) || (result as any).data.status === 'declined') {
+                if((result as any).data.status === 'inactive' && (result as any).data.adminApproved) {
                     showLoanOfferView.value = true;
                 } else {
                     showSelectedLoanDetails.value = true;
