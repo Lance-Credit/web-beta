@@ -171,9 +171,11 @@
 <script setup lang="ts">
 
     import * as yup from 'yup';
+    import { getActivePinia } from 'pinia'
 
-    const { $resetKYC } = useKYCStore();
     
+    const { $resetKYC } = useKYCStore();
+
     const { fetchApiToken } = useTokenStore();
     
     const { $resetUserProfile, fetchUserProfile } = useUserStore();
@@ -426,6 +428,10 @@
                 const signedIn = await signIn('credentials', { email: signupFormValues.email, password: signupFormValues.password, redirect: false, callbackUrl: '/dashboard' })
     
                 if(!(signedIn as any).error){
+
+                    const pinia = getActivePinia();
+                    
+                    await pinia._s.forEach((store) => store.$reset());
 
                     await fetchApiToken();
                 
