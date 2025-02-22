@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div
-                @click="showKycSummary = true" v-if="!kycCompleted"
+                @click="showKycSummary = true" v-if="waitedForKycFetch && !kycCompleted"
                 class="mb-6 rounded-xl bg-white border border-solid border-lance-green-20 py-6 px-10 flex items-center justify-between cursor-pointer">
                 <div class="flex gap-4 items-center">                    
                     <div class="w-16 h-16 rounded-full flex items-center justify-center relative">
@@ -243,7 +243,7 @@
         layout: 'dashboard'
     });
 
-    const { kycItems, kycCompleted } = storeToRefs(useKYCStore());
+    const { kycItems, kycCompleted, waitedForKycFetch } = storeToRefs(useKYCStore());
 
     const { fetchUserLinkedAccountAndBalance } = useWalletStore();
     const { balance, hasDirectDebit, transactions } = storeToRefs(useWalletStore());

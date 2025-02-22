@@ -25,6 +25,8 @@ export const useKYCStore = defineStore('kyc', () =>
             }
         });
 
+        const waitedForKycFetch: Ref<boolean> = ref(false);
+
         const kycCompleted = computed(() => {
             return kycItems.value.account.completed && kycItems.value.personalDetails.completed &&
             kycItems.value.kyc.completed && kycItems.value.id.completed &&
@@ -47,6 +49,9 @@ export const useKYCStore = defineStore('kyc', () =>
             const result = await apiFetch('verifications');
 
             if ((result as any).success && !(result as any).error) {
+                
+                waitedForKycFetch.value = true;
+
                 if(
                     (result as any).data.verification.phone && (result as any).data.verification.phone.verificationStatus == 'successful' &&
                     (result as any).data.verification.email && (result as any).data.verification.email.verificationStatus == 'successful'
@@ -94,6 +99,8 @@ export const useKYCStore = defineStore('kyc', () =>
                     completed: false
                 }
             };
+
+            waitedForKycFetch.value = false;
         }
 
         function $resetKYC() {
@@ -115,9 +122,11 @@ export const useKYCStore = defineStore('kyc', () =>
                     completed: false
                 }
             };
+
+            waitedForKycFetch.value = false;
         }
         
-        return { kycItems, kycCompleted, fetchKycStatus, $reset, $resetKYC }
+        return { kycItems, kycCompleted, fetchKycStatus, waitedForKycFetch, $reset, $resetKYC }
     },
     {
         persist: true,
