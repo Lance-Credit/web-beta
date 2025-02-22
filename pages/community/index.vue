@@ -31,7 +31,7 @@
                         Our community codes system is a framework designed to promote trust and safety within our lending and borrowing community. These codes establish a set of guidelines and standards that all members agree to follow, ensuring ethical conduct and fostering a positive environment for all participants.
                     </p>
                 </div>
-                <button @click="fetchCommunityCodes" class="btn btn-primary w-[282px]" :class="{'loading' : fetchingCommunityCodes}" :disabled="fetchingCommunityCodes">
+                <button @click="kycCompleted ? fetchCommunityCodes() : showKycIncompleteModal = true" class="btn btn-primary w-[282px]" :class="{'loading' : fetchingCommunityCodes}" :disabled="fetchingCommunityCodes">
                     <span v-show="!fetchingCommunityCodes">Invite Someone</span>
                     <Loader-Basic v-show="fetchingCommunityCodes" bg="#FFF" fg="#C3E48E" />
                 </button>
@@ -74,6 +74,8 @@
         </div>
 
         <CommunityCodeDetailsModal v-show="showCommunityCodeDetailsModal" :code="selectedCode" @@close-community-code-details-modal="showCommunityCodeDetailsModal = false"/>
+
+        <KYC-IncompleteKycNotificationModal v-if="!kycCompleted" v-show="showKycIncompleteModal" @@proceed-to-kyc-process="navigateTo('/dashboard?start_kyc=true')" @@close-kyc-incomplete-modal="showKycIncompleteModal = false;" />
     </div>
 </template>
 
@@ -84,8 +86,12 @@
         layout: 'dashboard'
     });
 
-    const showCommunityCodes: Ref<boolean> = ref(false);
+    const { kycCompleted } = storeToRefs(useKYCStore());
     
+    const showCommunityCodes: Ref<boolean> = ref(false);
+        
+    const showKycIncompleteModal: Ref<boolean> = ref(false);
+
     const communityCodes: Ref<CommunityCode[] | null> = ref(null);
 
     const fetchingCommunityCodes: Ref<boolean> = ref(false);
