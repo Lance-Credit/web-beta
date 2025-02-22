@@ -891,8 +891,7 @@
             nextOfKinPhoneNumber: yup.string().required().label('Phone Number'),
             nextOfKinRelationship: yup.string().required().label('Relationship'),
 
-            currPassword: yup.string().required()
-            .matches(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$"), 'Current Password is not in correct format').matches(/^.{8,}$/, 'Current Password must be a minimum of 8 characters in length').label('Current Password'),
+            currPassword: yup.string().required().label('Current Password'),
             newPassword: yup.string().required()
             .matches(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$"), 'Password is not in correct format')
             .matches(/^.{8,}$/, 'Password must be a minimum of 8 characters in length').label('Password'),
