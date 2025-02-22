@@ -314,9 +314,8 @@
     const continueLoanRequestProcess: Ref<boolean> = ref(false);
         
     function showLoanRequestProcess(){
-        if(!loanHistory.value.length && !hasDirectDebit.value){
-            fetchUserLinkedAccountAndBalance();
-        }
+        fetchUserLinkedAccountAndBalance();
+        
         showLoanInstructions.value = false;
         continueLoanRequestProcess.value = true;
     }
