@@ -246,6 +246,7 @@
     async function loanRepaymentSuccessful(){
         showLoanRepaymentModal.value = false;
         fetchLoanHistory();
+        fetchUserLinkedAccountAndBalance();
     }
 
 </script>
