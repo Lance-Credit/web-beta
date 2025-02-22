@@ -107,6 +107,7 @@
                 fetchLoanHistory();
             }else{
                 loginError.value = (signedIn as any).error;
+                setTimeout(() => loginError.value = '', 3000);
                 submittingLoginForm.value = false;
             }
         }

@@ -693,6 +693,12 @@
                         </div>
                     </div>
                     <div>
+                        <div class="pt-6">
+                            <div class="flex">
+                                <div class="w-[320px]"></div>
+                                <Form-ErrorNotification v-if="passwordChangeError" :message="passwordChangeError" class="w-[376px]" />
+                            </div>
+                        </div>
                         <div class="py-6 border-b border-solid border-lance-black-5">
                             <div class="flex">
                                 <p class="w-[320px] text-[#1E1721] font-medium tracking-[-0.16px]">Current Password</p>
@@ -2132,6 +2138,8 @@
 
     const passwordUpdated: Ref<boolean> = ref(false);
 
+    const passwordChangeError: Ref<string> = ref('');
+
     async function updatePassword(){
         savingNewPassword.value = true;
 
@@ -2149,6 +2157,8 @@
             passwordUpdated.value = true;
         } else {
             savingNewPassword.value = false;
+            passwordChangeError.value = (result as any).error;
+            setTimeout(() => passwordChangeError.value = '', 5000);
             // console.log((result as any).error);
         }
     }
