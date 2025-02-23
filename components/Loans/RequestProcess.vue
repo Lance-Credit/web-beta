@@ -37,7 +37,7 @@
                         </p>
                     </div>
                 </div>
-                <button @click="activeTab = 'summary'" class="btn btn-primary" :disabled="!loanRequestFormFilled || !loanSummary">Next</button>
+                <button @click="showLoanSummaryTab" class="btn btn-primary" :disabled="!loanRequestFormFilled || !loanSummary">Next</button>
             </div>
 
             <div v-show="activeTab == 'summary'" class="flex flex-col gap-6 w-[386px] mx-auto">
@@ -283,6 +283,11 @@
                 // console.log((result as any).error);
             }
         }
+    }
+
+    async function showLoanSummaryTab() {
+        fetchUserLinkedAccountAndBalance();
+        activeTab.value = 'summary';
     }
     
     const showDirectDebitInfoModal: Ref<boolean> = ref(false);

@@ -180,7 +180,7 @@
     const showKycIncompleteModal: Ref<boolean> = ref(false);
     
     const { fetchUserLinkedAccountAndBalance } = useWalletStore();
-    const { balance, hasDirectDebit } = storeToRefs(useWalletStore());
+    const { balance } = storeToRefs(useWalletStore());
 
     const { loanSettings } = storeToRefs(useLoanHistoryStore());
         
@@ -199,8 +199,6 @@
     } = storeToRefs(useLoanHistoryStore());
 
     function showLoanRequestProcess(){
-        fetchUserLinkedAccountAndBalance();
-        
         showLoanInstructions.value = false;
         continueLoanRequestProcess.value = true;
     }

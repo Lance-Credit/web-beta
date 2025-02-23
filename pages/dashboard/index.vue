@@ -246,7 +246,6 @@
     const { fetchKycStatus } = useKYCStore();
     const { kycItems, kycCompleted, waitedForKycFetch } = storeToRefs(useKYCStore());
 
-    const { fetchUserLinkedAccountAndBalance } = useWalletStore();
     const { balance, transactions } = storeToRefs(useWalletStore());
 
     const { userProfile } = storeToRefs(useUserStore());
@@ -314,8 +313,6 @@
     const continueLoanRequestProcess: Ref<boolean> = ref(false);
         
     function showLoanRequestProcess(){
-        fetchUserLinkedAccountAndBalance();
-
         showLoanInstructions.value = false;
         continueLoanRequestProcess.value = true;
     }
