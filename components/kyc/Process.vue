@@ -288,6 +288,10 @@
 
             setTimeout(async() => {
                 clearInterval(requeryKyc);
+                await fetchKycStatus();
+                if(!kycItems.value.kyc.completed){
+                    kycItems.value.kyc.state = '';
+                }
             }, 180000);
         }
     }
