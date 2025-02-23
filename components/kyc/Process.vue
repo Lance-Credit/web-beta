@@ -251,7 +251,8 @@
                 },
                 
                 onError: function (err: any) {
-                    // console.log('Error', err);
+                    console.log('Error', err);
+                    connect.close();
                     kycItems.value.kyc.state = 'failed';
                     startingDojahKyc.value = false;
                     showKycFailedModal.value = true;
