@@ -52,8 +52,8 @@
     
     const { fetchApiToken } = useTokenStore();
     
+    const { fetchUserProfile } = useUserStore();
     const { fetchLoanHistory } = useLoanHistoryStore();
-    const { $resetUserProfile, fetchUserProfile } = useUserStore();
 
     definePageMeta({
         middleware: 'auth',

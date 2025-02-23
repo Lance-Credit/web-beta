@@ -178,7 +178,7 @@
 
     const { fetchApiToken } = useTokenStore();
     
-    const { $resetUserProfile, fetchUserProfile } = useUserStore();
+    const { fetchUserProfile } = useUserStore();
 
     const { formattedPhoneNumberForPayload } = useFormattedPhoneNumberForPayload();
     
@@ -436,7 +436,6 @@
                     await fetchApiToken();
                 
                     $resetKYC();
-                    $resetUserProfile();
     
                     fetchUserProfile();
     

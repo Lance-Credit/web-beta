@@ -247,7 +247,7 @@
     const { kycItems, kycCompleted, waitedForKycFetch } = storeToRefs(useKYCStore());
 
     const { fetchUserLinkedAccountAndBalance } = useWalletStore();
-    const { balance, hasDirectDebit, transactions } = storeToRefs(useWalletStore());
+    const { balance, transactions } = storeToRefs(useWalletStore());
 
     const { userProfile } = storeToRefs(useUserStore());
 
@@ -308,14 +308,14 @@
         continueKycProcess.value = true;
     }
 
-    const { activeLoan, loanSettings, loanHistory, percentageLoanPaid, activeLoanTotalPaid } = storeToRefs(useLoanHistoryStore());
+    const { activeLoan, loanSettings, percentageLoanPaid, activeLoanTotalPaid } = storeToRefs(useLoanHistoryStore());
     
 
     const continueLoanRequestProcess: Ref<boolean> = ref(false);
         
     function showLoanRequestProcess(){
         fetchUserLinkedAccountAndBalance();
-        
+
         showLoanInstructions.value = false;
         continueLoanRequestProcess.value = true;
     }

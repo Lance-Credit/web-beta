@@ -71,12 +71,8 @@ export const useUserStore = defineStore('user', () =>
         function $reset() {
             userProfile.value = null
         }
-
-        function $resetUserProfile() {
-            userProfile.value = null
-        }
         
-        return { userProfile, fullName, fetchUserProfile, $reset, $resetUserProfile }
+        return { userProfile, fullName, fetchUserProfile, $reset }
     },
     {
         persist: true,

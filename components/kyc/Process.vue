@@ -183,6 +183,7 @@
 
     
     const { fetchKycStatus } = useKYCStore();
+    const { fetchUserProfile } = useUserStore();
     const { kycItems } = storeToRefs(useKYCStore());
     const { userProfile } = storeToRefs(useUserStore());
     
@@ -201,8 +202,9 @@
     const showKycFailedModal: Ref<boolean> = ref(false);
 
     async function startDojahKyc(){
-        if(!userProfile) {
-            return;
+        if(!userProfile.value) {
+            await fetchUserProfile();
+            startDojahKyc();
         }
 
         if(kycItems.value.kyc.state == 'pending') {
