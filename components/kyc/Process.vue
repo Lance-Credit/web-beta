@@ -172,7 +172,8 @@
 
         <KYC-DojahModal v-show="startingDojahKyc" />
         <KYC-UnderReviewModal v-show="showKycSubmittedModal" @@close-kyc-under-review-modal="confirmDojahComplete(); showKycSubmittedModal = false" @@back-to-dashboard="kycBackToDashboard" />
-        <KYC-ReviewFailedModal v-show="showKycFailedModal" @@close-kyc-review-failed-modal="showKycFailedModal = false" />
+        <KYC-ReviewFailedModal v-show="showKycFailedModal" 
+        @@close-kyc-review-failed-modal="showKycFailedModal = false" @@back-to-dashboard="kycBackToDashboard" />
         <KYC-MonoModal v-show="startingMonoKyc" />
     </div>
 </template>

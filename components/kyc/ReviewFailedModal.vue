@@ -44,7 +44,7 @@
                 </p>
             </div>
             <div class="flex gap-4">
-                <NuxtLink to="/dashboard" :external="true" class="btn btn-secondary w-full">Back to Dashboard</NuxtLink>
+                <button @click="emit('@back-to-dashboard')" class="btn btn-secondary w-full">Back to Dashboard</button>
                 <NuxtLink to="mailto:support@lancecredit.com" class="btn btn-primary w-full">Contact Support</NuxtLink>
             </div>
         </div>
@@ -54,6 +54,7 @@
 <script setup lang="ts">
 
     const emit = defineEmits<{
+        '@back-to-dashboard' : [],
         '@close-kyc-review-failed-modal' : []
     }>();
 
