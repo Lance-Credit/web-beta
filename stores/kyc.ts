@@ -52,7 +52,10 @@ export const useKYCStore = defineStore('kyc', () =>
                 
                 waitedForKycFetch.value = true;
 
-                kycItems.value.kyc.state = (result as any).data.verification.kyc.verificationStatus;
+                const kycState = (result as any).data.verification.kyc.verificationStatus;
+                if(kycState === 'pending' || kycState === 'failed') {
+                    kycItems.value.kyc.state = kycState;
+                }
 
                 if(
                     (result as any).data.verification.phone && (result as any).data.verification.phone.verificationStatus == 'successful' &&
@@ -63,7 +66,7 @@ export const useKYCStore = defineStore('kyc', () =>
                     kycItems.value.account.completed = false;
                 }
 
-                if((result as any).data.verification.kyc && (result as any).data.verification.kyc.verificationStatus == 'successful'){
+                if((result as any).data.verification.kyc && kycState == 'successful'){
                     kycItems.value.kyc.completed = true;
                     kycItems.value.id.completed = true;
                     kycItems.value.personalDetails.completed = true;

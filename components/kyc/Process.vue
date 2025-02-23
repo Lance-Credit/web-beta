@@ -277,12 +277,7 @@
 
     function kycBackToDashboard() {
         showKycSubmittedModal.value = false;
-        navigateTo(
-            '/dashboard',
-            {
-                external: true
-            }
-        );
+        emit('@stop-kyc-process');
     }
     
     async function confirmDojahComplete(){
