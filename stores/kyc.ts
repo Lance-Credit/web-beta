@@ -39,10 +39,12 @@ export const useKYCStore = defineStore('kyc', () =>
 
             await fetchUserVerifications();
 
-            if(kycCompleted.value){
+            if(kycItems.value.kyc.completed){
                 await fetchUserLinkedAccountAndBalance();
             }
             
+            waitedForKycFetch.value = true;
+
             kycItems.value.linkedBankAccount.completed = linkedAccount.value ? true : false;
         }
 
@@ -51,10 +53,8 @@ export const useKYCStore = defineStore('kyc', () =>
             const result = await apiFetch('verifications');
 
             if ((result as any).success && !(result as any).error) {
-                
-                waitedForKycFetch.value = true;
 
-                const kycState = (result as any).data.verification.kyc.verificationStatus;
+                const kycState = (result as any).data.verification.kyc ? (result as any).data.verification.kyc.verificationStatus : '';
                 if(kycState === 'pending' || kycState === 'failed') {
                     kycItems.value.kyc.state = kycState;
                 }
@@ -68,7 +68,7 @@ export const useKYCStore = defineStore('kyc', () =>
                     kycItems.value.account.completed = false;
                 }
 
-                if((result as any).data.verification.kyc && kycState == 'successful'){
+                if(kycState == 'successful'){
                     kycItems.value.kyc.completed = true;
                     kycItems.value.id.completed = true;
                     kycItems.value.personalDetails.completed = true;
