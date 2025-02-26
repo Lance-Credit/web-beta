@@ -306,7 +306,7 @@
                             </svg>
                         </div>
                         <div class="py-6 border-b border-solid border-lance-black-5 flex items-center gap-6">
-                            <div class="w-[64px] h-[64px] rounded-full bg-[#9BA6B9] bg-[url('/assets/img/kofo.jpg')] bg-cover bg-no-repeat"></div>
+                            <div class="w-[64px] h-[64px] rounded-full bg-[url('/assets/img/user.png')] bg-contain bg-no-repeat"></div>
                             <div>
                                 <p class="text-[#1E1721] font-medium tracking-[-0.16px]">{{ fullName }}</p>
                             </div>
@@ -1949,12 +1949,34 @@
         }
     ]
 
+    const isUpdatedMaritalStatus = computed(() => {
+        return (settingsFormValues.maritalStatus != userProfile.value?.maritalStatus) && !settingsFormErrors.value.maritalStatus;
+    });
+
+    const isUpdatedEducationLevel = computed(() => {
+        return (settingsFormValues.educationLevel != userProfile.value?.educationLevel) && !settingsFormErrors.value.educationLevel;
+    });
+
+    const isUpdatedResidentialAddress = computed(() => {
+        return (settingsFormValues.residentialAddress != userProfile.value?.address.street) && !settingsFormErrors.value.residentialAddress;
+    });
+
+    const isUpdatedResidentialCity = computed(() => {
+        return (settingsFormValues.city != userProfile.value?.address.city) && !settingsFormErrors.value.city;
+    });
+
+    const isUpdatedResidentialState = computed(() => {
+        return (settingsFormValues.state != userProfile.value?.address.state) && !settingsFormErrors.value.state;
+    });
+
+    const addressIsUpdated = computed(() => {
+        return (isUpdatedResidentialAddress.value || isUpdatedResidentialCity.value || isUpdatedResidentialState.value) &&
+        settingsFormValues.residentialAddress && !settingsFormErrors.value.residentialAddress && settingsFormValues.city && !settingsFormErrors.value.city && settingsFormValues.state && !settingsFormErrors.value.state;
+    });
+
     const personalDetailsFilled = computed(() => {
-        return settingsFormValues.maritalStatus && !settingsFormErrors.value.maritalStatus &&
-        settingsFormValues.educationLevel && !settingsFormErrors.value.educationLevel &&
-        settingsFormValues.residentialAddress && !settingsFormErrors.value.residentialAddress &&
-        settingsFormValues.city && !settingsFormErrors.value.city &&
-        settingsFormValues.state && !settingsFormErrors.value.state;
+        return isUpdatedMaritalStatus.value || isUpdatedEducationLevel.value ||
+        addressIsUpdated.value;
     });
 
     const savingPersonalDetails: Ref<boolean> = ref(false);
@@ -1966,19 +1988,22 @@
 
     async function savePersonalDetails(){
         savingPersonalDetails.value = true;
+
+        const personalDetailsData = {
+            maritalStatus: isUpdatedMaritalStatus.value ? settingsFormValues.maritalStatus : undefined,
+            levelOfEducation: isUpdatedEducationLevel.value ? settingsFormValues.educationLevel : undefined,
+            address: addressIsUpdated.value ? {
+                street: settingsFormValues.residentialAddress,
+                city: settingsFormValues.city,
+                state: settingsFormValues.state,
+                country: 'Nigeria'
+            } : undefined
+        }
+        
         const result = await apiFetch(
             'profile',
             'PATCH',
-            {
-                maritalStatus: settingsFormValues.maritalStatus,
-                levelOfEducation: settingsFormValues.educationLevel,
-                address: {
-                    street: settingsFormValues.residentialAddress,
-                    city: settingsFormValues.city,
-                    state: settingsFormValues.state,
-                    country: 'Nigeria'
-                },
-            }
+            personalDetailsData
         );
 
         if((result as any).success && !(result as any).error){
