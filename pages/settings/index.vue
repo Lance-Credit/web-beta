@@ -1999,7 +1999,7 @@
                 country: 'Nigeria'
             } : undefined
         }
-        
+
         const result = await apiFetch(
             'profile',
             'PATCH',
@@ -2081,8 +2081,28 @@
 
     const savingNextOfKinDetails: Ref<boolean> = ref(false);
 
+    const isUpdatedNextOfKinFirstName = computed(() => {
+        return (settingsFormValues.nextOfKinFirstName != nextOfKinDetails.value?.firstName) && !settingsFormErrors.value.nextOfKinFirstName;
+    });
+
+    const isUpdatedNextOfKinRelationship = computed(() => {
+        return (settingsFormValues.nextOfKinRelationship != nextOfKinDetails.value?.relationship) && !settingsFormErrors.value.nextOfKinRelationship;
+    });
+
+    const isUpdatedNextOfKinPhoneNumber = computed(() => {
+        return (settingsFormValues.nextOfKinPhoneNumber != nextOfKinDetails.value?.phoneNumber) && !settingsFormErrors.value.nextOfKinPhoneNumber;
+    });
+
+    const isUpdatedNextOfKinlastName = computed(() => {
+        return (settingsFormValues.nextOfKinLastName != nextOfKinDetails.value?.lastName) && !settingsFormErrors.value.nextOfKinLastName;
+    });
+
+    const isUpdatedNextOfKinEmail = computed(() => {
+        return (settingsFormValues.nextOfKinEmail != nextOfKinDetails.value?.email) && !settingsFormErrors.value.nextOfKinEmail;
+    });
+
     const nextOfKinDetailsFilled = computed(() => {
-        return settingsFormValues.nextOfKinFirstName && !settingsFormErrors.value.nextOfKinFirstName &&
+        return (isUpdatedNextOfKinFirstName.value || isUpdatedNextOfKinRelationship.value || isUpdatedNextOfKinPhoneNumber.value || isUpdatedNextOfKinlastName.value || isUpdatedNextOfKinEmail.value) && settingsFormValues.nextOfKinFirstName && !settingsFormErrors.value.nextOfKinFirstName &&
         settingsFormValues.nextOfKinRelationship && !settingsFormErrors.value.nextOfKinRelationship &&
         settingsFormValues.nextOfKinPhoneNumber && !settingsFormErrors.value.nextOfKinPhoneNumber &&
         settingsFormValues.nextOfKinLastName && !settingsFormErrors.value.nextOfKinLastName &&
