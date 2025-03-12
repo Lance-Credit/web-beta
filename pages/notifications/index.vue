@@ -45,7 +45,7 @@
     const { fetchNotifications } = useNotificationsStore();
     const { notifications } = storeToRefs(useNotificationsStore());
 
-    const { approvedLoan } = storeToRefs(useLoanHistoryStore());
+    const { approvedLoan, loanHistory } = storeToRefs(useLoanHistoryStore());
 
     onMounted(() => {
         fetchNotifications();
@@ -68,24 +68,35 @@
     }
 
     async function showLoanOfferOrDetails(notification: Notification){
-        if(notification.metadata.resourceType === 'loan') {
-            const result = await apiFetch(`loans/${notification.metadata.reference}`);
+        const notificationResourceId = notification.metadata.resourceId || notification.metadata.reference;
 
+        const loan = loanHistory.value.find((loan) => loan.reference == notificationResourceId);
+
+        if(loan) {
+            fetchedLoan.value = loan;
+            if(loan.status === 'inactive' && loan.adminApproved) {
+                showLoanOfferView.value = true;
+            } else {
+                showSelectedLoanDetails.value = true;
+            }
+        } else {
+            const result = await apiFetch(`loans/${notificationResourceId}`);
+    
             if((result as any).success && !(result as any).error){
-
+    
                 (result as any).data.amount = (result as any).data.amount / 100;
                 (result as any).data.totalRepaymentAmount = (result as any).data.totalRepaymentAmount / 100;
                 (result as any).data.monthlyRepaymentAmount = (result as any).data.monthlyRepaymentAmount / 100;
-
+    
                 const schedules = (result as any).data.schedule.map((schedule: any) => {
                     schedule.amount = schedule.amount / 100;
                     return schedule;
                 });
                 
                 (result as any).data.schedule = schedules;
-
+    
                 fetchedLoan.value = (result as any).data;
-
+    
                 if((result as any).data.status === 'inactive' && (result as any).data.adminApproved) {
                     showLoanOfferView.value = true;
                 } else {
