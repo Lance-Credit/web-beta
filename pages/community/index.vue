@@ -87,12 +87,10 @@
     });
 
     const { kycCompleted } = storeToRefs(useKYCStore());
-    
-    const showCommunityCodes: Ref<boolean> = ref(false);
+
+    const { communityCodes, showCommunityCodes } = storeToRefs(useCommunityCodesStore());
         
     const showKycIncompleteModal: Ref<boolean> = ref(false);
-
-    const communityCodes: Ref<CommunityCode[] | null> = ref(null);
 
     const fetchingCommunityCodes: Ref<boolean> = ref(false);
 
