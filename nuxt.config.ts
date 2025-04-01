@@ -29,7 +29,7 @@ export default defineNuxtConfig({
     },
     { path: '~/components/auth', prefix: 'Auth' },
     {
-      path: '~/components/loans',
+      path: '~/components/Loans',
       prefix: 'Loans',
       isAsync: true
     },
