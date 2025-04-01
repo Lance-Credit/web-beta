@@ -428,10 +428,8 @@
                 const signedIn = await signIn('credentials', { email: signupFormValues.email, password: signupFormValues.password, redirect: false, callbackUrl: '/dashboard' })
     
                 if(!(signedIn as any).error){
-
-                    const pinia = getActivePinia();
-                    
-                    await pinia._s.forEach((store) => store.$reset());
+                    const { resetStores } = useResetStores();
+                    resetStores();
 
                     await fetchApiToken();
                 
