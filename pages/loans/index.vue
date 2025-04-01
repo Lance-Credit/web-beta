@@ -51,7 +51,7 @@
                                 </div>
                             </div>
                             <div class="border-t border-solid border-lance-black-5 pt-4 flex gap-6">
-                                <button @click="viewLoanDetails(activeLoan)" class="btn btn-tertiary w-full">See Loan Details</button>
+                                <button @click="activeLoan ? viewLoanDetails(activeLoan) : ''" class="btn btn-tertiary w-full">See Loan Details</button>
                                 <button @click="showLoanRepaymentModal = true" class="btn btn-primary w-full">Make a Repayment</button>
                             </div>
                         </div>

@@ -28,10 +28,10 @@
                 </li>
             </ul>
         </div>
-        <Loans-DetailsModal @@close-loan-details-modal="showSelectedLoanDetails = false" v-show="showSelectedLoanDetails" :loan="fetchedLoan" />
-        <Loans-OfferView v-if="approvedLoan" @@close-loan-details-modal="showLoanOfferView = false" v-show="showLoanOfferView" :loan="fetchedLoan" />
+        <Notifications-LoanDetailsModal @@close-modal="showSelectedLoanDetails = false" v-show="showSelectedLoanDetails" :notificationData="fetchedNotificationDetails" />
+        <Notifications-LoansOfferView v-if="approvedLoan" @@close-modal="showLoanOfferView = false" v-show="showLoanOfferView" :notificationData="fetchedNotificationDetails" />
 
-        <Notifications-TransactionDetailsModal @@close-modal="showSelectedTransactionDetails = false" v-show="showSelectedTransactionDetails" :notificationData="fetchedTransactionNotification" />
+        <Notifications-TransactionDetailsModal @@close-modal="showSelectedTransactionDetails = false" v-show="showSelectedTransactionDetails" :notificationData="fetchedNotificationDetails" />
     </div>
 </template>
 
@@ -47,7 +47,7 @@
     const { fetchNotifications } = useNotificationsStore();
     const { notifications, notificationDetailsCache } = storeToRefs(useNotificationsStore());
 
-    const { approvedLoan, loanHistory } = storeToRefs(useLoanHistoryStore());
+    const { approvedLoan } = storeToRefs(useLoanHistoryStore());
 
     onMounted(() => {
         fetchNotifications();
@@ -55,8 +55,7 @@
 
     const { apiFetch } = useApiFetch();
 
-    const fetchedLoan: Ref<Loan | null> = ref(null);
-    const fetchedTransactionNotification: Ref<NotificationDetails | null> = ref(null);
+    const fetchedNotificationDetails: Ref<NotificationDetails | null> = ref(null);
 
     const showLoanOfferView: Ref<boolean> = ref(false);
     
@@ -73,13 +72,13 @@
     }
 
     async function showLoanOfferOrDetails(notification: Notification){
-        const notificationResourceId = notification.metadata.resourceId;
+        const notificationResourceId = notification.metadata.resourceId || notification.metadata.reference;
 
-        const loan = loanHistory.value.find((loan) => loan.reference == notificationResourceId);
+        const cachedNotification = notificationDetailsCache.value.find((notificationDetails) => notificationDetails.resourceId == notificationResourceId);
 
-        if(loan) {
-            fetchedLoan.value = loan;
-            if(loan.status === 'inactive' && loan.adminApproved) {
+        if(cachedNotification) {
+            fetchedNotificationDetails.value = cachedNotification;
+            if(cachedNotification.data.status === 'inactive' && cachedNotification.data.adminApproved) {
                 showLoanOfferView.value = true;
             } else {
                 showSelectedLoanDetails.value = true;
@@ -100,7 +99,9 @@
                 
                 (result as any).data.schedule = schedules;
     
-                fetchedLoan.value = (result as any).data;
+                const notificationDataResult = {resourceId: notificationResourceId, title: notification.title, data: (result as any).data}
+
+                fetchedNotificationDetails.value = notificationDataResult;
     
                 if((result as any).data.status === 'inactive' && (result as any).data.adminApproved) {
                     showLoanOfferView.value = true;
@@ -108,10 +109,10 @@
                     showSelectedLoanDetails.value = true;
                 }
 
-                // const notificationCache: NotificationDetails[] = notificationDetailsCache.value;
-                // notificationCache.push({resourceId: notificationResourceId, data: {}})
-
-                // notificationDetailsCache.value = notificationCache;
+                const notificationCache: NotificationDetails[] = notificationDetailsCache.value;
+                notificationCache.push(notificationDataResult);
+    
+                notificationDetailsCache.value = notificationCache;
             } else {
                 // console.log((result as any).error);
             }
@@ -124,7 +125,7 @@
         const cachedNotification = notificationDetailsCache.value.find((notificationDetails) => notificationDetails.resourceId == notificationResourceId);
 
         if(cachedNotification) {
-            fetchedTransactionNotification.value = cachedNotification;
+            fetchedNotificationDetails.value = cachedNotification;
             
             showSelectedTransactionDetails.value = true;
 
@@ -140,7 +141,7 @@
     
                 const notificationDataResult = {resourceId: notificationResourceId, title: notification.title, data: (result as any).data}
 
-                fetchedTransactionNotification.value = notificationDataResult;
+                fetchedNotificationDetails.value = notificationDataResult;
     
                 showSelectedTransactionDetails.value = true;
 

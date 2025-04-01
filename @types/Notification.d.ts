@@ -11,5 +11,5 @@ interface Notification {
 interface NotificationDetails {
     title: string,
     resourceId: string,
-    data: Record<string, any>
+    data: Loan | Transaction | Record<string, any>
 }
