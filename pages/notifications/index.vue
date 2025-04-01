@@ -10,13 +10,13 @@
                     v-for="(notification, key) in notifications" :key="key"
                     class="p-6 pr-10 rounded-xl bg-white border border-solid border-[rgba(3,87,238,0.10)]"
                 >
-                    <p class="mb-6 text-[#656167] font-medium">{{ new Date(notification.created_at).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) }}</p>
+                    <p class="mb-6 text-[#656167] font-medium">{{ new Date(notification.createdAt).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) }}</p>
                     <div class="flex items-center gap-4">
                         <div v-if="!notification.read" class="w-2.5 h-2.5 rounded-full bg-[#E70A3F]"></div>
                         <div @click="showNotification(notification)" class="flex items-center justify-between cursor-pointer grow">
                             <div>
                                 <p class="mb-1 text-lance-black font-medium">{{ notification.title }}
-                                    <span class="font-normal text-lance-black-60">| {{ new Date(notification.created_at).toLocaleTimeString('en-US') }}</span>
+                                    <span class="font-normal text-lance-black-60">| {{ new Date(notification.createdAt).toLocaleTimeString('en-US') }}</span>
                                 </p>
                                 <p class="text-lance-black-60">{{ notification.body }}</p>
                             </div>
