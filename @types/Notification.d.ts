@@ -3,7 +3,13 @@ interface Notification {
     title: string,
     createdAt: string
     metadata: {
-        reference: string,
+        resourceId: string,
         resourceType: string
     }
+}
+
+interface NotificationDetails {
+    title: string,
+    resourceId: string,
+    data: Record<string, any>
 }

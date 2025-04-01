@@ -30,6 +30,8 @@
         </div>
         <Loans-DetailsModal @@close-loan-details-modal="showSelectedLoanDetails = false" v-show="showSelectedLoanDetails" :loan="fetchedLoan" />
         <Loans-OfferView v-if="approvedLoan" @@close-loan-details-modal="showLoanOfferView = false" v-show="showLoanOfferView" :loan="fetchedLoan" />
+
+        <Notifications-TransactionDetailsModal @@close-modal="showSelectedTransactionDetails = false" v-show="showSelectedTransactionDetails" :notificationData="fetchedTransactionNotification" />
     </div>
 </template>
 
@@ -43,7 +45,7 @@
     });
     
     const { fetchNotifications } = useNotificationsStore();
-    const { notifications } = storeToRefs(useNotificationsStore());
+    const { notifications, notificationDetailsCache } = storeToRefs(useNotificationsStore());
 
     const { approvedLoan, loanHistory } = storeToRefs(useLoanHistoryStore());
 
@@ -54,21 +56,24 @@
     const { apiFetch } = useApiFetch();
 
     const fetchedLoan: Ref<Loan | null> = ref(null);
+    const fetchedTransactionNotification: Ref<NotificationDetails | null> = ref(null);
 
     const showLoanOfferView: Ref<boolean> = ref(false);
     
     const showSelectedLoanDetails: Ref<boolean> = ref(false);
+    const showSelectedTransactionDetails: Ref<boolean> = ref(false);
 
-    const selectedNotification = ref(null);
 
     async function showNotification(notification: Notification){
         if(notification.metadata.resourceType === 'loan') {
             showLoanOfferOrDetails(notification);
+        } else if(notification.metadata.resourceType == 'transactions') {
+            showTransactionNotificationDetails(notification);
         }
     }
 
     async function showLoanOfferOrDetails(notification: Notification){
-        const notificationResourceId = notification.metadata.resourceId || notification.metadata.reference;
+        const notificationResourceId = notification.metadata.resourceId;
 
         const loan = loanHistory.value.find((loan) => loan.reference == notificationResourceId);
 
@@ -102,6 +107,48 @@
                 } else {
                     showSelectedLoanDetails.value = true;
                 }
+
+                // const notificationCache: NotificationDetails[] = notificationDetailsCache.value;
+                // notificationCache.push({resourceId: notificationResourceId, data: {}})
+
+                // notificationDetailsCache.value = notificationCache;
+            } else {
+                // console.log((result as any).error);
+            }
+        }
+    }
+
+    async function showTransactionNotificationDetails(notification: Notification){
+        const notificationResourceId = notification.metadata.resourceId;
+
+        const cachedNotification = notificationDetailsCache.value.find((notificationDetails) => notificationDetails.resourceId == notificationResourceId);
+
+        if(cachedNotification) {
+            fetchedTransactionNotification.value = cachedNotification;
+            
+            showSelectedTransactionDetails.value = true;
+
+        } else {
+            const result = await apiFetch(`transactions/${notificationResourceId}`);
+    
+            if((result as any).success && !(result as any).error){
+    
+                (result as any).data.amount = (result as any).data.amount / 100;
+                (result as any).data.balanceAfter = (result as any).data.balanceAfter / 100;
+                (result as any).data.balanceBefore = (result as any).data.balanceBefore / 100;
+    
+    
+                const notificationDataResult = {resourceId: notificationResourceId, title: notification.title, data: (result as any).data}
+
+                fetchedTransactionNotification.value = notificationDataResult;
+    
+                showSelectedTransactionDetails.value = true;
+
+
+                const notificationCache: NotificationDetails[] = notificationDetailsCache.value;
+                notificationCache.push(notificationDataResult);
+    
+                notificationDetailsCache.value = notificationCache;
             } else {
                 // console.log((result as any).error);
             }

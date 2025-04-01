@@ -3,6 +3,7 @@ const { apiFetch } = useApiFetch();
 export const useNotificationsStore = defineStore('notifications', () => 
     {
         const notifications: Ref<Notification[] | []> = ref([]);
+        const notificationDetailsCache: Ref<NotificationDetails[] | []> = ref([]);
 
         async function fetchNotifications() {
             
@@ -16,10 +17,11 @@ export const useNotificationsStore = defineStore('notifications', () =>
         }
 
         function $reset() {
-            notifications.value = []
+            notifications.value = [];
+            notificationDetailsCache.value = [];
         }
         
-        return { notifications, fetchNotifications, $reset }
+        return { notifications, notificationDetailsCache, fetchNotifications, $reset }
     },
     {
         persist: true,
