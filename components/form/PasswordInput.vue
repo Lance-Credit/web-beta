@@ -1,13 +1,13 @@
 <template>
     <div>
         <div class="flex h-[65px] justify-center relative flex-col bg-white border border-solid py-2 px-4 rounded" :class="[error ? 'border-[#E70A3F]' : 'border-[rgba(4,17,17,0.10)]', inputFocused ? 'border-lance-green' : '']">
-            <label v-if="value" for="" class="mb-0.5 text-[13px] leading-[20.8px]" :class="[error ? 'text-[#E70A3F]' : 'text-lance-black']">
+            <label v-if="value" for="" class="mb-0.5 text-xs sm:text-[13px] leading-[19.2px] sm:leading-[20.8px]" :class="[error ? 'text-[#E70A3F]' : 'text-lance-black']">
                 {{ label }}
             </label>
             <input
                 :type="showPassword ? 'text' : 'password'" :placeholder="placeholder" v-model="value"
                 @focusin="inputFocused = true" @focusout="inputFocused = false"
-                class="text-lance-black outline-none font-gelion font-normal text-base"
+                class="text-lance-black outline-none font-gelion font-normal text-sm sm:text-base leading-[21px] sm:leading-6"
             >
             <div @click="showPassword = !showPassword" class="absolute right-[16px] top-0 h-full flex flex-col justify-center cursor-pointer">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

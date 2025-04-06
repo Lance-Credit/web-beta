@@ -25,7 +25,7 @@
             </template>
             <template #auth-content>
                 <div class="h-full grow flex">
-                    <div v-if="!signUpSuccess">
+                    <div v-if="!signUpSuccess" class="w-full">
                         <div v-if="!communityCodeFilled" class="flex flex-col h-full">
                             <div class="px-6 sm:px-0 mb-8 sm:mb-0">
                                 <p class="mt-[37.61px] sm:mt-0 mb-1 text-lance-black font-aventa text-[24px] leading-[32px] tracking-[-0.24px]">
@@ -57,7 +57,7 @@
                                     <span v-show="!submittingCommunityCode">Continue</span>
                                     <Loader-Basic v-show="submittingCommunityCode" bg="#FFF" fg="#C3E48E" />
                                 </button>
-                                <NuxtLink to="/auth/login" class="flex gap-2 justify-center text-lance-black-60 text-sm sm:text-base leading-6">
+                                <NuxtLink to="/auth/login" class="flex gap-2 justiffy-start sm:justify-center text-lance-black-60 text-sm sm:text-base leading-6">
                                     Already have an account?<span class="text-lance-green font-medium">Login</span>
                                 </NuxtLink>
                             </div>
@@ -72,24 +72,26 @@
                                     Let’s get you started, Please provide the info below
                                 </p>
                             </div>
-                            <div class="mb-8">
-                                <Form-TextInput class="mb-4" placeholder="First Name" label="First Name" v-model="signupForm.firstName[0].value" v-bind="signupForm.firstName[1].value" :error="signupFormErrors.firstName" />
-                                <Form-TextInput class="mb-4" placeholder="Last Name" label="Last Name" v-model="signupForm.lastName[0].value" v-bind="signupForm.lastName[1].value" :error="signupFormErrors.lastName" />
-                                <Form-EmailInput class="mb-4" placeholder="Email Address" label="Email Address" v-model="signupForm.email[0].value" v-bind="signupForm.email[1].value" :error="signupFormErrors.email" />
-                                <Form-TextInput class="mb-4" placeholder="090*****990" label="Phone Number" v-model="signupForm.phoneNumber[0].value" v-bind="signupForm.phoneNumber[1].value" :error="signupFormErrors.phoneNumber" />
-                                <Form-PasswordInput class="mb-4" placeholder="Enter Password" label="Enter Password" v-model="signupForm.password[0].value" v-bind="signupForm.password[1].value" :error="signupFormErrors.password" />
-                                <Form-PasswordRuleGuide :password="signupFormValues.password"/>
+                            <div class="bg-white pt-10 sm:pt-0 px-6 sm:px-0 pb-[110px] sm:pb-0 rounded-t-3xl h-full">
+                                <div class="mb-8">
+                                    <Form-TextInput class="mb-4" placeholder="First Name" label="First Name" v-model="signupForm.firstName[0].value" v-bind="signupForm.firstName[1].value" :error="signupFormErrors.firstName" />
+                                    <Form-TextInput class="mb-4" placeholder="Last Name" label="Last Name" v-model="signupForm.lastName[0].value" v-bind="signupForm.lastName[1].value" :error="signupFormErrors.lastName" />
+                                    <Form-EmailInput class="mb-4" placeholder="Email Address" label="Email Address" v-model="signupForm.email[0].value" v-bind="signupForm.email[1].value" :error="signupFormErrors.email" />
+                                    <Form-TextInput class="mb-4" placeholder="090*****990" label="Phone Number" v-model="signupForm.phoneNumber[0].value" v-bind="signupForm.phoneNumber[1].value" :error="signupFormErrors.phoneNumber" />
+                                    <Form-PasswordInput class="mb-4" placeholder="Enter Password" label="Enter Password" v-model="signupForm.password[0].value" v-bind="signupForm.password[1].value" :error="signupFormErrors.password" />
+                                    <Form-PasswordRuleGuide :password="signupFormValues.password"/>
+                                </div>
+    
+                                <Form-ErrorNotification v-if="signupErrorResponse" :message="signupErrorResponse" />
+    
+                                <button @click="submitSignUpForm" class="mb-6 btn w-full btn-primary" :class="{'loading' : submittingSignupForm}" :disabled="!signupFormFilled || submittingSignupForm">
+                                    <span v-show="!submittingSignupForm">Continue</span>
+                                    <Loader-Basic v-show="submittingSignupForm" bg="#FFF" fg="#C3E48E" />
+                                </button>
+                                <NuxtLink to="/auth/login" class="flex gap-2 justify-start sm:justify-center text-lance-black-60 text-sm sm:text-base leading-6">
+                                    Already have an account?<span class="text-lance-green font-medium">Login</span>
+                                </NuxtLink>
                             </div>
-
-                            <Form-ErrorNotification v-if="signupErrorResponse" :message="signupErrorResponse" />
-
-                            <button @click="submitSignUpForm" class="mb-6 btn w-full btn-primary" :class="{'loading' : submittingSignupForm}" :disabled="!signupFormFilled || submittingSignupForm">
-                                <span v-show="!submittingSignupForm">Continue</span>
-                                <Loader-Basic v-show="submittingSignupForm" bg="#FFF" fg="#C3E48E" />
-                            </button>
-                            <NuxtLink to="/auth/login" class="flex gap-2 justify-center text-lance-black-60">
-                                Already have an account?<span class="text-lance-green font-medium">Login</span>
-                            </NuxtLink>
                         </div>
                     </div>
                     <div v-else>
@@ -186,7 +188,6 @@
 <script setup lang="ts">
 
     import * as yup from 'yup';
-    import { getActivePinia } from 'pinia'
 
     
     const { $resetKYC } = useKYCStore();

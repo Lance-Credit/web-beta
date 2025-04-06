@@ -9,7 +9,7 @@
             ]"   
         >
             <label
-                v-show="value" for="" class="mb-0.5 text-[13px] leading-[20.8px]"
+                v-show="value" for="" class="mb-0.5 text-xs sm:text-[13px] leading-[19.2px] sm:leading-[20.8px]"
                 :class="[error ? 'text-[#E70A3F]' : '', disabled ? 'text-lance-black-50' : 'text-lance-black']"
             >
                 {{ label }}
@@ -17,7 +17,7 @@
             <input
                 :disabled="disabled" :type="type" :placeholder="placeholder" v-model="value"
                 @focusin="inputFocused = true" @focusout="inputFocused = false"
-                class="text-lance-black outline-none font-gelion font-normal text-base"
+                class="text-lance-black outline-none font-gelion font-normal text-sm sm:text-base leading-[21px] sm:leading-6"
             >
         </div>
         <p class="text-[#E70A3F] text-xs">{{ error }}</p>
