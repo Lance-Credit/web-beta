@@ -94,58 +94,78 @@
                             </div>
                         </div>
                     </div>
-                    <div v-else>
+                    <div v-else class="flex flex-col">
                         <div v-if="emailVerified">
                             <div class="px-6 sm:px-0 mb-8 sm:mb-0">
                                 <p class="mt-[37.61px] sm:mt-0 mb-2 text-lance-black font-aventa text-[24px] leading-[32px] tracking-[-0.24px]">
                                     Verify your phone number
                                 </p>
                                 <p class="mb-6 text-lance-black-60 text-sm sm:text-base leading-6">
-                                    Input the 6-digit verification code we sent to this phone number <span class="font-semibold">{{ formattedPhoneNumber }}</span> to activate your account.
+                                    <span class="sm:hidden">
+                                        Let’s get you started, Please provide the info below
+                                    </span>
+                                    <span class="hidden sm:block">
+                                        Input the 6-digit verification code we sent to this phone number <span class="font-semibold">{{ formattedPhoneNumber }}</span> to activate your account.
+                                    </span>
                                 </p>
                             </div>
-                            <div class="mb-6">
-                                <Form-TextInput placeholder="Verification Code" label="Verification Code" v-model="signupForm.phoneVerificationCode[0].value" v-bind="signupForm.phoneVerificationCode[1].value" :error="signupFormErrors.phoneVerificationCode" />
+                            <div class="bg-white pt-10 sm:pt-0 px-6 sm:px-0 pb-[110px] sm:pb-0 rounded-t-3xl h-full">
+                                <p class="mb-8 text-lance-black-60 text-sm leading-[18px] sm:hidden">
+                                    Input the 6-digit verification code we sent to this phone number <span class="font-semibold">{{ formattedPhoneNumber }}</span> to activate your account.
+                                </p>
+                                <div class="mb-6">
+                                    <Form-TextInput placeholder="Verification Code" label="Verification Code" v-model="signupForm.phoneVerificationCode[0].value" v-bind="signupForm.phoneVerificationCode[1].value" :error="signupFormErrors.phoneVerificationCode" />
+                                </div>
+    
+                                <Form-ErrorNotification v-if="phoneVerificationCodeErrorResponse" :message="phoneVerificationCodeErrorResponse" />
+    
+                                <button
+                                    @click="submitPhoneVerificationCode" class="mb-6 btn w-full btn-primary" :class="{'loading' : submittingPhoneVerificationCode}"
+                                    :disabled="!(signupFormValues.phoneVerificationCode && !signupFormErrors.phoneVerificationCode) || submittingPhoneVerificationCode"
+                                >
+                                    <span v-show="!submittingPhoneVerificationCode">Continue</span>
+                                    <Loader-Basic v-show="submittingPhoneVerificationCode" bg="#FFF" fg="#C3E48E" />
+                                </button>
+                                <p v-show="showResendPhoneVerificationCode" class="flex gap-2 justify-center text-lance-black-60">
+                                    Didn’t get the code?<span @click="resendPhoneVerificationCode" class="text-lance-green font-medium cursor-pointer">Resend code</span>
+                                </p>
                             </div>
-
-                            <Form-ErrorNotification v-if="phoneVerificationCodeErrorResponse" :message="phoneVerificationCodeErrorResponse" />
-
-                            <button
-                                @click="submitPhoneVerificationCode" class="mb-6 btn w-full btn-primary" :class="{'loading' : submittingPhoneVerificationCode}"
-                                :disabled="!(signupFormValues.phoneVerificationCode && !signupFormErrors.phoneVerificationCode) || submittingPhoneVerificationCode"
-                            >
-                                <span v-show="!submittingPhoneVerificationCode">Continue</span>
-                                <Loader-Basic v-show="submittingPhoneVerificationCode" bg="#FFF" fg="#C3E48E" />
-                            </button>
-                            <p v-show="showResendPhoneVerificationCode" class="flex gap-2 justify-center text-lance-black-60">
-                                Didn’t get the code?<span @click="resendPhoneVerificationCode" class="text-lance-green font-medium cursor-pointer">Resend code</span>
-                            </p>
                         </div>
 
-                        <div v-else>
+                        <div v-else class="h-full flex flex-col">
                             <div class="px-6 sm:px-0 mb-8 sm:mb-0">
                                 <p class="mt-[37.61px] sm:mt-0 mb-2 text-lance-black font-aventa text-[24px] leading-[32px] tracking-[-0.24px]">
                                     Verify your email address
                                 </p>
                                 <p class="mb-6 text-lance-black-60 text-sm sm:text-base leading-6">
-                                    Input the 6-digit verification code we sent to this email address <span class="font-semibold">{{ signupFormValues.email }}</span> to activate your account.
+                                    <span class="sm:hidden">
+                                        Let’s get you started, Please provide the info below
+                                    </span>
+                                    <span class="hidden sm:block">
+                                        Input the 6-digit verification code we sent to this email address <span class="font-semibold">{{ signupFormValues.email }}</span> to activate your account.
+                                    </span>
                                 </p>
                             </div>
-                            <div class="mb-6">
-                                <Form-TextInput placeholder="Verification Code" label="Verification Code" v-model="signupForm.emailVerificationCode[0].value" v-bind="signupForm.emailVerificationCode[1].value" :error="signupFormErrors.emailVerificationCode" />
+                            <div class="bg-white pt-10 sm:pt-0 px-6 sm:px-0 pb-[110px] sm:pb-0 rounded-t-3xl h-full">
+                                <p class="mb-8 text-lance-black-60 text-sm leading-[18px] sm:hidden">
+                                    Input the 6-digit verification code we sent to this email address <span class="font-semibold">{{ signupFormValues.email }}</span> to activate your account.
+                                </p>
+                                <div class="mb-6">
+                                    <Form-TextInput placeholder="Verification Code" label="Verification Code" v-model="signupForm.emailVerificationCode[0].value" v-bind="signupForm.emailVerificationCode[1].value" :error="signupFormErrors.emailVerificationCode" />
+                                </div>
+    
+                                <Form-ErrorNotification v-if="emailVerificationCodeErrorResponse" :message="emailVerificationCodeErrorResponse" />
+    
+                                <button
+                                    @click="submitEmailVerificationCode" class="mb-6 btn w-full btn-primary" :class="{'loading' : submittingEmailVerificationCode}"
+                                    :disabled="!(signupFormValues.emailVerificationCode && !signupFormErrors.emailVerificationCode) || submittingEmailVerificationCode">
+                                    <span v-show="!submittingEmailVerificationCode">Continue</span>
+                                    <Loader-Basic v-show="submittingEmailVerificationCode" bg="#FFF" fg="#C3E48E" />
+                                </button>
+                                <p v-show="showResendEmailVerificationCode" class="flex gap-2 justify-center text-lance-black-60 text-sm sm:text-base leading-6">
+                                    Didn’t get the code?<span @click="resendEmailVerificationCode" class="text-lance-green font-medium cursor-pointer">Resend code</span>
+                                </p>
                             </div>
-
-                            <Form-ErrorNotification v-if="emailVerificationCodeErrorResponse" :message="emailVerificationCodeErrorResponse" />
-
-                            <button
-                                @click="submitEmailVerificationCode" class="mb-6 btn w-full btn-primary" :class="{'loading' : submittingEmailVerificationCode}"
-                                :disabled="!(signupFormValues.emailVerificationCode && !signupFormErrors.emailVerificationCode) || submittingEmailVerificationCode">
-                                <span v-show="!submittingEmailVerificationCode">Continue</span>
-                                <Loader-Basic v-show="submittingEmailVerificationCode" bg="#FFF" fg="#C3E48E" />
-                            </button>
-                            <p v-show="showResendEmailVerificationCode" class="flex gap-2 justify-center text-lance-black-60">
-                                Didn’t get the code?<span @click="resendEmailVerificationCode" class="text-lance-green font-medium cursor-pointer">Resend code</span>
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -153,7 +173,7 @@
         </Auth-BaseAuth>
         <Auth-Modal
             v-if="verificationCodeSubmitted"
-            title="Welcome to Lance X"
+            title="Welcome to Lance"
             :text="referrerText"
             button-text="Proceed to your dashboard"
             button-link="/dashboard"
@@ -436,7 +456,7 @@
             });
     
             if((result as any).success && !(result as any).error){
-                console.log(result);
+                // console.log(result);
                 verificationCodeSubmitted.value = true;
     
                 const { signIn } = useAuth();

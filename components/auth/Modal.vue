@@ -1,6 +1,6 @@
 <template>
     <div class="fixed z-20 top-0 left-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex justify-center items-center">
-        <div class="py-[97.5px] px-[76px] bg-white rounded-3xl w-[528px] h-fit">
+        <div class="py-[97.5px] px-6 sm:px-[76px] bg-white sm:rounded-3xl w-[528px] h-screen sm:h-fit">
             <div class="mb-10 flex justify-center">
                 <slot />
             </div>
@@ -8,7 +8,7 @@
                 <p class="mb-2 text-lance-black font-aventa font-bold text-[24px] leading-[32px] tracking-[-0.24px]">
                     {{ title }}
                 </p>
-                <p class="mb-8 text-lance-black-60" v-html="text"></p>
+                <p class="mb-8 text-lance-black-60 text-sm sm:text-base leading-6" v-html="text"></p>
                 <NuxtLink @click="emit('@auth-modal-action')" :to="buttonLink" class="btn btn-primary w-full gap-4">
                     <span>{{ buttonText }}</span>
                     <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
