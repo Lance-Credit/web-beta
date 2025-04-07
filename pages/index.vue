@@ -36,9 +36,6 @@
                                 </p>
                             </div>
                             <div class="bg-white pt-10 sm:pt-0 px-6 sm:px-0 pb-[110px] sm:pb-0 rounded-t-3xl h-full">
-                                <!-- <style>
-
-                                </style> -->
                                 <p class="mb-8 sm:mb-4 text-[rgba(4,17,17,0.80)] text-sm sm:text-base leading-[18px] sm:leading-6">
                                     To begin, we require your community code,
                                     <span class="text-[rgba(4,17,17,0.80)] font-semibold">a 6-digit access code</span>
