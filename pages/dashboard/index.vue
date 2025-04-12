@@ -3,7 +3,7 @@
         <KYC-Process v-if="!kycCompleted" v-show="continueKycProcess" @@stop-kyc-process="continueKycProcess = false" />
 
         <div v-show="!continueKycProcess || kycCompleted">
-            <div class="mb-8 flex items-center justify-between">
+            <div class="mb-8 flex flex-col sm:flex-row items-center justify-between">
                 <div>
                     <p class="mb-1 text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px]">
                         Good {{dayTimeGreeting}}, {{ userProfile?.firstName ? `${userProfile?.firstName[0].toUpperCase()}${userProfile?.firstName.substring(1)}` : '' }}
@@ -56,8 +56,8 @@
                     </svg>
                 </div>
             </div>
-            <div class="mb-6 flex gap-6">
-                <div class="flex gap-6 basis-[718px] grow">
+            <div class="mb-6 flex flex-col sm:flex-row gap-6">
+                <div class="flex flex-col sm:flex-row gap-6 basis-[718px] grow">
                     <div
                         class="p-6 pt-8 basis-[421px] rounded-xl border border-solid border-lance-green-20 bg-lance-green
                         bg-[url('/assets/img/active-loan-bg-gradient.svg')] bg-no-repeat bg-right grow"
