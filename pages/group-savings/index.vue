@@ -1,6 +1,8 @@
 <template>
     <div>
-        <p class="mb-[30px] text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px]">Ajo</p>
+        <p class="mb-[30px] text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px] hidden sm:block">
+            Ajo
+        </p>
         <div class="rounded-3xl sm:rounded-xl bg-white border border-solid border-lance-black-10 py-[47px] px-[21.5px] sm:p-20 sm:pb-[149px] text-center">
             <div class="flex flex-col items-center justify-center gap-6 sm:w-[376px] mx-auto">
                 <div class="w-[192px] h-[192px] rounded-full bg-[#D6F0AD] flex items-center justify-center mx-auto">

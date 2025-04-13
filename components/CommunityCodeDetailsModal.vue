@@ -1,9 +1,14 @@
 <template>
     <div @click.self="emit('@close-community-code-details-modal')" class="fixed z-20 top-0 left-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex justify-center items-center">
-        <div class="bg-white w-[466px] p-10 rounded-3xl flex flex-col gap-6">
-            <p class="text-lance-black font-medium text-xl leading-[26px] tracking-[-0.24px]">Your Code</p>
+        <div class="bg-white w-[466px] pt-7 px-6 sm:p-10 sm:rounded-3xl flex flex-col gap-10 sm:gap-6 h-full sm:h-auto relative">
+            <svg @click="emit('@close-community-code-details-modal')" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="absolute sm:hidden top-7">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3333 17.5002C13.12 17.5002 12.9067 17.4185 12.7442 17.256L6.0775 10.5894C5.75167 10.2635 5.75167 9.73687 6.0775 9.41104L12.7442 2.74437C13.07 2.41854 13.5967 2.41854 13.9225 2.74437C14.2483 3.07021 14.2483 3.59687 13.9225 3.92271L7.845 10.0002L13.9225 16.0777C14.2483 16.4035 14.2483 16.9302 13.9225 17.256C13.76 17.4185 13.5467 17.5002 13.3333 17.5002" fill="#0A4F4D"/>
+            </svg>
+            <p class="text-lance-black font-medium text-base sm:text-xl leading-6 sm:leading-[26px] tracking-[-0.24px] text-center sm:text-left">
+                Your Code
+            </p>
             <div class="text-center py-6 rounded-lg bg-lance-green-5 border border-solid border-lance-green">
-                <p class="text-lance-black text-[40px] leading-[26px] font-aventa font-black">{{ code?.code }}</p>
+                <p class="text-lance-black text-3xl sm:text-[40px] leading-[26px] tracking-[0.6px] font-aventa font-black">{{ code?.code }}</p>
             </div>
             <div class="text-sm">
                 <p class="text-lance-black-50">Share Via</p>
