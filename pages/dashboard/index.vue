@@ -3,13 +3,13 @@
         <KYC-Process v-if="!kycCompleted" v-show="continueKycProcess" @@stop-kyc-process="continueKycProcess = false" />
 
         <div v-show="!continueKycProcess || kycCompleted">
-            <div class="mb-8 flex flex-col sm:flex-row items-center justify-between">
+            <div class="mb-7 sm:mb-8 flex flex-col sm:flex-row sm:items-center justify-between">
                 <div>
-                    <p class="mb-1 text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px]">
+                    <p class="text-lance-black text-sm sm:text-xl leading-[26px] font-medium tracking-[-0.14px] sm:tracking-[-0.2px]">
                         Good {{dayTimeGreeting}}, {{ userProfile?.firstName ? `${userProfile?.firstName[0].toUpperCase()}${userProfile?.firstName.substring(1)}` : '' }}
                     </p>
                 </div>
-                <div class="flex gap-4 items-center">
+                <div class="hidden sm:flex gap-4 items-center">
                     <NuxtLink to="/wallet" class="btn btn-secondary">Withdraw from wallet</NuxtLink>
                     <NuxtLink v-if="activeLoan" :to="'/loans'" class="btn btn-primary gap-4">
                         <span>Make a repayment</span>
@@ -29,7 +29,7 @@
             </div>
             <div
                 @click="showKycSummary = true" v-if="waitedForKycFetch && !kycCompleted"
-                class="mb-6 rounded-xl bg-white border border-solid border-lance-green-20 py-6 px-10 flex items-center justify-between cursor-pointer">
+                class="mb-3.5 sm:mb-6 rounded-xl bg-white border border-solid border-lance-green-20 py-[7px] sm:py-6 px-4 sm:px-10 flex items-center justify-between cursor-pointer">
                 <div class="flex gap-4 items-center">                    
                     <div class="w-16 h-16 rounded-full flex items-center justify-center relative">
                         <svg width="64" height="64" viewBox="0 0 64 64" class="absolute top-0 left-0">
@@ -44,10 +44,10 @@
                     </div>
 
                     <div>
-                        <p class="mb-2 text-[#1E1721] text-xl font-medium leading-[normal] tracking-[-0.2px]">
+                        <p class="mb-2 text-[#1E1721] text-base sm:text-xl font-medium leading-[normal] tracking-[-0.16px] sm:tracking-[-0.2px]">
                             Please complete your KYC
                         </p>
-                        <p class="text-[#656167]">Just start first   . . .</p>
+                        <p class="text-[#656167] text-sm sm:text-base leading-[18px] sm:leading6">Just start first   . . .</p>
                     </div>
                 </div>
                 <div>
@@ -57,14 +57,14 @@
                 </div>
             </div>
             <div class="mb-6 flex flex-col sm:flex-row gap-6">
-                <div class="flex flex-col sm:flex-row gap-6 basis-[718px] grow">
+                <div class="flex flex-col sm:flex-row gap-6 sm:basis-[718px] grow">
                     <div
-                        class="p-6 pt-8 basis-[421px] rounded-xl border border-solid border-lance-green-20 bg-lance-green
-                        bg-[url('/assets/img/active-loan-bg-gradient.svg')] bg-no-repeat bg-right grow"
+                        class="p-6 pt-3 sm:pt-8 basis-[198px] sm:basis-[421px] rounded-xl border border-solid border-lance-green-20 bg-lance-green
+                        bg-[url('/assets/img/active-loan-bg-gradient.svg')] bg-no-repeat bg-right sm:grow"
                     >
-                        <p class="mb-8 text-[rgba(255,255,255,0.80)] font-medium">Next Repayment</p>
+                        <p class="mb-[15px] sm:mb-8 text-sm sm:text-base leading-6 text-[rgba(255,255,255,0.80)] font-medium">Next Repayment</p>
                         <div class="mb-4 pb-7 border-b border-solid border-[rgba(255,255,255,0.20)]">
-                            <p class="mb-1 text-white text-[28px] leading-[36px] tracking-[0.28px] font-semibold">
+                            <p class="mb-1 text-white text-2xl sm:text-[28px] leading-[36px] tracking-[0.28px] font-semibold">
                                 N {{ activeLoan ? (activeLoan.monthlyRepaymentAmount).toLocaleString() : '0.00'}}
                             </p>
                             <p class="text-[rgba(255,255,255,0.90)] text-sm flex items-center gap-2">
@@ -96,12 +96,56 @@
                             <div class="h-full rounded-lg" style="background: linear-gradient(90deg, #E8FF28 -2.03%, #09837F 101.29%);" :style="`width: ${percentageLoanPaid}%`"></div>
                         </div>
                     </div>
-                    <div class="py-8 px-6 flex flex-col justify-between rounded-xl bg-white border border-solid border-lance-green-10 grow">
+                    <div class="flex justify-between sm:justify-center sm:gap-4 items-center sm:hidden">
+                        <NuxtLink to="/wallet" class="btn btn-secondary dash">Withdraw from wallet</NuxtLink>
+                        <NuxtLink v-if="activeLoan" :to="'/loans'" class="btn btn-primary gap-4 dash">
+                            <span>Make a repayment</span>
+                            <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3.58044 9.771C3.58044 9.45458 3.81557 9.19309 4.12064 9.1517L4.20544 9.146H16.7054C17.0506 9.146 17.3304 9.42582 17.3304 9.771C17.3304 10.0874 17.0953 10.3489 16.7903 10.3903L16.7054 10.396H4.20544C3.86027 10.396 3.58044 10.1162 3.58044 9.771Z" fill="white"/>
+                                <path d="M11.223 5.19356C10.9783 4.95001 10.9775 4.55428 11.221 4.30968C11.4425 4.08731 11.7896 4.0664 12.0347 4.24741L12.1049 4.30778L17.1466 9.32778C17.3696 9.54985 17.3899 9.89828 17.2075 10.1433L17.1466 10.2135L12.105 15.2344C11.8604 15.4779 11.4647 15.4771 11.2211 15.2325C10.9997 15.0102 10.9802 14.6629 11.1623 14.4186L11.2229 14.3486L15.8196 9.77042L11.223 5.19356Z" fill="white"/>
+                            </svg>
+                        </NuxtLink>
+                        <button v-else @click="kycCompleted ? showLoanInstructions = true : showKycIncompleteModal = true" class="btn btn-primary gap-4 dash">
+                            <span>Request a Loan</span>
+                            <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3.58044 9.771C3.58044 9.45458 3.81557 9.19309 4.12064 9.1517L4.20544 9.146H16.7054C17.0506 9.146 17.3304 9.42582 17.3304 9.771C17.3304 10.0874 17.0953 10.3489 16.7903 10.3903L16.7054 10.396H4.20544C3.86027 10.396 3.58044 10.1162 3.58044 9.771Z" fill="white"/>
+                                <path d="M11.223 5.19356C10.9783 4.95001 10.9775 4.55428 11.221 4.30968C11.4425 4.08731 11.7896 4.0664 12.0347 4.24741L12.1049 4.30778L17.1466 9.32778C17.3696 9.54985 17.3899 9.89828 17.2075 10.1433L17.1466 10.2135L12.105 15.2344C11.8604 15.4779 11.4647 15.4771 11.2211 15.2325C10.9997 15.0102 10.9802 14.6629 11.1623 14.4186L11.2229 14.3486L15.8196 9.77042L11.223 5.19356Z" fill="white"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="py-8 px-6 hidden sm:flex flex-col justify-between rounded-xl bg-white border border-solid border-lance-green-10 grow">
                         <p class="text-lance-black-60 font-medium">Wallet Balance</p>
                         <p class="text-lance-black text-[28px] leading-8 font-semibold tracking-[-0.28px]">N {{ balance.toLocaleString() }}</p>
                     </div>
                 </div>
-                <div class="basis-[421px] py-8 px-6 rounded-xl bg-white border border-solid border-lance-green-10 grow">
+
+                <div class="flex gap-2 sm:hidden">
+                    <div class="w-1/2 p-3 flex flex-col justify-between rounded-xl bg-white border border-solid border-lance-green-10">
+                        <p class="mb-0.5 text-lance-black-60 text-[10px] font-medium leading-4">Wallet Balance</p>
+                        <p class="text-lance-black text-lg sm:text-[28px] leading-6 sm:leading-8 font-semibold tracking-[-0.28px]">
+                            N {{ balance.toLocaleString() }}
+                        </p>
+                    </div>
+                    <div class="w-1/2 p-3 rounded-xl bg-white border border-solid border-lance-green-10">
+                        <p class="mb-0.5 text-lance-black-60 text-[10px] font-medium leading-4">Credit score</p>
+                        <div class="flex justify-between items-center">
+                            <p class="text-lance-black text-xs font-semibold leading-[14px] tracking-[-0.12px]">98/1000</p>
+                            <p class="rounded-[20px] bg-[rgba(210,47,47,0.04)] py-0.5 px-2.5 text-[#D22F2F] text-[8px] leading-[14px]">Poor</p>
+                        </div>
+                        <div class="relative flex items-center">
+                            <div class="flex gap-1 h-1.5">
+                                <div class="w-[52px] rounded-lg bg-[#D22F2F]"></div>
+                                <div class="w-[23px] rounded-lg bg-[#FFAC5F]"></div>
+                                <div class="w-[24px] rounded-lg bg-[#94B066]"></div>
+                                <div class="w-[25px] rounded-lg bg-[#0A4F4D]"></div>
+                            </div>
+                            <div class="absolute left-[18.459px] w-[9.4425px] h-[9.4425px] bg-[#D22F2F] rounded-full flex items-center justify-center">
+                                <div class="rounded-full w-[3.541px] h-[3.541px] bg-white"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="basis-[421px] hidden sm:block py-8 px-6 rounded-xl bg-white border border-solid border-lance-green-10 grow">
                     <p class="mb-3 flex items-center justify-between">
                         <span class="text-[#0E0B10] text-xl leading-[26px] font-medium tracking-[-0.2px]">Credit Score</span>
                         <NuxtLink to="/settings?tab=credit-score" class="text-lance-green font-medium">Learn more</NuxtLink>
@@ -130,11 +174,18 @@
                     </div>
                 </div>
             </div>
-            <div class="flex gap-6">
-                <div v-if="transactions.length" class="basis-[718px] rounded-xl pt-8 px-6 pb-4.5 border border-solid border-lance-blue-10 bg-white grow">
-                    <p class="mb-2 text-[#0E0B10] text-xl font-medium leading-[26px] tracking-[-0.2px]">Recent Transactions</p>
-                    <div class="bg-white">
-                        <ul class="px-4 flex justify-between py-4 text-[#8C8890] text-sm leading-[24px]">
+            <div class="flex flex-col sm:flex-row gap-6">
+                <div v-if="transactions.length" class="sm:basis-[718px] rounded-xl pt-4 sm:pt-8 px-5 sm:px-6 pb-4 sm:pb-4.5 border border-solid border-lance-blue-10 bg-white grow">
+                    <p class="flex items-center justify-between">
+                        <span class="mb-2 text-[#0E0B10] text-base sm:text-xl font-medium leading-[26px] tracking-[-0.16px] sm:tracking-[-0.2px]">
+                            Recent Transactions
+                        </span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="8" viewBox="0 0 14 8" fill="none" class="sm:hidden">
+                            <path d="M13 1L7.94281 6.05719C7.42211 6.57789 6.57789 6.57789 6.05719 6.05719L1 0.999999" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </p>
+                    <div class="bg-white h-[322px] sm:h-auto overflow-scroll">
+                        <ul class="px-4 hidden sm:flex justify-between py-4 text-[#8C8890] text-sm leading-[24px]">
                             <li class="basis-[50%]">Transaction Type</li>
                             <li class="basis-[30%]">Amount</li>
                             <li class="basis-[20%] text-right">Transaction Date</li>
@@ -142,10 +193,10 @@
                         <ul
                             @click="viewTransactionDetails(transaction)"
                             v-for="(transaction) in transactions" :key="transaction.id"
-                            class="mb-2 flex justify-between items-center pt-[23px] pb-[15px] px-4 border-t
-                            border-solid border-[rgba(3,87,238,0.05)] text-lance-black leading-[26px] cursor-pointer"
+                            class="mb-2 flex justify-between items-center pt-8 sm:pt-[23px] pb-4 sm:pb-[15px] sm:px-4 border-t
+                            border-solid border-[rgba(3,87,238,0.05)] text-lance-black text-sm sm:text-base leading-[26px] cursor-pointer"
                         >
-                            <li class="flex items-center gap-4 basis-[50%]">
+                            <li class="flex items-center justify-between sm:justify-normal gap-1.5 sm:gap-4 sm:basis-[50%]">
                                 <div class="flex items-center justify-center w-9 h-9 rounded-full bg-[rgba(10,79,77,0.05)]">
                                     <svg v-if="transaction.txnType == 'credit' || transaction.txnType == 'loan-repay'" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M10.8333 4.16634C10.8333 3.7061 10.4602 3.33301 9.99998 3.33301C9.53974 3.33301 9.16665 3.7061 9.16665 4.16634V9.16634H4.16665C3.70641 9.16634 3.33331 9.53944 3.33331 9.99967C3.33331 10.4599 3.70641 10.833 4.16665 10.833H9.16665V15.833C9.16665 16.2932 9.53974 16.6663 9.99998 16.6663C10.4602 16.6663 10.8333 16.2932 10.8333 15.833V10.833H15.8333C16.2936 10.833 16.6666 10.4599 16.6666 9.99967C16.6666 9.53944 16.2936 9.16634 15.8333 9.16634H10.8333V4.16634Z" fill="#0A4F4D"/>
@@ -158,15 +209,28 @@
                                     {{ transaction.txnTypeForUi }}
                                 </p>
                             </li>
-                            <li class="font-medium basis-[30%]">N {{ (transaction.amount/100).toLocaleString() }}</li>
-                            <li class="basis-[20%] text-right">{{ new Date(transaction.createdAt).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) }}</li>
+                            <li class="font-medium basis-[30%] text-right sm:text-left">
+                                <p>N {{ (transaction.amount/100).toLocaleString() }}</p>
+                                <p class="block font-normal sm:hidden">
+                                    {{ new Date(transaction.createdAt).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) }}
+                                </p>
+                            </li>
+                            <li class="basis-[20%] text-right hidden sm:block">
+                                {{ new Date(transaction.createdAt).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) }}
+                            </li>
                         </ul>
                     </div>
                 </div>
-                <div v-if="activeLoan" class="basis-[421px] rounded-xl pt-[32.12px] px-6 pb-[45.88px] border border-solid border-lance-green-10 bg-white grow">
-                    <p class="mb-6 flex items-center justify-between">
-                        <span class="text-[#0E0B10] text-xl leading-[26px] font-medium tracking-[-0.2px]">Repayments</span>
-                        <NuxtLink class="text-lance-green font-medium">Learn more</NuxtLink>
+
+                <div v-if="activeLoan" class="sm:basis-[421px] rounded-xl pt-4 sm:pt-[32.12px] px-5 sm:px-6 pb-4 sm:pb-[45.88px] border border-solid border-lance-green-10 bg-white grow">
+                    <p class="mb-[7px] sm:mb-6 flex items-center justify-between">
+                        <span class="text-[#0E0B10] text-base sm:text-xl font-medium leading-[26px] tracking-[-0.16px] sm:tracking-[-0.2px]">
+                            Repayments
+                        </span>
+                        <NuxtLink class="text-lance-green font-medium hidden sm:inline">Learn more</NuxtLink>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="8" viewBox="0 0 14 8" fill="none" class="sm:hidden">
+                            <path d="M13 1L7.94281 6.05719C7.42211 6.57789 6.57789 6.57789 6.05719 6.05719L1 0.999999" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
                     </p>
                     <ul>
                         <li v-for="(repayment, key) in activeLoan.schedule" :key="key" class="py-4 border-b border-solid border-lance-green-10 flex items-center justify-between">
@@ -232,8 +296,12 @@
 </template>
 <style>
     circle.fg {
-    transform: rotate(-90deg);
-    transform-origin: 32px 32px;
+        transform: rotate(-90deg);
+        transform-origin: 32px 32px;
+    }
+    .btn.dash {
+        padding-left: 10.5px;
+        padding-right: 10.5px;
     }
 </style>
 <script setup lang="ts">

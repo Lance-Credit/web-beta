@@ -109,6 +109,9 @@
                 fetchLoanHistory();
             }else{
                 loginError.value = (signedIn as any).error;
+                if(loginError.value == 'fetch failed') {
+                    loginError.value = 'Network error';
+                }
                 setTimeout(() => loginError.value = '', 3000);
                 submittingLoginForm.value = false;
             }
