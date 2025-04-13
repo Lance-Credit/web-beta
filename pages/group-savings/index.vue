@@ -1,8 +1,8 @@
 <template>
     <div>
         <p class="mb-[30px] text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px]">Ajo</p>
-        <div class="rounded-xl bg-white border border-solid border-lance-black-10 p-20 pb-[149px] text-center">
-            <div class="flex flex-col items-center justify-center gap-6 w-[376px] mx-auto">
+        <div class="rounded-3xl sm:rounded-xl bg-white border border-solid border-lance-black-10 py-[47px] px-[21.5px] sm:p-20 sm:pb-[149px] text-center">
+            <div class="flex flex-col items-center justify-center gap-6 sm:w-[376px] mx-auto">
                 <div class="w-[192px] h-[192px] rounded-full bg-[#D6F0AD] flex items-center justify-center mx-auto">
                     <svg width="81" height="129" viewBox="0 0 81 129" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <path d="M62.1477 13.2551L35.505 0.333984L29.3567 16.8892L13.3711 11.64C14.0542 15.274 15.3385 22.7037 15.0106 23.3498C14.6007 24.1573 11.3216 24.5611 11.3216 25.7725C11.3216 26.9838 12.5513 26.9838 12.5513 29.4065C12.5513 31.3447 10.092 32.6368 8.86231 33.0406C4.92739 27.2261 2.30412 29.8103 1.48434 31.8293C2.46807 31.8293 4.35355 34.7903 5.17333 36.2709C5.30996 36.4055 5.50124 37.563 5.17333 41.1163C4.76344 45.558 2.71403 49.5958 0.664591 54.0375C-0.974959 57.5908 0.80122 59.5559 1.89425 60.0942C5.17335 44.7504 8.45245 39.5012 12.1414 41.1163C7.87853 44.0236 7.0861 81.3603 7.22274 99.6652C6.56693 108.387 10.2286 114.605 12.1414 116.624C8.86229 116.947 7.496 124.565 7.22274 128.334H74.4443C76.0838 124.135 73.4879 116.624 71.985 113.394C75.6739 112.99 74.4443 58.0753 74.0344 51.6147C73.7065 46.4463 71.1652 42.4623 69.9355 41.1163L70.7553 34.6558L80.5926 33.8482V33.4444H71.985L69.9355 24.9649L58.4587 22.946L62.1477 13.2551Z" fill="#052926"/>
