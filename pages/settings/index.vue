@@ -1,12 +1,14 @@
 <template>
     <div>
         <p class="mb-[30px] text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px]">Account Settings</p>
-        <div class="rounded-xl bg-white border border-solid border-lance-black-10 pt-8 px-12 pb-[46px]">
-            <ul class="flex flex-wrap items-center gap-2 border-b border-solid border-[#DAE0E0]">
+        <div
+            class="rounded-3xl sm:rounded-xl bg-white border border-solid border-lance-black-10 pt-7 sm:pt-8 pr-6 pl-2 sm:px-12 pb-[46px]"
+        >
+            <ul class="flex flex-col sm:flex-row flex-wrap sm:items-center gap-2 sm:border-b border-solid border-[#DAE0E0]">
                 <li
                     @click="activeTab = 'personalDetails'"
-                    class="flex p-4 gap-2 items-center border-solid cursor-pointer"
-                    :class="activeTab == 'personalDetails' ? 'border-b border-[#052926]' : ''"
+                    class="flex p-4 pr-0 sm:pr-4 gap-2 items-center border-solid cursor-pointer"
+                    :class="activeTab == 'personalDetails' ? 'sm:border-b border-[#052926]' : ''"
                 >
                     <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg" :class="activeTab == 'personalDetails' ? 'fill-[#052926]' : 'fill-[#717A7A]'">
                         <mask id="mask0_7530_2512" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="3" y="12" width="14" height="7">
@@ -24,15 +26,15 @@
                     </svg>
                     <p
                         class="text-sm leading-[20.3px]"
-                        :class="activeTab == 'personalDetails' ? 'text-[#052926] font-medium' : 'text-[#272E2E]'"
+                        :class="activeTab == 'personalDetails' ? 'sm:text-[#052926] sm:font-medium' : 'text-[#272E2E]'"
                     >
                         Personal Details
                     </p>
                 </li>
                 <li
                     @click="activeTab = 'bankDetails'"
-                    class="flex p-4 gap-2 items-center border-solid cursor-pointer"
-                    :class="activeTab == 'bankDetails' ? 'border-b border-[#052926]' : ''"
+                    class="flex p-4 pr-0 sm:pr-4 gap-2 items-center border-solid cursor-pointer"
+                    :class="activeTab == 'bankDetails' ? 'sm:border-b border-[#052926]' : ''"
                 >
                     <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg" :class="activeTab == 'bankDetails' ? 'fill-[#052926]' : 'fill-[#717A7A]'">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M18.2406 13.5807H14.8672C13.2864 13.5807 11.9997 12.2949 11.9989 10.7149C11.9989 9.1332 13.2856 7.84654 14.8672 7.8457H18.2406C18.5856 7.8457 18.8656 8.1257 18.8656 8.4707C18.8656 8.8157 18.5856 9.0957 18.2406 9.0957H14.8672C13.9747 9.09654 13.2489 9.82237 13.2489 10.714C13.2489 11.6049 13.9756 12.3307 14.8672 12.3307H18.2406C18.5856 12.3307 18.8656 12.6107 18.8656 12.9557C18.8656 13.3007 18.5856 13.5807 18.2406 13.5807Z"/>
@@ -47,15 +49,15 @@
                     </svg>
                     <p
                         class="text-sm leading-[20.3px]"
-                        :class="activeTab == 'bankDetails' ? 'text-[#052926] font-medium' : 'text-[#272E2E]'"
+                        :class="activeTab == 'bankDetails' ? 'sm:text-[#052926] sm:font-medium' : 'text-[#272E2E]'"
                     >
                         Bank Details
                     </p>
                 </li>
                 <li
                     @click="activeTab = 'nextOfKin'"
-                    class="flex p-4 gap-2 items-center border-solid cursor-pointer"
-                    :class="activeTab == 'nextOfKin' ? 'border-b border-[#052926]' : ''"
+                    class="flex p-4 pr-0 sm:pr-4 gap-2 items-center border-solid cursor-pointer"
+                    :class="activeTab == 'nextOfKin' ? 'sm:border-b border-[#052926]' : ''"
                 >
                     <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg" :class="activeTab == 'nextOfKin' ? 'fill-[#052926]' : 'fill-[#717A7A]'">
                         <mask id="mask0_7530_16668" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="1" y="11" width="14" height="7">
@@ -75,15 +77,15 @@
                     </svg>
                     <p
                         class="text-sm leading-[20.3px]"
-                        :class="activeTab == 'nextOfKin' ? 'text-[#052926] font-medium' : 'text-[#272E2E]'"
+                        :class="activeTab == 'nextOfKin' ? 'sm:text-[#052926] sm:font-medium' : 'text-[#272E2E]'"
                     >
                         Next of Kin
                     </p>
                 </li>
                 <li
                     @click="activeTab = 'creditScore'"
-                    class="flex p-4 gap-2 items-center border-solid cursor-pointer"
-                    :class="activeTab == 'creditScore' ? 'border-b border-[#052926]' : ''"
+                    class="flex p-4 pr-0 sm:pr-4 gap-2 items-center border-solid cursor-pointer"
+                    :class="activeTab == 'creditScore' ? 'sm:border-b border-[#052926]' : ''"
                 >
                     <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg" :class="activeTab == 'creditScore' ? 'fill-[#052926]' : 'fill-[#717A7A]'">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M6.01357 13.6696C5.88024 13.6696 5.74607 13.6271 5.63274 13.5404C5.35941 13.3296 5.30774 12.9371 5.51857 12.6638L8.01274 9.42209C8.11441 9.28959 8.26524 9.20375 8.43024 9.18292C8.59857 9.16125 8.76357 9.20792 8.89441 9.31209L11.2444 11.1579L13.3002 8.50542C13.5119 8.23125 13.9036 8.18042 14.1769 8.39375C14.4502 8.60542 14.5002 8.99792 14.2886 9.27042L11.8469 12.4204C11.7452 12.5521 11.5952 12.6379 11.4302 12.6579C11.2636 12.6804 11.0986 12.6321 10.9669 12.5296L8.61857 10.6846L6.50941 13.4254C6.38607 13.5854 6.20107 13.6696 6.01357 13.6696"/>
@@ -102,15 +104,15 @@
                     </svg>
                     <p
                         class="text-sm leading-[20.3px]"
-                        :class="activeTab == 'creditScore' ? 'text-[#052926] font-medium' : 'text-[#272E2E]'"
+                        :class="activeTab == 'creditScore' ? 'sm:text-[#052926] sm:font-medium' : 'text-[#272E2E]'"
                     >
                         Credit Score & Education
                     </p>
                 </li>
                 <li
                     @click="activeTab = 'password'"
-                    class="flex p-4 gap-2 items-center border-solid cursor-pointer"
-                    :class="activeTab == 'password' ? 'border-b border-[#052926]' : ''"
+                    class="flex p-4 pr-0 sm:pr-4 gap-2 items-center border-solid cursor-pointer"
+                    :class="activeTab == 'password' ? 'sm:border-b border-[#052926]' : ''"
                 >
                     <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg" :class="activeTab == 'password' ? 'fill-[#052926]' : 'fill-[#717A7A]'">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M14.1024 8.83314C13.7574 8.83314 13.4774 8.55314 13.4774 8.20814V6.41897C13.4774 4.67231 12.0566 3.25147 10.3099 3.25147H10.2966C9.45242 3.25147 8.66159 3.57647 8.06409 4.16897C7.46242 4.76397 7.12992 5.55814 7.12659 6.40481V8.20814C7.12659 8.55314 6.84659 8.83314 6.50159 8.83314C6.15659 8.83314 5.87659 8.55314 5.87659 8.20814V6.41897C5.88159 5.21897 6.34575 4.11147 7.18325 3.28147C8.02159 2.45064 9.12825 1.96981 10.3124 2.00147C12.7458 2.00147 14.7274 3.98314 14.7274 6.41897V8.20814C14.7274 8.55314 14.4474 8.83314 14.1024 8.83314"/>
@@ -119,30 +121,30 @@
                     </svg>
                     <p
                         class="text-sm leading-[20.3px]"
-                        :class="activeTab == 'password' ? 'text-[#052926] font-medium' : 'text-[#272E2E]'"
+                        :class="activeTab == 'password' ? 'sm:text-[#052926] sm:font-medium' : 'text-[#272E2E]'"
                     >
                         Password
                     </p>
                 </li>
                 <li
                     @click="activeTab = 'help'"
-                    class="flex p-4 gap-2 items-center border-solid cursor-pointer"
-                    :class="activeTab == 'help' ? 'border-b border-[#052926]' : ''"
+                    class="flex p-4 pr-0 sm:pr-4 gap-2 items-center border-solid cursor-pointer"
+                    :class="activeTab == 'help' ? 'sm:border-b border-[#052926]' : ''"
                 >
                     <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg" :class="activeTab == 'help' ? 'fill-[#052926] stroke-[#052926]' : 'fill-[#717A7A] stroke-[#717A7A]'">
                         <path d="M16.875 8.86292V8.75354C16.87 6.93515 16.1429 5.19321 14.8536 3.91093C13.5643 2.62865 11.8184 1.91107 10 1.91604C8.18161 1.92101 6.43967 2.64814 5.15739 3.93745C3.87511 5.22676 3.15753 6.97265 3.1625 8.79104V8.85354C2.70244 8.98181 2.297 9.25713 2.0081 9.63745C1.71919 10.0178 1.56269 10.4822 1.5625 10.9598V11.5848C1.5625 12.165 1.79297 12.7214 2.2032 13.1316C2.61344 13.5418 3.16984 13.7723 3.75 13.7723H4.07813C4.1568 14.792 4.61718 15.7445 5.36735 16.4396C6.11752 17.1348 7.10227 17.5214 8.125 17.5223H10C10.4144 17.5223 10.8118 17.3577 11.1049 17.0646C11.3979 16.7716 11.5625 16.3742 11.5625 15.9598V15.6473C11.5625 15.5644 11.5296 15.4849 11.471 15.4263C11.4124 15.3677 11.3329 15.3348 11.25 15.3348H8.75C8.66712 15.3348 8.58763 15.3677 8.52903 15.4263C8.47042 15.4849 8.4375 15.5644 8.4375 15.6473V16.8973H8.125C7.21332 16.8973 6.33898 16.5351 5.69432 15.8905C5.04966 15.2458 4.6875 14.3715 4.6875 13.4598V9.08479C4.6875 9.00191 4.65458 8.92243 4.59597 8.86382C4.53737 8.80522 4.45788 8.77229 4.375 8.77229H3.7875C3.78501 7.11966 4.43913 5.53373 5.60596 4.36339C6.77279 3.19304 8.35674 2.53415 10.0094 2.53167C11.662 2.52918 13.2479 3.1833 14.4183 4.35013C15.5886 5.51696 16.2475 7.10091 16.25 8.75354V8.77229H15.625C15.5421 8.77229 15.4626 8.80522 15.404 8.86382C15.3454 8.92243 15.3125 9.00191 15.3125 9.08479V13.4598C15.3125 13.5427 15.3454 13.6222 15.404 13.6808C15.4626 13.7394 15.5421 13.7723 15.625 13.7723H16.25C16.5373 13.7723 16.8217 13.7157 17.0871 13.6058C17.3525 13.4958 17.5937 13.3347 17.7968 13.1316C17.9999 12.9285 18.1611 12.6873 18.271 12.4219C18.3809 12.1565 18.4375 11.8721 18.4375 11.5848V10.9598C18.4376 10.4886 18.2856 10.03 18.0041 9.65217C17.7225 9.27436 17.3265 8.99754 16.875 8.86292ZM9.0625 15.9598H10.9375C10.9375 16.2084 10.8387 16.4469 10.6629 16.6227C10.4871 16.7985 10.2486 16.8973 10 16.8973H9.0625V15.9598ZM4.0625 13.1473H3.75C3.54481 13.1473 3.34163 13.1069 3.15206 13.0284C2.96249 12.9498 2.79024 12.8347 2.64515 12.6896C2.50005 12.5446 2.38496 12.3723 2.30644 12.1827C2.22792 11.9932 2.1875 11.79 2.1875 11.5848V10.9598C2.1875 10.5454 2.35212 10.148 2.64515 9.85494C2.93817 9.56191 3.3356 9.39729 3.75 9.39729H4.0625V13.1473ZM17.8125 11.5848C17.8125 11.79 17.7721 11.9932 17.6936 12.1827C17.615 12.3723 17.4999 12.5446 17.3549 12.6896C17.2098 12.8347 17.0375 12.9498 16.8479 13.0284C16.6584 13.1069 16.4552 13.1473 16.25 13.1473H15.9375V9.39729H16.25C16.6644 9.39729 17.0618 9.56191 17.3549 9.85494C17.6479 10.148 17.8125 10.5454 17.8125 10.9598V11.5848Z" stroke-width="0.5"/>
                     </svg>
                     <p
                         class="text-sm leading-[20.3px]"
-                        :class="activeTab == 'help' ? 'text-[#052926] font-medium' : 'text-[#272E2E]'"
+                        :class="activeTab == 'help' ? 'sm:text-[#052926] sm:font-medium' : 'text-[#272E2E]'"
                     >
                         Help
                     </p>
                 </li>
                 <li
                     @click="activeTab = 'about'"
-                    class="flex p-4 gap-2 items-center border-solid cursor-pointer"
-                    :class="activeTab == 'about' ? 'border-b border-[#052926]' : ''"
+                    class="flex p-4 pr-0 sm:pr-4 gap-2 items-center border-solid cursor-pointer"
+                    :class="activeTab == 'about' ? 'sm:border-b border-[#052926]' : ''"
                 >
                     <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg" :class="activeTab == 'about' ? 'fill-[#052926]' : 'fill-[#717A7A]'">
                         <mask id="mask0_7530_5699" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="2" y="2" width="15" height="17">
@@ -157,57 +159,65 @@
                     </svg>
                     <p
                         class="text-sm leading-[20.3px]"
-                        :class="activeTab == 'about' ? 'text-[#052926] font-medium' : 'text-[#272E2E]'"
+                        :class="activeTab == 'about' ? 'sm:text-[#052926] sm:font-medium' : 'text-[#272E2E]'"
                     >
                         About Lance
                     </p>
                 </li>
             </ul>
-            <div class="pt-10 pb-[35px] border-b border-solid border-lance-black-5">
+            <div v-show="activeTab" class="p-6 pt-[18px] sm:pt-10 sm:pb-[35px] border-b border-solid border-lance-black-5 absolute top-0 left-0 sm:static bg-white z-20">
+                <div v-show="activeTab" class="mb-6 flex items-center sm:hidden">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" @click="activeTab = ''">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3332 17.5002C13.1199 17.5002 12.9065 17.4185 12.744 17.256L6.07738 10.5894C5.75155 10.2635 5.75155 9.73687 6.07738 9.41104L12.744 2.74437C13.0699 2.41854 13.5965 2.41854 13.9224 2.74437C14.2482 3.07021 14.2482 3.59687 13.9224 3.92271L7.84488 10.0002L13.9224 16.0777C14.2482 16.4035 14.2482 16.9302 13.9224 17.256C13.7599 17.4185 13.5465 17.5002 13.3332 17.5002" fill="#0A4F4D"/>
+                    </svg>
+                    <p class="text-[#111827] font-bold text-center grow">Settings</p>
+                </div>
                 <div v-show="activeTab == 'personalDetails'">
-                    <div class="flex items-center justify-between border-b border-solid border-lance-black-5 pb-4">
+                    <div class="flex flex-col sm:flex-row items-center justify-between sm:border-b border-solid border-lance-black-5 pb-4">
+                        <div class="mb-2 sm:mb-0 sm:order-2 mr-0 ml-auto">
+                            <div v-show="!editingPersonalDetails">
+                                <button @click="editingPersonalDetails = true" class="gap-4 btn btn-primary">
+                                    <span>Edit</span>
+                                    <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.2923 18.6172H11.2482C10.9032 18.6172 10.6232 18.3372 10.6232 17.9922C10.6232 17.6472 10.9032 17.3672 11.2482 17.3672H17.2923C17.6373 17.3672 17.9173 17.6472 17.9173 17.9922C17.9173 18.3372 17.6373 18.6172 17.2923 18.6172" fill="white"/>
+                                        <mask id="mask0_7530_2573" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="1" y="2" width="15" height="17">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1.66699 2.83398H15.9841V18.6169H1.66699V2.83398Z" fill="white"/>
+                                        </mask>
+                                        <g mask="url(#mask0_7530_2573)">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9256 4.51476L3.07973 14.3273C2.93723 14.5056 2.88473 14.7356 2.93723 14.9564L3.50473 17.3606L6.03723 17.3289C6.27806 17.3264 6.50056 17.2189 6.64806 17.0356C9.32889 13.6814 14.4397 7.28642 14.5847 7.09892C14.7214 6.87726 14.7747 6.56392 14.7031 6.26226C14.6297 5.95309 14.4372 5.69059 14.1597 5.52309C14.1006 5.48226 12.6964 4.39226 12.6531 4.35809C12.1247 3.93476 11.3539 4.00809 10.9256 4.51476V4.51476ZM3.01139 18.617C2.72222 18.617 2.47055 18.4187 2.40305 18.1362L1.72055 15.2437C1.57972 14.6445 1.71972 14.0262 2.10389 13.5462L9.95389 3.72785C9.95722 3.72452 9.95972 3.72035 9.96305 3.71702C10.8239 2.68785 12.3806 2.53619 13.4306 3.37869C13.4722 3.41119 14.8664 4.49452 14.8664 4.49452C15.3731 4.79619 15.7689 5.33535 15.9189 5.97369C16.0681 6.60535 15.9597 7.25702 15.6122 7.80785C15.5864 7.84869 15.5639 7.88369 7.62389 17.817C7.24139 18.2937 6.66805 18.5712 6.05222 18.5787L3.01972 18.617H3.01139Z" fill="white"/>
+                                        </g>
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M13.5196 10.0715C13.3863 10.0715 13.2529 10.029 13.1388 9.94229L8.59543 6.45229C8.3221 6.24229 8.27043 5.85062 8.48043 5.57562C8.69126 5.30229 9.08293 5.25146 9.3571 5.46146L13.9013 8.95062C14.1746 9.16062 14.2263 9.55312 14.0154 9.82729C13.8929 9.98729 13.7071 10.0715 13.5196 10.0715" fill="white"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div v-show="editingPersonalDetails" class="flex items-center gap-4">
+                                <button @click="editingPersonalDetails = false" class="btn btn-secondary">Cancel</button>
+                                <button @click="savePersonalDetails" class="gap-4 btn btn-primary" :class="{'loading' : savingPersonalDetails}" :disabled="!personalDetailsFilled || savingPersonalDetails">
+                                    <span v-show="!savingPersonalDetails">Save changes</span>
+                                    <Loader-Basic v-show="savingPersonalDetails" bg="#FFF" fg="#C3E48E" />
+                                </button>
+                            </div>
+                        </div>
                         <div>
-                            <p class="text-[#1E1721] font-aventa text-2xl tracking-[-0.24px] font-semibold">
+                            <p class="text-[#1E1721] font-aventa text-xl sm:text-2xl leading-8 tracking-[-0.2px] sm:tracking-[-0.24px] font-semibold">
                                 Personal Details
                             </p>
-                            <p class="text-lance-black-60 text-sm leading-6">
+                            <p class="text-lance-black-60 text-sm leading-[18px] sm:leading-6">
                                 Complete your loan application details below with the required information.
                             </p>
                         </div>
-                        <div v-show="!editingPersonalDetails">
-                            <button @click="editingPersonalDetails = true" class="gap-4 btn btn-primary">
-                                <span>Edit</span>
-                                <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17.2923 18.6172H11.2482C10.9032 18.6172 10.6232 18.3372 10.6232 17.9922C10.6232 17.6472 10.9032 17.3672 11.2482 17.3672H17.2923C17.6373 17.3672 17.9173 17.6472 17.9173 17.9922C17.9173 18.3372 17.6373 18.6172 17.2923 18.6172" fill="white"/>
-                                    <mask id="mask0_7530_2573" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="1" y="2" width="15" height="17">
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M1.66699 2.83398H15.9841V18.6169H1.66699V2.83398Z" fill="white"/>
-                                    </mask>
-                                    <g mask="url(#mask0_7530_2573)">
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9256 4.51476L3.07973 14.3273C2.93723 14.5056 2.88473 14.7356 2.93723 14.9564L3.50473 17.3606L6.03723 17.3289C6.27806 17.3264 6.50056 17.2189 6.64806 17.0356C9.32889 13.6814 14.4397 7.28642 14.5847 7.09892C14.7214 6.87726 14.7747 6.56392 14.7031 6.26226C14.6297 5.95309 14.4372 5.69059 14.1597 5.52309C14.1006 5.48226 12.6964 4.39226 12.6531 4.35809C12.1247 3.93476 11.3539 4.00809 10.9256 4.51476V4.51476ZM3.01139 18.617C2.72222 18.617 2.47055 18.4187 2.40305 18.1362L1.72055 15.2437C1.57972 14.6445 1.71972 14.0262 2.10389 13.5462L9.95389 3.72785C9.95722 3.72452 9.95972 3.72035 9.96305 3.71702C10.8239 2.68785 12.3806 2.53619 13.4306 3.37869C13.4722 3.41119 14.8664 4.49452 14.8664 4.49452C15.3731 4.79619 15.7689 5.33535 15.9189 5.97369C16.0681 6.60535 15.9597 7.25702 15.6122 7.80785C15.5864 7.84869 15.5639 7.88369 7.62389 17.817C7.24139 18.2937 6.66805 18.5712 6.05222 18.5787L3.01972 18.617H3.01139Z" fill="white"/>
-                                    </g>
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.5196 10.0715C13.3863 10.0715 13.2529 10.029 13.1388 9.94229L8.59543 6.45229C8.3221 6.24229 8.27043 5.85062 8.48043 5.57562C8.69126 5.30229 9.08293 5.25146 9.3571 5.46146L13.9013 8.95062C14.1746 9.16062 14.2263 9.55312 14.0154 9.82729C13.8929 9.98729 13.7071 10.0715 13.5196 10.0715" fill="white"/>
-                                </svg>
-                            </button>
-                        </div>
-                        <div v-show="editingPersonalDetails" class="flex items-center gap-4">
-                            <button @click="editingPersonalDetails = false" class="btn btn-secondary">Cancel</button>
-                            <button @click="savePersonalDetails" class="gap-4 btn btn-primary" :class="{'loading' : savingPersonalDetails}" :disabled="!personalDetailsFilled || savingPersonalDetails">
-                                <span v-show="!savingPersonalDetails">Save changes</span>
-                                <Loader-Basic v-show="savingPersonalDetails" bg="#FFF" fg="#C3E48E" />
-                            </button>
-                        </div>
                     </div>
                     <div v-show="!editingPersonalDetails">
-                        <div class="py-6 border-b border-solid border-lance-black-5 flex items-center gap-6">
+                        <div class="py-[43px] sm:py-6 sm:border-b border-solid border-lance-black-5 flex items-center gap-6">
                             <div class="w-[64px] h-[64px] rounded-full bg-[url('/assets/img/user.png')] bg-contain bg-no-repeat"></div>
                             <div>
                                 <p class="text-[#1E1721] font-medium tracking-[-0.16px]">{{ fullName }}</p>
                             </div>
                         </div>
-                        <div class="py-6 border-b border-solid border-lance-black-5">
-                            <p class="mb-6 text-[#1E1721] font-medium tracking-[-0.16px]">Personal Details</p>
-                            <div class="flex justify-between">
-                                <div class="flex flex-col gap-6 basis-[185px]">
+                        <div class="sm:py-6 sm:border-b border-solid border-lance-black-5">
+                            <p class="mb-[18px] sm:mb-6 text-[#1E1721] font-medium tracking-[-0.16px]">Personal Details</p>
+                            <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
+                                <div class="flex flex-col gap-6 sm:basis-[185px]">
                                     <div>
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             First Name
@@ -225,7 +235,7 @@
                                         </p>
                                     </div>
                                 </div>
-                                <div class="flex flex-col gap-6 basis-[185px]">
+                                <div class="flex flex-col gap-6 sm:basis-[185px]">
                                     <div>
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             Email Address
@@ -239,7 +249,7 @@
                                         <p class="text-lance-black">{{ userProfile?.phoneNumber }}</p>
                                     </div>
                                 </div>
-                                <div class="flex flex-col gap-6 basis-[185px]">
+                                <div class="flex flex-col gap-6 sm:basis-[185px]">
                                     <div>
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             Marital Status
@@ -255,10 +265,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="pt-6">
-                            <p class="mb-6 text-[#1E1721] font-medium tracking-[-0.16px]">Residential Details</p>
-                            <div class="flex justify-between">
-                                <div class="flex flex-col gap-6 basis-[185px]">
+                        <div class="pt-[42px] sm:pt-6">
+                            <p class="mb-2.5 sm:mb-6 text-[#1E1721] font-medium tracking-[-0.16px]">Residential Details</p>
+                            <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
+                                <div class="flex flex-col gap-6 sm:basis-[185px]">
                                     <div>
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             State
@@ -272,7 +282,7 @@
                                         <p class="text-lance-black">{{ userProfile?.address.street || '--' }}</p>
                                     </div>
                                 </div>
-                                <div class="flex flex-col gap-6 basis-[185px]">
+                                <div class="flex flex-col gap-6 sm:basis-[185px]">
                                     <div>
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             LGA
@@ -280,7 +290,7 @@
                                         <p class="text-lance-black">{{ userProfile?.address.city || '--' }}</p>
                                     </div>
                                 </div>
-                                <div class="flex flex-col gap-6 basis-[185px]">
+                                <div class="flex flex-col gap-6 sm:basis-[185px]">
                                     <div>
                                         <p class="mb-0.5 text-lance-black-50 text-sm leading-[21px] tracking-[-0.14px]">
                                             Address
@@ -305,21 +315,21 @@
                                 <path d="M7.96967 19.8643C7.7034 19.598 7.6792 19.1814 7.89705 18.8878L7.96967 18.8037L14.439 12.334L7.96967 5.86431C7.7034 5.59805 7.6792 5.18138 7.89705 4.88777L7.96967 4.80365C8.23594 4.53739 8.6526 4.51318 8.94621 4.73104L9.03033 4.80365L16.0303 11.8037C16.2966 12.0699 16.3208 12.4866 16.1029 12.7802L16.0303 12.8643L9.03033 19.8643C8.73744 20.1572 8.26256 20.1572 7.96967 19.8643Z" fill="black"/>
                             </svg>
                         </div>
-                        <div class="py-6 border-b border-solid border-lance-black-5 flex items-center gap-6">
+                        <div class="py-[43px] sm:py-6 sm:border-b border-solid border-lance-black-5 flex items-center gap-6">
                             <div class="w-[64px] h-[64px] rounded-full bg-[url('/assets/img/user.png')] bg-contain bg-no-repeat"></div>
                             <div>
                                 <p class="text-[#1E1721] font-medium tracking-[-0.16px]">{{ fullName }}</p>
                             </div>
                         </div>
-                        <div class="py-6 border-b border-solid border-lance-black-5">
+                        <div class="py-6 sm:border-b border-solid border-lance-black-5">
                             <p class="mb-6 text-[#1E1721] font-medium tracking-[-0.16px]">Personal Details</p>
-                            <div class="flex gap-[86px]">
-                                <div class="flex flex-col gap-6 basis-[376px]">
+                            <div class="flex flex-col sm:flex-row sm:gap-[86px]">
+                                <div class="flex flex-col gap-6 sm:basis-[376px]">
                                     <Form-TextInput label="First Name" v-model="settingsForm.firstName" :disabled="true" />
                                     <Form-TextInput label="Email address" v-model="settingsForm.email" :disabled="true" />
                                     <Form-TextInput label="Phone number" v-model="settingsForm.phoneNumber" :disabled="true" />
                                 </div>
-                                <div class="flex flex-col gap-6 basis-[376px]">
+                                <div class="flex flex-col gap-6 sm:basis-[376px]">
                                     <Form-TextInput label="Last Name" v-model="settingsForm.lastName" :disabled="true" />
                                     <Form-SelectInput
                                         :options="maritalStatusListOptions" placeholder="Marital Status" label="Marital Status" v-model="settingsForm.maritalStatus[0].value"
@@ -334,15 +344,15 @@
                         </div>
                         <div class="pt-6">
                             <p class="mb-6 text-[#1E1721] font-medium tracking-[-0.16px]">Residential Details</p>
-                            <div class="flex gap-[86px]">
-                                <div class="flex flex-col gap-6 basis-[376px]">
+                            <div class="flex flex-col sm:flex-row sm:gap-[86px]">
+                                <div class="mb-6 sm:mb-0 flex flex-col gap-6 sm:basis-[376px]">
                                     <Form-TextInput placeholder="Residential Address" label="Residential Address" v-model="settingsForm.residentialAddress[0].value" v-bind="settingsForm.residentialAddress[1].value" :error="settingsFormErrors.residentialAddress" />
                                     <Form-SelectInput
                                         :options="cityListOptions" placeholder="LGA" label="LGA"
                                         v-model="settingsForm.city[0].value" v-bind="settingsForm.city[1].value" :error="settingsFormErrors.city"
                                     />
                                 </div>
-                                <div class="flex flex-col gap-6 basis-[376px]">
+                                <div class="flex flex-col gap-6 sm:basis-[376px]">
                                     <Form-SelectInput
                                         :options="stateListOptions" placeholder="State" label="State" v-model="settingsForm.state[0].value"
                                         v-bind="settingsForm.state[1].value" :error="settingsFormErrors.state" @@select-change="selectedState = $event"
@@ -355,10 +365,10 @@
 
                 <div v-show="activeTab == 'bankDetails'">
                     <div class="border-b border-solid border-lance-black-5 pb-4">
-                        <p class="text-[#1E1721] font-aventa text-2xl tracking-[-0.24px] font-semibold">
+                        <p class="text-[#1E1721] font-aventa text-xl sm:text-2xl leading-8 tracking-[-0.2px] sm:tracking-[-0.24px] font-semibold">
                             Bank Details
                         </p>
-                        <p class="text-lance-black-60 text-sm leading-6">
+                        <p class="text-lance-black-60 text-sm leading-[18px] sm:leading-6">
                             Complete your loan application details below with the required information.
                         </p>
                     </div>
@@ -435,10 +445,10 @@
                 <div v-show="activeTab == 'nextOfKin'">
                     <div class="flex items-center justify-between border-b border-solid border-lance-black-5 pb-4">
                         <div>
-                            <p class="text-[#1E1721] font-aventa text-2xl tracking-[-0.24px] font-semibold">
+                            <p class="text-[#1E1721] font-aventa text-xl sm:text-2xl leading-8 tracking-[-0.2px] sm:tracking-[-0.24px] font-semibold">
                                 Next of Kin
                             </p>
-                            <p class="text-lance-black-60 text-sm leading-6">
+                            <p class="text-lance-black-60 text-sm leading-[18px] sm:leading-6">
                                 Complete your loan application details below with the required information.
                             </p>
                         </div>
@@ -534,10 +544,10 @@
                 <div v-show="activeTab == 'creditScore'">
                     <div class="border-b border-solid border-lance-black-5 pb-4">
                         <div>
-                            <p class="text-[#1E1721] font-aventa text-2xl tracking-[-0.24px] font-semibold">
+                            <p class="text-[#1E1721] font-aventa text-xl sm:text-2xl leading-8 tracking-[-0.2px] sm:tracking-[-0.24px] font-semibold">
                                 Credit Score & Education
                             </p>
-                            <p class="text-lance-black-60 text-sm leading-6">
+                            <p class="text-lance-black-60 text-sm leading-[18px] sm:leading-6">
                                 Complete your loan application details below with the required information.
                             </p>
                         </div>
@@ -678,10 +688,10 @@
                 <div v-show="activeTab == 'password'">
                     <div class="flex items-center justify-between border-b border-solid border-lance-black-5 pb-4">
                         <div>
-                            <p class="text-[#1E1721] font-aventa text-2xl tracking-[-0.24px] font-semibold">
+                            <p class="text-[#1E1721] font-aventa text-xl sm:text-2xl leading-8 tracking-[-0.2px] sm:tracking-[-0.24px] font-semibold">
                                 Password
                             </p>
-                            <p class="text-lance-black-60 text-sm leading-6">
+                            <p class="text-lance-black-60 text-sm leading-[18px] sm:leading-6">
                                 Complete your loan application details below with the required information.
                             </p>
                         </div>
@@ -726,10 +736,10 @@
                 <div v-show="activeTab == 'help'">
                     <div class="border-b border-solid border-lance-black-5 pb-4">
                         <div>
-                            <p class="text-[#1E1721] font-aventa text-2xl tracking-[-0.24px] font-semibold">
+                            <p class="text-[#1E1721] font-aventa text-xl sm:text-2xl leading-8 tracking-[-0.2px] sm:tracking-[-0.24px] font-semibold">
                                 Help
                             </p>
-                            <p class="text-lance-black-60 text-sm leading-6">
+                            <p class="text-lance-black-60 text-sm leading-[18px] sm:leading-6">
                                 Find help to the issues you might have run into
                             </p>
                         </div>
@@ -779,10 +789,10 @@
                 <div v-show="activeTab == 'about'">
                     <div class="border-b border-solid border-lance-black-5 pb-4">
                         <div>
-                            <p class="text-[#1E1721] font-aventa text-2xl tracking-[-0.24px] font-semibold">
+                            <p class="text-[#1E1721] font-aventa text-xl sm:text-2xl leading-8 tracking-[-0.2px] sm:tracking-[-0.24px] font-semibold">
                                 About Lance
                             </p>
-                            <p class="text-lance-black-60 text-sm leading-6">
+                            <p class="text-lance-black-60 text-sm leading-[18px] sm:leading-6">
                                 Read more and learn about the Lance Credit mission
                             </p>
                         </div>
