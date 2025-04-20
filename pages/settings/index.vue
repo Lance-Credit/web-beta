@@ -165,14 +165,14 @@
                     </p>
                 </li>
             </ul>
-            <div v-show="activeTab" class="p-6 pt-[18px] sm:pt-10 sm:pb-[35px] border-b border-solid border-lance-black-5 absolute top-0 left-0 sm:static bg-white z-20">
+            <div v-show="activeTab" class="h-full p-6 pt-[18px] sm:pt-10 sm:pb-[35px] border-b border-solid border-lance-black-5 absolute top-0 left-0 sm:static bg-white z-20">
                 <div v-show="activeTab" class="mb-6 flex items-center sm:hidden">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" @click="activeTab = ''">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3332 17.5002C13.1199 17.5002 12.9065 17.4185 12.744 17.256L6.07738 10.5894C5.75155 10.2635 5.75155 9.73687 6.07738 9.41104L12.744 2.74437C13.0699 2.41854 13.5965 2.41854 13.9224 2.74437C14.2482 3.07021 14.2482 3.59687 13.9224 3.92271L7.84488 10.0002L13.9224 16.0777C14.2482 16.4035 14.2482 16.9302 13.9224 17.256C13.7599 17.4185 13.5465 17.5002 13.3332 17.5002" fill="#0A4F4D"/>
                     </svg>
                     <p class="text-[#111827] font-bold text-center grow">Settings</p>
                 </div>
-                <div v-show="activeTab == 'personalDetails'">
+                <div v-show="activeTab == 'personalDetails'" class="pb-[73px] sm:pb-0">
                     <div class="flex flex-col sm:flex-row items-center justify-between sm:border-b border-solid border-lance-black-5 pb-4">
                         <div class="mb-2 sm:mb-0 sm:order-2 mr-0 ml-auto">
                             <div v-show="!editingPersonalDetails">
@@ -199,7 +199,7 @@
                             </div>
                         </div>
                         <div>
-                            <p class="text-[#1E1721] font-aventa text-xl sm:text-2xl leading-8 tracking-[-0.2px] sm:tracking-[-0.24px] font-semibold">
+                            <p class="text-[#1E1721] font-aventa text-xl sm:text-2xl leading-8 tracking-[-0.2px] sm:tracking-[-0.24px]">
                                 Personal Details
                             </p>
                             <p class="text-lance-black-60 text-sm leading-[18px] sm:leading-6">
@@ -363,21 +363,23 @@
                     </div>
                 </div>
 
-                <div v-show="activeTab == 'bankDetails'">
-                    <div class="border-b border-solid border-lance-black-5 pb-4">
-                        <p class="text-[#1E1721] font-aventa text-xl sm:text-2xl leading-8 tracking-[-0.2px] sm:tracking-[-0.24px] font-semibold">
+                <div v-show="activeTab == 'bankDetails'" class="h-full">
+                    <div class="sm:border-b border-solid border-lance-black-5 sm:pb-4">
+                        <p class="text-[#1E1721] font-aventa text-xl sm:text-2xl leading-8 tracking-[-0.2px] sm:tracking-[-0.24px]">
                             Bank Details
                         </p>
                         <p class="text-lance-black-60 text-sm leading-[18px] sm:leading-6">
                             Complete your loan application details below with the required information.
                         </p>
                     </div>
-                    <div v-if="kycItems.linkedBankAccount.completed" class="pt-6 flex gap-[240px]">
-                        <p class="text-[#1E1721] font-medium tracking-[-0.16px]">Linked Bank Account</p>
+                    <div v-if="kycItems.linkedBankAccount.completed" class="pt-6 flex flex-col sm:flex-row sm:gap-[240px]">
+                        <p class="mb-[15px] text-[#1E1721] font-medium tracking-[-0.16px]">
+                            Linked Bank Account
+                        </p>
                         <div>
                             <ul>
                                 <li
-                                    class="mb-4 py-4 px-6 rounded-xl border border-solid border-lance-green-20 bg-white flex items-center gap-[130px]"
+                                    class="mb-4 p-4 sm:py-4 sm:px-6 rounded-xl border border-solid border-lance-green-20 bg-white flex items-center justify-between sm:gap-[130px]"
                                 >
                                     <div class="flex gap-4 items-center">
                                         <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -412,7 +414,7 @@
                             </NuxtLink> -->
                         </div>
                     </div>
-                    <div v-else class="pt-6 flex flex-col items-center justify-center gap-6 w-[376px] mx-auto text-center">
+                    <div v-else class="pt-6 flex flex-col items-center justify-center gap-6 sm:w-[376px] mx-auto text-center">
                         <div class="w-[192px] h-[192px] rounded-full bg-[#D6F0AD] flex items-center justify-center">
                             <svg width="156" height="156" viewBox="0 0 156 156" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <rect x="0.137939" y="0.0722656" width="155.126" height="155.825" fill="url(#pattern0_5386_20380)"/>
