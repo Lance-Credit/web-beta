@@ -744,10 +744,10 @@
                     </div>
                 </div>
 
-                <div v-show="activeTab == 'help'">
-                    <div class="border-b border-solid border-lance-black-5 pb-4">
+                <div v-show="activeTab == 'help'" class="pb-[73px] sm:pb-0">
+                    <div class="sm:border-b border-solid border-lance-black-5 pb-4">
                         <div>
-                            <p class="text-[#1E1721] font-aventa text-xl sm:text-2xl leading-8 tracking-[-0.2px] sm:tracking-[-0.24px] font-semibold">
+                            <p class="text-[#1E1721] font-aventa text-xl sm:text-2xl leading-8 tracking-[-0.2px] sm:tracking-[-0.24px]">
                                 Help
                             </p>
                             <p class="text-lance-black-60 text-sm leading-[18px] sm:leading-6">
@@ -755,25 +755,25 @@
                             </p>
                         </div>
                     </div>
-                    <div class="py-6 border-b border-solid border-lance-black-5">
-                        <div class="flex gap-[132px]">
-                            <div class="basis-[251px]">
+                    <div class="py-6 sm:border-b border-solid border-lance-black-5">
+                        <div class="flex flex-col sm:flex-row sm:gap-[132px]">
+                            <div class="sm:basis-[251px] mb-[11px]">
                                 <p class="text-[#1E1721] font-medium tracking-[-0.16px]">Frequently Asked Questions</p>
                                 <p class="text-lance-black-60 text-sm leading-6 tracking-[-0.14px]">
                                     Everything you need to know about the Lance and how it works.
                                 </p>
                             </div>
-                            <ul class="basis-[calc(100%-383px)]">
+                            <ul class="sm:basis-[calc(100%-383px)]">
                                 <li v-for="(faq, key) in faqList" :key="key" class="py-4 border-b border-solid border-lance-black-10">
                                     <div @click="openedFaq == key ? openedFaq = null : openedFaq = key" class="mb-1 flex items-center justify-between cursor-pointer">
-                                        <p class="text-[#1E1721] font-medium tracking-[-0.16px]">
+                                        <p class="text-[#1E1721] text-sm sm:text-base leading-6 font-medium tracking-[-0.14px] sm:tracking-[-0.16px]">
                                             {{ faq.title }}
                                         </p>
                                         <svg class="faq-tip" :class="openedFaq == key ? 'rotate-180' : ''" width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M0.72505 0.976027C0.946939 0.754138 1.29416 0.733967 1.53884 0.915512L1.60893 0.976027L7.00033 6.36714L12.3917 0.976027C12.6136 0.754138 12.9608 0.733967 13.2055 0.915512L13.2756 0.976027C13.4975 1.19792 13.5177 1.54514 13.3361 1.78981L13.2756 1.85991L7.44227 7.69324C7.22038 7.91513 6.87316 7.9353 6.62848 7.75376L6.55838 7.69324L0.72505 1.85991C0.480973 1.61583 0.480973 1.2201 0.72505 0.976027Z" fill="#656167"/>
                                         </svg>
                                     </div>
-                                    <p v-show="openedFaq == key" class="text-lance-black-60 tracking-[-0.16px] faq-text">
+                                    <p v-show="openedFaq == key" class="text-lance-black-60 text-sm sm:text-base tracking-[-0.14px] sm:tracking-[-0.16px] faq-text">
                                         {{ faq.text }}
                                     </p>
                                 </li>
@@ -899,7 +899,7 @@
 
     const { nextOfKinDetails } = storeToRefs(useNextOfKinStore());
 
-    const activeTab: Ref<string> = ref('creditScore');
+    const activeTab: Ref<string> = ref('personalDetails');
 
     const editingPersonalDetails: Ref<boolean> = ref(false);
 
