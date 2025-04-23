@@ -184,7 +184,7 @@
                             <path d="M13 1L7.94281 6.05719C7.42211 6.57789 6.57789 6.57789 6.05719 6.05719L1 0.999999" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round"/>
                         </svg>
                     </p>
-                    <div class="bg-white h-[322px] sm:h-auto overflow-scroll">
+                    <div class="bg-white h-[322px] sm:h-auto overflow-scroll sm:overflow-hidden">
                         <ul class="px-4 hidden sm:flex justify-between py-4 text-[#8C8890] text-sm leading-[24px]">
                             <li class="basis-[50%]">Transaction Type</li>
                             <li class="basis-[30%]">Amount</li>
