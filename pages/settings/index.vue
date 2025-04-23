@@ -165,7 +165,7 @@
                     </p>
                 </li>
             </ul>
-            <div v-show="activeTab" class="h-full p-6 pt-[18px] sm:pt-10 sm:pb-[35px] border-b border-solid border-lance-black-5 absolute top-0 left-0 sm:static bg-white z-20">
+            <div v-show="activeTab" class="h-full p-6 pt-[18px] sm:pt-10 sm:pb-[35px] sm:border-b border-solid border-lance-black-5 absolute top-0 left-0 sm:static bg-white z-20">
                 <div v-show="activeTab" class="mb-6 flex items-center sm:hidden">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" @click="activeTab = ''">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3332 17.5002C13.1199 17.5002 12.9065 17.4185 12.744 17.256L6.07738 10.5894C5.75155 10.2635 5.75155 9.73687 6.07738 9.41104L12.744 2.74437C13.0699 2.41854 13.5965 2.41854 13.9224 2.74437C14.2482 3.07021 14.2482 3.59687 13.9224 3.92271L7.84488 10.0002L13.9224 16.0777C14.2482 16.4035 14.2482 16.9302 13.9224 17.256C13.7599 17.4185 13.5465 17.5002 13.3332 17.5002" fill="#0A4F4D"/>
@@ -546,10 +546,10 @@
                     </div>
                 </div>
 
-                <div v-show="activeTab == 'creditScore'">
-                    <div class="border-b border-solid border-lance-black-5 pb-4">
+                <div v-show="activeTab == 'creditScore'" class="pb-[73px] sm:pb-0">
+                    <div class="sm:border-b border-solid border-lance-black-5 sm:pb-4">
                         <div>
-                            <p class="text-[#1E1721] font-aventa text-xl sm:text-2xl leading-8 tracking-[-0.2px] sm:tracking-[-0.24px] font-semibold">
+                            <p class="text-[#1E1721] font-aventa text-xl sm:text-2xl leading-8 tracking-[-0.2px] sm:tracking-[-0.24px]">
                                 Credit Score & Education
                             </p>
                             <p class="text-lance-black-60 text-sm leading-[18px] sm:leading-6">
@@ -557,11 +557,13 @@
                             </p>
                         </div>
                     </div>
-                    <div class="py-6 border-b border-solid border-lance-black-5">
-                        <div class="flex gap-[132px]">
-                            <div class="basis-[251px]">
-                                <p class="text-[#1E1721] font-medium tracking-[-0.16px]">Your Credit Ratings</p>
-                                <p class="text-lance-black-60 text-sm leading-6 tracking-[-0.14px]">
+                    <div class="py-6 sm:border-b border-solid border-lance-black-5">
+                        <div class="flex flex-col sm:flex-row sm:gap-[132px]">
+                            <div class="mb-[29px] sm:basis-[251px] tracking-[-0.14px] leading-6 text-sm">
+                                <p class="text-[#1E1721] font-medium sm:text-base sm:tracking-[-0.16px]">
+                                    Your Credit Ratings
+                                </p>
+                                <p class="text-lance-black-60">
                                     Everything you need to know about the Lance and how it works.
                                 </p>
                             </div>
@@ -582,34 +584,38 @@
                                     </div>
                                     <div class="w-full">
                                         <div class="mb-4 flex items-center justify-between">
-                                            <p class="text-lance-black-60 tracking-[-0.16px]">Your score</p>
-                                            <p class="text-[#041111] text-xl leading-[30px] font-medium tracking-[-0.2px]">
+                                            <p class="text-lance-black-60 text-sm sm:text-base leading-6 tracking-[-0.14px] sm:tracking-[-0.16px]">
+                                                Your score
+                                            </p>
+                                            <p class="text-[#041111] text-lg sm:text-xl leading-[30px] font-medium tracking-[-0.18px] sm:tracking-[-0.2px]">
                                                 838/1000
                                             </p>
-                                            <p class="py-1 px-6 text-lance-green rounded-[31px] bg-lance-green-5">Excellent</p>
+                                            <p class="py-1 px-2.5 sm:px-6 text-sm sm:text-base leading-6 text-lance-green rounded-[31px] bg-lance-green-5">Excellent</p>
                                         </div>
                                         <div class="rounded-[3px] bg-lance-green-10 h-1.5 w-full" style="box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25) inset;">
                                             <div class="rounded-[3px] h-full w-[83.8%]" style="background: linear-gradient(270deg, #09837F 2.17%, #E8FF28 99.93%)"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <p class="mb-1 text-[#1E1721] font-medium">What does this mean?</p>
-                                <p class="text-lance-black-60">
+                                <p class="mb-1 text-sm sm:text-base leading-6 text-[#1E1721] font-medium tracking-[-0.14px]">
+                                    What does this mean?
+                                </p>
+                                <p class="text-sm sm:text-base leading-[18px] sm:leading-6 tracking-[-0.14px] text-lance-black-60">
                                     By requiring a referral code, we ensure that our community remains a curated space of like-minded individuals who are genuinely invested in growth, collaboration, and support.
                                 </p>
                             </div>
                         </div>
                     </div>
-                    <div class="pt-6">
-                        <div class="flex gap-[132px]">
-                            <div class="basis-[251px]">
+                    <div class="sm:pt-6">
+                        <div class="flex flex-col sm:flex-row sm:gap-[132px]">
+                            <div class="mb-[50px] sm:basis-[251px]">
                                 <p class="text-[#1E1721] font-medium tracking-[-0.16px]">Improving Your Rating</p>
                                 <p class="text-lance-black-60 text-sm leading-6 tracking-[-0.14px]">
                                     Everything you need to know about the Lance and how it works.
                                 </p>
                             </div>
-                            <ul class="basis-[calc(100%-383px)]">
-                                <li class="flex items-center gap-4 pb-4 border-b border-solid border-lance-black-10">
+                            <ul class="sm:basis-[calc(100%-383px)]">
+                                <li class="flex items-center gap-4 pb-8 border-b border-solid border-lance-black-10">
                                     <div class="flex items-center justify-center w-10 h-10 rounded-full bg-lance-green-5">
                                         <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M5.21653 14.3371C5.05653 14.3371 4.89553 14.2861 4.75953 14.1821C4.43153 13.9291 4.36953 13.4581 4.62253 13.1301L7.61553 9.2401C7.73753 9.0811 7.91853 8.9781 8.11653 8.9531C8.31853 8.9271 8.51653 8.9831 8.67353 9.1081L11.4935 11.3231L13.9605 8.1401C14.2145 7.8111 14.6845 7.7501 15.0125 8.0061C15.3405 8.2601 15.4005 8.7311 15.1465 9.0581L12.2165 12.8381C12.0945 12.9961 11.9145 13.0991 11.7165 13.1231C11.5165 13.1501 11.3185 13.0921 11.1605 12.9691L8.34253 10.7551L5.81153 14.0441C5.66353 14.2361 5.44153 14.3371 5.21653 14.3371Z" fill="#0A4F4D"/>
@@ -628,13 +634,13 @@
                                         </svg>
                                     </div>
                                     <div class="tracking-[-0.16px]">
-                                        <p class="text-[#1E1721] font-medium mb-1">Loan more, Earn more</p>
-                                        <p class="text-lance-black-60">
+                                        <p class="text-[#1E1721] font-medium mb-1 tracking-[-0.16px]">Loan more, Earn more</p>
+                                        <p class="text-lance-black-60 tracking-[-0.16px]">
                                             By loaning more and paying back successfully, your credit rating increases.
                                         </p>
                                     </div>
                                 </li>
-                                <li class="flex items-center gap-4 py-4 border-b border-solid border-lance-black-10">
+                                <li class="flex items-center gap-4 py-8 border-b border-solid border-lance-black-10">
                                     <div class="flex items-center justify-center w-10 h-10 rounded-full bg-lance-green-5">
                                         <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M5.21653 14.3371C5.05653 14.3371 4.89553 14.2861 4.75953 14.1821C4.43153 13.9291 4.36953 13.4581 4.62253 13.1301L7.61553 9.2401C7.73753 9.0811 7.91853 8.9781 8.11653 8.9531C8.31853 8.9271 8.51653 8.9831 8.67353 9.1081L11.4935 11.3231L13.9605 8.1401C14.2145 7.8111 14.6845 7.7501 15.0125 8.0061C15.3405 8.2601 15.4005 8.7311 15.1465 9.0581L12.2165 12.8381C12.0945 12.9961 11.9145 13.0991 11.7165 13.1231C11.5165 13.1501 11.3185 13.0921 11.1605 12.9691L8.34253 10.7551L5.81153 14.0441C5.66353 14.2361 5.44153 14.3371 5.21653 14.3371Z" fill="#0A4F4D"/>
@@ -653,13 +659,13 @@
                                         </svg>
                                     </div>
                                     <div class="tracking-[-0.16px]">
-                                        <p class="text-[#1E1721] font-medium mb-1">Early Loan Repayments</p>
-                                        <p class="text-lance-black-60">
+                                        <p class="text-[#1E1721] font-medium mb-1 tracking-[-0.16px]">Early Loan Repayments</p>
+                                        <p class="text-lance-black-60 tracking-[-0.16px]">
                                             The more frequently you repay your loans, the higher your credit score increases.
                                         </p>
                                     </div>
                                 </li>
-                                <li class="flex items-center gap-4 py-4">
+                                <li class="flex items-center gap-4 py-8">
                                     <div class="flex items-center justify-center w-10 h-10 rounded-full bg-lance-green-5">
                                         <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M5.21653 14.3371C5.05653 14.3371 4.89553 14.2861 4.75953 14.1821C4.43153 13.9291 4.36953 13.4581 4.62253 13.1301L7.61553 9.2401C7.73753 9.0811 7.91853 8.9781 8.11653 8.9531C8.31853 8.9271 8.51653 8.9831 8.67353 9.1081L11.4935 11.3231L13.9605 8.1401C14.2145 7.8111 14.6845 7.7501 15.0125 8.0061C15.3405 8.2601 15.4005 8.7311 15.1465 9.0581L12.2165 12.8381C12.0945 12.9961 11.9145 13.0991 11.7165 13.1231C11.5165 13.1501 11.3185 13.0921 11.1605 12.9691L8.34253 10.7551L5.81153 14.0441C5.66353 14.2361 5.44153 14.3371 5.21653 14.3371Z" fill="#0A4F4D"/>
@@ -678,8 +684,8 @@
                                         </svg>
                                     </div>
                                     <div class="tracking-[-0.16px]">
-                                        <p class="text-[#1E1721] font-medium mb-1">Early Loan Repayments</p>
-                                        <p class="text-lance-black-60">
+                                        <p class="text-[#1E1721] font-medium mb-1 tracking-[-0.16px]">Early Loan Repayments</p>
+                                        <p class="text-lance-black-60 tracking-[-0.16px]">
                                             The more frequently you repay your loans, the higher your credit score increases.
                                         </p>
                                     </div>
@@ -893,7 +899,7 @@
 
     const { nextOfKinDetails } = storeToRefs(useNextOfKinStore());
 
-    const activeTab: Ref<string> = ref('personalDetails');
+    const activeTab: Ref<string> = ref('creditScore');
 
     const editingPersonalDetails: Ref<boolean> = ref(false);
 
