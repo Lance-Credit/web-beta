@@ -6,7 +6,7 @@
         >
             <ul class="flex flex-col sm:flex-row flex-wrap sm:items-center gap-2 sm:border-b border-solid border-[#DAE0E0]">
                 <li
-                    @click="activeTab = 'personalDetails'"
+                    @click="activeTab = 'personalDetails'; mobileActiveTab = 'personalDetails'"
                     class="flex p-4 pr-0 sm:pr-4 gap-2 items-center border-solid cursor-pointer"
                     :class="activeTab == 'personalDetails' ? 'sm:border-b border-[#052926]' : ''"
                 >
@@ -32,7 +32,7 @@
                     </p>
                 </li>
                 <li
-                    @click="activeTab = 'bankDetails'"
+                    @click="activeTab = 'bankDetails'; mobileActiveTab = 'bankDetails'"
                     class="flex p-4 pr-0 sm:pr-4 gap-2 items-center border-solid cursor-pointer"
                     :class="activeTab == 'bankDetails' ? 'sm:border-b border-[#052926]' : ''"
                 >
@@ -55,7 +55,7 @@
                     </p>
                 </li>
                 <li
-                    @click="activeTab = 'nextOfKin'"
+                    @click="activeTab = 'nextOfKin'; mobileActiveTab = 'nextOfKin'"
                     class="flex p-4 pr-0 sm:pr-4 gap-2 items-center border-solid cursor-pointer"
                     :class="activeTab == 'nextOfKin' ? 'sm:border-b border-[#052926]' : ''"
                 >
@@ -83,7 +83,7 @@
                     </p>
                 </li>
                 <li
-                    @click="activeTab = 'creditScore'"
+                    @click="activeTab = 'creditScore'; mobileActiveTab = 'creditScore'"
                     class="flex p-4 pr-0 sm:pr-4 gap-2 items-center border-solid cursor-pointer"
                     :class="activeTab == 'creditScore' ? 'sm:border-b border-[#052926]' : ''"
                 >
@@ -110,7 +110,7 @@
                     </p>
                 </li>
                 <li
-                    @click="activeTab = 'password'"
+                    @click="activeTab = 'password'; mobileActiveTab = 'password'"
                     class="flex p-4 pr-0 sm:pr-4 gap-2 items-center border-solid cursor-pointer"
                     :class="activeTab == 'password' ? 'sm:border-b border-[#052926]' : ''"
                 >
@@ -127,7 +127,7 @@
                     </p>
                 </li>
                 <li
-                    @click="activeTab = 'help'"
+                    @click="activeTab = 'help'; mobileActiveTab = 'help'"
                     class="flex p-4 pr-0 sm:pr-4 gap-2 items-center border-solid cursor-pointer"
                     :class="activeTab == 'help' ? 'sm:border-b border-[#052926]' : ''"
                 >
@@ -142,7 +142,7 @@
                     </p>
                 </li>
                 <li
-                    @click="activeTab = 'about'"
+                    @click="activeTab = 'about'; mobileActiveTab = 'about'"
                     class="flex p-4 pr-0 sm:pr-4 gap-2 items-center border-solid cursor-pointer"
                     :class="activeTab == 'about' ? 'sm:border-b border-[#052926]' : ''"
                 >
@@ -165,7 +165,10 @@
                     </p>
                 </li>
             </ul>
-            <div v-show="activeTab" class="h-full p-6 pt-[18px] sm:pt-10 sm:pb-[35px] sm:border-b border-solid border-lance-black-5 absolute top-0 left-0 sm:static bg-white z-20">
+            <div
+                v-show="activeTab" :class="mobileActiveTab ? 'block' : 'hidden sm:block'"
+                class="h-full p-6 pt-[18px] sm:pt-10 sm:pb-[35px] sm:border-b border-solid border-lance-black-5 absolute top-0 left-0 sm:static bg-white z-20"
+            >
                 <div v-show="activeTab" class="mb-6 flex items-center sm:hidden">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" @click="activeTab = ''">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3332 17.5002C13.1199 17.5002 12.9065 17.4185 12.744 17.256L6.07738 10.5894C5.75155 10.2635 5.75155 9.73687 6.07738 9.41104L12.744 2.74437C13.0699 2.41854 13.5965 2.41854 13.9224 2.74437C14.2482 3.07021 14.2482 3.59687 13.9224 3.92271L7.84488 10.0002L13.9224 16.0777C14.2482 16.4035 14.2482 16.9302 13.9224 17.256C13.7599 17.4185 13.5465 17.5002 13.3332 17.5002" fill="#0A4F4D"/>
@@ -899,6 +902,7 @@
 
     const { nextOfKinDetails } = storeToRefs(useNextOfKinStore());
 
+    const mobileActiveTab: Ref<string> = ref('');
     const activeTab: Ref<string> = ref('personalDetails');
 
     const editingPersonalDetails: Ref<boolean> = ref(false);
