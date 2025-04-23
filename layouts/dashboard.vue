@@ -34,7 +34,7 @@
                         <path d="M3.10745 4.64865C3.26277 4.49333 3.50583 4.47921 3.6771 4.60629L3.72617 4.64865L7.50014 8.42242L11.2741 4.64865C11.4294 4.49333 11.6725 4.47921 11.8438 4.60629L11.8928 4.64865C12.0482 4.80397 12.0623 5.04702 11.9352 5.2183L11.8928 5.26737L7.8095 9.3507C7.65418 9.50602 7.41113 9.52014 7.23985 9.39306L7.19078 9.3507L3.10745 5.26737C2.9366 5.09651 2.9366 4.8195 3.10745 4.64865Z" fill="#656167"/>
                     </svg>
                 </div>
-                <div class="py-[41px] sm:py-12 flex flex-col justify-between h-full sm:h-[calc(100%-72px)]">
+                <div class="pt-[41px] pb-[82px] sm:py-12 flex flex-col justify-between h-full sm:h-[calc(100%-72px)]">
                     <ul class="flex flex-col gap-2 text-lance-black-60 leading-[19.6px] sm:leading-[22.4px] text-sm sm:text-base">
                         <li>
                             <NuxtLink @click="showSidebar = false" to="/dashboard" class="py-3 pl-6 pr-[17.25px] flex gap-4 items-center group" activeClass="is-active rounded-md bg-[rgba(10,79,77,0.05)] text-lance-green font-medium">
