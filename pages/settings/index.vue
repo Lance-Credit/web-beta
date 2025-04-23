@@ -797,10 +797,10 @@
                     </NuxtLink>
                 </div>
 
-                <div v-show="activeTab == 'about'">
-                    <div class="border-b border-solid border-lance-black-5 pb-4">
+                <div v-show="activeTab == 'about'" class="pb-[73px] sm:pb-0">
+                    <div class="sm:border-b border-solid border-lance-black-5 pb-4">
                         <div>
-                            <p class="text-[#1E1721] font-aventa text-xl sm:text-2xl leading-8 tracking-[-0.2px] sm:tracking-[-0.24px] font-semibold">
+                            <p class="text-[#1E1721] font-aventa text-xl sm:text-2xl leading-8 tracking-[-0.2px] sm:tracking-[-0.24px]">
                                 About Lance
                             </p>
                             <p class="text-lance-black-60 text-sm leading-[18px] sm:leading-6">
@@ -809,8 +809,8 @@
                         </div>
                     </div>
                     <div class="pt-6">
-                        <div class="flex gap-[247px]">
-                            <div class="w-[136px]">
+                        <div class="flex flex-col sm:flex-row sm:gap-[247px]">
+                            <div class="w-[136px] mb-6">
                                 <svg width="136" height="21" viewBox="0 0 136 21" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                     <rect y="0.333984" width="136" height="20" fill="url(#pattern0_3050_12513)"/>
                                     <defs>
@@ -821,7 +821,7 @@
                                     </defs>
                                 </svg>
                             </div>
-                            <p class="text-lance-black-60 tracking-[-0.16px]">
+                            <p class="text-lance-black-60 text-sm sm:text-base tracking-[-0.14px] sm:tracking-[-0.16px]">
                                 At Lance Credit, we're here to help you take control of your finances with ease. With our platform, you can give and receive loans within your trusted network or request funds directly quickly and on your terms. We're not just about lending; we're about empowering you to achieve your goals and build a stronger financial future with the people who matter most.
                             </p>
                         </div>
