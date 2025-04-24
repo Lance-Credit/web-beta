@@ -699,49 +699,59 @@
 
                 </div>
 
-                <div v-show="activeTab == 'password'">
-                    <div class="flex items-center justify-between border-b border-solid border-lance-black-5 pb-4">
+                <div v-show="activeTab == 'password'" class="pb-[73px] sm:pb-0">
+                    <div class="flex flex-col sm:flex-row items-center justify-between sm:border-b border-solid border-lance-black-5 sm:pb-4">
+                        <div class="mb-2 sm:mb-0 sm:order-2 mr-0 ml-auto">
+                            <div class="flex items-center gap-4">
+                                
+                                <button v-show="settingsForm.currPassword[0].value" @click="resetPasswordForm" class="btn btn-secondary">Cancel</button>
+                                <button @click="updatePassword" class="gap-4 btn btn-primary" :class="{'loading' : savingNewPassword}" :disabled="!newPasswordFilled || savingNewPassword">
+                                    <span v-show="!savingNewPassword">Update Password</span>
+                                    <Loader-Basic v-show="savingNewPassword" bg="#FFF" fg="#C3E48E" />
+                                </button>
+                            </div>
+                        </div>
                         <div>
-                            <p class="text-[#1E1721] font-aventa text-xl sm:text-2xl leading-8 tracking-[-0.2px] sm:tracking-[-0.24px] font-semibold">
+                            <p class="text-[#1E1721] font-aventa text-xl sm:text-2xl leading-8 tracking-[-0.2px] sm:tracking-[-0.24px]">
                                 Password
                             </p>
                             <p class="text-lance-black-60 text-sm leading-[18px] sm:leading-6">
                                 Complete your loan application details below with the required information.
                             </p>
                         </div>
-                        <div class="flex items-center gap-4">
-                            <button @click="updatePassword" class="gap-4 btn btn-primary" :class="{'loading' : savingNewPassword}" :disabled="!newPasswordFilled || savingNewPassword">
-                                <span v-show="!savingNewPassword">Update Password</span>
-                                <Loader-Basic v-show="savingNewPassword" bg="#FFF" fg="#C3E48E" />
-                            </button>
-                        </div>
                     </div>
                     <div>
-                        <div class="pt-6">
-                            <div class="flex">
-                                <div class="w-[320px]"></div>
-                                <Form-ErrorNotification v-if="passwordChangeError" :message="passwordChangeError" class="w-[376px]" />
+                        <div class="sm:pt-6">
+                            <div class="flex flex-col sm:flex-row">
+                                <div class="sm:w-[320px]"></div>
+                                <Form-ErrorNotification v-if="passwordChangeError" :message="passwordChangeError" class="sm:w-[376px]" />
                             </div>
                         </div>
                         <div class="py-6 border-b border-solid border-lance-black-5">
-                            <div class="flex">
-                                <p class="w-[320px] text-[#1E1721] font-medium tracking-[-0.16px]">Current Password</p>
-                                <Form-PasswordInput label="Current Password" v-model="settingsForm.currPassword[0].value" v-bind="settingsForm.currPassword[1].value" :error="settingsFormErrors.currPassword" class="w-[376px]" />
+                            <div class="flex flex-col sm:flex-row">
+                                <p class="mb-2.5 sm:w-[320px] text-sm sm:text-base leading-6 text-[#1E1721] font-medium tracking-[-0.14px] sm:tracking-[-0.16px]">
+                                    Current Password
+                                </p>
+                                <Form-PasswordInput label="Current Password" v-model="settingsForm.currPassword[0].value" v-bind="settingsForm.currPassword[1].value" :error="settingsFormErrors.currPassword" class="sm:w-[376px]" />
                             </div>
                         </div>
                         <div class="py-6 border-b border-solid border-lance-black-5">
-                            <div class="flex">
-                                <p class="w-[320px] text-[#1E1721] font-medium tracking-[-0.16px]">New Password</p>
-                                <div class="w-[376px]">
+                            <div class="flex flex-col sm:flex-row">
+                                <p class="mb-2.5 sm:w-[320px] text-sm sm:text-base leading-6 text-[#1E1721] font-medium tracking-[-0.14px] sm:tracking-[-0.16px]">
+                                    New Password
+                                </p>
+                                <div class="sm:w-[376px]">
                                     <Form-PasswordInput class="mb-2" placeholder="New Password" label="New Password" v-model="settingsForm.newPassword[0].value" v-bind="settingsForm.newPassword[1].value" :error="settingsFormErrors.newPassword" />
                                     <Form-PasswordRuleGuide v-show="settingsForm.newPassword[0].value" :password="settingsFormValues.newPassword"/>
                                 </div>
                             </div>
                         </div>
                         <div class="pt-6">
-                            <div class="flex">
-                                <p class="w-[320px] text-[#1E1721] font-medium tracking-[-0.16px]">Confirm New Password</p>
-                                <Form-PasswordInput label="Confirm New Password" v-model="settingsForm.confPassword[0].value" v-bind="settingsForm.confPassword[1].value" :error="settingsFormErrors.confPassword" class="w-[376px]" />
+                            <div class="flex flex-col sm:flex-row">
+                                <p class="mb-2.5 sm:w-[320px] text-sm sm:text-base leading-6 text-[#1E1721] font-medium tracking-[-0.14px] sm:tracking-[-0.16px]">
+                                    Confirm New Password
+                                </p>
+                                <Form-PasswordInput label="Confirm New Password" v-model="settingsForm.confPassword[0].value" v-bind="settingsForm.confPassword[1].value" :error="settingsFormErrors.confPassword" class="sm:w-[376px]" />
                             </div>
                         </div>
                     </div>
@@ -2203,6 +2213,12 @@
         settingsFormValues.newPassword && !settingsFormErrors.value.newPassword &&
         settingsFormValues.confPassword && !settingsFormErrors.value.confPassword;
     });
+
+    function resetPasswordForm() {
+        setFieldValue('newPassword', '');
+        setFieldValue('confPassword', '');
+        setFieldValue('currPassword', '');
+    }
 
     const savingNewPassword: Ref<boolean> = ref(false);
 
