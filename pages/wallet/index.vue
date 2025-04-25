@@ -1,14 +1,18 @@
 <template>
     <div>
-        <p class="mb-[30px] text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px]">Wallet</p>
-        <div class="rounded-xl bg-white border border-solid border-lance-black-10 p-10">
+        <p class="hidden sm:block mb-[30px] text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px]">Wallet</p>
+        <div class="rounded-xl sm:bg-white sm:border border-solid border-lance-black-10 sm:p-10">
             <div
-                class="flex justify-between items-center py-12 px-6 rounded-xl border border-solid border-lance-blue-10
-                bg-lance-green mb-10 bg-[url('/assets/img/wallet-gradient-bg.svg')] bg-no-repeat bg-right"
+                class="flex flex-col sm:flex-row justify-between sm:items-center py-4 sm:py-12 px-6 rounded-xl border border-solid border-lance-blue-10
+                bg-lance-green mb-10 sm:bg-[url('/assets/img/wallet-gradient-bg.svg')] bg-no-repeat bg-right"
             >
-                <div>
-                    <p class="mb-2 text-[rgba(255,255,255,0.80)] font-medium tracking-[-0.16px]">Wallet Balance</p>
-                    <p class="text-white text-[32px] font-medium leading-[32px] tracking-[-0.32px]">N {{ balance.toLocaleString() }}</p>
+                <div class="mb-4 sm:mb-0 pb-1.5 sm:pb-0 border-b sm:border-none border-solid border-[rgba(255,255,255,0.20)]">
+                    <p class="mb-1.5 sm:mb-2 text-sm sm:text-base leading-6 text-[rgba(255,255,255,0.80)] font-medium tracking-[-0.16px]">
+                        Wallet Balance
+                    </p>
+                    <p class="text-white text-2xl sm:text-[32px] font-semibold sm:font-medium leading-9 sm:leading-[32px] tracking-[0.24px] sm:tracking-[-0.32px]">
+                        N {{ balance.toLocaleString() }}
+                    </p>
                 </div>
                 <div class="flex gap-4">
                     <button @click="!kycCompleted ? showKycIncompleteModal = true : showWalletFundingModal = true" class="btn border border-solid border-white text-white">
@@ -23,9 +27,11 @@
                     </button>
                 </div>
             </div>
-            <p class="mb-6 text-[#0E0B10] font-medium leading-[22px] tracking-[-0.16px]">Wallet Transactions</p>
-            <div class="p-4 rounded-xl bg-white border border-solid border-lance-blue-10">
-                <ul class="flex py-2 px-4 text-lance-black-60 text-sm leading-[24px]">
+            <p class="hidden sm:block mb-6 text-[#0E0B10] font-medium leading-[22px] tracking-[-0.16px]">
+                Wallet Transactions
+            </p>
+            <div class="p-4 rounded-xl bg-white border border-solid border-lance-blue-10 overflow-scroll sm:overflow-hidden">
+                <ul class="flex py-2 px-4 text-lance-black-60 text-sm leading-[24px] w-fit sm:w-auto">
                     <li class="w-[228px]">Transaction Type</li>
                     <li class="w-[138px]">Amount</li>
                     <li class="w-[250px] grow">Description</li>
@@ -35,7 +41,7 @@
                 <ul
                     @click="viewTransactionDetails(transaction)"
                     v-for="(transaction) in transactions" :key="transaction.id"
-                    class="mb-2 flex items-center pt-[23px] pb-[15px] px-4 border-t
+                    class="mb-2 flex items-center pt-[23px] pb-[15px] px-4 border-t w-fit sm:w-auto text-sm sm:text-base
                     border-solid border-[rgba(3,87,238,0.05)] text-lance-black leading-[26px] cursor-pointer"
                 >
                     <li class="flex items-center gap-4 w-[228px]">
@@ -52,7 +58,9 @@
                         </p>
                     </li>
                     <li class="font-medium w-[138px]">N {{ (transaction.amount/100).toLocaleString() }}</li>
-                    <li class="w-[250px] grow">{{ transaction.metadata.description }}</li>
+                    <li class="w-[250px] grow">
+                        <p class="pr-4">{{ transaction.metadata.description }}</p>
+                    </li>
                     <li class="w-[108px] grow">
                         {{ transaction.reference }}
                     </li>
