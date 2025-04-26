@@ -5,14 +5,14 @@
                 <p class="text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px]">Notifications</p>
                 <p class="text-[#1E1721] text-sm cursor-pointer">Mark all as read</p>
             </div>
-            <ul class="flex flex-col gap-6">
+            <ul class="flex flex-col gap-2 sm:gap-6">
                 <li
                     v-for="(notification, key) in notifications" :key="key"
-                    class="p-6 pr-10 rounded-xl bg-white border border-solid border-[rgba(3,87,238,0.10)]"
+                    class="p-4 sm:p-6 pr-2 sm:pr-10 rounded-xl bg-white border border-solid border-[rgba(3,87,238,0.10)]"
                 >
                     <p class="mb-6 text-[#656167] font-medium">{{ new Date(notification.createdAt).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) }}</p>
-                    <div class="flex items-center gap-4">
-                        <div v-if="!notification.read" class="w-2.5 h-2.5 rounded-full bg-[#E70A3F]"></div>
+                    <div class="flex items-center gap-2 sm:gap-4">
+                        <div v-if="!notification.read" class="w-2.5 h-2.5 shrink-0 rounded-full bg-[#E70A3F]"></div>
                         <div @click="showNotification(notification)" class="flex items-center justify-between cursor-pointer grow">
                             <div>
                                 <p class="mb-1 text-lance-black font-medium">{{ notification.title }}

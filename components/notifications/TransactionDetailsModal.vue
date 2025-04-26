@@ -1,6 +1,6 @@
 <template>
   <div @click.self="emit('@close-modal')" class="fixed z-20 top-0 left-0 w-screen h-screen backdrop-blur-[2px] flex items-center justify-center bg-lance-black-70">
-      <div class="flex flex-col gap-6 w-[456px] mx-auto bg-white p-10 rounded-3xl">
+      <div class="flex flex-col gap-6 w-full sm:w-[456px] h-full sm:h-auto mx-auto bg-white px-6 sm:px-10 p-10 sm:rounded-3xl">
           <div class="p-4 rounded border border-solid bg-lance-green-5 border-lance-green">
               <p class="text-lance-green text-sm text-center"> {{ notificationData?.title }} </p>
           </div>

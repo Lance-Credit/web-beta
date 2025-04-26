@@ -1,6 +1,6 @@
 <template>
   <div @click.self="emit('@close-modal')" class="fixed z-20 top-0 left-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex items-center justify-center">
-      <div class="bg-white w-[466px] rounded-3xl p-10 flex flex-col gap-6">
+      <div class="bg-white w-full sm:w-[466px] h-full sm:h-auto sm:rounded-3xl px-6 sm:px-10 p-10 flex flex-col gap-6">
           <p class="text-lance-black text-2xl font-medium leading-[26px] tracking-[-0.24px]">Loan Details</p>
           <div v-show="notificationData?.data.status === 'paid'" class="flex items-center justify-between">
               <div>
