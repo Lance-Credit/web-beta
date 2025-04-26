@@ -1,7 +1,10 @@
 <template>
-    <div @click.self="emit('@close-paystack-direct-debit-modal')" class="fixed z-20 top-0 left-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex justify-center items-center">
-        <div class="bg-white w-[466px] p-10 rounded-3xl flex flex-col gap-8">
-            <div class="w-[192px] h-[192px] rounded-full bg-[#D6F0AD] flex items-center justify-center mx-auto">
+    <div
+      @click.self="emit('@close-paystack-direct-debit-modal')"
+      class="fixed z-20 top-0 py-[92px] px-6 left-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex justify-center items-center"
+    >
+        <div class="bg-white h-full sm:h-auto w-full sm:w-[466px] px-6 sm:px-10 p-10 sm:rounded-3xl flex flex-col gap-8 overflow-scroll sm:overflow-hidden">
+            <div class="w-[192px] h-[192px] rounded-full bg-[#D6F0AD] flex items-center justify-center mx-auto shrink-0">
                 <Loader-CircularBar />
             </div>
             <div class="text-center">

@@ -199,6 +199,7 @@
     const { fetchLoanHistory } = useLoanHistoryStore();
     const { hasDirectDebit } = storeToRefs(useWalletStore());
     const { fetchUserLinkedAccountAndBalance } = useWalletStore();
+    const { ongoingLoanRequest } = storeToRefs(useLoanHistoryStore());
 
     const props = defineProps<{
         loanSettings?: {
@@ -215,21 +216,12 @@
 
     onMounted(async()=>{
         const route = useRoute();
-        if(route.query.continue_loan_request == 'true'){
-            if(
-                Number(route.query.amount) && 
-                Number(route.query.duration) &&
-                props.loanSettings?.maxDuration &&
-                Number(route.query.duration) <= props.loanSettings.maxDuration / 30
-            ) {
-                setFieldValue('loanAmount', Number(route.query.amount));
-                setFieldValue('loanDuration', Number(route.query.duration));
-                await calculateLoanSummary();
-                activeTab.value = 'summary';
-                submitLoanApplication();
-            } else {
-                navigateTo('/loans');
-            }
+        if(ongoingLoanRequest.value){
+            setFieldValue('loanAmount', ongoingLoanRequest.value.amount);
+            setFieldValue('loanDuration', ongoingLoanRequest.value.duration);
+            await calculateLoanSummary();
+            activeTab.value = 'summary';
+            submitLoanApplication();
         }
     });
 
@@ -327,11 +319,19 @@
                 loanApplicationSuccess.value = true;
                 submittingLoanApplication.value = false;
                 fetchLoanHistory();
+
+                if(ongoingLoanRequest.value) {
+                    ongoingLoanRequest.value = null;
+                }
             } else {
                 submittingLoanApplication.value = false;
                 // console.log(result.error);
             }
         } else {
+            ongoingLoanRequest.value = {
+                amount: loanRequestFormValues.loanAmount,
+                duration: loanRequestFormValues.loanDuration
+            }
             showDirectDebitInfoModal.value = true;
         }
     }

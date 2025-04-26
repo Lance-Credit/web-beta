@@ -14,6 +14,8 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
             "processingFee": number
         } | null> = ref(null);
 
+        const ongoingLoanRequest: Ref<null | {amount: number, duration: number}> = ref(null);
+
         const activeLoan = computed(() => {
             if(loanHistory.value.length){
                 return loanHistory.value.find((loan: Loan)=> loan.status == 'active');
@@ -98,7 +100,8 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
         }
 
         function $reset() {
-            loanHistory.value = []
+            loanHistory.value = [];
+            ongoingLoanRequest.value = null;
         }
         
         return {
@@ -110,6 +113,7 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
             declinedLoans,
             completedLoans,
             fetchLoanHistory,
+            ongoingLoanRequest,
             percentageLoanPaid,
             activeLoanTotalPaid
         }

@@ -217,7 +217,7 @@
 
     const { loanSettings } = storeToRefs(useLoanHistoryStore());
         
-    const { kycItems, kycCompleted } = storeToRefs(useKYCStore());
+    const { kycCompleted } = storeToRefs(useKYCStore());
 
     const showLoanInstructions: Ref<boolean> = ref(false);
 
@@ -251,7 +251,6 @@
                 fetchUserLinkedAccountAndBalance();
                 showLoanRequestProcess();
             }
-            
         }
     });
 
