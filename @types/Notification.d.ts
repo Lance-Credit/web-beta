@@ -1,7 +1,9 @@
 interface Notification {
+    id: number,
     body: string,
     title: string,
-    createdAt: string
+    readAt: string,
+    createdAt: string,
     metadata: {
         resourceId: string,
         resourceType: string

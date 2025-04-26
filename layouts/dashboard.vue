@@ -186,7 +186,7 @@
                             </g>
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M7.14421 15.6367H7.14275C6.32748 15.6359 5.55584 15.2767 4.97039 14.6243C4.76894 14.401 4.78712 14.0556 5.01112 13.8548C5.23512 13.6527 5.57984 13.6708 5.7813 13.8956C6.15803 14.3152 6.64166 14.5458 7.14348 14.5458H7.14421C7.64821 14.5458 8.13403 14.3152 8.51148 13.8948C8.71366 13.6716 9.05839 13.6534 9.28166 13.8548C9.50566 14.0563 9.52384 14.4018 9.32239 14.625C8.73475 15.2774 7.96166 15.6367 7.14421 15.6367" fill="#8C8890"/>
                         </svg>
-                        <div v-if="notifications.length" class=" w-[5.82px] sm:w-2 h-[5.82px] sm:h-2 absolute top-[7.27px] sm:top-3 right-[7.27px] sm:right-2.5 bg-[#E70A3F] rounded-full"></div>
+                        <div v-if="unreadNotificationExists" class=" w-[5.82px] sm:w-2 h-[5.82px] sm:h-2 absolute top-[7.27px] sm:top-3 right-[7.27px] sm:right-2.5 bg-[#E70A3F] rounded-full"></div>
                     </NuxtLink>
                     <NuxtLink to="/settings" class="hidden sm:flex items-center gap-2">
                         <div v-if="!userProfile?.profilePicture" class="w-[44px] h-[44px] rounded-full bg-contain bg-no-repeat bg-[url('/assets/img/user.png')]"></div>
@@ -228,7 +228,7 @@
     const { fullName, userProfile } = storeToRefs(useUserStore());
 
     const { fetchNotifications } = useNotificationsStore();
-    const { notifications } = storeToRefs(useNotificationsStore());
+    const { notifications, unreadNotificationExists } = storeToRefs(useNotificationsStore());
 
     const loggingUserOut: Ref<boolean> = ref(false);
 

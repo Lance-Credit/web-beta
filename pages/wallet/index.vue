@@ -15,10 +15,16 @@
                     </p>
                 </div>
                 <div class="flex gap-4">
-                    <button @click="!kycCompleted ? showKycIncompleteModal = true : showWalletFundingModal = true" class="btn border border-solid border-white text-white">
+                    <button
+                        @click="!kycCompleted ? showKycIncompleteModal = true : showWalletFundingModal = true"
+                        class="btn border border-solid border-white text-white w-full sm:w-auto"
+                    >
                         Fund Wallet
                     </button>
-                    <button @click="!kycCompleted ? showKycIncompleteModal = true : showWalletWithdrawalModal = true" class="btn bg-white gap-4 text-lance-green">
+                    <button
+                        @click="!kycCompleted ? showKycIncompleteModal = true : showWalletWithdrawalModal = true"
+                        class="btn bg-white gap-4 text-lance-green w-full sm:w-auto"
+                    >
                         <span>Withdraw</span>
                         <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0.0804443 6.10547C0.0804443 5.78906 0.315573 5.52756 0.620636 5.48617L0.705444 5.48047L13.2054 5.48047C13.5506 5.48047 13.8304 5.76029 13.8304 6.10547C13.8304 6.42188 13.5953 6.68338 13.2903 6.72476L13.2054 6.73047L0.705444 6.73047C0.360266 6.73047 0.0804443 6.45065 0.0804443 6.10547Z" fill="#0A4F4D"/>

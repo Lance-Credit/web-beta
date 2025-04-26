@@ -5,6 +5,13 @@ export const useNotificationsStore = defineStore('notifications', () =>
         const notifications: Ref<Notification[] | []> = ref([]);
         const notificationDetailsCache: Ref<NotificationDetails[] | []> = ref([]);
 
+        const unreadNotificationExists = computed(() => {
+            if(notifications.value) {
+                return notifications.value.find((notification: Notification) => !notification.readAt);
+            }
+            return false;
+        });
+
         async function fetchNotifications() {
             
             const result = await apiFetch('notifications');
@@ -21,7 +28,7 @@ export const useNotificationsStore = defineStore('notifications', () =>
             notificationDetailsCache.value = [];
         }
         
-        return { notifications, notificationDetailsCache, fetchNotifications, $reset }
+        return { notifications,unreadNotificationExists, notificationDetailsCache, fetchNotifications, $reset }
     },
     {
         persist: true,

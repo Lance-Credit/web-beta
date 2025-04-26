@@ -3,7 +3,7 @@
         <div>
             <div class="mb-[30px] flex items-center justify-between">
                 <p class="text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px]">Notifications</p>
-                <p class="text-[#1E1721] text-sm cursor-pointer">Mark all as read</p>
+                <p v-if="unreadNotificationExists" @click="markNotificationsAsRead(notifications)" class="text-[#1E1721] text-sm cursor-pointer">Mark all as read</p>
             </div>
             <ul class="flex flex-col gap-2 sm:gap-6">
                 <li
@@ -12,7 +12,7 @@
                 >
                     <p class="mb-6 text-[#656167] font-medium">{{ new Date(notification.createdAt).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) }}</p>
                     <div class="flex items-center gap-2 sm:gap-4">
-                        <div v-if="!notification.read" class="w-2.5 h-2.5 shrink-0 rounded-full bg-[#E70A3F]"></div>
+                        <div v-if="!notification.readAt" class="w-2.5 h-2.5 shrink-0 rounded-full bg-[#E70A3F]"></div>
                         <div @click="showNotification(notification)" class="flex items-center justify-between cursor-pointer grow">
                             <div>
                                 <p class="mb-1 text-lance-black font-medium">{{ notification.title }}
@@ -45,7 +45,7 @@
     });
     
     const { fetchNotifications } = useNotificationsStore();
-    const { notifications, notificationDetailsCache } = storeToRefs(useNotificationsStore());
+    const { notifications, notificationDetailsCache, unreadNotificationExists } = storeToRefs(useNotificationsStore());
 
     const { approvedLoan } = storeToRefs(useLoanHistoryStore());
 
@@ -117,6 +117,8 @@
                 // console.log((result as any).error);
             }
         }
+
+        markNotificationsAsRead([notification]);
     }
 
     async function showTransactionNotificationDetails(notification: Notification){
@@ -153,6 +155,18 @@
             } else {
                 // console.log((result as any).error);
             }
+        }
+
+        markNotificationsAsRead([notification]);
+    }
+
+    async function markNotificationsAsRead(notifications: Notification[]) {
+        const notificationIds = notifications.map((notification) => notification.id);
+
+        const result = await apiFetch('notifications/read', 'POST', { ids: notificationIds });
+    
+        if((result as any).success && !(result as any).error){
+            fetchNotifications();
         }
     }
 
