@@ -1,7 +1,12 @@
 <template>
     <div @click.self="emit('@close-loan-details-modal')" class="fixed z-20 top-0 left-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex items-center justify-center">
-        <div class="bg-white w-[466px] rounded-3xl p-10 flex flex-col gap-6">
-            <p class="text-lance-black text-2xl font-medium leading-[26px] tracking-[-0.24px]">Loan Details</p>
+        <div class="bg-white w-full sm:w-[466px] h-full sm:h-auto sm:rounded-3xl px-6 py-10 sm:p-10 flex flex-col gap-6">
+            <p class="text-lance-black text-base sm:text-2xl font-bold sm:font-medium sm:leading-[26px] tracking-[-0.24px] flex items-center">
+                <svg @click="emit('@close-loan-details-modal')" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="sm:hidden">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3332 17.5C13.1199 17.5 12.9065 17.4183 12.744 17.2558L6.07738 10.5892C5.75155 10.2633 5.75155 9.73666 6.07738 9.41083L12.744 2.74416C13.0699 2.41833 13.5965 2.41833 13.9224 2.74416C14.2482 3.06999 14.2482 3.59666 13.9224 3.92249L7.84488 9.99999L13.9224 16.0775C14.2482 16.4033 14.2482 16.93 13.9224 17.2558C13.7599 17.4183 13.5465 17.5 13.3332 17.5" fill="#0A4F4D"/>
+                </svg>
+                <span class="mx-auto sm:mx-0">Loan Details</span>
+            </p>
             <div v-show="loan?.status === 'paid'" class="flex items-center justify-between">
                 <div>
                     <p class="text-lance-black-50 text-sm leading-5">Total Amount Repaid</p>
@@ -89,12 +94,12 @@
                 </div>
                 <ul v-else class="p-6 rounded-lg border border-solid border-lance-black bg-[rgba(236,255,77,0.05)]">
                     <li class="flex items-center justify-between pb-4 border-b border-solid border-b-lance-green-5">
-                        <p class="text-lance-black-70 text-sm leading-[21px]">Loan Amount</p>
-                        <p class="text-lance-black">N{{ (loan?.amount)?.toLocaleString() }}</p>
+                        <p class="text-lance-black-70 text-xs sm:text-sm leading-[18px] sm:leading-[21px]">Loan Amount</p>
+                        <p class="text-lance-black text-[13px] sm:text-base leading-6">N{{ (loan?.amount)?.toLocaleString() }}</p>
                     </li>
                     <li class="flex items-center justify-between py-4 border-b border-solid border-b-lance-green-5">
-                        <p class="text-lance-black-70 text-sm leading-[21px]">Reference</p>
-                        <p class="text-lance-black flex items-center gap-2">
+                        <p class="text-lance-black-70 text-xs sm:text-sm leading-[18px] sm:leading-[21px]">Reference</p>
+                        <p class="text-lance-black text-[13px] sm:text-base leading-6 flex items-center gap-2">
                             <span class="">{{ loan?.reference }}</span>
                             <svg @click="copyReferenceCode" class="cursor-pointer" width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <mask id="mask0_3427_18542" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="2" y="1" width="15" height="18">
@@ -108,21 +113,21 @@
                         </p>
                     </li>
                     <li class="flex items-center justify-between py-4 border-b border-solid border-b-lance-green-5">
-                        <p class="text-lance-black-70 text-sm leading-[21px]">Interest Rate</p>
-                        <p class="text-lance-black">{{ loan?.rate }}% per month</p>
+                        <p class="text-lance-black-70 text-xs sm:text-sm leading-[18px] sm:leading-[21px]">Interest Rate</p>
+                        <p class="text-lance-black text-[13px] sm:text-base leading-6">{{ loan?.rate }}% per month</p>
                     </li>
                     <li class="flex items-center justify-between py-4 border-b border-solid border-b-lance-green-5">
-                        <p class="text-lance-black-70 text-sm leading-[21px]">Duration</p>
-                        <p class="text-lance-black">{{ loan?.tenure }} months</p>
+                        <p class="text-lance-black-70 text-xs sm:text-sm leading-[18px] sm:leading-[21px]">Duration</p>
+                        <p class="text-lance-black text-[13px] sm:text-base leading-6">{{ loan?.tenure }} months</p>
                     </li>
                     <li class="flex items-center justify-between py-4 border-b border-solid border-b-lance-green-5">
-                        <p class="text-lance-black-70 text-sm leading-[21px]">Monthly Repayment</p>
-                        <p class="text-lance-black">N{{ (loan?.monthlyRepaymentAmount)?.toLocaleString() }} every month</p>
+                        <p class="text-lance-black-70 text-xs sm:text-sm leading-[18px] sm:leading-[21px]">Monthly Repayment</p>
+                        <p class="text-lance-black text-[13px] sm:text-base leading-6">N{{ (loan?.monthlyRepaymentAmount)?.toLocaleString() }} every month</p>
                     </li>
                 </ul>
                 <div v-show="loan?.status === 'active'" class="mt-4 p-6 rounded-lg border border-solid border-lance-black bg-[rgba(236,255,77,0.05)]">
                     <div class="flex items-center justify-between">
-                        <p class="text-lance-black-70 text-sm leading-[21px]">Total Repayment</p>
+                        <p class="text-lance-black-70 text-xs sm:text-sm leading-[18px] sm:leading-[21px]">Total Repayment</p>
                         <p class="text-lance-green text-2xl font-bold leading-[30px]">
                             N{{ (loan?.totalRepaymentAmount)?.toLocaleString() }}
                         </p>

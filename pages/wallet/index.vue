@@ -4,7 +4,7 @@
         <div class="rounded-xl sm:bg-white sm:border border-solid border-lance-black-10 sm:p-10">
             <div
                 class="flex flex-col sm:flex-row justify-between sm:items-center py-4 sm:py-12 px-6 rounded-xl border border-solid border-lance-blue-10
-                bg-lance-green mb-10 sm:bg-[url('/assets/img/wallet-gradient-bg.svg')] bg-no-repeat bg-right"
+                bg-lance-green mb-10 bg-[url('/assets/img/wallet-gradient-mobile-bg.svg')] sm:bg-[url('/assets/img/wallet-gradient-bg.svg')] bg-no-repeat bg-right"
             >
                 <div class="mb-4 sm:mb-0 pb-1.5 sm:pb-0 border-b sm:border-none border-solid border-[rgba(255,255,255,0.20)]">
                     <p class="mb-1.5 sm:mb-2 text-sm sm:text-base leading-6 text-[rgba(255,255,255,0.80)] font-medium tracking-[-0.16px]">

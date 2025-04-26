@@ -198,7 +198,7 @@
                     </NuxtLink>
                 </div>
             </div>
-            <div class="bg-[#FAFAFA] mt-[65.53px] sm:min-h-[calc(100%-72px)] p-6 sm:p-8">
+            <div class="bg-[#FAFAFA] mt-[65.53px] h-full sm:h-auto sm:min-h-[calc(100%-72px)] p-6 sm:p-8">
                 <slot />
             </div>
         </div>

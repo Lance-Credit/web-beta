@@ -10,7 +10,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 12px 24px;
+    padding: 12px;
     border-radius: 6px;
     font-family: 'Gelion';
     font-size: 14px;
@@ -63,5 +63,6 @@
 @media (min-width: 640px) {
     .btn{
         font-size: 16px;
+        padding: 12px 24px;
     }
 }
