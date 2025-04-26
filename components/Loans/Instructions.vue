@@ -1,11 +1,16 @@
 <template>
     <div @click.self="emit('@close-loan-instructions-modal')" class="fixed z-20 top-0 left-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex justify-center items-center">
-        <div class="bg-white w-[466px] p-10 rounded-3xl flex flex-col gap-6">
-            <div>
-                <p class="text-lance-black font-medium text-xl leading-[26px] tracking-[-0.2px]">Things to Note</p>
+        <div class="bg-white w-full sm:w-[466px] py-[34px] px-6 sm:p-10 sm:rounded-3xl flex flex-col gap-6">
+            <div class="flex items-center">
+                <svg @click="emit('@close-loan-instructions-modal')" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="sm:hidden">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3333 17.5002C13.12 17.5002 12.9067 17.4185 12.7442 17.256L6.0775 10.5894C5.75167 10.2635 5.75167 9.73687 6.0775 9.41104L12.7442 2.74437C13.07 2.41854 13.5967 2.41854 13.9225 2.74437C14.2483 3.07021 14.2483 3.59687 13.9225 3.92271L7.845 10.0002L13.9225 16.0777C14.2483 16.4035 14.2483 16.9302 13.9225 17.256C13.76 17.4185 13.5467 17.5002 13.3333 17.5002" fill="#0A4F4D"/>
+                </svg>
+                <p class="text-lance-black font-medium text-xl leading-[26px] tracking-[-0.2px] mx-auto sm:mx-0">
+                    Things to Note
+                </p>
             </div>
             <ul class="text-lance-black text-sm tracking-[-0.14px] flex flex-col gap-6">
-                <li class="p-4 rounded-lg border border-solid border-lance-black-10 bg-white flex gap-3 items-center">
+                <li class="p-4 rounded-lg border border-solid border-lance-black-10 bg-white flex gap-3 sm:items-center">
                     <div class="w-10 h-10 rounded-full bg-lance-green-10 flex items-center justify-center">
                         <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M3.81135 9.66882C3.70468 9.66882 3.59735 9.63482 3.50668 9.56549C3.28801 9.39682 3.24668 9.08282 3.41535 8.86416L5.41068 6.27082C5.49201 6.16482 5.61268 6.09616 5.74468 6.07949C5.87935 6.06216 6.01135 6.09949 6.11601 6.18282L7.99601 7.65949L9.64068 5.53749C9.81001 5.31816 10.1233 5.27749 10.342 5.44816C10.5607 5.61749 10.6007 5.93149 10.4313 6.14949L8.47801 8.66949C8.39668 8.77482 8.27668 8.84349 8.14468 8.85949C8.01135 8.87749 7.87935 8.83882 7.77401 8.75682L5.89535 7.28082L4.20801 9.47349C4.10935 9.60149 3.96135 9.66882 3.81135 9.66882Z" fill="black"/>
@@ -33,7 +38,7 @@
                         </p>
                     </div>
                 </li>
-                <li class="p-4 rounded-lg border border-solid border-lance-black-10 bg-white flex gap-3 items-center">
+                <li class="p-4 rounded-lg border border-solid border-lance-black-10 bg-white flex gap-3 sm:items-center">
                     <div class="w-10 h-10 rounded-full bg-lance-green-10 flex items-center justify-center">
                         <svg width="15" height="13" viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M9.06616 3.44725C8.79016 3.44725 8.56616 3.22325 8.56616 2.94725V1.33325C8.56616 1.05725 8.79016 0.833252 9.06616 0.833252C9.34216 0.833252 9.56616 1.05725 9.56616 1.33325V2.94725C9.56616 3.22325 9.34216 3.44725 9.06616 3.44725Z" fill="black"/>
@@ -56,7 +61,7 @@
                         </p>
                     </div>
                 </li>
-                <li class="p-4 rounded-lg border border-solid border-lance-black-10 bg-white flex gap-3 items-center">
+                <li class="p-4 rounded-lg border border-solid border-lance-black-10 bg-white flex gap-3 sm:items-center">
                     <div class="w-10 h-10 rounded-full bg-lance-green-10 flex items-center justify-center">
                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <mask id="mask0_7654_1687" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="14" height="14">

@@ -1,6 +1,6 @@
 <template>
     <div @click.self="emit('@close-loan-application-modal')" class="fixed z-20 top-0 left-0 w-screen h-screen bg-lance-black-70 backdrop-blur-[2px] flex items-center justify-center">
-        <div class="bg-white w-[466px] rounded-3xl p-10">
+        <div class="bg-white w-full sm:w-[466px] h-full sm:h-auto sm:rounded-3xl p-10">
             <div>
                 <div>
                     <div class="mb-10 w-[192px] h-[192px] rounded-full flex items-center justify-center bg-[#D6F0AD] mx-auto">
@@ -20,10 +20,10 @@
                         </svg>
                     </div>
                     <div class="text-lance-black text-center mb-8">
-                        <p class="mb-2 font-aventa text-2xl leading-8 tracking-[-0.24px] font-semibold">
+                        <p class="mb-2 font-aventa text-xl sm:text-2xl leading-8 tracking-[-0.2px] sm:tracking-[-0.24px]">
                             Loan Application Sent
                         </p>
-                        <p class="text-lance-black-60">
+                        <p class="text-lance-black-60 text-sm sm:text-base leading-[18px] sm:leading-6">
                             We’ve gotten your loan application, and will get back to you with a loan offer in less than 2 hours via email and your notifications.
                         </p>
                     </div>
