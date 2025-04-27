@@ -1,10 +1,10 @@
 <template>
     <div>
-        <p class="mb-8 text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px]">
+        <p class="mb-8 text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px] hidden sm:block">
             KYC Completion 
         </p>
         <div class="rounded-xl bg-white flex text-lance-black">
-            <div class="w-[395px] p-12 border-r border-solid border-lance-black-10">
+            <div class="w-[395px] p-12 border-r border-solid border-lance-black-10 hidden sm:block">
                 <p class="mb-4 text-[#1E1721] leading-8 tracking-[-0.16px] font-aventa font-extrabold">KYC Process</p>
                 <div class="flex gap-4">
                     <div class="px-[2.33px] pt-[6.33px] flex flex-col items-center">
@@ -77,8 +77,8 @@
                     </ul>
                 </div>
             </div>
-            <div class="w-[calc(100%-395px)] p-[100px]">
-                <div v-if="activeStep == 'personalDetails'" class="w-[376px] mx-auto flex flex-col gap-8">
+            <div class="w-full sm:w-[calc(100%-395px)] p-6 sm:p-[100px]">
+                <div v-if="activeStep == 'personalDetails'" class="sm:w-[376px] mx-auto flex flex-col gap-8">
                     <p class="text-[#1E1721] font-aventa font-semibold text-2xl tracking-[-0.24px]">KYC Verification</p>
                     <svg width="128" height="129" viewBox="0 0 128 129" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <mask id="mask0_5387_20773" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="3" y="3" width="126" height="126">
@@ -124,7 +124,7 @@
                         </button>
                     </div>
                 </div>
-                <div v-if="activeStep == 'bankAccount'" class="w-[376px] mx-auto flex flex-col gap-8">
+                <div v-if="activeStep == 'bankAccount'" class="sm:w-[376px] mx-auto flex flex-col gap-8">
                     <p class="text-[#1E1721] font-aventa font-semibold text-2xl tracking-[-0.24px]">Bank Account Verification</p>
                     <svg width="128" height="129" viewBox="0 0 128 129" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <mask id="mask0_5387_20773" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="3" y="3" width="126" height="126">
