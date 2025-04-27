@@ -102,7 +102,7 @@
                                             <p v-if="repayment.status === 'paid'" class="text-xs leading-[16.8px]">
                                                 Date Paid:
                                                 <span class="font-semibold">
-                                                    {{ repayment.status === 'paid' ? new Date(repayment.dueDate).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) : '' }}
+                                                    {{ repayment.status === 'paid' ? new Date(repayment.paidAt).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) : '' }}
                                                 </span>
                                             </p>
                                             <p v-else class="text-xs leading-[16.8px]">

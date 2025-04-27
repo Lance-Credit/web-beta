@@ -20,5 +20,6 @@ interface Loan {
 interface LoanSchedule {
     amount: number,
     status: string,
-    dueDate: string
+    paidAt: string,
+    dueDate: string,
 }
