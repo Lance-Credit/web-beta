@@ -64,10 +64,14 @@
 
 
     async function showNotification(notification: Notification){
-        if(notification.metadata.resourceType === 'loan') {
+        if(notification.metadata && notification.metadata.resourceType === 'loan') {
             showLoanOfferOrDetails(notification);
-        } else if(notification.metadata.resourceType == 'transactions') {
+        } else if(notification.metadata && notification.metadata.resourceType == 'transactions') {
             showTransactionNotificationDetails(notification);
+        } else {
+            if(!notification.readAt) {
+                markNotificationsAsRead([notification]);
+            }
         }
     }
 
