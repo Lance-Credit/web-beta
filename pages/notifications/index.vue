@@ -122,7 +122,9 @@
             }
         }
 
-        markNotificationsAsRead([notification]);
+        if(!notification.readAt) {
+            markNotificationsAsRead([notification]);
+        }
     }
 
     async function showTransactionNotificationDetails(notification: Notification){
@@ -161,7 +163,9 @@
             }
         }
 
-        markNotificationsAsRead([notification]);
+        if(!notification.readAt) {
+            markNotificationsAsRead([notification]);
+        }
     }
 
     async function markNotificationsAsRead(notifications: Notification[]) {
