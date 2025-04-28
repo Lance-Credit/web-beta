@@ -12,7 +12,7 @@
                 >
                     <p class="mb-6 text-[#656167] font-medium">{{ new Date(notification.createdAt).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) }}</p>
                     <div class="flex items-center gap-2 sm:gap-4">
-                        <div v-if="!notification.readAt" class="w-2.5 h-2.5 shrink-0 rounded-full bg-[#E70A3F]"></div>
+                        <div v-if="!notification.readAt || notification.readAt == '0000-01-01T00:00:00.000Z'" class="w-2.5 h-2.5 shrink-0 rounded-full bg-[#E70A3F]"></div>
                         <div @click="showNotification(notification)" class="flex items-center justify-between cursor-pointer grow">
                             <div>
                                 <p class="mb-1 text-lance-black font-medium">{{ notification.title }}
@@ -69,7 +69,7 @@
         } else if(notification.metadata && notification.metadata.resourceType == 'transactions') {
             showTransactionNotificationDetails(notification);
         } else {
-            if(!notification.readAt) {
+            if(!notification.readAt || notification.readAt == '0000-01-01T00:00:00.000Z') {
                 markNotificationsAsRead([notification]);
             }
         }
@@ -122,7 +122,7 @@
             }
         }
 
-        if(!notification.readAt) {
+        if(!notification.readAt || notification.readAt == '0000-01-01T00:00:00.000Z') {
             markNotificationsAsRead([notification]);
         }
     }
@@ -163,7 +163,7 @@
             }
         }
 
-        if(!notification.readAt) {
+        if(!notification.readAt || notification.readAt == '0000-01-01T00:00:00.000Z') {
             markNotificationsAsRead([notification]);
         }
     }

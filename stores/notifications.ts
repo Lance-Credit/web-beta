@@ -7,7 +7,7 @@ export const useNotificationsStore = defineStore('notifications', () =>
 
         const unreadNotificationExists = computed(() => {
             if(notifications.value) {
-                return notifications.value.find((notification: Notification) => !notification.readAt);
+                return notifications.value.find((notification: Notification) => !notification.readAt || notification.readAt == '0000-01-01T00:00:00.000Z');
             }
             return false;
         });
