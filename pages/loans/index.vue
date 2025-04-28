@@ -252,6 +252,10 @@
                 showLoanRequestProcess();
             }
         }
+
+        if(route.query.continue_repayment == 'true') {
+            showLoanRepaymentModal.value = true;
+        }
     });
 
     const selectedLoan: Ref<Loan | null> = ref(null);

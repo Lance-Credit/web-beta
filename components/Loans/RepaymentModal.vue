@@ -186,7 +186,7 @@
         walletBalance: number
     }>();
 
-    const { activeLoanTotalPaid } = storeToRefs(useLoanHistoryStore());
+    const { activeLoanTotalPaid, ongoingLoanRepayment } = storeToRefs(useLoanHistoryStore());
 
     const remainingPayment = computed(() => {
         return props.loan ? props.loan.totalRepaymentAmount - activeLoanTotalPaid.value : 0;
@@ -229,38 +229,88 @@
     
     const repaymentResponseMessage: Ref<string> = ref('We see you and we appreciate it');
 
+    onMounted(() => {
+        const route = useRoute();
+        if(route.query.continue_repayment == 'true') {
+            if(ongoingLoanRepayment.value) {
+                continueRepayment.value = true;
+                successfulRepayment.value = true;
+                ongoingLoanRepayment.value = false;
+            }
+        }
+    });
+    
     const { apiFetch } = useApiFetch();
 
     async function makeRepayment(){
         makingRepayment.value = true;
 
         const medium = repaymentFormValues.repaymentMethod == 'wallet' ? 'wallet' : 'link';
-        const installment = repaymentFormValues.repaymentOption == 'full' ? 'full' : 'partial';
+        const installment = repaymentFormValues.repaymentOption == 'full' ? 'full' :
+            repaymentFormValues.repaymentOption == 'nextRepayment' ? 'next' : 'partial';
 
-        const result = await apiFetch(`loans/${props.loan?.reference}/repayments?installment=${installment}&medium=${medium}`, 'POST');
-        if ((result as any).success && !(result as any).error) {
+        const rePaymentSessionId = await initiateRepayment(props.loan, installment);
+
+        if(rePaymentSessionId && medium == 'link') {
+            const result = await apiFetch(`repayments/session/${rePaymentSessionId}/payment-link`);
             
-            if (medium === 'wallet') {
-                makingRepayment.value = false;
-                successfulRepayment.value = true;
-            }
+            if ((result as any).success && !(result as any).error) {
 
-            repaymentResponseMessage.value = (result as any).message;
+                repaymentResponseMessage.value = (result as any).message;
+                ongoingLoanRepayment.value = true;
 
-            if (medium === 'link'){
                 navigateTo(
                     (result as any).data.link,
                     {
                         external: true
                     }
                 );
+            } else {
+                // console.log((result as any).error);
+                makingRepayment.value = false;
+                successfulRepayment.value = false;
             }
         } else {
-            // console.log((result as any).error);
-            makingRepayment.value = false;
-            successfulRepayment.value = false;
+            makeWalletRepayment(rePaymentSessionId, medium);
         }
     }
+
+    async function initiateRepayment(loan: Loan | null, installment: string) {
+        const payload = {
+            installments: installment,
+            loanReference: loan?.reference,
+            amount: Number(chosenAmount.value) * 100
+        }
+
+        const result = await apiFetch('repayments', 'POST', payload);
+
+        if ((result as any).success && !(result as any).error) {
+            
+            return (result as any).data.sessionId;
+        } else {
+            return false;
+        }
+    }
+
+    async function makeWalletRepayment(sessionId: string, source: string) {
+        const payload = {
+            source
+        }
+        const result = await apiFetch(`repayments/session/${sessionId}/pay`, 'POST', payload);
+        
+        if ((result as any).success && !(result as any).error) {
+            
+            successfulRepayment.value = true;
+
+            repaymentResponseMessage.value = (result as any).message;
+        } else {
+            // console.log((result as any).error);
+            successfulRepayment.value = false;
+        }
+
+        makingRepayment.value = false;
+    }
+
 
     function resetRepaymentChoice(){
         setFieldValue('repaymentOption', undefined);
