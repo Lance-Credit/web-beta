@@ -1087,16 +1087,19 @@
         );
 
         if((result as any).success && !(result as any).error){
-            savingPersonalDetails.value = false;
 
             if (userProfile.value) {
-                userProfile.value.maritalStatus = (result as any).data.profile.maritalStatus;
-                userProfile.value.educationLevel = (result as any).data.profile.levelOfEducation;
                 userProfile.value.address.city = (result as any).data.profile.address.city;
-                userProfile.value.address.country = (result as any).data.profile.address.country;
+                userProfile.value.maritalStatus = (result as any).data.profile.maritalStatus;
                 userProfile.value.address.state = (result as any).data.profile.address.state;
                 userProfile.value.address.street = (result as any).data.profile.address.street;
+                userProfile.value.address.country = (result as any).data.profile.address.country;
+                userProfile.value.educationLevel = (result as any).data.profile.levelOfEducation;
+
+                continueDirectDebit();
             }
+
+            savingPersonalDetails.value = false;
         }else {
             savingPersonalDetails.value = false;
             // console.log((result as any).error);
