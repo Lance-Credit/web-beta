@@ -81,7 +81,7 @@
                             <p class="mb-2 text-[#1E1721] font-aventa text-sm sm:text-base leading-[18px] sm:leading-8 tracking-[-0.14px] sm:tracking-[-0.16px] font-bold">
                                 Repayment Timeline
                             </p>
-                            <div class="sm:h-[275px] overflow-y-scroll flex gap-4">
+                            <div class="sm:h-[275px] overflow-y-scroll sm:overflow-y-hidden flex gap-4">
                                 <div v-if="activeLoan" class="px-[2.335px] pt-[6.33px] flex flex-col items-center">
                                     <div v-for="(repayment, key) in activeLoan.schedule" :key="key" class="flex flex-col items-center">
                                         <div class="w-0.5 h-[48.66px] bg-[#063A4F] opacity-10" v-if="key != 0"></div>
