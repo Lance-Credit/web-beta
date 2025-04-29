@@ -49,10 +49,7 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
         const activeLoanTotalPaid = computed(() => {
             return activeLoan.value
                 ? (activeLoan.value.schedule).reduce((total, repayment): number => {
-                    if(repayment.status === 'paid'){
-                        return total + repayment.amount;
-                    }
-                    return total;
+                    return total + repayment.paidAmount;
                 }, 0)
                 : 0;
         });
@@ -78,6 +75,8 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
 
                     const schedules = loan.schedule.map((schedule) => {
                         schedule.amount = schedule.amount / 100;
+                        schedule.paidAmount = schedule.paidAmount / 100;
+                        schedule.remainingAmount = schedule.remainingAmount / 100;
                         return schedule;
                     });
                     

@@ -37,7 +37,7 @@
                         <div class="rounded-xl bg-white border border-solid border-lance-black-10 py-6 px-4 sm:px-10">
                             <p class="text-lance-black-50 text-sm leading-5">Next Repayment</p>
                             <p class="mt-[-12px] text-lance-black text-[28px] sm:text-4xl font-bold leading-[52px] sm:leading-[55.93px] tracking-[0.28px] sm:tracking-[0.36px]">
-                                {{ activeLoan ? (activeLoan.monthlyRepaymentAmount).toLocaleString() : '' }}
+                                {{ activeLoan ? (activeLoan.schedule).find((schedule) => schedule.status != 'paid')?.remainingAmount.toLocaleString() : '' }}
                             </p>
                             <p class="mb-3 flex gap-1.5 items-center">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -98,7 +98,7 @@
                                 <ul v-if="activeLoan" class="flex flex-col gap-8 grow">
                                     <li v-for="(repayment, key) in activeLoan.schedule" :key="key" class="flex items-center justify-between">
                                         <div class="text-lance-black">
-                                            <p class="leading-[22.4px] font-semibold">{{ (repayment.amount).toLocaleString() }}</p>
+                                            <p class="leading-[22.4px] font-semibold">{{ (repayment.remainingAmount).toLocaleString() }}</p>
                                             <p v-if="repayment.status === 'paid'" class="text-xs leading-[16.8px]">
                                                 Date Paid:
                                                 <span class="font-semibold">

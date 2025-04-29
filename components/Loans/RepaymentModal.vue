@@ -34,7 +34,7 @@
                         <form  class="flex flex-col gap-6">
                             <Form-RadioInput type="radio" name="repaymentOption" value="nextRepayment">
                                 <p class="text-lance-black text-sm">
-                                    Pay Next Instalment of <span class="font-bold">N{{ (loan?.monthlyRepaymentAmount)?.toLocaleString() }}</span>
+                                    Pay Next Instalment of <span class="font-bold">N{{ activeLoan ? (activeLoan.schedule).find((schedule) => schedule.status != 'paid')?.remainingAmount.toLocaleString() : '' }}</span>
                                 </p>
                             </Form-RadioInput>
             
@@ -186,7 +186,7 @@
         walletBalance: number
     }>();
 
-    const { activeLoanTotalPaid, ongoingLoanRepayment } = storeToRefs(useLoanHistoryStore());
+    const { activeLoan, activeLoanTotalPaid, ongoingLoanRepayment } = storeToRefs(useLoanHistoryStore());
 
     const remainingPayment = computed(() => {
         return props.loan ? props.loan.totalRepaymentAmount - activeLoanTotalPaid.value : 0;
