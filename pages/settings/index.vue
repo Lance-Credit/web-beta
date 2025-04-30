@@ -704,7 +704,7 @@
                         <div class="mb-2 sm:mb-0 sm:order-2 mr-0 ml-auto">
                             <div class="flex items-center gap-4">
                                 
-                                <button v-show="settingsForm.currPassword[0].value" @click="resetPasswordForm" class="btn btn-secondary">Cancel</button>
+                                <button v-show="settingsForm.currPassword[0].value" @click="resetForm" class="btn btn-secondary">Cancel</button>
                                 <button @click="updatePassword" class="gap-4 btn btn-primary" :class="{'loading' : savingNewPassword}" :disabled="!newPasswordFilled || savingNewPassword">
                                     <span v-show="!savingNewPassword">Update Password</span>
                                     <Loader-Basic v-show="savingNewPassword" bg="#FFF" fg="#C3E48E" />
@@ -917,7 +917,7 @@
 
     const editingPersonalDetails: Ref<boolean> = ref(false);
 
-    const { values: settingsFormValues, errors: settingsFormErrors, setFieldValue, defineField } = useForm({
+    const { values: settingsFormValues, errors: settingsFormErrors, setFieldValue, defineField, resetForm } = useForm({
         validationSchema: yup.object({
             lga: yup.string().required().label('LGA'),
             city: yup.string().required().label('City'),
@@ -2213,12 +2213,6 @@
         settingsFormValues.newPassword && !settingsFormErrors.value.newPassword &&
         settingsFormValues.confPassword && !settingsFormErrors.value.confPassword;
     });
-
-    function resetPasswordForm() {
-        setFieldValue('newPassword', '');
-        setFieldValue('confPassword', '');
-        setFieldValue('currPassword', '');
-    }
 
     const savingNewPassword: Ref<boolean> = ref(false);
 
