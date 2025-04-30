@@ -186,6 +186,7 @@
         walletBalance: number
     }>();
 
+    const { fetchNotifications } = useNotificationsStore();
     const { activeLoan, activeLoanTotalPaid, ongoingLoanRepayment } = storeToRefs(useLoanHistoryStore());
 
     const remainingPayment = computed(() => {
@@ -237,6 +238,7 @@
                 successfulRepayment.value = true;
                 ongoingLoanRepayment.value = false;
             }
+            fetchNotifications();
         }
     });
     
@@ -271,7 +273,8 @@
                 successfulRepayment.value = false;
             }
         } else {
-            makeWalletRepayment(rePaymentSessionId, medium);
+            await makeWalletRepayment(rePaymentSessionId, medium);
+            fetchNotifications();
         }
     }
 
