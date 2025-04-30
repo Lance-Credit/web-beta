@@ -55,7 +55,7 @@
                         </form>
                     </div>
                     <div class="flex gap-6">
-                        <button @click="emit('@close-loan-repayment-modal')" class="btn btn-tertiary w-full">Back</button>
+                        <button @click="resetRepaymentChoice" class="btn btn-tertiary w-full">Back</button>
                         <button @click="continueRepayment = true" class="btn btn-primary w-full" :disabled="!(repaymentFormValues.repaymentOption && !repaymentFormErrors.repaymentOption)">Make Repayment</button>
                     </div>
                 </div>
@@ -192,7 +192,7 @@
         return props.loan ? props.loan.totalRepaymentAmount - activeLoanTotalPaid.value : 0;
     })
 
-    const { values: repaymentFormValues, errors: repaymentFormErrors, setFieldValue, defineField } = useForm({
+    const { values: repaymentFormValues, errors: repaymentFormErrors, setFieldValue, defineField, resetField } = useForm({
         validationSchema: yup.object({
             repaymentMethod: yup.string().required().label('Repayment Method'),
             repaymentOption: yup.string().required().label('Repayment Option'),
@@ -313,7 +313,11 @@
 
 
     function resetRepaymentChoice(){
-        setFieldValue('repaymentOption', undefined);
+        resetField('repaymentOption');
+        resetField('repaymentAmount', {
+            value: 0
+        });
+
         emit('@close-loan-repayment-modal')
     }    
 
