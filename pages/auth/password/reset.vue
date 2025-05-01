@@ -20,7 +20,7 @@
                                 <div class="mb-8">
                                     <Form-EmailInput class="mb-4" placeholder="Email address" label="Email address" v-model="passwordResetForm.email[0].value" v-bind="passwordResetForm.email[1].value" :error="passwordResetFormErrors.email"/>
                                 </div>
-                                <Form-ErrorNotification v-if="resetPasswordFormRequestError" :message="resetPasswordFormRequestError" />
+                                <Form-ErrorNotification v-if="resetPasswordFormRequestError" :message="resetPasswordFormRequestError" class="mb-6" />
                                 <button
                                     @click="submitResetPasswordRequestForm" class="mb-6 btn btn-primary w-full gap-4" :class="{'loading' : submittingResetPasswordRequestForm}"
                                     :disabled="!emailFormFilled || submittingResetPasswordRequestForm">
@@ -58,7 +58,7 @@
                                 <div class="mb-8">
                                     <Form-TextInput placeholder="Verification Code" label="Verification Code" v-model="passwordResetForm.verificationCode[0].value" v-bind="passwordResetForm.verificationCode[1].value" :error="passwordResetFormErrors.verificationCode"/>
                                 </div>
-                                <Form-ErrorNotification v-if="verificationCodeErrorResponse" :message="verificationCodeErrorResponse" />
+                                <Form-ErrorNotification v-if="verificationCodeErrorResponse" :message="verificationCodeErrorResponse" class="mb-6" />
                                 <button @click="verificationCodeFormSubmitted = true" class="mb-6 btn btn-primary w-full gap-4" :disabled="!verificationCodeFormFilled">
                                     <span>Continue</span>
                                     <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -48,7 +48,7 @@
                                     I do not have a community code
                                 </NuxtLink>
     
-                                <Form-ErrorNotification v-if="communityCodeErrorResponse" :message="communityCodeErrorResponse" />
+                                <Form-ErrorNotification v-if="communityCodeErrorResponse" :message="communityCodeErrorResponse" class="mb-6" />
     
                                 <button @click="submitCommunityCode" class="mb-4 sm:mb-6 btn w-full btn-primary" :class="{'loading' : submittingCommunityCode}" :disabled="!signupFormValues.communityCode || submittingCommunityCode">
                                     <span v-show="!submittingCommunityCode">Continue</span>
@@ -79,7 +79,7 @@
                                     <Form-PasswordRuleGuide :password="signupFormValues.password"/>
                                 </div>
     
-                                <Form-ErrorNotification v-if="signupErrorResponse" :message="signupErrorResponse" />
+                                <Form-ErrorNotification v-if="signupErrorResponse" :message="signupErrorResponse" class="mb-6" />
     
                                 <button @click="submitSignUpForm" class="mb-6 btn w-full btn-primary" :class="{'loading' : submittingSignupForm}" :disabled="!signupFormFilled || submittingSignupForm">
                                     <span v-show="!submittingSignupForm">Continue</span>
@@ -114,7 +114,7 @@
                                     <Form-TextInput placeholder="Verification Code" label="Verification Code" v-model="signupForm.phoneVerificationCode[0].value" v-bind="signupForm.phoneVerificationCode[1].value" :error="signupFormErrors.phoneVerificationCode" />
                                 </div>
     
-                                <Form-ErrorNotification v-if="phoneVerificationCodeErrorResponse" :message="phoneVerificationCodeErrorResponse" />
+                                <Form-ErrorNotification v-if="phoneVerificationCodeErrorResponse" :message="phoneVerificationCodeErrorResponse" class="mb-6" />
     
                                 <button
                                     @click="submitPhoneVerificationCode" class="mb-6 btn w-full btn-primary" :class="{'loading' : submittingPhoneVerificationCode}"
@@ -151,7 +151,7 @@
                                     <Form-TextInput placeholder="Verification Code" label="Verification Code" v-model="signupForm.emailVerificationCode[0].value" v-bind="signupForm.emailVerificationCode[1].value" :error="signupFormErrors.emailVerificationCode" />
                                 </div>
     
-                                <Form-ErrorNotification v-if="emailVerificationCodeErrorResponse" :message="emailVerificationCodeErrorResponse" />
+                                <Form-ErrorNotification v-if="emailVerificationCodeErrorResponse" :message="emailVerificationCodeErrorResponse" class="mb-6" />
     
                                 <button
                                     @click="submitEmailVerificationCode" class="mb-6 btn w-full btn-primary" :class="{'loading' : submittingEmailVerificationCode}"

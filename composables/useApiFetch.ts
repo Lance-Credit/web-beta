@@ -40,8 +40,11 @@ export const useApiFetch = () => {
       // console.log((error as any).response);
       if((error as any).response && (error as any).response.status == 401){
         logOut();
-      } else {
+      } else if ((error as any).response) {
         return (error as any).response._data
+      }
+      return {
+        success: false
       }
     }
 

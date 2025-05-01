@@ -98,6 +98,9 @@
                         <p class="mb-1 text-lance-black text-2xl font-medium leading-[26px] tracking-[-0.24px]">Repayments</p>
                         <p class="text-lance-black-60">Choose a Payment Method</p>
                     </div>
+
+                    <Form-ErrorNotification v-if="repaymentSessionError" :message="repaymentSessionError" class="w-full mb-0" />
+
                     <form  class="flex flex-col gap-2">
                         <Form-RepaymentMethodRadioInput type="radio" name="repaymentMethod" value="wallet">
                             <div class="w-8 h-8 rounded-full flex items-center justify-center" :class="repaymentFormValues.repaymentMethod != 'wallet' ? 'bg-lance-green-5' : ''">
@@ -163,7 +166,7 @@
                     </form>
                 </div>
                 <div class="flex gap-6">
-                    <button @click="continueRepayment = false; emit('@close-loan-repayment-modal')" class="btn btn-tertiary w-full">Back</button>
+                    <button @click="continueRepayment = false;" class="btn btn-tertiary w-full">Back</button>
                     <NuxtLink v-if="repaymentFormValues.repaymentMethod == 'wallet' && walletBalance < chosenAmount" to="wallet" class="btn btn-primary w-full">
                         <span>Fund Wallet</span>
                     </NuxtLink>
@@ -237,8 +240,9 @@
                 continueRepayment.value = true;
                 successfulRepayment.value = true;
                 ongoingLoanRepayment.value = false;
+                
+                fetchNotifications();
             }
-            fetchNotifications();
         }
     });
     
@@ -272,11 +276,15 @@
                 makingRepayment.value = false;
                 successfulRepayment.value = false;
             }
-        } else {
+        } else if (rePaymentSessionId) {
             await makeWalletRepayment(rePaymentSessionId, medium);
             fetchNotifications();
         }
+
+        makingRepayment.value = false;
     }
+
+    const repaymentSessionError: Ref<string> = ref('');
 
     async function initiateRepayment(loan: Loan | null, installment: string) {
         const payload = {
@@ -291,6 +299,8 @@
             
             return (result as any).data.sessionId;
         } else {
+            repaymentSessionError.value = (result as any).error;
+            setTimeout(() => repaymentSessionError.value = '', 5000);
             return false;
         }
     }

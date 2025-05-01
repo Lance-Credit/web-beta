@@ -98,7 +98,9 @@
                                 <ul v-if="activeLoan" class="flex flex-col gap-8 grow">
                                     <li v-for="(repayment, key) in activeLoan.schedule" :key="key" class="flex items-center justify-between">
                                         <div class="text-lance-black">
-                                            <p class="leading-[22.4px] font-semibold">{{ (repayment.remainingAmount).toLocaleString() }}</p>
+                                            <p class="leading-[22.4px] font-semibold">
+                                                {{ repayment.status == 'paid' ? (repayment.paidAmount).toLocaleString() : (repayment.remainingAmount).toLocaleString() }}
+                                            </p>
                                             <p v-if="repayment.status === 'paid'" class="text-xs leading-[16.8px]">
                                                 Date Paid:
                                                 <span class="font-semibold">

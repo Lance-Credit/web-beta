@@ -16,7 +16,7 @@
                         <Form-MoneyInput placeholder="Amount" label="Amount" v-model="fundingForm.fundingAmount[0].value" v-bind="fundingForm.fundingAmount[1].value" :error="fundingFormErrors.fundingAmount" class="mb-4" />
                     </div>
                 </div>
-                <Form-ErrorNotification v-if="fundingError" :message="fundingError" />
+                <Form-ErrorNotification v-if="fundingError" :message="fundingError" class="mb-6" />
                 <div class="flex gap-6">
                     <button @click="resetFundingForm" class="btn btn-tertiary w-full">Back</button>
                     <button

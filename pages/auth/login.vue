@@ -26,7 +26,7 @@
                             />
                             <NuxtLink to="/auth/password/reset" class="text-[#1E1721] text-sm leading-[24px]">Forgot password?</NuxtLink>
                         </form>
-                        <Form-ErrorNotification v-if="loginError" :message="loginError" />
+                        <Form-ErrorNotification v-if="loginError" :message="loginError" class="mb-6" />
                         <button
                             @click="submitLogInForm" class="mb-6 btn w-full btn-primary" :class="{'loading' : submittingLoginForm}"
                             :disabled="!loginFormFilled || submittingLoginForm"

@@ -236,7 +236,7 @@
                         <li v-for="(repayment, key) in activeLoan.schedule" :key="key" class="py-4 border-b border-solid border-lance-green-10 flex items-center justify-between">
                             <div>
                                 <p class="mb-1 text-lance-black font-medium leading-[26px]">
-                                    N{{ (repayment.amount).toLocaleString() }}
+                                    N{{ repayment.status == 'paid' ? (repayment.paidAmount).toLocaleString() : (repayment.remainingAmount).toLocaleString() }}
                                 </p>
                                 <p class="flex gap-2 items-center">
                                     <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">

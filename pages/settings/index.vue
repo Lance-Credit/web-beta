@@ -724,7 +724,7 @@
                         <div class="sm:pt-6">
                             <div class="flex flex-col sm:flex-row">
                                 <div class="sm:w-[320px]"></div>
-                                <Form-ErrorNotification v-if="passwordChangeError" :message="passwordChangeError" class="sm:w-[376px]" />
+                                <Form-ErrorNotification v-if="passwordChangeError" :message="passwordChangeError" class="sm:w-[376px] mb-6" />
                             </div>
                         </div>
                         <div class="py-6 border-b border-solid border-lance-black-5">
