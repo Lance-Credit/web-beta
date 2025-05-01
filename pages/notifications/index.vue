@@ -28,10 +28,10 @@
                 </li>
             </ul>
         </div>
-        <Notifications-LoanDetailsModal @@close-modal="showSelectedLoanDetails = false" v-show="showSelectedLoanDetails" :notificationData="fetchedNotificationDetails" />
-        <Notifications-LoansOfferView v-if="approvedLoan" @@close-modal="showLoanOfferView = false" v-show="showLoanOfferView" :notificationData="fetchedNotificationDetails" />
+        <Notifications-LoanDetailsModal @@close-modal="showSelectedLoanDetails = false; markFetchedNotificationDetailsAsRead(fetchedNotificationDetails?.resourceId)" v-show="showSelectedLoanDetails" :notificationData="fetchedNotificationDetails" />
+        <Notifications-LoansOfferView v-if="approvedLoan" @@close-modal="showLoanOfferView = false; markFetchedNotificationDetailsAsRead(fetchedNotificationDetails?.resourceId)" v-show="showLoanOfferView" :notificationData="fetchedNotificationDetails" />
 
-        <Notifications-TransactionDetailsModal @@close-modal="showSelectedTransactionDetails = false" v-show="showSelectedTransactionDetails" :notificationData="fetchedNotificationDetails" />
+        <Notifications-TransactionDetailsModal @@close-modal="showSelectedTransactionDetails = false; markFetchedNotificationDetailsAsRead(fetchedNotificationDetails?.resourceId)" v-show="showSelectedTransactionDetails" :notificationData="fetchedNotificationDetails" />
     </div>
 </template>
 
@@ -121,10 +121,6 @@
                 // console.log((result as any).error);
             }
         }
-
-        if(!notification.readAt || notification.readAt == '0000-01-01T00:00:00.000Z') {
-            markNotificationsAsRead([notification]);
-        }
     }
 
     async function showTransactionNotificationDetails(notification: Notification){
@@ -162,9 +158,18 @@
                 // console.log((result as any).error);
             }
         }
+    }
 
-        if(!notification.readAt || notification.readAt == '0000-01-01T00:00:00.000Z') {
-            markNotificationsAsRead([notification]);
+    function markFetchedNotificationDetailsAsRead(resourceId: any) {
+        const allNotifications = notifications.value;
+        if(resourceId) {
+            const notification = allNotifications.find((notification: Notification) => {
+                return notification.metadata?.resourceId == resourceId || notification.metadata?.reference == resourceId
+            })
+
+            if(notification && (!notification.readAt || notification.readAt == '0000-01-01T00:00:00.000Z')) {
+                markNotificationsAsRead([notification]);
+            }
         }
     }
 
