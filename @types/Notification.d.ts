@@ -5,6 +5,8 @@ interface Notification {
     readAt: string,
     createdAt: string,
     metadata: {
+        reference: string,
+        operation: string,
         resourceId: string,
         resourceType: string
     }
@@ -13,5 +15,5 @@ interface Notification {
 interface NotificationDetails {
     title: string,
     resourceId: string,
-    data: Loan | Transaction | Record<string, any>
+    data: Record<string, any>
 }

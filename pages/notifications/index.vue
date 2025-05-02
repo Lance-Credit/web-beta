@@ -32,6 +32,7 @@
         <Notifications-LoansOfferView v-if="approvedLoan" @@close-modal="showLoanOfferView = false; markFetchedNotificationDetailsAsRead(fetchedNotificationDetails?.resourceId)" v-show="showLoanOfferView" :notificationData="fetchedNotificationDetails" />
 
         <Notifications-TransactionDetailsModal @@close-modal="showSelectedTransactionDetails = false; markFetchedNotificationDetailsAsRead(fetchedNotificationDetails?.resourceId)" v-show="showSelectedTransactionDetails" :notificationData="fetchedNotificationDetails" />
+        <Notifications-LoanRepaymentDetailsModal @@close-modal="showSelectedRepaymentDetails = false; markFetchedNotificationDetailsAsRead(fetchedNotificationDetails?.resourceId)" v-show="showSelectedRepaymentDetails" :notificationData="fetchedNotificationDetails" />
     </div>
 </template>
 
@@ -60,12 +61,17 @@
     const showLoanOfferView: Ref<boolean> = ref(false);
     
     const showSelectedLoanDetails: Ref<boolean> = ref(false);
+    const showSelectedRepaymentDetails: Ref<boolean> = ref(false);
     const showSelectedTransactionDetails: Ref<boolean> = ref(false);
 
 
     async function showNotification(notification: Notification){
         if(notification.metadata && notification.metadata.resourceType === 'loan') {
-            showLoanOfferOrDetails(notification);
+            if(notification.metadata.operation == 'repayment') {
+                showLoanRepaymentDetails(notification);
+            } else {
+                showLoanOfferOrDetails(notification);
+            }
         } else if(notification.metadata && notification.metadata.resourceType == 'transactions') {
             showTransactionNotificationDetails(notification);
         } else {
@@ -112,6 +118,38 @@
                 } else {
                     showSelectedLoanDetails.value = true;
                 }
+
+                const notificationCache: NotificationDetails[] = notificationDetailsCache.value;
+                notificationCache.push(notificationDataResult);
+    
+                notificationDetailsCache.value = notificationCache;
+            } else {
+                // console.log((result as any).error);
+            }
+        }
+    }
+
+    async function showLoanRepaymentDetails(notification: Notification){
+        const notificationResourceId = notification.metadata.resourceId || notification.metadata.reference;
+
+        const cachedNotification = notificationDetailsCache.value.find((notificationDetails) => notificationDetails.resourceId == notificationResourceId);
+
+        if(cachedNotification) {
+            fetchedNotificationDetails.value = cachedNotification;
+
+            showSelectedRepaymentDetails.value = true;
+        } else {
+            const result = await apiFetch(`repayments/${notificationResourceId}`);
+    
+            if((result as any).success && !(result as any).error){
+    
+                (result as any).data.amount = (result as any).data.amount / 100;
+    
+                const notificationDataResult = {resourceId: notificationResourceId, title: notification.title, data: (result as any).data}
+
+                fetchedNotificationDetails.value = notificationDataResult;
+    
+                showSelectedRepaymentDetails.value = true;
 
                 const notificationCache: NotificationDetails[] = notificationDetailsCache.value;
                 notificationCache.push(notificationDataResult);
