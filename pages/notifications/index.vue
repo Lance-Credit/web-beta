@@ -31,8 +31,9 @@
         <Notifications-LoanDetailsModal @@close-modal="showSelectedLoanDetails = false; markFetchedNotificationDetailsAsRead(fetchedNotificationDetails?.resourceId)" v-show="showSelectedLoanDetails" :notificationData="fetchedNotificationDetails" />
         <Notifications-LoansOfferView v-if="approvedLoan" @@close-modal="showLoanOfferView = false; markFetchedNotificationDetailsAsRead(fetchedNotificationDetails?.resourceId)" v-show="showLoanOfferView" :notificationData="fetchedNotificationDetails" />
 
-        <Notifications-TransactionDetailsModal @@close-modal="showSelectedTransactionDetails = false; markFetchedNotificationDetailsAsRead(fetchedNotificationDetails?.resourceId)" v-show="showSelectedTransactionDetails" :notificationData="fetchedNotificationDetails" />
-        <Notifications-LoanRepaymentDetailsModal @@close-modal="showSelectedRepaymentDetails = false; markFetchedNotificationDetailsAsRead(fetchedNotificationDetails?.resourceId)" v-show="showSelectedRepaymentDetails" :notificationData="fetchedNotificationDetails" />
+        <Notifications-LoanRepaymentDetailsModal @@close-modal="showSelectedRepaymentDetails = false; markFetchedNotificationDetailsAsRead(fetchedRepaymentNotificationDetails?.resourceId)" v-show="showSelectedRepaymentDetails" :notificationData="fetchedRepaymentNotificationDetails" />
+        <Notifications-TransactionDetailsModal @@close-modal="showSelectedTransactionDetails = false; markFetchedNotificationDetailsAsRead(fetchedTransactionNotificationDetails?.resourceId)" v-show="showSelectedTransactionDetails" :notificationData="fetchedTransactionNotificationDetails" />
+        <Notifications-LoanDisbursementDetailsModal @@close-modal="showSelectedLoanDisbursementDetails = false; markFetchedNotificationDetailsAsRead(fetchedDisbursementNotificationDetails?.resourceId)" v-show="showSelectedLoanDisbursementDetails" :notificationData="fetchedDisbursementNotificationDetails" />
     </div>
 </template>
 
@@ -57,18 +58,25 @@
     const { apiFetch } = useApiFetch();
 
     const fetchedNotificationDetails: Ref<NotificationDetails | null> = ref(null);
+    // const fetchedNotificationDetails: Ref<NotificationDetails | null> = ref(null);
+    const fetchedRepaymentNotificationDetails: Ref<NotificationDetails | null> = ref(null);
+    const fetchedTransactionNotificationDetails: Ref<NotificationDetails | null> = ref(null);
+    const fetchedDisbursementNotificationDetails: Ref<NotificationDetails | null> = ref(null);
 
     const showLoanOfferView: Ref<boolean> = ref(false);
     
     const showSelectedLoanDetails: Ref<boolean> = ref(false);
     const showSelectedRepaymentDetails: Ref<boolean> = ref(false);
     const showSelectedTransactionDetails: Ref<boolean> = ref(false);
+    const showSelectedLoanDisbursementDetails: Ref<boolean> = ref(false);
 
 
     async function showNotification(notification: Notification){
-        if(notification.metadata && notification.metadata.resourceType === 'loan') {
+        if(notification.metadata && (notification.metadata.resourceType === 'loan' || notification.metadata.resourceType === 'loans')) {
             if(notification.metadata.operation == 'repayment') {
                 showLoanRepaymentDetails(notification);
+            } else if (notification.metadata.operation == 'disbursement') {
+                showLoanDisbursementDetails(notification);
             } else {
                 showLoanOfferOrDetails(notification);
             }
@@ -135,7 +143,7 @@
         const cachedNotification = notificationDetailsCache.value.find((notificationDetails) => notificationDetails.resourceId == notificationResourceId);
 
         if(cachedNotification) {
-            fetchedNotificationDetails.value = cachedNotification;
+            fetchedRepaymentNotificationDetails.value = cachedNotification;
 
             showSelectedRepaymentDetails.value = true;
         } else {
@@ -147,9 +155,51 @@
     
                 const notificationDataResult = {resourceId: notificationResourceId, title: notification.title, data: (result as any).data}
 
-                fetchedNotificationDetails.value = notificationDataResult;
+                fetchedRepaymentNotificationDetails.value = notificationDataResult;
     
                 showSelectedRepaymentDetails.value = true;
+
+                const notificationCache: NotificationDetails[] = notificationDetailsCache.value;
+                notificationCache.push(notificationDataResult);
+    
+                notificationDetailsCache.value = notificationCache;
+            } else {
+                // console.log((result as any).error);
+            }
+        }
+    }
+
+    async function showLoanDisbursementDetails(notification: Notification){
+        const notificationResourceId = notification.metadata.resourceId || notification.metadata.reference;
+        
+        const cachedNotification = notificationDetailsCache.value.find((notificationDetails) => notificationDetails.resourceId == notificationResourceId);
+        
+        if(cachedNotification) {
+            fetchedDisbursementNotificationDetails.value = cachedNotification;
+            
+            showSelectedLoanDisbursementDetails.value = true;
+        } else {
+            const result = await apiFetch(`loans/${notificationResourceId}`);
+    
+            if((result as any).success && !(result as any).error){
+                (result as any).data.amount = (result as any).data.amount / 100;
+                (result as any).data.feeAmount = (result as any).data.feeAmount / 100;
+                (result as any).data.totalInterestAmount = (result as any).data.totalInterestAmount / 100;
+                (result as any).data.totalRepaymentAmount = (result as any).data.totalRepaymentAmount / 100;
+                (result as any).data.monthlyRepaymentAmount = (result as any).data.monthlyRepaymentAmount / 100;
+                
+                const schedules = (result as any).data.schedule.map((schedule: any) => {
+                    schedule.amount = schedule.amount / 100;
+                    return schedule;
+                });
+                
+                (result as any).data.schedule = schedules;
+                
+                const notificationDataResult = {resourceId: notificationResourceId, title: notification.title, data: (result as any).data}
+                
+                fetchedDisbursementNotificationDetails.value = notificationDataResult;
+    
+                showSelectedLoanDisbursementDetails.value = true;
 
                 const notificationCache: NotificationDetails[] = notificationDetailsCache.value;
                 notificationCache.push(notificationDataResult);
@@ -167,7 +217,7 @@
         const cachedNotification = notificationDetailsCache.value.find((notificationDetails) => notificationDetails.resourceId == notificationResourceId);
 
         if(cachedNotification) {
-            fetchedNotificationDetails.value = cachedNotification;
+            fetchedTransactionNotificationDetails.value = cachedNotification;
             
             showSelectedTransactionDetails.value = true;
 
@@ -183,7 +233,7 @@
     
                 const notificationDataResult = {resourceId: notificationResourceId, title: notification.title, data: (result as any).data}
 
-                fetchedNotificationDetails.value = notificationDataResult;
+                fetchedTransactionNotificationDetails.value = notificationDataResult;
     
                 showSelectedTransactionDetails.value = true;
 
