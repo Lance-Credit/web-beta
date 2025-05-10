@@ -34,7 +34,7 @@
                         </p>
                         <p class="text-lance-black-50 leading-6">
                             Lance loans range from <span class="text-lance-green font-medium">{{loanSettings?.minDuration}} - {{loanSettings?.maxDuration}}</span>
-                            days with an Annual Percentage Rate from <span class="text-lance-green font-medium">{{loanSettings?.minRate}}% - {{loanSettings?.maxRate}}%</span>.
+                            days with a Monthly Percentage Rate of <span class="text-lance-green font-medium">{{loanSettings?.maxRate}}%</span>.
                         </p>
                     </div>
                 </li>
