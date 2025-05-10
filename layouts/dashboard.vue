@@ -30,9 +30,6 @@
                 <div class="rounded-md bg-[#F5F7F7] py-2.5 flex items-center justify-center gap-2.5 sm:hidden">
                     <div v-if="!userProfile?.profilePicture" class="w-[30px] h-[30px] rounded-full bg-contain bg-no-repeat bg-[url('/assets/img/user.png')]"></div>
                     <p class="w-[119px] text-center text-sm leading-6 font-medium">{{ fullName }}</p>
-                    <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3.10745 4.64865C3.26277 4.49333 3.50583 4.47921 3.6771 4.60629L3.72617 4.64865L7.50014 8.42242L11.2741 4.64865C11.4294 4.49333 11.6725 4.47921 11.8438 4.60629L11.8928 4.64865C12.0482 4.80397 12.0623 5.04702 11.9352 5.2183L11.8928 5.26737L7.8095 9.3507C7.65418 9.50602 7.41113 9.52014 7.23985 9.39306L7.19078 9.3507L3.10745 5.26737C2.9366 5.09651 2.9366 4.8195 3.10745 4.64865Z" fill="#656167"/>
-                    </svg>
                 </div>
                 <div class="pt-[41px] pb-[82px] sm:py-12 flex flex-col justify-between h-full sm:h-[calc(100%-72px)]">
                     <ul class="flex flex-col gap-2 text-lance-black-60 leading-[19.6px] sm:leading-[22.4px] text-sm sm:text-base">
