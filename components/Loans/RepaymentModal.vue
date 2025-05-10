@@ -24,7 +24,7 @@
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3342 17.5C13.1209 17.5 12.9075 17.4184 12.745 17.2559L6.07836 10.5892C5.75253 10.2634 5.75253 9.73669 6.07836 9.41086L12.745 2.74419C13.0709 2.41836 13.5975 2.41836 13.9234 2.74419C14.2492 3.07003 14.2492 3.59669 13.9234 3.92253L7.84586 10L13.9234 16.0775C14.2492 16.4034 14.2492 16.93 13.9234 17.2559C13.7609 17.4184 13.5475 17.5 13.3342 17.5" fill="#0A4F4D"/>
                 </svg>
             </div>
-            <div v-show="!continueRepayment" class="h-full">
+            <div v-show="!continueRepayment" class="h-[calc(100%-78px)] sm:h-auto">
                 <div v-show="repaymentFormValues.repaymentOption != 'specific'" class="h-[calc(100%-78px)] sm:h-auto flex flex-col gap-6 justify-between sm:justify-normal">
                     <div class="flex flex-col gap-6">
                         <div>
@@ -92,7 +92,7 @@
                     </div>
                 </div>
             </div>
-            <div v-show="continueRepayment" class="h-[calc(100%-78px)] sm:h-auto flex flex-col gap-6 justify-between sm:justify-normal">
+            <div v-show="continueRepayment" class="h-[calc(100%-156px)] sm:h-auto flex flex-col gap-6 justify-between sm:justify-normal">
                 <div class="flex flex-col gap-6">
                     <div>
                         <p class="mb-1 text-lance-black text-2xl font-medium leading-[26px] tracking-[-0.24px]">Repayments</p>
