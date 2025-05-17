@@ -1,12 +1,12 @@
 <template>
     <div class="min-h-full">
-        <p class="mb-[30px] text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px] hidden sm:block">
+        <p class="mb-[30px] text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px] hidden md:block">
             Community
         </p>
-        <div class="rounded-xl bg-white border border-solid border-lance-black-10 overflow-x-scroll">
+        <div class="rounded-xl bg-white border border-solid border-lance-black-10 overflow-x-scroll md:overflow-hidden">
             <div
                 v-show="!showCommunityCodes"
-                class="flex flex-col items-center justify-center gap-4 sm:w-[505px] mx-auto py-[58px] sm:py-[112.5px] px-[21.5px] text-center"
+                class="flex flex-col items-center justify-center gap-4 md:w-[505px] mx-auto py-[58px] md:py-[112.5px] px-[21.5px] text-center"
             >
                 <div class="bg-[#D6F0AD] rounded-full">
                     <svg width="193" height="192" viewBox="0 0 193 192" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -30,7 +30,7 @@
                     <p class="mb-4 text-lance-black text-xl font-medium leading-[26px] tracking-[-0.2px]">
                         What are community codes?
                     </p>
-                    <p class="text-lance-black-60 text-sm sm:text-base leading-5 sm:leading-6 mb-1 sm:mb-8">
+                    <p class="text-lance-black-60 text-sm md:text-base leading-5 md:leading-6 mb-1 md:mb-8">
                         Our community codes system is a framework designed to promote trust and safety within our lending and borrowing community. These codes establish a set of guidelines and standards that all members agree to follow, ensuring ethical conduct and fostering a positive environment for all participants.
                     </p>
                 </div>
@@ -39,26 +39,26 @@
                     <Loader-Basic v-show="fetchingCommunityCodes" bg="#FFF" fg="#C3E48E" />
                 </button>
             </div>
-            <div v-show="showCommunityCodes" class="p-6 text-sm leading-6 w-max sm:w-auto">
-                <ul class="flex items-center text-lance-black-60 gap-[50.33px] sm:gap-0">
-                    <li class="w-1/2 sm:w-1/4">
+            <div v-show="showCommunityCodes" class="p-6 text-sm leading-6 w-max md:w-auto">
+                <ul class="flex items-center text-lance-black-60 gap-[50.33px] md:gap-0">
+                    <li class="w-1/2 md:w-1/4">
                         Code
                     </li>
-                    <li class="w-1/2 sm:w-1/4">
+                    <li class="w-1/2 md:w-1/4">
                         Status
                     </li>
-                    <li class="w-1/2 sm:w-1/4">
+                    <li class="w-1/2 md:w-1/4">
                         Used By
                     </li>
-                    <li class="w-1/2 sm:w-1/4">
+                    <li class="w-1/2 md:w-1/4">
                         Date Used
                     </li>
                 </ul>
-                <ul @click="!code.used ? showCommunityCodeDetails(code) : ''" v-for="(code, key) in communityCodes" :key="key" class="flex items-center py-6 border-b border-solid border-lance-black-5 text-lance-black cursor-pointer gap-[50.33px] sm:gap-0">
-                    <li class="w-1/2 sm:w-1/4">
+                <ul @click="!code.used ? showCommunityCodeDetails(code) : ''" v-for="(code, key) in communityCodes" :key="key" class="flex items-center py-6 border-b border-solid border-lance-black-5 text-lance-black cursor-pointer gap-[50.33px] md:gap-0">
+                    <li class="w-1/2 md:w-1/4">
                         {{ code.code }}
                     </li>
-                    <li class="w-1/2 sm:w-1/4">
+                    <li class="w-1/2 md:w-1/4">
                         <p
                             class="text-xs leading-6 w-[94px] rounded-[31px] text-center"
                             :class="!code.used ? 'text-lance-green bg-lance-green-10' : 'text-lance-black-50 bg-lance-black-10'"
@@ -66,10 +66,10 @@
                             {{ code.used ? 'Inactive' : 'Active'}}
                         </p>
                     </li>
-                    <li class="w-1/2 sm:w-1/4">
+                    <li class="w-1/2 md:w-1/4">
                         {{ code.usedBy }}
                     </li>
-                    <li class="w-1/2 sm:w-1/4">
+                    <li class="w-1/2 md:w-1/4">
                         {{ code.usedAt ? new Date(code.usedAt).toLocaleDateString('en-GB', { day:"numeric", month:"long", year:"numeric" }) : '' }}
                     </li>
                 </ul>
