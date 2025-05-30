@@ -62,7 +62,7 @@
           
   
           <div class="flex items-center gap-[14px]">
-              <NuxtLink to="/dashboard" class="btn btn-tertiary w-full">Back to Dashboard</NuxtLink>
+              <NuxtLink to="/dashboard" class="btn btn-tertiary w-full">Back to Notifications</NuxtLink>
               <NuxtLink to="/wallet" class="btn w-full btn-primary">Go to Wallet</NuxtLink>
           </div>
       </div>

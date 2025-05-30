@@ -85,7 +85,7 @@
           
   
           <div class="flex items-center gap-[14px]">
-              <NuxtLink @click="emit('@close-modal')" to="/dashboard" class="btn btn-tertiary w-full">Back to Dashboard</NuxtLink>
+              <NuxtLink @click="emit('@close-modal')" to="/notifications" class="btn btn-tertiary w-full">Back to Notifications</NuxtLink>
               <NuxtLink @click="emit('@close-modal')" to="/loans" class="btn w-full btn-primary">Go to Loans</NuxtLink>
           </div>
       </div>
