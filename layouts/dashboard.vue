@@ -164,7 +164,7 @@
                         </svg>
                         <span>{{ pageName }}</span>
                     </div>
-                    <NuxtLink :to="notifications.length ? '/notifications' : ''" class="relative p-[7.27px] sm:p-2.5 rounded-md border border-solid border-[#BFBDC2]">
+                    <NuxtLink to="/notifications" class="relative p-[7.27px] sm:p-2.5 rounded-md border border-solid border-[#BFBDC2]">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="hidden sm:block">
                             <mask id="mask0_7374_6096" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="3" y="1" width="19" height="18">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M3.00012 1H21.497V18.348H3.00012V1Z" fill="white"/>
