@@ -46,6 +46,13 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
             return null;
         });
 
+        const pendingLoans = computed(() => {
+            if(loanHistory.value.length){
+                return loanHistory.value.filter((loan: Loan)=> (loan.status == 'inactive' && !loan.adminApproved));
+            }
+            return null;
+        });
+
         const activeLoanTotalPaid = computed(() => {
             return activeLoan.value
                 ? (activeLoan.value.schedule).reduce((total, repayment): number => {
@@ -112,6 +119,7 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
             loanHistory,
             loanSettings,
             approvedLoan,
+            pendingLoans,
             declinedLoans,
             completedLoans,
             fetchLoanHistory,

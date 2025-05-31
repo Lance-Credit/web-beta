@@ -1,14 +1,14 @@
 <template>
     <div>
         <div v-if="!continueLoanRequestProcess">
-            <p class="hidden sm:block mb-[30px] text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px]">
+            <p class="hidden md:block mb-[30px] text-lance-black text-xl leading-[26px] font-medium tracking-[-0.2px]">
                 Loans
             </p>
-            <div v-show="!loanHistory.length" class="rounded-xl bg-white border border-solid border-lance-black-10 p-[47px] sm:p-[115px] sm:pb-[162px] text-center">
+            <div v-show="!loanHistory.length" class="rounded-xl bg-white border border-solid border-lance-black-10 p-[47px] md:p-[115px] md:pb-[162px] text-center">
                 <Loans-NoActiveLoan @@show-loan-instructions="kycCompleted ? showLoanInstructions = true : showKycIncompleteModal = true" />
             </div>
     
-            <ul v-show="loanHistory.length" class="mb-[45px] flex items-center justify-center gap-4 sm:hidden">
+            <ul v-show="loanHistory.length" class="mb-[45px] flex items-center justify-center gap-4 md:hidden">
                 <li
                     @click="mobileLoanTab = 'active'" class="py-[5.5px] px-3 rounded-[25px] text-xs leading-[14.88px] text-[#333]"
                     :class="mobileLoanTab == 'active' ? 'bg-[#052926] text-white font-semibold' : ''"
@@ -28,15 +28,15 @@
                     Completed
                 </li>
             </ul>
-            <div v-show="loanHistory.length" class="flex sm:gap-[25px]">
-                <div class="w-full sm:basis-2/4" :class="mobileLoanTab == 'active' ? 'block sm:block' : 'hidden sm:block'">
-                    <div v-show="!activeLoan" class="rounded-xl bg-white border border-solid border-lance-black-10 p-[47px] sm:py-[132.5px] sm:px-[96.5px] text-center">
+            <div v-show="loanHistory.length" class="flex md:gap-[25px]">
+                <div class="w-full md:basis-2/4" :class="mobileLoanTab == 'active' ? 'block md:block' : 'hidden md:block'">
+                    <div v-show="!activeLoan" class="rounded-xl bg-white border border-solid border-lance-black-10 p-[47px] md:py-[132.5px] md:px-[96.5px] text-center">
                         <Loans-NoActiveLoan @@show-loan-instructions="kycCompleted ? showLoanInstructions = true : showKycIncompleteModal = true" />
                     </div>
                     <div v-show="activeLoan" class="flex flex-col gap-4">
-                        <div class="rounded-xl bg-white border border-solid border-lance-black-10 py-6 px-4 sm:px-10">
+                        <div class="rounded-xl bg-white border border-solid border-lance-black-10 py-6 px-4 md:px-10">
                             <p class="text-lance-black-50 text-sm leading-5">Next Repayment</p>
-                            <p class="mt-[-12px] text-lance-black text-[28px] sm:text-4xl font-bold leading-[52px] sm:leading-[55.93px] tracking-[0.28px] sm:tracking-[0.36px]">
+                            <p class="mt-[-12px] text-lance-black text-[28px] md:text-4xl font-bold leading-[52px] md:leading-[55.93px] tracking-[0.28px] md:tracking-[0.36px]">
                                 {{ activeLoan ? (activeLoan.schedule).find((schedule) => schedule.status != 'paid')?.remainingAmount.toLocaleString() : '' }}
                             </p>
                             <p class="mb-3 flex gap-1.5 items-center">
@@ -72,16 +72,16 @@
                                     <div class="h-full rounded-lg" :style="`width: ${percentageLoanPaid}%`" style="background: linear-gradient(90deg, #E8FF28 -2.03%, #09837F 101.29%);"></div>
                                 </div>
                             </div>
-                            <div class="border-t border-solid border-lance-black-5 pt-4 flex gap-[7px] sm:gap-6">
+                            <div class="border-t border-solid border-lance-black-5 pt-4 flex gap-[7px] md:gap-6">
                                 <button @click="activeLoan ? viewLoanDetails(activeLoan) : ''" class="btn btn-tertiary w-full">See Loan Details</button>
                                 <button @click="showLoanRepaymentModal = true" class="btn btn-primary w-full">Make a Repayment</button>
                             </div>
                         </div>
-                        <div class="rounded-xl bg-white border border-solid border-lance-black-10 py-[30px] px-3 sm:p-10">
-                            <p class="mb-2 text-[#1E1721] font-aventa text-sm sm:text-base leading-[18px] sm:leading-8 tracking-[-0.14px] sm:tracking-[-0.16px] font-bold">
+                        <div class="rounded-xl bg-white border border-solid border-lance-black-10 py-[30px] px-3 md:p-10">
+                            <p class="mb-2 text-[#1E1721] font-aventa text-sm md:text-base leading-[18px] md:leading-8 tracking-[-0.14px] md:tracking-[-0.16px] font-bold">
                                 Repayment Timeline
                             </p>
-                            <div class="sm:h-[275px] overflow-y-scroll sm:overflow-y-hidden flex gap-4">
+                            <div class="md:h-[275px] overflow-y-scroll md:overflow-y-hidden flex gap-4">
                                 <div v-if="activeLoan" class="px-[2.335px] pt-[6.33px] flex flex-col items-center">
                                     <div v-for="(repayment, key) in activeLoan.schedule" :key="key" class="flex flex-col items-center">
                                         <div class="w-0.5 h-[48.66px] bg-[#063A4F] opacity-10" v-if="key != 0"></div>
@@ -132,14 +132,14 @@
                     </div>
                 </div>
                 <div
-                    class="rounded-xl bg-white border border-solid border-lance-black-10 py-[35px] px-4 sm:p-10 w-full sm:basis-2/4"
-                    :class="mobileLoanTab != 'active' ? 'block sm:block' : 'hidden sm:block'"
+                    class="rounded-xl bg-white border border-solid border-lance-black-10 py-[35px] px-4 md:p-10 w-full md:basis-2/4"
+                    :class="mobileLoanTab != 'active' ? 'block md:block' : 'hidden md:block'"
                 >
                     <p class="mb-6 text-[#1E1721] text-xl font-medium leading-[26px] tracking-[-0.2px]">Loan History</p>
                     <ul class="flex flex-col gap-4">
                         <li
                             @click="viewLoanDetails(loan)" v-for="(loan, key) in loanHistory" :key="key"
-                            class="py-3 px-6 rounded-2xl border border-solid border-lance-black-10 flex items-center justify-between cursor-pointer">
+                            class="py-3 px-6 rounded-2xl border border-solid border-lance-black-10 hidden md:flex items-center justify-between cursor-pointer">
                             <div class="basis-1/3">
                                 <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Amount</p>
                                 <p class="text-black text-sm font-medium leading-5">N {{ (loan.amount).toLocaleString() }}</p>
@@ -148,7 +148,93 @@
                                 <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Duration</p>
                                 <p class="text-black text-sm font-medium leading-5">{{ loan.tenure }} Months</p>
                             </div>
-                            <div class="basis-1/3 hidden sm:block">
+                            <div class="basis-1/3 hidden md:block">
+                                <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Status</p>
+                                <p v-if="loan.status === 'active'" class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(12,180,59,0.04)] text-[#0CB43B]">
+                                    Active
+                                </p>
+                                <div v-if="loan.status === 'inactive'">
+                                    <p v-if="loan.adminApproved" class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(211,229,227,0.20)] text-[#086120]">
+                                        Approved
+                                    </p>
+                                    <p v-else class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(255,138,0,0.06)] text-[#FF8A00]">
+                                        Pending
+                                    </p>
+                                </div>
+                                <p
+                                    v-if="(loan.status === 'declined' && loan.declinedBy === 'borrower')"
+                                    class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(93,36,45,0.04)] text-[rgba(93,36,45,0.90)]"
+                                >
+                                    Rejected
+                                </p>
+                                <p
+                                    v-if="(loan.status === 'declined' && loan.declinedBy === 'lender')"
+                                    class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(250,206,202,0.20)] text-[#BC251B]"
+                                >
+                                    Declined
+                                </p>
+                                <p v-if="loan.status === 'paid'" class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[#EBF0F0] text-[#485252]">
+                                    Completed
+                                </p>
+                            </div>
+                        </li>
+                        <li
+                            @click="viewLoanDetails(loan)" v-for="(loan, key) in pendingLoans" :key="key"
+                            class="py-3 px-6 rounded-2xl border border-solid border-lance-black-10 items-center justify-between cursor-pointer"
+                            :class="mobileLoanTab == 'pending' ? 'flex md:hidden' : 'hidden md:hidden'"
+                        >
+                            <div class="basis-1/3">
+                                <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Amount</p>
+                                <p class="text-black text-sm font-medium leading-5">N {{ (loan.amount).toLocaleString() }}</p>
+                            </div>
+                            <div class="basis-1/3">
+                                <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Duration</p>
+                                <p class="text-black text-sm font-medium leading-5">{{ loan.tenure }} Months</p>
+                            </div>
+                            <div class="basis-1/3 hidden md:block">
+                                <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Status</p>
+                                <p v-if="loan.status === 'active'" class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(12,180,59,0.04)] text-[#0CB43B]">
+                                    Active
+                                </p>
+                                <div v-if="loan.status === 'inactive'">
+                                    <p v-if="loan.adminApproved" class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(211,229,227,0.20)] text-[#086120]">
+                                        Approved
+                                    </p>
+                                    <p v-else class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(255,138,0,0.06)] text-[#FF8A00]">
+                                        Pending
+                                    </p>
+                                </div>
+                                <p
+                                    v-if="(loan.status === 'declined' && loan.declinedBy === 'borrower')"
+                                    class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(93,36,45,0.04)] text-[rgba(93,36,45,0.90)]"
+                                >
+                                    Rejected
+                                </p>
+                                <p
+                                    v-if="(loan.status === 'declined' && loan.declinedBy === 'lender')"
+                                    class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(250,206,202,0.20)] text-[#BC251B]"
+                                >
+                                    Declined
+                                </p>
+                                <p v-if="loan.status === 'paid'" class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[#EBF0F0] text-[#485252]">
+                                    Completed
+                                </p>
+                            </div>
+                        </li>
+                        <li
+                            @click="viewLoanDetails(loan)" v-for="(loan, key) in completedLoans" :key="key"
+                            class="py-3 px-6 rounded-2xl border border-solid border-lance-black-10 items-center justify-between cursor-pointer"
+                            :class="mobileLoanTab == 'completed' ? 'flex md:hidden' : 'hidden md:hidden'"
+                        >
+                            <div class="basis-1/3">
+                                <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Amount</p>
+                                <p class="text-black text-sm font-medium leading-5">N {{ (loan.amount).toLocaleString() }}</p>
+                            </div>
+                            <div class="basis-1/3">
+                                <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Duration</p>
+                                <p class="text-black text-sm font-medium leading-5">{{ loan.tenure }} Months</p>
+                            </div>
+                            <div class="basis-1/3 hidden md:block">
                                 <p class="mb-1 text-lance-black-50 text-xs leading-[14px] tracking-[0.4px]">Status</p>
                                 <p v-if="loan.status === 'active'" class="py-1 px-6 rounded-[31px] text-sm font-medium w-fit bg-[rgba(12,180,59,0.04)] text-[#0CB43B]">
                                     Active
@@ -229,6 +315,8 @@
         activeLoan,
         loanHistory,
         approvedLoan,
+        pendingLoans,
+        completedLoans,
         percentageLoanPaid,
         activeLoanTotalPaid
     } = storeToRefs(useLoanHistoryStore());
