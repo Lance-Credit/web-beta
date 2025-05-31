@@ -133,7 +133,9 @@
                 </div>
                 <div
                     class="rounded-xl bg-white border border-solid border-lance-black-10 py-[35px] px-4 md:p-10 w-full md:basis-2/4"
-                    :class="mobileLoanTab != 'active' ? 'block md:block' : 'hidden md:block'"
+                    :class="[mobileLoanTab != 'active' ? 'block md:block' : 'hidden md:block',
+                    (mobileLoanTab == 'pending' && !pendingLoans?.length) ? 'hidden' : 'block',
+                    ( mobileLoanTab == 'completed' && !completedLoans?.length) ? 'hidden' : 'block']"
                 >
                     <p class="mb-6 text-[#1E1721] text-xl font-medium leading-[26px] tracking-[-0.2px]">Loan History</p>
                     <ul class="flex flex-col gap-4">
@@ -265,6 +267,12 @@
                             </div>
                         </li>
                     </ul>
+                </div>
+                <div v-show="!pendingLoans?.length && mobileLoanTab == 'pending'" class="rounded-xl bg-white border border-solid border-lance-black-10 p-[47px] md:py-[132.5px] md:px-[96.5px] text-center md:hidden">
+                    <Loans-NoActiveLoan @@show-loan-instructions="kycCompleted ? showLoanInstructions = true : showKycIncompleteModal = true" loan-type="pending" />
+                </div>
+                <div v-show="!completedLoans?.length && mobileLoanTab == 'completed'" class="rounded-xl bg-white border border-solid border-lance-black-10 p-[47px] md:py-[132.5px] md:px-[96.5px] text-center md:hidden">
+                    <Loans-NoActiveLoan @@show-loan-instructions="kycCompleted ? showLoanInstructions = true : showKycIncompleteModal = true" loan-type="completed" />
                 </div>
             </div>
     

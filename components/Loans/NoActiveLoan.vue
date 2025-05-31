@@ -5,10 +5,10 @@
         </div>
         <div>
             <p class="mb-4 text-lance-black text-lg sm:text-xl font-medium leading-[26px] tracking-[-0.18px] sm:tracking-[-0.2px]">
-                You have no active loans 
+                You have no {{loanType ? loanType : 'active'}} loans 
             </p>
             <p class="text-lance-black-60 text-sm sm:text-base leading-[18px] sm:leading-6">
-                You currently do not have any active loans. Simply request for one.
+                You currently do not have any {{loanType ? loanType : 'active'}} loans. Simply request for one.
             </p>
         </div>
         <button @click="emit('@show-loan-instructions')" class="btn btn-primary w-full sm:w-[282px]">Get a loan</button>
@@ -16,6 +16,10 @@
 </template>
 
 <script setup lang="ts">
+
+    defineProps<{
+        loanType?: string,
+    }>();
 
     const emit = defineEmits<{
         '@show-loan-instructions': []
