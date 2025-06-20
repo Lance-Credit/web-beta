@@ -29,9 +29,9 @@ export default NuxtAuthHandler({
 
                 // console.log(data);
 
-                if(data.data?.token){
+                if(data.data?.session?.token){
                     return {
-                        token: data.data.token
+                        token: data.data.session.token
                     };
                 }
 
