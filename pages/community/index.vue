@@ -103,7 +103,7 @@
 
         fetchingCommunityCodes.value = true;
 
-        const result = await apiFetch('community-codes');
+        const result = await apiFetch('profile/community-codes');
 
         if((result as any).success && !(result as any).error){
             communityCodes.value = (result as any).data;
