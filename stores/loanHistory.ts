@@ -46,6 +46,13 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
             return null;
         });
 
+        const mobileCompletedLoans = computed(() => {
+            if(loanHistory.value.length){
+                return loanHistory.value.filter((loan: Loan)=> loan.status != 'inactive');
+            }
+            return null;
+        });
+
         const pendingLoans = computed(() => {
             if(loanHistory.value.length){
                 return loanHistory.value.filter((loan: Loan)=> (loan.status == 'inactive'));
@@ -126,7 +133,8 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
             ongoingLoanRequest,
             percentageLoanPaid,
             activeLoanTotalPaid,
-            ongoingLoanRepayment
+            ongoingLoanRepayment,
+            mobileCompletedLoans
         }
     },
     {
