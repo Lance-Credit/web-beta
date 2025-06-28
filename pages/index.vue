@@ -384,13 +384,13 @@
                     "x-verification-token": `Bearer ${authToken.value}`
                 },
                 body: {
-                    "token": signupFormValues.emailVerificationCode,
-                    "type": "email"
+                    "token": signupFormValues.emailVerificationCode
                 }
             });
             
             if((result as any).success && !(result as any).error){
                 emailVerified.value = true;
+                authToken.value = (result as any).data.token.verification;
                 processShowResendPhoneVerificationCode();
             } else {
                 // console.log((result as any).error);
@@ -408,7 +408,7 @@
         showResendEmailVerificationCode.value = false;
         
         try {
-            await $fetch(`${apiURL}/onboarding/verification?type=email`, {
+            await $fetch(`${apiURL}/onboarding/verification`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -447,8 +447,7 @@
                     "x-verification-token": `Bearer ${authToken.value}`
                 },
                 body: {
-                    "token": signupFormValues.phoneVerificationCode,
-                    "type": "phone"
+                    "token": signupFormValues.phoneVerificationCode
                 }
             });
     
@@ -489,7 +488,7 @@
         showResendPhoneVerificationCode.value = false;
 
         try {
-            await $fetch(`${apiURL}/onboarding/verification?type=phone`, {
+            await $fetch(`${apiURL}/onboarding/verification`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
