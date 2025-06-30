@@ -6,15 +6,15 @@
             </template>
             <template #auth-content>
                 <div class="grow flex flex-col">
-                    <div class="px-6 sm:px-0 mb-8 sm:mb-0">
-                        <p class="mt-[37.61px] sm:mt-0 mb-2 text-lance-black font-aventa text-[24px] leading-[32px] tracking-[-0.24px]">
+                    <div class="px-6 md:px-0 mb-8 md:mb-0">
+                        <p class="mt-[37.61px] md:mt-0 mb-2 text-lance-black font-aventa text-[24px] leading-[32px] tracking-[-0.24px]">
                             Log in to your account
                         </p>
-                        <p class="mb-6 text-lance-black-60 text-sm sm:text-base leading-6">
+                        <p class="mb-6 text-lance-black-60 text-sm md:text-base leading-6">
                             Hey Lancer, Welcome back
                         </p>
                     </div>
-                    <div class="bg-white pt-10 sm:pt-0 px-6 sm:px-0 pb-[110px] sm:pb-0 rounded-t-3xl h-full grow">
+                    <div class="bg-white pt-10 md:pt-0 px-6 md:px-0 pb-[110px] md:pb-0 rounded-t-3xl h-full grow">
                         <form @keyup.enter="submitLogInForm" class="mb-8">
                             <Form-EmailInput
                                 class="mb-4" placeholder="Email address" label="Email address" v-model="loginForm.email[0].value"
@@ -34,7 +34,7 @@
                             <span v-show="!submittingLoginForm">Login to your account</span>
                             <Loader-Basic v-show="submittingLoginForm" bg="#FFF" fg="#C3E48E" />
                         </button>
-                        <NuxtLink to="/" class="flex gap-2 justiffy-start sm:justify-center text-lance-black-60 text-sm sm:text-base leading-6">
+                        <NuxtLink to="/" class="flex gap-2 justiffy-start md:justify-center text-lance-black-60 text-sm md:text-base leading-6">
                             Don’t have an account?<span class="text-lance-green font-medium">Create an account</span>
                         </NuxtLink>
                     </div>

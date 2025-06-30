@@ -221,7 +221,7 @@
 
         startingDojahKyc.value = true;
 
-        const result = await apiFetch('verifications/kyc', 'POST');
+        const result = await apiFetch('verifications/initiate', 'POST', { type: 'kyc' });
 
         if((result as any).success && !(result as any).error){
 

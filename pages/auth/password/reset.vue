@@ -8,15 +8,15 @@
                 <div class="h-full grow flex flex-col">
                     <div v-if="!verificationCodeFormSubmitted" class="h-full grow flex flex-col">
                         <div v-if="!emailFormSubmitted" class="h-full grow flex flex-col">
-                            <div class="px-6 sm:px-0 mb-8 sm:mb-0">
-                                <p class="mt-[37.61px] sm:mt-0 mb-1 text-lance-black font-aventa text-[24px] leading-[32px] tracking-[-0.24px]">
+                            <div class="px-6 md:px-0 mb-8 md:mb-0">
+                                <p class="mt-[37.61px] md:mt-0 mb-1 text-lance-black font-aventa text-[24px] leading-[32px] tracking-[-0.24px]">
                                     Forgot password?
                                 </p>
-                                <p class="mb-6 text-lance-black-60 text-sm sm:text-base leading-6">
+                                <p class="mb-6 text-lance-black-60 text-sm md:text-base leading-6">
                                     Don’t stress, Happens to the best of us
                                 </p>
                             </div>
-                            <div class="bg-white pt-10 sm:pt-0 px-6 sm:px-0 pb-[110px] sm:pb-0 rounded-t-3xl h-full grow">
+                            <div class="bg-white pt-10 md:pt-0 px-6 md:px-0 pb-[110px] md:pb-0 rounded-t-3xl h-full grow">
                                 <div class="mb-8">
                                     <Form-EmailInput class="mb-4" placeholder="Email address" label="Email address" v-model="passwordResetForm.email[0].value" v-bind="passwordResetForm.email[1].value" :error="passwordResetFormErrors.email"/>
                                 </div>
@@ -31,28 +31,28 @@
                                     </svg>
                                     <Loader-Basic v-show="submittingResetPasswordRequestForm" bg="#FFF" fg="#C3E48E" />
                                 </button>
-                                <NuxtLink to="/auth/login" class="flex gap-2 justiffy-start sm:justify-center text-lance-black-60 text-sm sm:text-base leading-6">
+                                <NuxtLink to="/auth/login" class="flex gap-2 justiffy-start md:justify-center text-lance-black-60 text-sm md:text-base leading-6">
                                     Remember password?<span class="text-lance-green font-medium">Back to login</span>
                                 </NuxtLink>
                             </div>
 
                         </div>
                         <div v-else class="h-full grow flex flex-col">
-                            <div class="px-6 sm:px-0 mb-8 sm:mb-0">
-                                <p class="mt-[37.61px] sm:mt-0 mb-2 text-lance-black font-aventa text-[24px] leading-[32px] tracking-[-0.24px]">
+                            <div class="px-6 md:px-0 mb-8 md:mb-0">
+                                <p class="mt-[37.61px] md:mt-0 mb-2 text-lance-black font-aventa text-[24px] leading-[32px] tracking-[-0.24px]">
                                     Verify your account
                                 </p>
-                                <p class="mb-6 text-lance-black-60 text-sm sm:text-base leading-6">
-                                    <span class="sm:hidden">
+                                <p class="mb-6 text-lance-black-60 text-sm md:text-base leading-6">
+                                    <span class="md:hidden">
                                         Let's be sure
                                     </span>
-                                    <span class="hidden sm:block">
+                                    <span class="hidden md:block">
                                         Input the 6-digit verification code we sent to your email address to activate your account.
                                     </span>
                                 </p>
                             </div>
-                            <div class="bg-white pt-10 sm:pt-0 px-6 sm:px-0 pb-[110px] sm:pb-0 rounded-t-3xl h-full grow">
-                                <p class="mb-8 text-lance-black-60 text-sm leading-[18px] sm:hidden">
+                            <div class="bg-white pt-10 md:pt-0 px-6 md:px-0 pb-[110px] md:pb-0 rounded-t-3xl h-full grow">
+                                <p class="mb-8 text-lance-black-60 text-sm leading-[18px] md:hidden">
                                     Input the 6-digit verification code we sent to your email address to activate your account.
                                 </p>
                                 <div class="mb-8">
@@ -66,7 +66,7 @@
                                         <path d="M10.976 5.69405C10.7314 5.4505 10.7305 5.05477 10.9741 4.81017C11.1955 4.5878 11.5427 4.56688 11.7878 4.7479L11.858 4.80827L16.8996 9.82827C17.1227 10.0503 17.143 10.3988 16.9605 10.6438L16.8997 10.714L11.858 15.7348C11.6134 15.9784 11.2177 15.9776 10.9741 15.733C10.7527 15.5107 10.7333 15.1634 10.9153 14.9191L10.976 14.8491L15.5727 10.2709L10.976 5.69405Z" fill="white"/>
                                     </svg>
                                 </button>
-                                <p class="flex gap-2 justiffy-start sm:justify-center text-lance-black-60 text-sm sm:text-base leading-6">
+                                <p class="flex gap-2 justiffy-start md:justify-center text-lance-black-60 text-sm md:text-base leading-6">
                                     Didn’t get the code?
                                     <span @click="submitResetPasswordRequestForm" class="text-lance-green font-medium cursor-pointer">
                                         Resend code
@@ -76,15 +76,15 @@
                         </div>
                     </div>
                     <div v-else>
-                        <div class="px-6 sm:px-0 mb-8 sm:mb-0">
-                            <p class="mt-[37.61px] sm:mt-0 mb-1 text-lance-black font-aventa text-[24px] leading-[32px] tracking-[-0.24px]">
+                        <div class="px-6 md:px-0 mb-8 md:mb-0">
+                            <p class="mt-[37.61px] md:mt-0 mb-1 text-lance-black font-aventa text-[24px] leading-[32px] tracking-[-0.24px]">
                                 Create new password
                             </p>
-                            <p class="mb-6 text-lance-black-60 text-sm sm:text-base leading-6">
+                            <p class="mb-6 text-lance-black-60 text-sm md:text-base leading-6">
                                 Enter your new password
                             </p>
                         </div>
-                        <div class="bg-white pt-10 sm:pt-0 px-6 sm:px-0 pb-[110px] sm:pb-0 rounded-t-3xl h-full grow">
+                        <div class="bg-white pt-10 md:pt-0 px-6 md:px-0 pb-[110px] md:pb-0 rounded-t-3xl h-full grow">
                             <div class="mb-8">
                                 <Form-PasswordInput class="mb-2" placeholder="Password" label="Password" v-model="passwordResetForm.password[0].value" v-bind="passwordResetForm.password[1].value" :error="passwordResetFormErrors.password"/>
                                 <Form-PasswordRuleGuide :password="passwordResetFormValues.password"/>

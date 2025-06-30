@@ -27,16 +27,16 @@
                 <div class="h-full grow flex">
                     <div v-if="!signUpSuccess" class="w-full">
                         <div v-if="!communityCodeFilled" class="flex flex-col h-full">
-                            <div class="px-6 sm:px-0 mb-8 sm:mb-0">
-                                <p class="mt-[37.61px] sm:mt-0 mb-1 text-lance-black font-aventa text-[24px] leading-[32px] tracking-[-0.24px]">
+                            <div class="px-6 md:px-0 mb-8 md:mb-0">
+                                <p class="mt-[37.61px] md:mt-0 mb-1 text-lance-black font-aventa text-[24px] leading-[32px] tracking-[-0.24px]">
                                     Hey there!
                                 </p>
-                                <p class="mb-6 text-lance-black-60 text-sm sm:text-base leading-6">
+                                <p class="mb-6 text-lance-black-60 text-sm md:text-base leading-6">
                                     Welcome to Lance 👋🏾
                                 </p>
                             </div>
-                            <div class="bg-white pt-10 sm:pt-0 px-6 sm:px-0 pb-[110px] sm:pb-0 rounded-t-3xl h-full">
-                                <p class="mb-8 sm:mb-4 text-[rgba(4,17,17,0.80)] text-sm sm:text-base leading-[18px] sm:leading-6">
+                            <div class="bg-white pt-10 md:pt-0 px-6 md:px-0 pb-[110px] md:pb-0 rounded-t-3xl h-full">
+                                <p class="mb-8 md:mb-4 text-[rgba(4,17,17,0.80)] text-sm md:text-base leading-[18px] md:leading-6">
                                     To begin, we require your community code,
                                     <span class="text-[rgba(4,17,17,0.80)] font-semibold">a 6-digit access code</span>
                                     that grants you unrestricted entry to our platform.
@@ -44,32 +44,32 @@
                                 <div class="mb-2">
                                     <Form-TextInput placeholder="Enter Community Code" label="Community Code" v-model="signupForm.communityCode[0].value" v-bind="signupForm.communityCode[1].value" :error="signupFormErrors.communityCode" />
                                 </div>
-                                <NuxtLink to="https://tally.so/r/w2KLJL" target="_blank" class="flex mb-4 sm:mb-8 text-lance-green text-sm sm:text-base leading-6">
+                                <NuxtLink to="https://tally.so/r/w2KLJL" target="_blank" class="flex mb-4 md:mb-8 text-lance-green text-sm md:text-base leading-6">
                                     I do not have a community code
                                 </NuxtLink>
     
                                 <Form-ErrorNotification v-if="communityCodeErrorResponse" :message="communityCodeErrorResponse" class="mb-6" />
     
-                                <button @click="submitCommunityCode" class="mb-4 sm:mb-6 btn w-full btn-primary" :class="{'loading' : submittingCommunityCode}" :disabled="!signupFormValues.communityCode || submittingCommunityCode">
+                                <button @click="submitCommunityCode" class="mb-4 md:mb-6 btn w-full btn-primary" :class="{'loading' : submittingCommunityCode}" :disabled="!signupFormValues.communityCode || submittingCommunityCode">
                                     <span v-show="!submittingCommunityCode">Continue</span>
                                     <Loader-Basic v-show="submittingCommunityCode" bg="#FFF" fg="#C3E48E" />
                                 </button>
-                                <NuxtLink to="/auth/login" class="flex gap-2 justiffy-start sm:justify-center text-lance-black-60 text-sm sm:text-base leading-6">
+                                <NuxtLink to="/auth/login" class="flex gap-2 justiffy-start md:justify-center text-lance-black-60 text-sm md:text-base leading-6">
                                     Already have an account?<span class="text-lance-green font-medium">Login</span>
                                 </NuxtLink>
                             </div>
                         </div>
         
                         <div v-else>
-                            <div class="px-6 sm:px-0 mb-8 sm:mb-0">
-                                <p class="mt-[37.61px] sm:mt-0 mb-2 text-lance-black font-aventa text-[24px] leading-[32px] tracking-[-0.24px]">
+                            <div class="px-6 md:px-0 mb-8 md:mb-0">
+                                <p class="mt-[37.61px] md:mt-0 mb-2 text-lance-black font-aventa text-[24px] leading-[32px] tracking-[-0.24px]">
                                     Create your account
                                 </p>
-                                <p class="mb-6 text-lance-black-60 text-sm sm:text-base leading-6">
+                                <p class="mb-6 text-lance-black-60 text-sm md:text-base leading-6">
                                     Let’s get you started, Please provide the info below
                                 </p>
                             </div>
-                            <div class="bg-white pt-10 sm:pt-0 px-6 sm:px-0 pb-[110px] sm:pb-0 rounded-t-3xl h-full">
+                            <div class="bg-white pt-10 md:pt-0 px-6 md:px-0 pb-[110px] md:pb-0 rounded-t-3xl h-full">
                                 <div class="mb-8">
                                     <Form-TextInput class="mb-4" placeholder="First Name" label="First Name" v-model="signupForm.firstName[0].value" v-bind="signupForm.firstName[1].value" :error="signupFormErrors.firstName" />
                                     <Form-TextInput class="mb-4" placeholder="Last Name" label="Last Name" v-model="signupForm.lastName[0].value" v-bind="signupForm.lastName[1].value" :error="signupFormErrors.lastName" />
@@ -85,7 +85,7 @@
                                     <span v-show="!submittingSignupForm">Continue</span>
                                     <Loader-Basic v-show="submittingSignupForm" bg="#FFF" fg="#C3E48E" />
                                 </button>
-                                <NuxtLink to="/auth/login" class="flex gap-2 justify-start sm:justify-center text-lance-black-60 text-sm sm:text-base leading-6">
+                                <NuxtLink to="/auth/login" class="flex gap-2 justify-start md:justify-center text-lance-black-60 text-sm md:text-base leading-6">
                                     Already have an account?<span class="text-lance-green font-medium">Login</span>
                                 </NuxtLink>
                             </div>
@@ -93,21 +93,21 @@
                     </div>
                     <div v-else class="flex flex-col">
                         <div v-if="emailVerified">
-                            <div class="px-6 sm:px-0 mb-8 sm:mb-0">
-                                <p class="mt-[37.61px] sm:mt-0 mb-2 text-lance-black font-aventa text-[24px] leading-[32px] tracking-[-0.24px]">
+                            <div class="px-6 md:px-0 mb-8 md:mb-0">
+                                <p class="mt-[37.61px] md:mt-0 mb-2 text-lance-black font-aventa text-[24px] leading-[32px] tracking-[-0.24px]">
                                     Verify your phone number
                                 </p>
-                                <p class="mb-6 text-lance-black-60 text-sm sm:text-base leading-6">
-                                    <span class="sm:hidden">
+                                <p class="mb-6 text-lance-black-60 text-sm md:text-base leading-6">
+                                    <span class="md:hidden">
                                         Let’s get you started, Please provide the info below
                                     </span>
-                                    <span class="hidden sm:block">
+                                    <span class="hidden md:block">
                                         Input the 6-digit verification code we sent to this phone number <span class="font-semibold">{{ formattedPhoneNumber }}</span> to activate your account.
                                     </span>
                                 </p>
                             </div>
-                            <div class="bg-white pt-10 sm:pt-0 px-6 sm:px-0 pb-[110px] sm:pb-0 rounded-t-3xl h-full">
-                                <p class="mb-8 text-lance-black-60 text-sm leading-[18px] sm:hidden">
+                            <div class="bg-white pt-10 md:pt-0 px-6 md:px-0 pb-[110px] md:pb-0 rounded-t-3xl h-full">
+                                <p class="mb-8 text-lance-black-60 text-sm leading-[18px] md:hidden">
                                     Input the 6-digit verification code we sent to this phone number <span class="font-semibold">{{ formattedPhoneNumber }}</span> to activate your account.
                                 </p>
                                 <div class="mb-6">
@@ -130,21 +130,21 @@
                         </div>
 
                         <div v-else class="h-full flex flex-col">
-                            <div class="px-6 sm:px-0 mb-8 sm:mb-0">
-                                <p class="mt-[37.61px] sm:mt-0 mb-2 text-lance-black font-aventa text-[24px] leading-[32px] tracking-[-0.24px]">
+                            <div class="px-6 md:px-0 mb-8 md:mb-0">
+                                <p class="mt-[37.61px] md:mt-0 mb-2 text-lance-black font-aventa text-[24px] leading-[32px] tracking-[-0.24px]">
                                     Verify your email address
                                 </p>
-                                <p class="mb-6 text-lance-black-60 text-sm sm:text-base leading-6">
-                                    <span class="sm:hidden">
+                                <p class="mb-6 text-lance-black-60 text-sm md:text-base leading-6">
+                                    <span class="md:hidden">
                                         Let’s get you started, Please provide the info below
                                     </span>
-                                    <span class="hidden sm:block">
+                                    <span class="hidden md:block">
                                         Input the 6-digit verification code we sent to this email address <span class="font-semibold">{{ signupFormValues.email }}</span> to activate your account.
                                     </span>
                                 </p>
                             </div>
-                            <div class="bg-white pt-10 sm:pt-0 px-6 sm:px-0 pb-[110px] sm:pb-0 rounded-t-3xl h-full">
-                                <p class="mb-8 text-lance-black-60 text-sm leading-[18px] sm:hidden">
+                            <div class="bg-white pt-10 md:pt-0 px-6 md:px-0 pb-[110px] md:pb-0 rounded-t-3xl h-full">
+                                <p class="mb-8 text-lance-black-60 text-sm leading-[18px] md:hidden">
                                     Input the 6-digit verification code we sent to this email address <span class="font-semibold">{{ signupFormValues.email }}</span> to activate your account.
                                 </p>
                                 <div class="mb-6">
@@ -159,7 +159,7 @@
                                     <span v-show="!submittingEmailVerificationCode">Continue</span>
                                     <Loader-Basic v-show="submittingEmailVerificationCode" bg="#FFF" fg="#C3E48E" />
                                 </button>
-                                <p v-show="showResendEmailVerificationCode" class="flex gap-2 justify-center text-lance-black-60 text-sm sm:text-base leading-6">
+                                <p v-show="showResendEmailVerificationCode" class="flex gap-2 justify-center text-lance-black-60 text-sm md:text-base leading-6">
                                     Didn’t get the code?<span @click="resendEmailVerificationCode" class="text-lance-green font-medium cursor-pointer">Resend code</span>
                                 </p>
                             </div>
