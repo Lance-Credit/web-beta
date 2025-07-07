@@ -237,7 +237,7 @@
                     first_name: userProfile.value?.firstName,
                 },
                 
-                reference_id: (result as any).data.sessionReference,
+                reference_id: (result as any).data.verification.verificationValue,
                 
                 config: {
                     widget_id: dojahWidgetId
