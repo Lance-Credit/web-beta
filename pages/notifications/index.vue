@@ -128,12 +128,12 @@
                     markFetchedNotificationDetailsAsRead(notificationId)
                 } else {
                     showSelectedLoanDetails.value = true;
+                    const notificationCache: NotificationDetails[] = notificationDetailsCache.value;
+                    notificationCache.push(notificationDataResult);
+        
+                    notificationDetailsCache.value = notificationCache;
                 }
 
-                const notificationCache: NotificationDetails[] = notificationDetailsCache.value;
-                notificationCache.push(notificationDataResult);
-    
-                notificationDetailsCache.value = notificationCache;
             } else {
                 // console.log((result as any).error);
             }
