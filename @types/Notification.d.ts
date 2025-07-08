@@ -13,6 +13,7 @@ interface Notification {
 }
 
 interface NotificationDetails {
+    id: number,
     title: string,
     resourceId: string,
     data: Record<string, any>

@@ -235,7 +235,7 @@
                         </p>
                         <div class="text-lance-black-60 text-center">
                             <p>
-                                God go continue to strengthen you boss, you can continue to <NuxtLink to="/loans" class="font-medium text-lance-black">Loans.</NuxtLink>
+                                You can continue to <NuxtLink to="/loans" class="font-medium text-lance-black">Loans.</NuxtLink>
                             </p>
                         </div>
                     </div>

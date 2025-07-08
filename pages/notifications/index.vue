@@ -28,12 +28,12 @@
                 </li>
             </ul>
         </div>
-        <Notifications-LoanDetailsModal @@close-modal="showSelectedLoanDetails = false; markFetchedNotificationDetailsAsRead(fetchedNotificationDetails?.resourceId)" v-show="showSelectedLoanDetails" :notificationData="fetchedNotificationDetails" />
-        <Notifications-LoansOfferView v-if="approvedLoan" @@close-modal="showLoanOfferView = false; markFetchedNotificationDetailsAsRead(fetchedNotificationDetails?.resourceId)" v-show="showLoanOfferView" :notificationData="fetchedNotificationDetails" />
+        <Notifications-LoanDetailsModal @@close-modal="showSelectedLoanDetails = false; markFetchedNotificationDetailsAsRead(fetchedNotificationDetails?.id)" v-show="showSelectedLoanDetails" :notificationData="fetchedNotificationDetails" />
+        <Notifications-LoanOfferView v-if="approvedLoan" @@close-modal="showLoanOfferView = false; markFetchedNotificationDetailsAsRead(fetchedNotificationDetails?.id)" v-show="showLoanOfferView" :notificationData="fetchedNotificationDetails" />
 
-        <Notifications-LoanRepaymentDetailsModal @@close-modal="showSelectedRepaymentDetails = false; markFetchedNotificationDetailsAsRead(fetchedRepaymentNotificationDetails?.resourceId)" v-show="showSelectedRepaymentDetails" :notificationData="fetchedRepaymentNotificationDetails" />
-        <Notifications-TransactionDetailsModal @@close-modal="showSelectedTransactionDetails = false; markFetchedNotificationDetailsAsRead(fetchedTransactionNotificationDetails?.resourceId)" v-show="showSelectedTransactionDetails" :notificationData="fetchedTransactionNotificationDetails" />
-        <Notifications-LoanDisbursementDetailsModal @@close-modal="showSelectedLoanDisbursementDetails = false; markFetchedNotificationDetailsAsRead(fetchedDisbursementNotificationDetails?.resourceId)" v-show="showSelectedLoanDisbursementDetails" :notificationData="fetchedDisbursementNotificationDetails" />
+        <Notifications-LoanRepaymentDetailsModal @@close-modal="showSelectedRepaymentDetails = false; markFetchedNotificationDetailsAsRead(fetchedRepaymentNotificationDetails?.id)" v-show="showSelectedRepaymentDetails" :notificationData="fetchedRepaymentNotificationDetails" />
+        <Notifications-TransactionDetailsModal @@close-modal="showSelectedTransactionDetails = false; markFetchedNotificationDetailsAsRead(fetchedTransactionNotificationDetails?.id)" v-show="showSelectedTransactionDetails" :notificationData="fetchedTransactionNotificationDetails" />
+        <Notifications-LoanDisbursementDetailsModal @@close-modal="showSelectedLoanDisbursementDetails = false; markFetchedNotificationDetailsAsRead(fetchedDisbursementNotificationDetails?.id)" v-show="showSelectedLoanDisbursementDetails" :notificationData="fetchedDisbursementNotificationDetails" />
     </div>
 </template>
 
@@ -90,14 +90,16 @@
     }
 
     async function showLoanOfferOrDetails(notification: Notification){
+        const notificationId = notification.id;
         const notificationResourceId = notification.metadata.resourceId || notification.metadata.reference;
 
-        const cachedNotification = notificationDetailsCache.value.find((notificationDetails) => notificationDetails.resourceId == notificationResourceId);
+        const cachedNotification = notificationDetailsCache.value.find((notificationDetails) => notificationDetails.id == notificationId);
 
         if(cachedNotification) {
             fetchedNotificationDetails.value = cachedNotification;
             if(cachedNotification.data.status === 'inactive' && cachedNotification.data.adminApproved) {
                 showLoanOfferView.value = true;
+                markFetchedNotificationDetailsAsRead(cachedNotification.id);
             } else {
                 showSelectedLoanDetails.value = true;
             }
@@ -117,12 +119,13 @@
                 
                 (result as any).data.schedule = schedules;
     
-                const notificationDataResult = {resourceId: notificationResourceId, title: notification.title, data: (result as any).data}
+                const notificationDataResult = {id: notification.id, resourceId: notificationResourceId, title: notification.title, data: (result as any).data}
 
                 fetchedNotificationDetails.value = notificationDataResult;
     
                 if((result as any).data.status === 'inactive' && (result as any).data.adminApproved) {
                     showLoanOfferView.value = true;
+                    markFetchedNotificationDetailsAsRead(notificationId)
                 } else {
                     showSelectedLoanDetails.value = true;
                 }
@@ -138,9 +141,10 @@
     }
 
     async function showLoanRepaymentDetails(notification: Notification){
+        const notificationId = notification.id;
         const notificationResourceId = notification.metadata.resourceId || notification.metadata.reference;
 
-        const cachedNotification = notificationDetailsCache.value.find((notificationDetails) => notificationDetails.resourceId == notificationResourceId);
+        const cachedNotification = notificationDetailsCache.value.find((notificationDetails) => notificationDetails.id == notificationId);
 
         if(cachedNotification) {
             fetchedRepaymentNotificationDetails.value = cachedNotification;
@@ -153,7 +157,7 @@
     
                 (result as any).data.amount = (result as any).data.amount / 100;
     
-                const notificationDataResult = {resourceId: notificationResourceId, title: notification.title, data: (result as any).data}
+                const notificationDataResult = {id: notificationId, resourceId: notificationResourceId, title: notification.title, data: (result as any).data}
 
                 fetchedRepaymentNotificationDetails.value = notificationDataResult;
     
@@ -170,9 +174,10 @@
     }
 
     async function showLoanDisbursementDetails(notification: Notification){
+        const notificationId = notification.id;
         const notificationResourceId = notification.metadata.resourceId || notification.metadata.reference;
         
-        const cachedNotification = notificationDetailsCache.value.find((notificationDetails) => notificationDetails.resourceId == notificationResourceId);
+        const cachedNotification = notificationDetailsCache.value.find((notificationDetails) => notificationDetails.id == notificationId);
         
         if(cachedNotification) {
             fetchedDisbursementNotificationDetails.value = cachedNotification;
@@ -195,7 +200,7 @@
                 
                 (result as any).data.schedule = schedules;
                 
-                const notificationDataResult = {resourceId: notificationResourceId, title: notification.title, data: (result as any).data}
+                const notificationDataResult = {id: notificationId, resourceId: notificationResourceId, title: notification.title, data: (result as any).data}
                 
                 fetchedDisbursementNotificationDetails.value = notificationDataResult;
     
@@ -212,9 +217,10 @@
     }
 
     async function showTransactionNotificationDetails(notification: Notification){
+        const notificationId = notification.id;
         const notificationResourceId = notification.metadata.resourceId;
 
-        const cachedNotification = notificationDetailsCache.value.find((notificationDetails) => notificationDetails.resourceId == notificationResourceId);
+        const cachedNotification = notificationDetailsCache.value.find((notificationDetails) => notificationDetails.id == notificationId);
 
         if(cachedNotification) {
             fetchedTransactionNotificationDetails.value = cachedNotification;
@@ -231,7 +237,7 @@
                 (result as any).data.balanceBefore = (result as any).data.balanceBefore / 100;
     
     
-                const notificationDataResult = {resourceId: notificationResourceId, title: notification.title, data: (result as any).data}
+                const notificationDataResult = {id: notificationId, resourceId: notificationResourceId, title: notification.title, data: (result as any).data}
 
                 fetchedTransactionNotificationDetails.value = notificationDataResult;
     
@@ -248,11 +254,12 @@
         }
     }
 
-    function markFetchedNotificationDetailsAsRead(resourceId: any) {
+    function markFetchedNotificationDetailsAsRead(notificationId: any) {
         const allNotifications = notifications.value;
-        if(resourceId) {
-            const notification = allNotifications.find((notification: Notification) => {
-                return notification.metadata?.resourceId == resourceId || notification.metadata?.reference == resourceId
+        if(notificationId) {
+            let notification;
+            notification = allNotifications.find((notification: Notification) => {
+                return notification.id == notificationId
             })
 
             if(notification && (!notification.readAt || notification.readAt == '0000-01-01T00:00:00.000Z')) {
