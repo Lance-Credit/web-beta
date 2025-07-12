@@ -40,20 +40,20 @@
                         <div v-else class="h-full grow flex flex-col">
                             <div class="px-6 md:px-0 mb-8 md:mb-0">
                                 <p class="mt-[37.61px] md:mt-0 mb-2 text-lance-black font-aventa text-[24px] leading-[32px] tracking-[-0.24px]">
-                                    Verify your account
+                                    Reset your password
                                 </p>
                                 <p class="mb-6 text-lance-black-60 text-sm md:text-base leading-6">
                                     <span class="md:hidden">
                                         Let's be sure
                                     </span>
                                     <span class="hidden md:block">
-                                        Input the 6-digit verification code we sent to your email address to activate your account.
+                                        Input the 6-digit verification code we sent to your email address to complete your account password reset.
                                     </span>
                                 </p>
                             </div>
                             <div class="bg-white pt-10 md:pt-0 px-6 md:px-0 pb-[110px] md:pb-0 rounded-t-3xl h-full grow">
                                 <p class="mb-8 text-lance-black-60 text-sm leading-[18px] md:hidden">
-                                    Input the 6-digit verification code we sent to your email address to activate your account.
+                                    Input the 6-digit verification code we sent to your email address to complete your account password reset.
                                 </p>
                                 <div class="mb-8">
                                     <Form-TextInput placeholder="Verification Code" label="Verification Code" v-model="passwordResetForm.verificationCode[0].value" v-bind="passwordResetForm.verificationCode[1].value" :error="passwordResetFormErrors.verificationCode"/>
