@@ -1,3 +1,5 @@
+import colors from 'tailwindcss/colors'
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [],
@@ -24,9 +26,14 @@ export default {
       'lance-black-70': 'rgba(4,17,17,0.70)',
       'lance-blue-10': 'rgba(3,87,238,0.10)',
     },
-    fontFamily: {
-      'aventa': ['Aventa'],
-      'gelion': ['Gelion'],
+    extend: {
+      colors: {
+        ...colors
+      },
+      fontFamily: {
+        'aventa': ['Aventa'],
+        'gelion': ['Gelion'],
+      }
     }
   },
   plugins: [],

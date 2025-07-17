@@ -1,5 +1,6 @@
 <template>
     <div class="flex h-screen relative">
+        <Toast />
         <div
             @click.self="showSidebar = false"
             class="sm:bg-white fixed h-screen w-full sm:w-[213px] bg-[rgba(11,30,75,0.56)] backdrop-blur-[2px] z-20 sidebar"

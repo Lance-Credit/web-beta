@@ -1,4 +1,5 @@
 const { logOut } = useLogout();
+const { showError } = useToast();
 
 export const useApiFetch = () => {
 
@@ -38,6 +39,7 @@ export const useApiFetch = () => {
       }
     } catch (error) {
       // console.log((error as any).response);
+      showError((error as any).response?._data.error || 'Something went wrong!');
       if((error as any).response && (error as any).response.status == 401){
         logOut();
       } else if ((error as any).response) {
