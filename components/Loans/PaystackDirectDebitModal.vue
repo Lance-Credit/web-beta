@@ -1065,6 +1065,9 @@
     function continueDirectDebit() {
         continuingDirectDebit.value = true;
         emit('@continue-paystack-direct-debit');
+        setTimeout(() => {
+            continuingDirectDebit.value = false;
+        }, 2000);
     }
     
     const savingPersonalDetails: Ref<boolean> = ref(false);
