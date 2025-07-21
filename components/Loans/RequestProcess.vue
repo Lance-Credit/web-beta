@@ -337,6 +337,14 @@
     }
 
     async function setupDirectDebit() {
+        await fetchUserLinkedAccountAndBalance();
+        if(hasDirectDebit.value){
+            showDirectDebitInfoModal.value = false;
+            submittingLoanApplication.value = false;
+            submitLoanApplication();
+            return;
+        }
+
         const result = await apiFetch('accounts/direct_debit', 'POST');
     
         if ((result as any).success && !(result as any).error) {
