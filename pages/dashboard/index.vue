@@ -18,7 +18,7 @@
                             <path d="M11.223 5.19356C10.9783 4.95001 10.9775 4.55428 11.221 4.30968C11.4425 4.08731 11.7896 4.0664 12.0347 4.24741L12.1049 4.30778L17.1466 9.32778C17.3696 9.54985 17.3899 9.89828 17.2075 10.1433L17.1466 10.2135L12.105 15.2344C11.8604 15.4779 11.4647 15.4771 11.2211 15.2325C10.9997 15.0102 10.9802 14.6629 11.1623 14.4186L11.2229 14.3486L15.8196 9.77042L11.223 5.19356Z" fill="white"/>
                         </svg>
                     </NuxtLink>
-                    <button v-else @click="kycCompleted ? showLoanInstructions = true : showKycIncompleteModal = true" class="btn btn-primary gap-4">
+                    <button v-else @click="kycCompleted ? startLoanApplication() : showKycIncompleteModal = true" class="btn btn-primary gap-4">
                         <span>Request a Loan</span>
                         <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M3.58044 9.771C3.58044 9.45458 3.81557 9.19309 4.12064 9.1517L4.20544 9.146H16.7054C17.0506 9.146 17.3304 9.42582 17.3304 9.771C17.3304 10.0874 17.0953 10.3489 16.7903 10.3903L16.7054 10.396H4.20544C3.86027 10.396 3.58044 10.1162 3.58044 9.771Z" fill="white"/>
@@ -105,7 +105,7 @@
                                 <path d="M11.223 5.19356C10.9783 4.95001 10.9775 4.55428 11.221 4.30968C11.4425 4.08731 11.7896 4.0664 12.0347 4.24741L12.1049 4.30778L17.1466 9.32778C17.3696 9.54985 17.3899 9.89828 17.2075 10.1433L17.1466 10.2135L12.105 15.2344C11.8604 15.4779 11.4647 15.4771 11.2211 15.2325C10.9997 15.0102 10.9802 14.6629 11.1623 14.4186L11.2229 14.3486L15.8196 9.77042L11.223 5.19356Z" fill="white"/>
                             </svg>
                         </NuxtLink>
-                        <button v-else @click="kycCompleted ? showLoanInstructions = true : showKycIncompleteModal = true" class="btn btn-primary gap-4 dash">
+                        <button v-else @click="kycCompleted ? startLoanApplication() : showKycIncompleteModal = true" class="btn btn-primary gap-4 dash">
                             <span>Request a Loan</span>
                             <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M3.58044 9.771C3.58044 9.45458 3.81557 9.19309 4.12064 9.1517L4.20544 9.146H16.7054C17.0506 9.146 17.3304 9.42582 17.3304 9.771C17.3304 10.0874 17.0953 10.3489 16.7903 10.3903L16.7054 10.396H4.20544C3.86027 10.396 3.58044 10.1162 3.58044 9.771Z" fill="white"/>
@@ -311,6 +311,7 @@
         layout: 'dashboard'
     });
 
+    const { showWarning } = useToast();
     const { fetchKycStatus } = useKYCStore();
     const { kycItems, kycCompleted, waitedForKycFetch } = storeToRefs(useKYCStore());
 
@@ -375,7 +376,13 @@
         continueKycProcess.value = true;
     }
 
-    const { activeLoan, loanSettings, percentageLoanPaid, activeLoanTotalPaid } = storeToRefs(useLoanHistoryStore());
+    const {
+        activeLoan,
+        approvedLoan,
+        loanSettings,
+        percentageLoanPaid,
+        activeLoanTotalPaid
+    } = storeToRefs(useLoanHistoryStore());
     
 
     const continueLoanRequestProcess: Ref<boolean> = ref(false);
@@ -419,6 +426,14 @@
     function viewTransactionDetails(transaction: Transaction){
         selectedTransaction.value = transaction;
         showSelectedTransaction.value = true;
+    }
+
+    function startLoanApplication(){
+        if(!approvedLoan.value?.length){
+            showLoanInstructions.value = true;
+        } else {
+            showWarning('You have a loan awaiting your final decision. Please approve or reject it before requesting a new one.');
+        }
     }
 
 

@@ -11,7 +11,7 @@
                 You currently do not have any {{loanType ? loanType : 'active'}} loans. Simply request for one.
             </p>
         </div>
-        <button @click="emit('@show-loan-instructions')" class="btn btn-primary w-full sm:w-[282px]">Get a loan</button>
+        <button @click="startLoanApplication" class="btn btn-primary w-full sm:w-[282px]">Get a loan</button>
     </div>
 </template>
 
@@ -20,6 +20,20 @@
     defineProps<{
         loanType?: string,
     }>();
+
+    const { showWarning } = useToast();
+    const {
+        approvedLoan
+    } = storeToRefs(useLoanHistoryStore());
+
+
+    function startLoanApplication(){
+        if(!approvedLoan.value?.length){
+            emit('@show-loan-instructions');
+        } else {
+            showWarning('You have a loan awaiting your final decision. Please approve or reject it before requesting a new one.');
+        }
+    }
 
     const emit = defineEmits<{
         '@show-loan-instructions': []
