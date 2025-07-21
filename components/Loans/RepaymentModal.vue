@@ -99,8 +99,6 @@
                         <p class="text-lance-black-60">Choose a Payment Method</p>
                     </div>
 
-                    <Form-ErrorNotification v-if="repaymentSessionError" :message="repaymentSessionError" class="w-full mb-0" />
-
                     <form  class="flex flex-col gap-2">
                         <Form-RepaymentMethodRadioInput type="radio" name="repaymentMethod" value="wallet">
                             <div class="w-8 h-8 rounded-full flex items-center justify-center" :class="repaymentFormValues.repaymentMethod != 'wallet' ? 'bg-lance-green-5' : ''">
@@ -284,7 +282,6 @@
         makingRepayment.value = false;
     }
 
-    const repaymentSessionError: Ref<string> = ref('');
 
     async function initiateRepayment(loan: Loan | null, installment: string) {
         const payload = {
@@ -296,11 +293,8 @@
         const result = await apiFetch('repayments', 'POST', payload);
 
         if ((result as any).success && !(result as any).error) {
-            
             return (result as any).data.sessionId;
         } else {
-            repaymentSessionError.value = (result as any).error;
-            setTimeout(() => repaymentSessionError.value = '', 5000);
             return false;
         }
     }
