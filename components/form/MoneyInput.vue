@@ -39,7 +39,10 @@
     const value = computed({
         get() {
             if(props.modelValue){
-                return (Number(props.modelValue))?.toLocaleString();
+                if(!isNaN(parseInt(props.modelValue as string))){
+                    return (parseInt(props.modelValue as string))?.toLocaleString();
+                }
+                // return props.modelValue;
             }
             return undefined;
         },
