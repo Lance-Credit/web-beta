@@ -207,6 +207,7 @@
     import * as yup from 'yup';
 
     
+    const { showSuccess } = useToast();
     const { $resetKYC } = useKYCStore();
 
     const { fetchApiToken } = useTokenStore();
@@ -408,13 +409,18 @@
         showResendEmailVerificationCode.value = false;
         
         try {
-            await $fetch(`${apiURL}/onboarding/verification`, {
+            const response = await $fetch(`${apiURL}/onboarding/verification`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
                     "x-verification-token": `Bearer ${authToken.value}`
                 }
             });
+
+            if((response as any).success) {
+                showSuccess('OTP has been successfully sent');
+            }
+
         } catch (error) {
             // console.log((error as any).response);
             emailVerificationCodeErrorResponse.value = (error as any).response._data.error;
@@ -488,13 +494,16 @@
         showResendPhoneVerificationCode.value = false;
 
         try {
-            await $fetch(`${apiURL}/onboarding/verification`, {
+            const response = await $fetch(`${apiURL}/onboarding/verification`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
                     "x-verification-token": `Bearer ${authToken.value}`
                 }
             });
+            if((response as any).success) {
+                showSuccess('OTP has been successfully sent');
+            }
         } catch (error) {
             // console.log((error as any).response);
             phoneVerificationCodeErrorResponse.value = (error as any).response._data.error;

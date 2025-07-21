@@ -163,6 +163,7 @@
         conf_password: defineField('conf_password')
     };
 
+    const { showSuccess } = useToast();
     const emailFormSubmitted: Ref<boolean> = ref(false);
 
     const verificationCodeFormSubmitted: Ref<boolean> = ref(false);
@@ -195,6 +196,7 @@
             submittingResetPasswordRequestForm.value = false;
             emailFormSubmitted.value = true;
             passwordResetToken.value = (result as any).data.token
+            showSuccess((result as any).message);
         } else {
             // console.log((result as any).error);
             resetPasswordFormRequestError.value = (result as any).error;
