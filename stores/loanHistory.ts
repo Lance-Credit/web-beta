@@ -25,6 +25,16 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
             return null;
         });
 
+        const nextRepaymentDate = computed(() => {
+            if(activeLoan.value){
+                const nextRepayment = activeLoan.value.schedule.find((schedule) => schedule.status != 'paid');
+                if(nextRepayment){
+                    return new Date(nextRepayment.dueDate).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" });
+                }
+            }
+            return '- -';
+        });
+
         const approvedLoan = computed(() => {
             if(loanHistory.value.length){
                 return loanHistory.value.filter((loan: Loan) => loan.adminApproved && loan.status == 'inactive');
@@ -130,6 +140,7 @@ export const useLoanHistoryStore = defineStore('loanHistory', () =>
             declinedLoans,
             completedLoans,
             fetchLoanHistory,
+            nextRepaymentDate,
             ongoingLoanRequest,
             percentageLoanPaid,
             activeLoanTotalPaid,

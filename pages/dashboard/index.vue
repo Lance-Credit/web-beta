@@ -85,7 +85,7 @@
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M5.26101 2.7194C3.53234 2.7194 2.58034 3.6414 2.58034 5.3154V11.3481C2.58034 13.0587 3.53234 14.0001 5.26101 14.0001H10.8997C12.6283 14.0001 13.5803 13.0761 13.5803 11.3987V5.3154C13.583 4.49207 13.3617 3.85207 12.9223 3.41207C12.4703 2.95873 11.7737 2.7194 10.9057 2.7194H5.26101ZM10.8997 14.9999H5.26105C2.99105 14.9999 1.58038 13.6006 1.58038 11.3479V5.31524C1.58038 3.09657 2.99105 1.71924 5.26105 1.71924H10.9057C12.0451 1.71924 12.9871 2.06057 13.6304 2.70524C14.2551 3.33257 14.5837 4.23457 14.5804 5.31657V11.3986C14.5804 13.6199 13.1697 14.9999 10.8997 14.9999Z" fill="white" fill-opacity="0.9"/>
                                     </g>
                                 </svg>
-                                <span>Due: {{ activeLoan ? new Date(activeLoan.dueDate).toLocaleDateString('en-GB', { day:"numeric", month:"short", year:"numeric" }) : '- -'}}</span>
+                                <span>Due: {{ nextRepaymentDate }}</span>
                             </p>
                         </div>
                         <div class="mb-0.5 flex items-center justify-between text-[rgba(255,255,255,0.90)] text-sm">
@@ -380,6 +380,7 @@
         activeLoan,
         approvedLoan,
         loanSettings,
+        nextRepaymentDate,
         percentageLoanPaid,
         activeLoanTotalPaid
     } = storeToRefs(useLoanHistoryStore());
