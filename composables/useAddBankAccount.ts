@@ -36,7 +36,7 @@ export const useAddBankAccount = () => {
         const { fetchKycStatus } = useKYCStore();
 
         try {
-            const result = await apiFetch('accounts', 'POST', { code });
+            const result = await apiFetch('accounts', 'POST', {}, { code });
             
             if ((result as any).success && !(result as any).error) {
                 // console.log('success',result);

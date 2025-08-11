@@ -271,7 +271,7 @@
     async function markNotificationsAsRead(notifications: Notification[]) {
         const notificationIds = notifications.map((notification) => notification.id);
 
-        const result = await apiFetch('notifications/read', 'POST', { ids: notificationIds });
+        const result = await apiFetch('notifications/read', 'POST', {}, { ids: notificationIds });
     
         if((result as any).success && !(result as any).error){
             fetchNotifications();

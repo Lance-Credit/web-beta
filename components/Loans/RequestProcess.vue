@@ -308,6 +308,7 @@
             const result = await apiFetch(
                 'loans',
                 'POST',
+                {},
                 {
                     "source": "web",
                     "amount": parseInt(loanRequestFormValues.loanAmount) * 100,

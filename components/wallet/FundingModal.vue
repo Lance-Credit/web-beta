@@ -65,6 +65,7 @@
         const result = await apiFetch(
             'wallets',
             'POST',
+            {},
             {
                 "amount": parseInt(fundingFormValues.fundingAmount) * 100
             }

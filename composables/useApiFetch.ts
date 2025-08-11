@@ -6,6 +6,7 @@ export const useApiFetch = () => {
   const apiFetch = async(
     endpoint: string,
     method: any = 'GET',
+    headers:  Record<any, any> | undefined = undefined,
     body: Record<any, any> | undefined = undefined
   ) => {
     
@@ -18,7 +19,8 @@ export const useApiFetch = () => {
           method: method,
           headers: {
               "Content-Type": "application/json",
-              "Authorization": `Bearer ${apiToken.value}`
+              "Authorization": `Bearer ${apiToken.value}`,
+              ...headers
           },
           body: body
       });

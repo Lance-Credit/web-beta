@@ -343,6 +343,7 @@
         const result = await apiFetch(
             'auth/register',
             'POST',
+            {},
             {
                 "source": "web",
                 "email": signupFormValues.email,

@@ -294,6 +294,7 @@
         const result = await apiFetch(
             'wallets/withdraw',
             'POST',
+            {},
             {
                 "amount": parseInt(withdrawalFormValues.withdrawalAmount) * 100
             }
