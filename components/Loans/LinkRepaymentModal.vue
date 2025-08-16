@@ -53,7 +53,8 @@
                     </div>
                     <div class="flex gap-6">
                         <button @click="resetRepaymentChoice" class="btn btn-tertiary w-full">Back</button>
-                        <button @click="continueRepayment = true" class="btn btn-primary w-full" :disabled="!(repaymentFormValues.repaymentOption && !repaymentFormErrors.repaymentOption)">Make Repayment</button>
+                        <!-- <button @click="continueRepayment = true" class="btn btn-primary w-full" :disabled="!(repaymentFormValues.repaymentOption && !repaymentFormErrors.repaymentOption)">Make Repayment</button> -->
+                        <button @click="makeRepayment" class="btn btn-primary w-full" :disabled="!(repaymentFormValues.repaymentOption && !repaymentFormErrors.repaymentOption)  || makingRepayment">Make Repayment</button>
                     </div>
                 </div>
     
@@ -69,7 +70,8 @@
                     </div>
                     <div class="flex gap-6">
                         <button @click="resetRepaymentChoice" class="btn btn-tertiary w-full">Back</button>
-                        <button @click="continueRepayment = true" class="btn btn-primary w-full" :disabled="!(repaymentFormValues.repaymentAmount && !repaymentFormErrors.repaymentAmount)">Continue</button>
+                        <!-- <button @click="continueRepayment = true" class="btn btn-primary w-full" :disabled="!(repaymentFormValues.repaymentAmount && !repaymentFormErrors.repaymentAmount)">Continue</button> -->
+                        <button @click="makeRepayment" class="btn btn-primary w-full" :disabled="!(repaymentFormValues.repaymentAmount && !repaymentFormErrors.repaymentAmount) || makingRepayment">Continue</button>
                     </div>
                 </div>
             </div>
@@ -216,7 +218,7 @@
             }
         }
 
-        makingRepayment.value = false;
+        // makingRepayment.value = false;
     }
 
 
