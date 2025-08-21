@@ -164,7 +164,10 @@
                     <p>Don't worry, it's quick and completely secure!</p>
                     <div class="flex items-center gap-3.5">
                         <button @click="emit('@stop-kyc-process')" class="btn btn-tertiary w-full">Back</button>
-                        <button @click="startMonoKyc" class="btn btn-primary w-full">Start Verification</button>
+                        <button @click="startMonoKyc" class="btn btn-primary w-full" :class="{'loading' : startingMonoKyc}" :disabled="startingMonoKyc">
+                            <span v-show="!startingMonoKyc">Start Verification</span>
+                            <Loader-Basic v-show="startingMonoKyc" bg="#FFF" fg="#C3E48E" />
+                        </button>
                     </div>
                 </div>
             </div>
@@ -174,7 +177,13 @@
         <KYC-UnderReviewModal v-show="showKycSubmittedModal" @@close-kyc-under-review-modal="confirmDojahComplete(); showKycSubmittedModal = false" @@back-to-dashboard="kycBackToDashboard" />
         <KYC-ReviewFailedModal v-show="showKycFailedModal" 
         @@close-kyc-review-failed-modal="showKycFailedModal = false" @@back-to-dashboard="kycBackToDashboard" />
-        <KYC-MonoModal v-show="startingMonoKyc" />
+        <!-- <KYC-MonoModal v-show="startingMonoKyc" /> -->
+
+        <KYC-SelectBankModal
+            v-show="showSelectBankModal"
+            @@close-modal="showSelectBankModal = false; startingMonoKyc = false;"
+            :bank-choice-array="bankChoiceArray"
+        />
     </div>
 </template>
 
@@ -201,6 +210,10 @@
     const showKycSubmittedModal: Ref<boolean> = ref(false);
 
     const showKycFailedModal: Ref<boolean> = ref(false);
+
+    const showSelectBankModal: Ref<boolean> = ref(false);
+    
+    const bankChoiceArray: Ref<any[]> = ref([]);
 
     async function startDojahKyc(){
         if(!userProfile.value) {
@@ -282,19 +295,6 @@
     }
     
     async function confirmDojahComplete(){
-        // if(!kycItems.value.kyc.completed){
-        //     const requeryKyc = setInterval(async() => {
-        //         await fetchKycStatus();
-        //     }, 30000);
-
-        //     setTimeout(async() => {
-        //         clearInterval(requeryKyc);
-        //         await fetchKycStatus();
-        //         if(!kycItems.value.kyc.completed){
-        //             kycItems.value.kyc.state = '';
-        //         }
-        //     }, 180000);
-        // }
         
         const result = await apiFetch('verifications/verify', 'POST', {}, { type: 'kyc' });
 
@@ -309,15 +309,17 @@
     }
     
     const startingMonoKyc: Ref<boolean> = ref(false);
-    
-    const { monoConnect } = useAddBankAccount();
 
-    function startMonoKyc(){
+    async function startMonoKyc(){
         startingMonoKyc.value = true;
 
-        setTimeout(() => startingMonoKyc.value = false, 10000);
-
-        monoConnect();
+        const result = await apiFetch('banks');
+        
+        if((result as any).success && !(result as any).error){
+            
+            showSelectBankModal.value = true;
+            bankChoiceArray.value = (result as any).data.banks;
+        }
     }
 
     const emit = defineEmits<{
