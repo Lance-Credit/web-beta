@@ -155,6 +155,7 @@
         const result = await apiFetch(
             `loans/${props.loan.reference}`,
             'PATCH',
+            {},
             {
                 "acceptOrDecline": "decline",
                 "operation":"acceptOrDecline",

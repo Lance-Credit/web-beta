@@ -1077,6 +1077,7 @@
         const result = await apiFetch(
             'profile',
             'PATCH',
+            {},
             {
                 // maritalStatus: settingsFormValues.maritalStatus,
                 // levelOfEducation: settingsFormValues.educationLevel,

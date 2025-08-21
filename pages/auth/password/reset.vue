@@ -187,6 +187,7 @@
         const result = await apiFetch(
             'auth/password/reset',
             'PATCH',
+            {},
             {
                 "email": passwordResetFormValues.email
             }

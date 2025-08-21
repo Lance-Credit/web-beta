@@ -191,6 +191,7 @@
       const result = await apiFetch(
           `loans/${props.notificationData?.data.reference}`,
           'PATCH',
+          {},
           {
               "operation":"acceptOrDecline",
               "acceptOrDecline": "accept"

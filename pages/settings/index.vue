@@ -2062,6 +2062,7 @@
         const result = await apiFetch(
             'profile',
             'PATCH',
+            {},
             personalDetailsData
         );
 
@@ -2176,6 +2177,7 @@
         const result = await apiFetch(
             'profile',
             'PATCH',
+            {},
             {
                 nextOfKin: {
                     email: settingsFormValues.nextOfKinEmail,
@@ -2250,6 +2252,7 @@
         const result = await apiFetch(
             'auth/password',
             'PATCH',
+            {},
             {
                 "oldPassword": settingsFormValues.currPassword,
                 "newPassword": settingsFormValues.newPassword,
