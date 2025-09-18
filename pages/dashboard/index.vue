@@ -315,6 +315,7 @@
     const { fetchKycStatus } = useKYCStore();
     const { kycItems, kycCompleted, waitedForKycFetch } = storeToRefs(useKYCStore());
 
+    const { fetchAccountBalance } = useWalletStore();
     const { balance, transactions } = storeToRefs(useWalletStore());
 
     const { userProfile } = storeToRefs(useUserStore());
@@ -399,8 +400,12 @@
             showKycSummary.value = true
         }
 
-        if(!kycItems.value.kyc.completed){
+        if(!kycItems.value.kyc.completed || !kycItems.value.linkedBankAccount.completed ){
             fetchKycStatus();
+        }
+
+        if(kycCompleted.value){
+            fetchAccountBalance();
         }
 
         setTimeout(async() => {
