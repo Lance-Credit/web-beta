@@ -206,7 +206,7 @@
                             </div>
                             <p class="text-base">
                                 Can't find your bank? Let us know and we'll notify you when we add it. Add it
-                                <NuxtLink class="text-[#174743] cursor-pointer">here</NuxtLink>
+                                <span @click="showAddUnsupportedBankModal = true" class="text-[#174743] cursor-pointer">here</span>
                             </p>
                         </div>
                         <div class="flex items-center gap-6">
@@ -226,10 +226,10 @@
         <KYC-ReviewFailedModal v-show="showKycFailedModal" 
         @@close-kyc-review-failed-modal="showKycFailedModal = false" @@back-to-dashboard="kycBackToDashboard" />
         <!-- <KYC-MonoModal v-show="startingMonoKyc" /> -->
-         <!-- <KYC-SelectBankModal
+         <KYC-AddUnsupportedBankModal
             v-show="showAddUnsupportedBankModal"
             @@close-modal="showAddUnsupportedBankModal = false"
-        /> -->
+        />
     </div>
 </template>
 
@@ -264,6 +264,8 @@
         name: string,
         logo: string
     } | null> = ref(null);
+
+    const showAddUnsupportedBankModal: Ref<boolean> = ref(false);
 
     async function startDojahKyc(){
         if(!userProfile.value) {
