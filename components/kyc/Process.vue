@@ -204,9 +204,8 @@
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M12.497 7.2041C13.05 7.2041 13.502 7.6511 13.502 8.2041C13.502 8.7571 13.059 9.2041 12.507 9.2041H12.497C11.944 9.2041 11.497 8.7571 11.497 8.2041C11.497 7.6511 11.944 7.2041 12.497 7.2041Z" fill="#041111"/>
                                 </svg>
                             </div>
-                            <p class="text-base">
-                                Can't find your bank? Let us know and we'll notify you when we add it. Add it
-                                <span @click="showAddUnsupportedBankModal = true" class="text-[#174743] cursor-pointer">here</span>
+                            <p @click="showAddUnsupportedBankModal = true"  class="text-base text-[#174743] cursor-pointer">
+                                Please ckick here to let us know your bank
                             </p>
                         </div>
                         <div class="flex items-center gap-6">
